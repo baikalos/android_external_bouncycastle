@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAKF3///t4\u003d",
+        "filename": "patches/android.patch",
+        "patchSetId": 4
+      },
+      "lineNbr": 9427,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2012-10-12T06:14:03Z",
+      "side": 1,
+      "message": "need //BEGIN android- markers",
+      "revId": "9d0f7ae44336402b0f54f8a9375769a2aab291d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKF3///t0\u003d",
+        "filename": "src/main/java/org/bouncycastle/jce/provider/asymmetric/ec/ECUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2012-10-12T06:14:03Z",
+      "side": 1,
+      "message": "// BEGIN android-added",
+      "revId": "9d0f7ae44336402b0f54f8a9375769a2aab291d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKF3///tw\u003d",
+        "filename": "src/main/java/org/bouncycastle/jce/provider/asymmetric/ec/ECUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2012-10-12T06:14:03Z",
+      "side": 1,
+      "message": "// END android-added",
+      "revId": "9d0f7ae44336402b0f54f8a9375769a2aab291d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKF3///ts\u003d",
+        "filename": "src/main/java/org/bouncycastle/jce/provider/asymmetric/ec/Signature.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2012-10-12T06:14:03Z",
+      "side": 1,
+      "message": "markers here too",
+      "revId": "9d0f7ae44336402b0f54f8a9375769a2aab291d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
