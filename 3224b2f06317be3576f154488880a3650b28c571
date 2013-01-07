@@ -16,6 +16,24 @@
       "revId": "3224b2f06317be3576f154488880a3650b28c571",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "N71nnQ80",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/DERT61String.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-01-07T21:29:40Z",
+      "side": 1,
+      "message": "OpenSSL, RI, and BouncyCastle interpret T61 as a UTF-8 string, though. I\u0027m not sure if they try to guess the encoding or what.",
+      "parentUuid": "N71kpA4c",
+      "revId": "3224b2f06317be3576f154488880a3650b28c571",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
