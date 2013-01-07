@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "N71kpA4c",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/DERT61String.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-01-07T20:04:46Z",
+      "side": 1,
+      "message": "hmm. I thought T61String was basically for 8-bit data?",
+      "revId": "3224b2f06317be3576f154488880a3650b28c571",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
