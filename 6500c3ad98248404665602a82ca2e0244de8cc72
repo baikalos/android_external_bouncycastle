@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "N72cf.hI",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/extension/X509ExtensionUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-01-08T00:04:11Z",
+      "side": 1,
+      "message": "so the RI is doing name resolution too? I assume having the ip address case is rare.",
+      "revId": "6500c3ad98248404665602a82ca2e0244de8cc72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "N7wftZuY",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/extension/X509ExtensionUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-01-08T00:04:11Z",
+      "side": 1,
+      "message": "above if there is no extVal, we return Collections.EMPTY_LIST. that seems inconsistent.",
+      "revId": "6500c3ad98248404665602a82ca2e0244de8cc72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
