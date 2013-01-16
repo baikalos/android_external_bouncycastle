@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "OZX2Q90o",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/extension/X509ExtensionUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-01-16T21:24:07Z",
+      "side": 1,
+      "message": "android-changed markers?",
+      "revId": "bb3f6b8e72afdc47fc11ea6b2cecc6145abb8121",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
