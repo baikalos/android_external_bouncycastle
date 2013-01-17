@@ -16,6 +16,24 @@
       "revId": "bb3f6b8e72afdc47fc11ea6b2cecc6145abb8121",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "OZmIs0k8",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/extension/X509ExtensionUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-01-17T00:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "OZX2Q90o",
+      "revId": "bb3f6b8e72afdc47fc11ea6b2cecc6145abb8121",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
