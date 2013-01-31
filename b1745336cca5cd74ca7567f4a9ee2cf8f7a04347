@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PD9TgiB8",
+        "filename": "patches/bcprov.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-01-31T17:45:59Z",
+      "side": 1,
+      "message": "This looks weird, but must be a difference in diff",
+      "revId": "b1745336cca5cd74ca7567f4a9ee2cf8f7a04347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
