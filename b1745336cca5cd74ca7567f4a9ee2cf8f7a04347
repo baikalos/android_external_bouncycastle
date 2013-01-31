@@ -16,6 +16,24 @@
       "revId": "b1745336cca5cd74ca7567f4a9ee2cf8f7a04347",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PDxR94KQ",
+        "filename": "patches/bcprov.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-01-31T18:34:31Z",
+      "side": 1,
+      "message": "commenting on the diff of the diff, i don\u0027t know what diff difference you mean. I did add more changes lines to the android-changed section to match the DSA-\u003eSHA1withDSA rename above.",
+      "parentUuid": "PD9TgiB8",
+      "revId": "b1745336cca5cd74ca7567f4a9ee2cf8f7a04347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
