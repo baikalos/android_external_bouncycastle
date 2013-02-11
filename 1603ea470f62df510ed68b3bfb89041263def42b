@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Pwm.CXQw",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/x509/KeyUsage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-02-11T23:27:30Z",
+      "side": 1,
+      "message": "Strange comment.",
+      "revId": "1603ea470f62df510ed68b3bfb89041263def42b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Pws.oyX4",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/x9/X962NamedCurves.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-02-11T23:27:30Z",
+      "side": 1,
+      "message": "hah, whoops.",
+      "revId": "1603ea470f62df510ed68b3bfb89041263def42b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Pws91afQ",
+        "filename": "patches/bcprov.patch",
+        "patchSetId": 2
+      },
+      "lineNbr": 9071,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-02-11T23:27:30Z",
+      "side": 1,
+      "message": "I don\u0027t think we need these changes any more.",
+      "revId": "1603ea470f62df510ed68b3bfb89041263def42b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Pwk8hWQQ",
+        "filename": "patches/bcprov.patch",
+        "patchSetId": 2
+      },
+      "lineNbr": 9110,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-02-11T23:27:30Z",
+      "side": 1,
+      "message": "do we need these markers anymore?",
+      "revId": "1603ea470f62df510ed68b3bfb89041263def42b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
