@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QOkiJf90",
+        "filename": "patches/bcprov.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 3056,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2013-02-22T17:45:39Z",
+      "side": 1,
+      "message": "Trailing whitespace",
+      "revId": "200c44f2dde27abe81d5125f893e6b6ed9b69674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOmiOw.g",
+        "filename": "patches/bcprov.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 3064,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2013-02-22T17:45:39Z",
+      "side": 1,
+      "message": "Trailing whitespace",
+      "revId": "200c44f2dde27abe81d5125f893e6b6ed9b69674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
