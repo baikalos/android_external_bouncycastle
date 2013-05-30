@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d4915a3_41a09632",
+        "filename": "bouncycastle.version",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-05-30T09:25:20Z",
+      "side": 1,
+      "message": "note this is based on 1.49 beta 14, so its not ready to be submitted. I did verify that the tests in README.android all had consistent behavior before and after this change.",
+      "revId": "b3b3fecd38e99d3c95c186273db89a369e1331ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
