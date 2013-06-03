@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d879d2a_0f27c924",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/cms/SignerInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-06-03T19:54:46Z",
+      "side": 1,
+      "message": "Weird that they don\u0027t just have a valueOf(...) with a pool of small constants.",
+      "revId": "9eca1f41c4a4232b01932082f27982f8c72915a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d879d2a_8f3ad936",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/dsa/AlgorithmParameterGeneratorSpi.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-06-03T19:54:46Z",
+      "side": 1,
+      "message": "interesting that this was fixed...",
+      "revId": "9eca1f41c4a4232b01932082f27982f8c72915a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d879d2a_af7cfdf3",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/BouncyCastleProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-06-03T19:54:46Z",
+      "side": 1,
+      "message": "RC2?",
+      "revId": "9eca1f41c4a4232b01932082f27982f8c72915a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d879d2a_cf8931dd",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/BouncyCastleProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-06-03T19:54:46Z",
+      "side": 1,
+      "message": "IES?",
+      "revId": "9eca1f41c4a4232b01932082f27982f8c72915a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d879d2a_ef86f5cb",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/BouncyCastleProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-06-03T19:54:46Z",
+      "side": 1,
+      "message": "Is this going to cause any problems?",
+      "revId": "9eca1f41c4a4232b01932082f27982f8c72915a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d879d2a_0f750905",
+        "filename": "bouncycastle.config",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-06-03T19:54:46Z",
+      "side": 1,
+      "message": "Why are we adding IES back in?",
+      "revId": "9eca1f41c4a4232b01932082f27982f8c72915a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d879d2a_2f7acdf3",
+        "filename": "bouncycastle.config",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-06-03T19:54:46Z",
+      "side": 1,
+      "message": "It looked like there was a change where this mode was allowed.",
+      "revId": "9eca1f41c4a4232b01932082f27982f8c72915a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d879d2a_4f6f0131",
+        "filename": "bouncycastle.config",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-06-03T19:54:46Z",
+      "side": 1,
+      "message": "Is this really not needed?",
+      "revId": "9eca1f41c4a4232b01932082f27982f8c72915a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
