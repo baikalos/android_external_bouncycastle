@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d879d2a_afbf9db6",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/digest/SHA384.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-06-03T18:24:47Z",
+      "side": 1,
+      "message": "We don\u0027t have the OldHMac code in the tree. Looking upstream it says:\n\n     * @deprecated uses incorrect pad for SHA-512 and SHA-384 use HMac.",
+      "parentUuid": "1d879d2a_8fe3b902",
+      "revId": "c563afdb3eff47bb24344191e6cde9b6f73571a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d879d2a_4f13811b",
         "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/AES.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-06-03T17:51:44Z",
       "side": 1,
       "message": "Trailing whitespace.",
+      "revId": "c563afdb3eff47bb24344191e6cde9b6f73571a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d879d2a_ef8ef522",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/AES.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-06-03T18:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d879d2a_4f13811b",
       "revId": "c563afdb3eff47bb24344191e6cde9b6f73571a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
