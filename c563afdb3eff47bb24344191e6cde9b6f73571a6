@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d879d2a_8fe3b902",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/digest/SHA384.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1020966
+      },
+      "writtenOn": "2013-06-03T17:51:44Z",
+      "side": 1,
+      "message": "Just wondering: is this old or broken?",
+      "revId": "c563afdb3eff47bb24344191e6cde9b6f73571a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d879d2a_4f13811b",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/AES.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1020966
+      },
+      "writtenOn": "2013-06-03T17:51:44Z",
+      "side": 1,
+      "message": "Trailing whitespace.",
+      "revId": "c563afdb3eff47bb24344191e6cde9b6f73571a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
