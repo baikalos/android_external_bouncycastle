@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4015b89_e60a3e36",
+        "filename": "bcprov/src/main/java/org/bouncycastle/crypto/digests/AndroidDigestFactoryOpenSSL.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-09-26T22:14:46Z",
+      "side": 1,
+      "message": "Mixed this up with 256 in PS1.. fixed.",
+      "revId": "87490acd76f544251011cf49753d4d0a61f86a66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
