@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08abe757_3f247798",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/DSA.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-12-12T23:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28aeeb65_3b3ecbd9",
+      "range": {
+        "startLine": 37,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 96
+      },
+      "revId": "7d41405353641dccc5fb0765ab144b023abeda95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a82f3bb4_76391807",
         "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/EC.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a82f3bb4_91d5c62a",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/EC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-12-12T23:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a82f3bb4_76391807",
+      "range": {
+        "startLine": 84,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 103
+      },
+      "revId": "7d41405353641dccc5fb0765ab144b023abeda95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a82f3bb4_11fb76ee",
         "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/SymmetricAlgorithmProvider.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2013-12-12T23:27:13Z",
       "side": 1,
       "message": "need to remove this",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 1
+      },
+      "revId": "7d41405353641dccc5fb0765ab144b023abeda95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a82f3bb4_31b79a07",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/SymmetricAlgorithmProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-12-12T23:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a82f3bb4_11fb76ee",
       "range": {
         "startLine": 23,
         "startChar": 0,
