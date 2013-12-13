@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28aeeb65_5b686710",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/x9/ECNamedCurveTable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-12-13T00:43:58Z",
+      "side": 1,
+      "message": "should we have removed NIST in this case? I think that was a mistake.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "244aa9df12a4919f3672741d8169e9db46b8f128",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a82f3bb4_112896b1",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509Store.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-12-13T00:43:58Z",
+      "side": 1,
+      "message": "can we proactively remove this? or do they still reference it themselves?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "244aa9df12a4919f3672741d8169e9db46b8f128",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
