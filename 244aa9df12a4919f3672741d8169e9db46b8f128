@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28aeeb65_edab966f",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/x9/ECNamedCurveTable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-12-13T00:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28aeeb65_5b686710",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "244aa9df12a4919f3672741d8169e9db46b8f128",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a82f3bb4_112896b1",
         "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509Store.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2013-12-13T00:43:58Z",
       "side": 1,
       "message": "can we proactively remove this? or do they still reference it themselves?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "244aa9df12a4919f3672741d8169e9db46b8f128",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08abe757_1a92e940",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509Store.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-12-13T00:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a82f3bb4_112896b1",
       "range": {
         "startLine": 11,
         "startChar": 0,
