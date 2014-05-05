@@ -22,6 +22,30 @@
       "revId": "7324e049e24e7a104d9ab2cef4545ef5691df470",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8aba749a_8430ba78",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXCertPathValidatorSpi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2014-05-05T17:45:47Z",
+      "side": 1,
+      "message": "I was thinking of class preloading... so preinitialization won\u0027t actually call the constructor of CertBlacklist? If it did, it would call System.getenv.",
+      "parentUuid": "aacbb83b_80466485",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "7324e049e24e7a104d9ab2cef4545ef5691df470",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
