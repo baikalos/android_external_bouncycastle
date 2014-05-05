@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aacbb83b_e034081b",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertBlacklist.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2014-05-05T17:37:48Z",
+      "side": 1,
+      "message": "whoops. switched these around.",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 77
+      },
+      "revId": "1fa548785e583702343a3874ef99711244f6cbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
