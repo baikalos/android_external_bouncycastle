@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "1624f7a2_130f4354",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/util/ECUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2014-07-30T18:00:22Z",
+      "side": 1,
+      "message": "I think these are fine. OpenSSL supports Curve25519 as well. The others are repeats of the SEC curves, but perhaps with some acceleration.",
+      "parentUuid": "560aef14_fb8a6b91",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 64
+      },
+      "revId": "1856c7ded7d148367b9c752f339e0af75e96e492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "560aef14_1bc75fde",
         "filename": "bcprov/src/main/java/org/bouncycastle/math/ec/custom/djb/Curve25519.java",
         "patchSetId": 2
