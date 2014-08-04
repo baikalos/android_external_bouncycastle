@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "f693e315_51d36442",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/util/ECUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2014-08-04T17:06:54Z",
+      "side": 1,
+      "message": "Does OpenSSL support Curve25519? It doesn\u0027t show up when I grep for \"25519\" or run \"openssl ecparam -list_curves\".",
+      "parentUuid": "1624f7a2_130f4354",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 64
+      },
+      "revId": "1856c7ded7d148367b9c752f339e0af75e96e492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "560aef14_1bc75fde",
         "filename": "bcprov/src/main/java/org/bouncycastle/math/ec/custom/djb/Curve25519.java",
         "patchSetId": 2
