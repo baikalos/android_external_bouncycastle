@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3c55625_b4d3a8fd",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/AES.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2015-03-29T21:15:33Z",
+      "side": 1,
+      "message": "We commented out the code for this above, so we should comment out the registration of it.",
+      "range": {
+        "startLine": 730,
+        "startChar": 12,
+        "endLine": 733,
+        "endChar": 121
+      },
+      "revId": "5b70151a566316256f9d093a902a1be198bd458b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
