@@ -22,6 +22,30 @@
       "revId": "5b70151a566316256f9d093a902a1be198bd458b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d246e8_16b740c7",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/AES.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-29T21:20:20Z",
+      "side": 1,
+      "message": "I think my libcore ProviderTest should catch this as well?",
+      "parentUuid": "c3c55625_b4d3a8fd",
+      "range": {
+        "startLine": 730,
+        "startChar": 12,
+        "endLine": 733,
+        "endChar": 121
+      },
+      "revId": "5b70151a566316256f9d093a902a1be198bd458b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
