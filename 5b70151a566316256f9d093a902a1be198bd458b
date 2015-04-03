@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "63f74ae2_e6bfe0a2",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/AES.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2015-04-03T16:37:09Z",
+      "side": 1,
+      "message": "Needs // BEGIN android-removed",
+      "range": {
+        "startLine": 717,
+        "startChar": 12,
+        "endLine": 717,
+        "endChar": 14
+      },
+      "revId": "5b70151a566316256f9d093a902a1be198bd458b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3c55625_b4d3a8fd",
         "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/AES.java",
         "patchSetId": 1
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "I think my libcore ProviderTest should catch this as well?",
       "parentUuid": "c3c55625_b4d3a8fd",
+      "range": {
+        "startLine": 730,
+        "startChar": 12,
+        "endLine": 733,
+        "endChar": 121
+      },
+      "revId": "5b70151a566316256f9d093a902a1be198bd458b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63f74ae2_a6c9e859",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/AES.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2015-04-03T16:37:09Z",
+      "side": 1,
+      "message": "Yes, this block also needs // END android-removed",
+      "parentUuid": "43d246e8_16b740c7",
       "range": {
         "startLine": 730,
         "startChar": 12,
