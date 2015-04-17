@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f03ce2f3_5fbeabc5",
+        "filename": "Blueprints",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2015-04-17T23:17:31Z",
+      "side": 1,
+      "message": "This is currently handled in soong, for glob exclusions and for replacing source files in specific architectures.  This syntax can\u0027t be entirely handled in Blueprint, because Blueprint doesn\u0027t know what is a list of source files where this syntax makes sense, and what is a list of cflags where this syntax would be disastrous.\n\nSupporting the - operator for lists is certainly possible (I added support for the + operator not that long ago), if we can figure out a syntax and behavior that makes sense.  In particular, I\u0027m worried about how to deal with per-arch overriden source files like bionic/Blueprints uses, where a property might contain only a list of sources to remove with nothing to explicitly subtract it from.  For example:\n\ncc_library{\n  srcs: [\"a.c\", \"b.c\"],\n  arch: {\n    arm: {\n      srcs: -[\"b.c\"],\n    },\n  },\n}\n\nThe negative list in arch.arm.srcs would be hard to support cleanly.",
+      "parentUuid": "d0c51e25_3a4eb61c",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 6
+      },
+      "revId": "c6d7c05d76ff3072a418c21f18d3c2a17fc8385d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b782b3_cd257dd9",
         "filename": "Blueprints",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2015-04-17T22:51:46Z",
       "side": 1,
       "message": "why do we have this?",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "c6d7c05d76ff3072a418c21f18d3c2a17fc8385d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b03eeaea_5da4fb84",
+        "filename": "Blueprints",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2015-04-17T23:17:31Z",
+      "side": 1,
+      "message": "This comes from the hostdex library in Android.mk, as far as I can tell it is present on all hostdex libraries.  I was going to look into it, and if it really is all hostdex libraries just delete it from here an put it in the build logic.",
+      "parentUuid": "f0b782b3_cd257dd9",
       "range": {
         "startLine": 44,
         "startChar": 7,
