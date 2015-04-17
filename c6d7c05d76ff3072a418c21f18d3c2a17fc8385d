@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d0c51e25_9f955918",
+        "filename": "Blueprints",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003981
+      },
+      "writtenOn": "2015-04-17T23:38:49Z",
+      "side": 1,
+      "message": "in that case it may be better to have a separate property \"srcs-excludes\".",
+      "parentUuid": "f03ce2f3_5fbeabc5",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 6
+      },
+      "revId": "c6d7c05d76ff3072a418c21f18d3c2a17fc8385d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b782b3_cd257dd9",
         "filename": "Blueprints",
         "patchSetId": 1
