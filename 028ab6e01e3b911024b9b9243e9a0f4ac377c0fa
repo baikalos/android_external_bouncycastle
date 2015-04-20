@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d06c3e17_4bea65a6",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/EC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2015-04-20T15:26:03Z",
+      "side": 1,
+      "message": "Please report this bug upstream at http://www.bouncycastle.org/jira/secure/Dashboard.jspa (along with the one below).",
+      "range": {
+        "startLine": 40,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 98
+      },
+      "revId": "028ab6e01e3b911024b9b9243e9a0f4ac377c0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f055c239_66e960ad",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertPathValidatorUtilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2015-04-20T15:26:03Z",
+      "side": 1,
+      "message": "Please report this upstream at http://www.bouncycastle.org/jira/secure/Dashboard.jspa",
+      "range": {
+        "startLine": 727,
+        "startChar": 0,
+        "endLine": 728,
+        "endChar": 64
+      },
+      "revId": "028ab6e01e3b911024b9b9243e9a0f4ac377c0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d06c3e17_ebbd31a5",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertPathValidatorUtilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2015-04-20T15:26:03Z",
+      "side": 1,
+      "message": "Please report this bug upstream at http://www.bouncycastle.org/jira/secure/Dashboard.jspa",
+      "range": {
+        "startLine": 907,
+        "startChar": 12,
+        "endLine": 910,
+        "endChar": 72
+      },
+      "revId": "028ab6e01e3b911024b9b9243e9a0f4ac377c0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
