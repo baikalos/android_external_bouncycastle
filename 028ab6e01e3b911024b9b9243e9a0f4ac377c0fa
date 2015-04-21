@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "102176e2_0be52123",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/EC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2015-04-21T15:19:27Z",
+      "side": 1,
+      "message": "Unless we want to risk being ridiculed I think we should try this one in an unpatched version, isn\u0027t it? It might take me some time to do it so I filed a bug for me to try and see what happens.",
+      "parentUuid": "d06c3e17_4bea65a6",
+      "range": {
+        "startLine": 40,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 98
+      },
+      "revId": "028ab6e01e3b911024b9b9243e9a0f4ac377c0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f055c239_66e960ad",
         "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertPathValidatorUtilities.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "102176e2_2b32a522",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertPathValidatorUtilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2015-04-21T15:19:27Z",
+      "side": 1,
+      "message": "Done:\nhttp://www.bouncycastle.org/jira/browse/BJA-537",
+      "parentUuid": "f055c239_66e960ad",
+      "range": {
+        "startLine": 727,
+        "startChar": 0,
+        "endLine": 728,
+        "endChar": 64
+      },
+      "revId": "028ab6e01e3b911024b9b9243e9a0f4ac377c0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d06c3e17_ebbd31a5",
         "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertPathValidatorUtilities.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2015-04-20T15:26:03Z",
       "side": 1,
       "message": "Please report this bug upstream at http://www.bouncycastle.org/jira/secure/Dashboard.jspa",
+      "range": {
+        "startLine": 907,
+        "startChar": 12,
+        "endLine": 910,
+        "endChar": 72
+      },
+      "revId": "028ab6e01e3b911024b9b9243e9a0f4ac377c0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0f19ea3_71b932dc",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertPathValidatorUtilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2015-04-21T15:19:27Z",
+      "side": 1,
+      "message": "Done:\nhttp://www.bouncycastle.org/jira/browse/BJA-538",
+      "parentUuid": "d06c3e17_ebbd31a5",
       "range": {
         "startLine": 907,
         "startChar": 12,
