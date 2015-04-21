@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "302afabf_b22281cd",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/EC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2015-04-21T15:20:52Z",
+      "side": 1,
+      "message": "That\u0027s prudent. I took a look briefly myself and couldn\u0027t find it.",
+      "parentUuid": "102176e2_0be52123",
+      "range": {
+        "startLine": 40,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 98
+      },
+      "revId": "028ab6e01e3b911024b9b9243e9a0f4ac377c0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f055c239_66e960ad",
         "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertPathValidatorUtilities.java",
         "patchSetId": 4
