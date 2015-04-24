@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90972654_e0b28ac3",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXCertPathValidatorSpi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2015-04-24T16:41:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10a416b9_6c62ff87",
+      "range": {
+        "startLine": 84,
+        "startChar": 17,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "fd73ee581f99a75994646e84a6a75fb69f5c29be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0d43e30_22770304",
         "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXCertPathValidatorSpi.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2015-04-24T16:17:01Z",
       "side": 1,
       "message": "Looks like this got reformatted on accident.",
+      "range": {
+        "startLine": 91,
+        "startChar": 49,
+        "endLine": 91,
+        "endChar": 57
+      },
+      "revId": "fd73ee581f99a75994646e84a6a75fb69f5c29be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b088aa37_21ead6a5",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXCertPathValidatorSpi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2015-04-24T16:41:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0d43e30_22770304",
       "range": {
         "startLine": 91,
         "startChar": 49,
