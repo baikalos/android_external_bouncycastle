@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b97b38ac_35ec903f",
+        "filename": "patches/bcprov.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 1805,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-06-01T23:28:59Z",
+      "side": 1,
+      "message": "nit: unneeded",
+      "range": {
+        "startLine": 1805,
+        "startChar": 102,
+        "endLine": 1805,
+        "endChar": 104
+      },
+      "revId": "6917f1fd1dea57dd272bf55857ecab4962ec2fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
