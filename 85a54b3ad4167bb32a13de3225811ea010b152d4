@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58888336_6dba15f4",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXNameConstraintValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1031048
+      },
+      "writtenOn": "2015-09-28T23:34:39Z",
+      "side": 1,
+      "message": "[I like how this loop and the one at 1037 use different constructs for the same thing. I\u0027m assuming you\u0027re trying to minimize the diff?]",
+      "revId": "85a54b3ad4167bb32a13de3225811ea010b152d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "788d4744_8ebe5be4",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXNameConstraintValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1031048
+      },
+      "writtenOn": "2015-09-28T23:34:39Z",
+      "side": 1,
+      "message": "I don\u0027t think this quite does the right thing when dots are involved.\n\nAs I understand, this code currently interprets .example.com as matching foo.example.com but not example.com, while it interprets example.com as matching foo.example.com AND example.com. (Whether that\u0027s the right interpretation, I\u0027ll defer to Ryan.)\n\nPresuming that interpretation is correct, that would mean you\u0027d need .example.com intersect example.com to be .example.com, and I\u0027m not sure this code does that.\n\n(If that interpretation is not correct, then this code needs even more work.)",
+      "range": {
+        "startLine": 1056,
+        "startChar": 43,
+        "endLine": 1056,
+        "endChar": 59
+      },
+      "revId": "85a54b3ad4167bb32a13de3225811ea010b152d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98a67bc2_6fba11f4",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXNameConstraintValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1031048
+      },
+      "writtenOn": "2015-09-28T23:34:39Z",
+      "side": 1,
+      "message": "If dns is null, then 1060 and 1064 also don\u0027t work. If it\u0027s possible for extractNameAsString to return null, I think you want to just do:\n\n  if (dns \u003d\u003d null) {\n    continue;\n  }\n\npretty early on. (Is it possible to return null? One would think that would be exception-worthy... at a glance, it can\u0027t unless GeneralName.getName returns null, but I\u0027m not sure.)",
+      "range": {
+        "startLine": 1056,
+        "startChar": 24,
+        "endLine": 1056,
+        "endChar": 35
+      },
+      "revId": "85a54b3ad4167bb32a13de3225811ea010b152d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
