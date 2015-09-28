@@ -62,6 +62,30 @@
       "revId": "85a54b3ad4167bb32a13de3225811ea010b152d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee616dea_fd13618e",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXNameConstraintValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-09-28T23:39:37Z",
+      "side": 1,
+      "message": "My cursory reading of RFC 5820 (4.2.1.10.  Name Constraints) tells me .example.com is not a supported DNS name constraint. Unfortunately, withinDomain supports names starting with a dot.",
+      "parentUuid": "788d4744_8ebe5be4",
+      "range": {
+        "startLine": 1056,
+        "startChar": 43,
+        "endLine": 1056,
+        "endChar": 59
+      },
+      "revId": "85a54b3ad4167bb32a13de3225811ea010b152d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
