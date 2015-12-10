@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "855c6237_fb7db7c2",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXNameConstraintValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2015-12-10T17:13:34Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "58888336_6dba15f4",
+      "revId": "85a54b3ad4167bb32a13de3225811ea010b152d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "788d4744_8ebe5be4",
         "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXNameConstraintValidator.java",
         "patchSetId": 1
@@ -76,6 +94,54 @@
       "writtenOn": "2015-09-28T23:39:37Z",
       "side": 1,
       "message": "My cursory reading of RFC 5820 (4.2.1.10.  Name Constraints) tells me .example.com is not a supported DNS name constraint. Unfortunately, withinDomain supports names starting with a dot.",
+      "parentUuid": "788d4744_8ebe5be4",
+      "range": {
+        "startLine": 1056,
+        "startChar": 43,
+        "endLine": 1056,
+        "endChar": 59
+      },
+      "revId": "85a54b3ad4167bb32a13de3225811ea010b152d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65984e34_926c8cb4",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXNameConstraintValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2015-12-10T17:13:34Z",
+      "side": 1,
+      "message": "It can\u0027t return null after examination.",
+      "parentUuid": "98a67bc2_6fba11f4",
+      "range": {
+        "startLine": 1056,
+        "startChar": 24,
+        "endLine": 1056,
+        "endChar": 35
+      },
+      "revId": "85a54b3ad4167bb32a13de3225811ea010b152d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "254d7687_9352265b",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXNameConstraintValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2015-12-10T17:13:34Z",
+      "side": 1,
+      "message": "This is kind of tricky since RFC 5280 doesn\u0027t allow dots at the beginning as Alex mentions. I\u0027m not sure what should be done currently. However, the instance that caused this change, the person had BOTH \".foo.example.com\" and \"foo.example.com\" for each subdomain in the permitted subtrees list.",
       "parentUuid": "788d4744_8ebe5be4",
       "range": {
         "startLine": 1056,
