@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b15ff0f8_3ee35136",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/operator/DefaultDigestAlgorithmIdentifierFinder.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2016-02-08T17:33:08Z",
+      "side": 0,
+      "message": "These are different than the ones listed on lines 68-72.",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 72
+      },
+      "revId": "05830964491a652cd101ce687830e8d805bd198e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7179f872_dc28a574",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/BouncyCastleProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2016-02-08T17:33:08Z",
+      "side": 0,
+      "message": "I wonder why we leave in RC2. That should probably be removed.",
+      "range": {
+        "startLine": 82,
+        "startChar": 51,
+        "endLine": 82,
+        "endChar": 57
+      },
+      "revId": "05830964491a652cd101ce687830e8d805bd198e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9162ecbe_1dbbf32b",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertPathValidatorUtilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2016-02-08T17:33:08Z",
+      "side": 0,
+      "message": "Is this here twice in the upstream code or is gerrit presenting this strangely?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 46
+      },
+      "revId": "05830964491a652cd101ce687830e8d805bd198e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
