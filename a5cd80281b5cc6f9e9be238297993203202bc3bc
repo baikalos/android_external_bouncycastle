@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bdb504dc_9a214d88",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/x9/ECNamedCurveTable.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2016-02-09T19:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "518b14a3_46cf68db",
+      "range": {
+        "startLine": 123,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 32
+      },
+      "revId": "a5cd80281b5cc6f9e9be238297993203202bc3bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91890cab_a5390ab0",
         "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/rsa/KeyPairGeneratorSpi.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2016-02-08T17:33:08Z",
       "side": 1,
       "message": "might want to put this on the next line.",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "a5cd80281b5cc6f9e9be238297993203202bc3bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ddb703a_7df63743",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/rsa/KeyPairGeneratorSpi.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2016-02-09T19:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91890cab_a5390ab0",
       "range": {
         "startLine": 48,
         "startChar": 12,
