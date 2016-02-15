@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdb504dc_601e86f9",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-02-15T10:12:13Z",
+      "side": 1,
+      "message": "inconsistent naming. Should be all_bcosp_src_files",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "447ccfebf0db0abd0c36cf41518be1ba29380dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5da5e8c5_08e54bf5",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-02-15T10:12:13Z",
+      "side": 1,
+      "message": "This is no longer necessary - you shouldn\u0027t be introducing for new rules (and should be actively removing it from old rules)",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 61
+      },
+      "revId": "447ccfebf0db0abd0c36cf41518be1ba29380dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
