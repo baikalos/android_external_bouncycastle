@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "421d051a_df8877e1",
+        "filename": "Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-03-03T21:46:42Z",
+      "side": 1,
+      "message": "all these LOCAL_ADDITIONAL_DEPENDENCIES are unnecessary.",
+      "revId": "0a68cf31d9bbb34e219c64e15148558e9fc0794d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
