@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "421d051a_3f3c0bc7",
+        "filename": "Android.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1023201
+      },
+      "writtenOn": "2016-03-04T14:24:00Z",
+      "side": 1,
+      "message": "Maybe comment that this is a workaround for http://b/27491842\n\nYou can only decide that it\u0027s always a good thing to give the full classpath to the compiler.",
+      "revId": "919a66f4813d5ccd1d9587b17808a06533bde6bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
