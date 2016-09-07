@@ -615,35 +615,55 @@ public class X509CertificateObject
             return false;
         }
     }
-    
+
+    // BEGIN ANDROID-CHANGED: taken from
+    // org/bouncycastle/jcajce/provider/asymmetric/x509/X509CertificateObject.java
+    // Original code below.
+    // TODO(31287348): check whether it makes sense to have these two X509CertificateObject
+    // classes that differ slightly.
+    // Note: the other X509CertificateObject class has an originalHashCode() that returns
+    // the hash pre-Java 8 in case it's needed.
     public synchronized int hashCode()
     {
         if (!hashValueSet)
         {
-            hashValue = calculateHashCode();
+            hashValue = super.hashCode();
             hashValueSet = true;
         }
 
         return hashValue;
     }
-    
-    private int calculateHashCode()
-    {
-        try
-        {
-            int hashCode = 0;
-            byte[] certData = this.getEncoded();
-            for (int i = 1; i < certData.length; i++)
-            {
-                 hashCode += certData[i] * i;
-            }
-            return hashCode;
-        }
-        catch (CertificateEncodingException e)
-        {
-            return 0;
-        }
-    }
+
+    // ANDROID Original code:
+    // public synchronized int hashCode()
+    // {
+    //     if (!hashValueSet)
+    //     {
+    //         hashValue = calculateHashCode();
+    //         hashValueSet = true;
+    //     }
+    //
+    //     return hashValue;
+    // }
+    //
+    // private int calculateHashCode()
+    // {
+    //     try
+    //     {
+    //         int hashCode = 0;
+    //         byte[] certData = this.getEncoded();
+    //         for (int i = 1; i < certData.length; i++)
+    //         {
+    //              hashCode += certData[i] * i;
+    //         }
+    //         return hashCode;
+    //     }
+    //     catch (CertificateEncodingException e)
+    //     {
+    //         return 0;
+    //     }
+    // }
+    // END ANDROID-CHANGED
 
     public void setBagAttribute(
         ASN1ObjectIdentifier oid,
