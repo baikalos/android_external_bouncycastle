@@ -22,6 +22,30 @@
       "revId": "c4d4dde339002a8d7b37ddacb4a2f1805af70734",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab2dde95_6b8fc1de",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/X509CertificateObject.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2016-09-08T10:04:03Z",
+      "side": 1,
+      "message": "I thought it was useful to have it at hand in case another issue with hashes occur (and it was in the other BC class from where I took it, so it came for free). I can delete it if you\u0027re strong for it.",
+      "parentUuid": "ab2dde95_cbf4754f",
+      "range": {
+        "startLine": 639,
+        "startChar": 15,
+        "endLine": 639,
+        "endChar": 33
+      },
+      "revId": "c4d4dde339002a8d7b37ddacb4a2f1805af70734",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
