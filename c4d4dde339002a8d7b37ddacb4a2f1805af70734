@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab2dde95_cbf4754f",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/X509CertificateObject.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-09-08T10:00:45Z",
+      "side": 1,
+      "message": "what is this for ?",
+      "range": {
+        "startLine": 639,
+        "startChar": 15,
+        "endLine": 639,
+        "endChar": 33
+      },
+      "revId": "c4d4dde339002a8d7b37ddacb4a2f1805af70734",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
