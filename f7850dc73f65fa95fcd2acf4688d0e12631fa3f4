@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb74360d_4557eac8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-09-12T08:50:45Z",
+      "side": 1,
+      "message": "Because this is a tricky area it may be worth being more explicit generally because it\u0027s not obvious what\u0027s going. Particularly without access to buganizer.\n\nPerhaps state that X happened, leading to Y, which is bad. This commit changes Z so that A, thereby fixing Y.\n\nY, I believe is TrustedCertificateStoreTest.\u003csome test\u003e failed (and/or the thing it is testing for).\n\nX, I believe is something to do with the OpenJDK 8 pull.\nZ, is switching to using jcajce.provider.asymmetric.x509.X509CertificateObject, but may be there\u0027s more detail you can provide about how this helps. Good place to document your research.\nA is TrustedCertificateStoreTest.\u003csome test\u003e passes, and (I assume) behavior returns to behavior as it was in N.",
+      "range": {
+        "startLine": 14,
+        "startChar": 28,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "f7850dc73f65fa95fcd2acf4688d0e12631fa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb74360d_c5c75a8d",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509V3CertificateGenerator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-09-12T08:50:45Z",
+      "side": 1,
+      "message": "Can you be a little more explicit for clarity:\n\n// See the definition of the jcaJceHelper file below for details.\n\n[Took me a while to work out you were talking about the field, not the class (I initially assumed it was a typo of the JcaJceHelper class).]",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "f7850dc73f65fa95fcd2acf4688d0e12631fa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb74360d_054df23c",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509V3CertificateGenerator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-09-12T08:50:45Z",
+      "side": 1,
+      "message": "additional\n\nProbably because I have no idea about crypto, but the comment didn\u0027t enlighten me as to why this might be useful.\n\nThis may be junk, but something like this, perhaps:\n\n// Use org.bouncycastle.jcajce.provider.asymmetric.x509.X509CertificateObject\n// instead of org.bouncycastle.jce.provider.X509CertificateObject.\n// The constructor of o.b.jcajce.provider.asymmetric.x509.X509CertificateObject takes a JcaJceHelper as a parameter, which ensures that the hashcode is consistent with .....",
+      "range": {
+        "startLine": 59,
+        "startChar": 51,
+        "endLine": 59,
+        "endChar": 60
+      },
+      "revId": "f7850dc73f65fa95fcd2acf4688d0e12631fa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb74360d_2552eed9",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509V3CertificateGenerator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-09-12T08:50:45Z",
+      "side": 1,
+      "message": "the jcaJceHelper field for details.",
+      "range": {
+        "startLine": 531,
+        "startChar": 14,
+        "endLine": 531,
+        "endChar": 26
+      },
+      "revId": "f7850dc73f65fa95fcd2acf4688d0e12631fa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
