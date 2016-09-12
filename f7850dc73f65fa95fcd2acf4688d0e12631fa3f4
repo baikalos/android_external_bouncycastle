@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb6db244_84180680",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2016-09-12T18:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb74360d_4557eac8",
+      "range": {
+        "startLine": 14,
+        "startChar": 28,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "f7850dc73f65fa95fcd2acf4688d0e12631fa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb74360d_c5c75a8d",
         "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509V3CertificateGenerator.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-12T08:50:45Z",
       "side": 1,
       "message": "Can you be a little more explicit for clarity:\n\n// See the definition of the jcaJceHelper file below for details.\n\n[Took me a while to work out you were talking about the field, not the class (I initially assumed it was a typo of the JcaJceHelper class).]",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "f7850dc73f65fa95fcd2acf4688d0e12631fa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bad0ab1_9e2abd85",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509V3CertificateGenerator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2016-09-12T18:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb74360d_c5c75a8d",
       "range": {
         "startLine": 38,
         "startChar": 21,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eb74360d_08a18703",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509V3CertificateGenerator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2016-09-12T18:50:33Z",
+      "side": 1,
+      "message": "I didn\u0027t intend to give a full explanation of how BC works, just to indicate that the addition of this field is required for that change.",
+      "parentUuid": "eb74360d_054df23c",
+      "range": {
+        "startLine": 59,
+        "startChar": 51,
+        "endLine": 59,
+        "endChar": 60
+      },
+      "revId": "f7850dc73f65fa95fcd2acf4688d0e12631fa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb74360d_2552eed9",
         "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509V3CertificateGenerator.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2016-09-12T08:50:45Z",
       "side": 1,
       "message": "the jcaJceHelper field for details.",
+      "range": {
+        "startLine": 531,
+        "startChar": 14,
+        "endLine": 531,
+        "endChar": 26
+      },
+      "revId": "f7850dc73f65fa95fcd2acf4688d0e12631fa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb74360d_28a6431c",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509V3CertificateGenerator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2016-09-12T18:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb74360d_2552eed9",
       "range": {
         "startLine": 531,
         "startChar": 14,
