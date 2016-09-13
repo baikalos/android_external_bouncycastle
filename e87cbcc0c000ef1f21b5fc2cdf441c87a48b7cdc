@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ba48eca_e24ec8bf",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509V3CertificateGenerator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-09-13T08:57:45Z",
+      "side": 1,
+      "message": "why are you setting here as well as in the no arg constructor ? Also, given that this is android change, can it be final ?",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 61
+      },
+      "revId": "e87cbcc0c000ef1f21b5fc2cdf441c87a48b7cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
