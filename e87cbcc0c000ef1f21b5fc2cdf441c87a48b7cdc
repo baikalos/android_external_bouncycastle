@@ -22,6 +22,30 @@
       "revId": "e87cbcc0c000ef1f21b5fc2cdf441c87a48b7cdc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b99fa95_62107605",
+        "filename": "bcprov/src/main/java/org/bouncycastle/x509/X509V3CertificateGenerator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2016-09-13T11:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ba48eca_e24ec8bf",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 61
+      },
+      "revId": "e87cbcc0c000ef1f21b5fc2cdf441c87a48b7cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
