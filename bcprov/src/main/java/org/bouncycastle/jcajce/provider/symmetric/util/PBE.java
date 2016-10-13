@@ -4,6 +4,9 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.spec.AlgorithmParameterSpec;
 
 import javax.crypto.SecretKey;
+// BEGIN android-added
+import javax.crypto.spec.IvParameterSpec;
+// END android-added
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
@@ -243,6 +246,18 @@ public interface PBE
             if (ivSize != 0)
             {
                 param = generator.generateDerivedParameters(keySize, ivSize);
+                // BEGIN ANDROID-ADDED
+                // PKCS5S2 doesn't specify that the IV must be generated from the password. If the
+                // IV is passed as a parameter, use it.
+                if ((scheme == PKCS5S2 || scheme == PKCS5S2_UTF8)
+                        && pbeParam.getParameterSpec() instanceof IvParameterSpec) {
+                    ParametersWithIV parametersWithIV = (ParametersWithIV) param;
+                    IvParameterSpec ivParameterSpec = (IvParameterSpec) pbeParam.getParameterSpec();
+                    param = new ParametersWithIV(
+                            (KeyParameter) parametersWithIV.getParameters(),
+                            ivParameterSpec.getIV());
+                }
+                // END ANDROID-ADDED
             }
             else
             {
@@ -302,6 +317,18 @@ public interface PBE
             if (pbeKey.getIvSize() != 0)
             {
                 param = generator.generateDerivedParameters(pbeKey.getKeySize(), pbeKey.getIvSize());
+                // BEGIN ANDROID-ADDED
+                // PKCS5S2 doesn't specify that the IV must be generated from the password. If the
+                // IV is passed as a parameter, use it.
+                if ((pbeKey.getType() == PKCS5S2 || pbeKey.getType() == PKCS5S2_UTF8)
+                        && pbeParam.getParameterSpec() instanceof IvParameterSpec) {
+                    ParametersWithIV parametersWithIV = (ParametersWithIV) param;
+                    IvParameterSpec ivParameterSpec = (IvParameterSpec) pbeParam.getParameterSpec();
+                    param = new ParametersWithIV(
+                            (KeyParameter) parametersWithIV.getParameters(),
+                            ivParameterSpec.getIV());
+                }
+                // END ANDROID-ADDED
             }
             else
             {
