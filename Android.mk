@@ -69,7 +69,7 @@ ifneq ($(TARGET_BUILD_PDK),true)
     include $(CLEAR_VARS)
     LOCAL_MODULE := bouncycastle-unbundled
     LOCAL_MODULE_TAGS := optional
-    LOCAL_SDK_VERSION := 9
+    LOCAL_SDK_VERSION := 9 #current
     LOCAL_SRC_FILES := $(ri_bcprov_src_files)
     include $(BUILD_STATIC_JAVA_LIBRARY)
 
