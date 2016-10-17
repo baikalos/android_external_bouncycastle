@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cdd769f_6c055322",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/PBES2AlgorithmParameters.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2016-10-17T15:30:21Z",
+      "side": 1,
+      "message": "Wrong name",
+      "range": {
+        "startLine": 196,
+        "startChar": 21,
+        "endLine": 196,
+        "endChar": 31
+      },
+      "revId": "9e9f3f131b67bd2c8045e652e29a798357ae8cc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cdd769f_ec09433b",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/PBES2AlgorithmParameters.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2016-10-17T15:30:21Z",
+      "side": 1,
+      "message": "Wrong name",
+      "range": {
+        "startLine": 251,
+        "startChar": 21,
+        "endLine": 251,
+        "endChar": 31
+      },
+      "revId": "9e9f3f131b67bd2c8045e652e29a798357ae8cc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
