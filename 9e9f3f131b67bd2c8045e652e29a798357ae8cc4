@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7cdd769f_2ca19bf5",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/PBES2AlgorithmParameters.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2016-10-17T16:41:57Z",
+      "side": 1,
+      "message": "As discussed, it\u0027s not in BouncyCastle style to have license headers in every file.",
+      "parentUuid": "7cdd769f_4c1b2f7c",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 64
+      },
+      "revId": "9e9f3f131b67bd2c8045e652e29a798357ae8cc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cdd769f_6c055322",
         "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/PBES2AlgorithmParameters.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7cdd769f_0c9e57b5",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/PBES2AlgorithmParameters.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2016-10-17T16:41:57Z",
+      "side": 1,
+      "message": "Changed and added test to catch this.",
+      "parentUuid": "7cdd769f_6c055322",
+      "range": {
+        "startLine": 196,
+        "startChar": 21,
+        "endLine": 196,
+        "endChar": 31
+      },
+      "revId": "9e9f3f131b67bd2c8045e652e29a798357ae8cc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cdd769f_ec09433b",
         "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/PBES2AlgorithmParameters.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2016-10-17T15:30:21Z",
       "side": 1,
       "message": "Wrong name",
+      "range": {
+        "startLine": 251,
+        "startChar": 21,
+        "endLine": 251,
+        "endChar": 31
+      },
+      "revId": "9e9f3f131b67bd2c8045e652e29a798357ae8cc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cdd769f_8cfa47d0",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/PBES2AlgorithmParameters.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2016-10-17T16:41:57Z",
+      "side": 1,
+      "message": "Ditto",
+      "parentUuid": "7cdd769f_ec09433b",
       "range": {
         "startLine": 251,
         "startChar": 21,
