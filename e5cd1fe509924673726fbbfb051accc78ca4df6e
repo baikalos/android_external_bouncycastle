@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fca887f5_8cfc0705",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/PBE.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2016-10-20T13:15:49Z",
+      "side": 1,
+      "message": "This should probably use reflection so upstream will be able to use it.\n\nSee the example presented by reflective access of GCMParameterSpec here: https://android.googlesource.com/platform/external/bouncycastle/+/master/bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java#804",
+      "range": {
+        "startLine": 253,
+        "startChar": 36,
+        "endLine": 253,
+        "endChar": 52
+      },
+      "revId": "e5cd1fe509924673726fbbfb051accc78ca4df6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
