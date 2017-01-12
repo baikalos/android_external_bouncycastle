@@ -16,24 +16,31 @@ import org.bouncycastle.asn1.ASN1Null;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.DERNull;
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
 // BEGIN android-removed
 // import org.bouncycastle.asn1.cryptopro.CryptoProObjectIdentifiers;
 // END android-removed
 import org.bouncycastle.asn1.nist.NISTObjectIdentifiers;
 import org.bouncycastle.asn1.oiw.OIWObjectIdentifiers;
+=======
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.RSASSAPSSparams;
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
 // BEGIN android-removed
 // import org.bouncycastle.asn1.teletrust.TeleTrusTObjectIdentifiers;
 // END android-removed
+=======
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
+import org.bouncycastle.jcajce.util.MessageDigestUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 class X509SignatureUtil
 {
     private static final ASN1Null       derNull = DERNull.INSTANCE;
-    
+
     static void setSignatureParameters(
         Signature signature,
         ASN1Encodable params)
@@ -123,10 +130,14 @@ class X509SignatureUtil
     private static String getDigestAlgName(
         ASN1ObjectIdentifier digestAlgOID)
     {
-        if (PKCSObjectIdentifiers.md5.equals(digestAlgOID))
+        String name = MessageDigestUtils.getDigestName(digestAlgOID);
+
+        int dIndex = name.indexOf('-');
+        if (dIndex > 0 && !name.startsWith("SHA3"))
         {
-            return "MD5";
+            return name.substring(0, dIndex) + name.substring(dIndex + 1);
         }
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
         else if (OIWObjectIdentifiers.idSHA1.equals(digestAlgOID))
         {
             return "SHA1";
@@ -169,5 +180,9 @@ class X509SignatureUtil
         {
             return digestAlgOID.getId();            
         }
+=======
+
+        return MessageDigestUtils.getDigestName(digestAlgOID);
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 }
