@@ -22,6 +22,7 @@ public class DefaultCMSSignatureEncryptionAlgorithmFinder
         // END android-removed
         RSA_PKCS1d5.add(PKCSObjectIdentifiers.md5WithRSAEncryption);
         RSA_PKCS1d5.add(PKCSObjectIdentifiers.sha1WithRSAEncryption);
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
         RSA_PKCS1d5.add(PKCSObjectIdentifiers.sha224WithRSAEncryption);
         RSA_PKCS1d5.add(PKCSObjectIdentifiers.sha256WithRSAEncryption);
         RSA_PKCS1d5.add(PKCSObjectIdentifiers.sha384WithRSAEncryption);
@@ -30,6 +31,10 @@ public class DefaultCMSSignatureEncryptionAlgorithmFinder
         // RSA_PKCS1d5.add(OIWObjectIdentifiers.md4WithRSAEncryption);
         // RSA_PKCS1d5.add(OIWObjectIdentifiers.md4WithRSA);
         // END android-removed
+=======
+        RSA_PKCS1d5.add(OIWObjectIdentifiers.md4WithRSAEncryption);
+        RSA_PKCS1d5.add(OIWObjectIdentifiers.md4WithRSA);
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
         RSA_PKCS1d5.add(OIWObjectIdentifiers.md5WithRSA);
         RSA_PKCS1d5.add(OIWObjectIdentifiers.sha1WithRSA);
         // BEGIN android-removed
@@ -41,7 +46,7 @@ public class DefaultCMSSignatureEncryptionAlgorithmFinder
 
     public AlgorithmIdentifier findEncryptionAlgorithm(AlgorithmIdentifier signatureAlgorithm)
     {
-               // RFC3370 section 3.2
+               // RFC3370 section 3.2 with RFC 5754 update
         if (RSA_PKCS1d5.contains(signatureAlgorithm.getAlgorithm()))
         {
             return new AlgorithmIdentifier(PKCSObjectIdentifiers.rsaEncryption, DERNull.INSTANCE);

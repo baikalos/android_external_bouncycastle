@@ -25,6 +25,7 @@ import org.bouncycastle.asn1.x509.DigestInfo;
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.Digest;
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
 // BEGIN android-added
 import org.bouncycastle.crypto.digests.AndroidDigestFactory;
 // END android-added
@@ -43,8 +44,17 @@ import org.bouncycastle.crypto.digests.AndroidDigestFactory;
 // import org.bouncycastle.crypto.digests.SHA512Digest;
 // import org.bouncycastle.crypto.digests.SHA512tDigest;
 // END android-removed
+=======
+import org.bouncycastle.crypto.digests.MD2Digest;
+import org.bouncycastle.crypto.digests.MD4Digest;
+import org.bouncycastle.crypto.digests.NullDigest;
+import org.bouncycastle.crypto.digests.RIPEMD128Digest;
+import org.bouncycastle.crypto.digests.RIPEMD160Digest;
+import org.bouncycastle.crypto.digests.RIPEMD256Digest;
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.crypto.encodings.PKCS1Encoding;
 import org.bouncycastle.crypto.engines.RSABlindedEngine;
+import org.bouncycastle.crypto.util.DigestFactory;
 import org.bouncycastle.util.Arrays;
 
 public class DigestSignatureSpi
@@ -262,9 +272,13 @@ public class DigestSignatureSpi
     {
         public SHA1()
         {
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
             // BEGIN android-changed
             super(OIWObjectIdentifiers.idSHA1, AndroidDigestFactory.getSHA1(), new PKCS1Encoding(new RSABlindedEngine()));
             // END android-changed
+=======
+            super(OIWObjectIdentifiers.idSHA1, DigestFactory.createSHA1(), new PKCS1Encoding(new RSABlindedEngine()));
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
         }
     }
 
@@ -273,9 +287,13 @@ public class DigestSignatureSpi
     {
         public SHA224()
         {
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
             // BEGIN android-changed
             super(NISTObjectIdentifiers.id_sha224, AndroidDigestFactory.getSHA224(), new PKCS1Encoding(new RSABlindedEngine()));
             // END android-changed
+=======
+            super(NISTObjectIdentifiers.id_sha224, DigestFactory.createSHA224(), new PKCS1Encoding(new RSABlindedEngine()));
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
         }
     }
 
@@ -284,9 +302,13 @@ public class DigestSignatureSpi
     {
         public SHA256()
         {
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
             // BEGIN android-changed
             super(NISTObjectIdentifiers.id_sha256, AndroidDigestFactory.getSHA256(), new PKCS1Encoding(new RSABlindedEngine()));
             // END android-changed
+=======
+            super(NISTObjectIdentifiers.id_sha256, DigestFactory.createSHA256(), new PKCS1Encoding(new RSABlindedEngine()));
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
         }
     }
 
@@ -295,9 +317,13 @@ public class DigestSignatureSpi
     {
         public SHA384()
         {
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
             // BEGIN android-changed
             super(NISTObjectIdentifiers.id_sha384, AndroidDigestFactory.getSHA384(), new PKCS1Encoding(new RSABlindedEngine()));
             // END android-changed
+=======
+            super(NISTObjectIdentifiers.id_sha384, DigestFactory.createSHA384(), new PKCS1Encoding(new RSABlindedEngine()));
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
         }
     }
 
@@ -306,12 +332,17 @@ public class DigestSignatureSpi
     {
         public SHA512()
         {
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
             // BEGIN android-changed
             super(NISTObjectIdentifiers.id_sha512, AndroidDigestFactory.getSHA512(), new PKCS1Encoding(new RSABlindedEngine()));
             // END android-changed
+=======
+            super(NISTObjectIdentifiers.id_sha512, DigestFactory.createSHA512(), new PKCS1Encoding(new RSABlindedEngine()));
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
         }
     }
 
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
     // BEGIN android-removed
     // static public class SHA512_224
     //     extends DigestSignatureSpi
@@ -321,7 +352,18 @@ public class DigestSignatureSpi
     //         super(NISTObjectIdentifiers.id_sha512_224, new SHA512tDigest(224), new PKCS1Encoding(new RSABlindedEngine()));
     //     }
     // }
+=======
+    static public class SHA512_224
+        extends DigestSignatureSpi
+    {
+        public SHA512_224()
+        {
+            super(NISTObjectIdentifiers.id_sha512_224, DigestFactory.createSHA512_224(), new PKCS1Encoding(new RSABlindedEngine()));
+        }
+    }
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
     // static public class SHA512_256
     //     extends DigestSignatureSpi
     // {
@@ -330,6 +372,52 @@ public class DigestSignatureSpi
     //         super(NISTObjectIdentifiers.id_sha512_256, new SHA512tDigest(256), new PKCS1Encoding(new RSABlindedEngine()));
     //     }
     // }
+=======
+    static public class SHA512_256
+        extends DigestSignatureSpi
+    {
+        public SHA512_256()
+        {
+            super(NISTObjectIdentifiers.id_sha512_256, DigestFactory.createSHA512_256(), new PKCS1Encoding(new RSABlindedEngine()));
+        }
+    }
+
+    static public class SHA3_224
+        extends DigestSignatureSpi
+    {
+        public SHA3_224()
+        {
+            super(NISTObjectIdentifiers.id_sha3_224, DigestFactory.createSHA3_224(), new PKCS1Encoding(new RSABlindedEngine()));
+        }
+    }
+
+    static public class SHA3_256
+        extends DigestSignatureSpi
+    {
+        public SHA3_256()
+        {
+            super(NISTObjectIdentifiers.id_sha3_256, DigestFactory.createSHA3_256(), new PKCS1Encoding(new RSABlindedEngine()));
+        }
+    }
+
+    static public class SHA3_384
+        extends DigestSignatureSpi
+    {
+        public SHA3_384()
+        {
+            super(NISTObjectIdentifiers.id_sha3_384, DigestFactory.createSHA3_384(), new PKCS1Encoding(new RSABlindedEngine()));
+        }
+    }
+
+    static public class SHA3_512
+        extends DigestSignatureSpi
+    {
+        public SHA3_512()
+        {
+            super(NISTObjectIdentifiers.id_sha3_512, DigestFactory.createSHA3_512(), new PKCS1Encoding(new RSABlindedEngine()));
+        }
+    }
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 
     // static public class MD2
     //     extends DigestSignatureSpi
@@ -355,9 +443,13 @@ public class DigestSignatureSpi
     {
         public MD5()
         {
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
             // BEGIN android-changed
             super(PKCSObjectIdentifiers.md5, AndroidDigestFactory.getMD5(), new PKCS1Encoding(new RSABlindedEngine()));
             // END android-changed
+=======
+            super(PKCSObjectIdentifiers.md5, DigestFactory.createMD5(), new PKCS1Encoding(new RSABlindedEngine()));
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
         }
     }
 
