@@ -3,11 +3,15 @@ package org.bouncycastle.crypto.generators;
 import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.PBEParametersGenerator;
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
 // BEGIN android-changed
 import org.bouncycastle.crypto.digests.AndroidDigestFactory;
 // END android-changed
+=======
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
+import org.bouncycastle.crypto.util.DigestFactory;
 
 /**
  * Generator for PBE derived keys and ivs as usd by OpenSSL.
@@ -19,9 +23,13 @@ import org.bouncycastle.crypto.params.ParametersWithIV;
 public class OpenSSLPBEParametersGenerator
     extends PBEParametersGenerator
 {
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
     // BEGIN android-changed
     private Digest  digest = AndroidDigestFactory.getMD5();
     // END android-changed
+=======
+    private Digest  digest = DigestFactory.createMD5();
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 
     /**
      * Construct a OpenSSL Parameters generator. 

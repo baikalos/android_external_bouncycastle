@@ -32,6 +32,7 @@ public class MessageDigestUtils
         digestOidMap.put(NISTObjectIdentifiers.id_sha256, "SHA-256");
         digestOidMap.put(NISTObjectIdentifiers.id_sha384, "SHA-384");
         digestOidMap.put(NISTObjectIdentifiers.id_sha512, "SHA-512");
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
         // BEGIN android-removed
         // digestOidMap.put(TeleTrusTObjectIdentifiers.ripemd128, "RIPEMD-128");
         // digestOidMap.put(TeleTrusTObjectIdentifiers.ripemd160, "RIPEMD-160");
@@ -42,6 +43,20 @@ public class MessageDigestUtils
         // digestOidMap.put(GNUObjectIdentifiers.Tiger_192, "Tiger");
         // digestOidMap.put(ISOIECObjectIdentifiers.whirlpool, "Whirlpool");
         // END android-removed
+=======
+        digestOidMap.put(TeleTrusTObjectIdentifiers.ripemd128, "RIPEMD-128");
+        digestOidMap.put(TeleTrusTObjectIdentifiers.ripemd160, "RIPEMD-160");
+        digestOidMap.put(TeleTrusTObjectIdentifiers.ripemd256, "RIPEMD-128");
+        digestOidMap.put(ISOIECObjectIdentifiers.ripemd128, "RIPEMD-128");
+        digestOidMap.put(ISOIECObjectIdentifiers.ripemd160, "RIPEMD-160");
+        digestOidMap.put(CryptoProObjectIdentifiers.gostR3411, "GOST3411");
+        digestOidMap.put(GNUObjectIdentifiers.Tiger_192, "Tiger");
+        digestOidMap.put(ISOIECObjectIdentifiers.whirlpool, "Whirlpool");
+        digestOidMap.put(NISTObjectIdentifiers.id_sha3_224, "SHA3-224");
+        digestOidMap.put(NISTObjectIdentifiers.id_sha3_256, "SHA3-256");
+        digestOidMap.put(NISTObjectIdentifiers.id_sha3_384, "SHA3-384");
+        digestOidMap.put(NISTObjectIdentifiers.id_sha3_512, "SHA3-512");
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     /**

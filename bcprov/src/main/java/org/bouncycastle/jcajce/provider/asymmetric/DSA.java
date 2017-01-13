@@ -43,6 +43,17 @@ public class DSA
             // provider.addAlgorithm("Signature.SHA512WITHDETDSA", PREFIX + "DSASigner$detDSA512");
             // END android-removed
 
+            provider.addAlgorithm("Signature.DDSA", PREFIX + "DSASigner$detDSA");
+            provider.addAlgorithm("Signature.SHA1WITHDDSA", PREFIX + "DSASigner$detDSA");
+            provider.addAlgorithm("Signature.SHA224WITHDDSA", PREFIX + "DSASigner$detDSA224");
+            provider.addAlgorithm("Signature.SHA256WITHDDSA", PREFIX + "DSASigner$detDSA256");
+            provider.addAlgorithm("Signature.SHA384WITHDDSA", PREFIX + "DSASigner$detDSA384");
+            provider.addAlgorithm("Signature.SHA512WITHDDSA", PREFIX + "DSASigner$detDSA512");
+            provider.addAlgorithm("Signature.SHA3-224WITHDDSA", PREFIX + "DSASigner$detDSASha3_224");
+            provider.addAlgorithm("Signature.SHA3-256WITHDDSA", PREFIX + "DSASigner$detDSASha3_256");
+            provider.addAlgorithm("Signature.SHA3-384WITHDDSA", PREFIX + "DSASigner$detDSASha3_384");
+            provider.addAlgorithm("Signature.SHA3-512WITHDDSA", PREFIX + "DSASigner$detDSASha3_512");
+
             addSignatureAlgorithm(provider, "SHA224", "DSA", PREFIX + "DSASigner$dsa224", NISTObjectIdentifiers.dsa_with_sha224);
             addSignatureAlgorithm(provider, "SHA256", "DSA", PREFIX + "DSASigner$dsa256", NISTObjectIdentifiers.dsa_with_sha256);
             // BEGIN android-removed
@@ -50,6 +61,7 @@ public class DSA
             // addSignatureAlgorithm(provider, "SHA512", "DSA", PREFIX + "DSASigner$dsa512", NISTObjectIdentifiers.dsa_with_sha512);
             // END android-removed
 
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
             // BEGIN android-added
             provider.addAlgorithm("Alg.Alias.Signature.DSA", "SHA1withDSA");
             // END android-added
@@ -64,6 +76,22 @@ public class DSA
             provider.addAlgorithm("Alg.Alias.Signature.SHA1WithDSA", "SHA1withDSA");
             provider.addAlgorithm("Alg.Alias.Signature.DSAWithSHA1", "SHA1withDSA");
             // END android-changed
+=======
+            addSignatureAlgorithm(provider, "SHA3-224", "DSA", PREFIX + "DSASigner$dsaSha3_224", NISTObjectIdentifiers.id_dsa_with_sha3_224);
+            addSignatureAlgorithm(provider, "SHA3-256", "DSA", PREFIX + "DSASigner$dsaSha3_256", NISTObjectIdentifiers.id_dsa_with_sha3_256);
+            addSignatureAlgorithm(provider, "SHA3-384", "DSA", PREFIX + "DSASigner$dsaSha3_384", NISTObjectIdentifiers.id_dsa_with_sha3_384);
+            addSignatureAlgorithm(provider, "SHA3-512", "DSA", PREFIX + "DSASigner$dsaSha3_512", NISTObjectIdentifiers.id_dsa_with_sha3_512);
+
+            provider.addAlgorithm("Alg.Alias.Signature.SHA/DSA", "DSA");
+            provider.addAlgorithm("Alg.Alias.Signature.SHA1withDSA", "DSA");
+            provider.addAlgorithm("Alg.Alias.Signature.SHA1WITHDSA", "DSA");
+            provider.addAlgorithm("Alg.Alias.Signature.1.3.14.3.2.26with1.2.840.10040.4.1", "DSA");
+            provider.addAlgorithm("Alg.Alias.Signature.1.3.14.3.2.26with1.2.840.10040.4.3", "DSA");
+            provider.addAlgorithm("Alg.Alias.Signature.DSAwithSHA1", "DSA");
+            provider.addAlgorithm("Alg.Alias.Signature.DSAWITHSHA1", "DSA");
+            provider.addAlgorithm("Alg.Alias.Signature.SHA1WithDSA", "DSA");
+            provider.addAlgorithm("Alg.Alias.Signature.DSAWithSHA1", "DSA");
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 
             // BEGIN android-removed
             // provider.addAlgorithm("Alg.Alias.Signature.1.2.840.10040.4.3", "DSA");
