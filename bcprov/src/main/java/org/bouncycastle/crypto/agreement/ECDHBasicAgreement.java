@@ -44,6 +44,7 @@ public class ECDHBasicAgreement
     public BigInteger calculateAgreement(
         CipherParameters pubKey)
     {
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
         // BEGIN android-changed
         ECPoint peerPoint = ((ECPublicKeyParameters) pubKey).getQ();
         ECCurve myCurve = key.getParameters().getCurve();
@@ -61,6 +62,15 @@ public class ECDHBasicAgreement
             peerPoint.getYCoord().toBigInteger());
         ECPoint P = pubPoint.multiply(key.getD()).normalize();
         // END android-changed
+=======
+        ECPublicKeyParameters pub = (ECPublicKeyParameters)pubKey;
+        if (!pub.getParameters().equals(key.getParameters()))
+        {
+            throw new IllegalStateException("ECDH public key has wrong domain parameters");
+        }
+
+        ECPoint P = pub.getQ().multiply(key.getD()).normalize();
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 
         if (P.isInfinity())
         {
