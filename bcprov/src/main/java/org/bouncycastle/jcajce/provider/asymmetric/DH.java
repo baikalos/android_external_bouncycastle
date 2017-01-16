@@ -39,6 +39,7 @@ public class DH
 
             provider.addAlgorithm("AlgorithmParameterGenerator.DH", PREFIX + "AlgorithmParameterGeneratorSpi");
 
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
             // BEGIN android-removed
             // provider.addAlgorithm("Cipher.IES", PREFIX + "IESCipher$IES");
             // provider.addAlgorithm("Cipher.IESwithAES", PREFIX + "IESCipher$IESwithAES");
@@ -55,6 +56,17 @@ public class DH
             // provider.addAlgorithm("Cipher.OLDDHIESWITHAES", PREFIX + "IESCipher$OldIESwithAES");
             // provider.addAlgorithm("Cipher.OLDDHIESWITHDESEDE", PREFIX + "IESCipher$OldIESwithDESede");
             // END android-removed
+=======
+            provider.addAlgorithm("Cipher.IES", PREFIX + "IESCipher$IES");
+            provider.addAlgorithm("Cipher.IESwithAES-CBC", PREFIX + "IESCipher$IESwithAESCBC");
+            provider.addAlgorithm("Cipher.IESWITHAES-CBC", PREFIX + "IESCipher$IESwithAESCBC");
+            provider.addAlgorithm("Cipher.IESWITHDESEDE-CBC", PREFIX + "IESCipher$IESwithDESedeCBC");
+
+            provider.addAlgorithm("Cipher.DHIES", PREFIX + "IESCipher$IES");
+            provider.addAlgorithm("Cipher.DHIESwithAES-CBC", PREFIX + "IESCipher$IESwithAESCBC");
+            provider.addAlgorithm("Cipher.DHIESWITHAES-CBC", PREFIX + "IESCipher$IESwithAESCBC");
+            provider.addAlgorithm("Cipher.DHIESWITHDESEDE-CBC", PREFIX + "IESCipher$IESwithDESedeCBC");
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 
             registerOid(provider, PKCSObjectIdentifiers.dhKeyAgreement, "DH", new KeyFactorySpi());
             registerOid(provider, X9ObjectIdentifiers.dhpublicnumber, "DH", new KeyFactorySpi());

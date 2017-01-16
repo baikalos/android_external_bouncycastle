@@ -13,6 +13,7 @@ import javax.crypto.spec.PBEParameterSpec;
 
 import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.PBEParametersGenerator;
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
 // BEGIN android-removed
 // import org.bouncycastle.crypto.digests.GOST3411Digest;
 // import org.bouncycastle.crypto.digests.MD2Digest;
@@ -25,6 +26,12 @@ import org.bouncycastle.crypto.PBEParametersGenerator;
 // BEGIN android-added
 import org.bouncycastle.crypto.digests.AndroidDigestFactory;
 // END android-added
+=======
+import org.bouncycastle.crypto.digests.GOST3411Digest;
+import org.bouncycastle.crypto.digests.MD2Digest;
+import org.bouncycastle.crypto.digests.RIPEMD160Digest;
+import org.bouncycastle.crypto.digests.TigerDigest;
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.crypto.generators.OpenSSLPBEParametersGenerator;
 import org.bouncycastle.crypto.generators.PKCS12ParametersGenerator;
 import org.bouncycastle.crypto.generators.PKCS5S1ParametersGenerator;
@@ -32,6 +39,7 @@ import org.bouncycastle.crypto.generators.PKCS5S2ParametersGenerator;
 import org.bouncycastle.crypto.params.DESParameters;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
+import org.bouncycastle.crypto.util.DigestFactory;
 
 public interface PBE
 {
@@ -45,10 +53,18 @@ public interface PBE
     // static final int        TIGER        = 3;
     // END android-removed
     static final int        SHA256       = 4;
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
     // BEGIN android-removed
     // static final int        MD2          = 5;
     // static final int        GOST3411     = 6;
     // END android-removed
+=======
+    static final int        MD2          = 5;
+    static final int        GOST3411     = 6;
+    static final int        SHA224       = 7;
+    static final int        SHA384       = 8;
+    static final int        SHA512       = 9;
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 
     static final int        PKCS5S1      = 0;
     static final int        PKCS5S2      = 1;
@@ -84,14 +100,22 @@ public interface PBE
                 //     break;
                 // END android-removed
                 case MD5:
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
                     // BEGIN android-changed
                     generator = new PKCS5S1ParametersGenerator(AndroidDigestFactory.getMD5());
                     // END android-changed
+=======
+                    generator = new PKCS5S1ParametersGenerator(DigestFactory.createMD5());
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
                     break;
                 case SHA1:
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
                     // BEGIN android-changed
                     generator = new PKCS5S1ParametersGenerator(AndroidDigestFactory.getSHA1());
                     // END android-changed
+=======
+                    generator = new PKCS5S1ParametersGenerator(DigestFactory.createSHA1());
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
                     break;
                 default:
                     throw new IllegalStateException("PKCS5 scheme 1 only supports MD2, MD5 and SHA1.");
@@ -107,14 +131,22 @@ public interface PBE
                 //     break;
                 // END android-removed
                 case MD5:
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
                     // BEGIN android-changed
                     generator = new PKCS5S2ParametersGenerator(AndroidDigestFactory.getMD5());
                     // END android-changed
+=======
+                    generator = new PKCS5S2ParametersGenerator(DigestFactory.createMD5());
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
                     break;
                 case SHA1:
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
                     // BEGIN android-changed
                     generator = new PKCS5S2ParametersGenerator(AndroidDigestFactory.getSHA1());
                     // END android-changed
+=======
+                    generator = new PKCS5S2ParametersGenerator(DigestFactory.createSHA1());
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
                     break;
                 // BEGIN android-removed
                 // case RIPEMD160:
@@ -130,13 +162,31 @@ public interface PBE
                     break;
                 // END android-added
                 case SHA256:
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
                     // BEGIN android-changed
                     generator = new PKCS5S2ParametersGenerator(AndroidDigestFactory.getSHA256());
                     // END android-changed
+=======
+                    generator = new PKCS5S2ParametersGenerator(DigestFactory.createSHA256());
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
                     break;
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
                 // BEGIN android-added
                 case SHA384:
                     generator = new PKCS5S2ParametersGenerator(AndroidDigestFactory.getSHA384());
+=======
+                case GOST3411:
+                    generator = new PKCS5S2ParametersGenerator(new GOST3411Digest());
+                    break;
+                case SHA224:
+                    generator = new PKCS5S2ParametersGenerator(DigestFactory.createSHA224());
+                    break;
+                case SHA384:
+                    generator = new PKCS5S2ParametersGenerator(DigestFactory.createSHA384());
+                    break;
+                case SHA512:
+                    generator = new PKCS5S2ParametersGenerator(DigestFactory.createSHA512());
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
                     break;
                 case SHA512:
                     generator = new PKCS5S2ParametersGenerator(AndroidDigestFactory.getSHA512());
@@ -161,14 +211,22 @@ public interface PBE
                 //     break;
                 // END android-removed
                 case MD5:
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
                     // BEGIN android-changed
                     generator = new PKCS12ParametersGenerator(AndroidDigestFactory.getMD5());
                     // END android-changed
+=======
+                    generator = new PKCS12ParametersGenerator(DigestFactory.createMD5());
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
                     break;
                 case SHA1:
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
                     // BEGIN android-changed
                     generator = new PKCS12ParametersGenerator(AndroidDigestFactory.getSHA1());
                     // END android-changed
+=======
+                    generator = new PKCS12ParametersGenerator(DigestFactory.createSHA1());
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
                     break;
                 // BEGIN android-removed
                 // case RIPEMD160:
@@ -184,13 +242,31 @@ public interface PBE
                     break;
                 // END android-added
                 case SHA256:
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
                     // BEGIN android-changed
                     generator = new PKCS12ParametersGenerator(AndroidDigestFactory.getSHA256());
                     // END android-changed
+=======
+                    generator = new PKCS12ParametersGenerator(DigestFactory.createSHA256());
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
                     break;
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
                 // BEGIN android-added
                 case SHA384:
                     generator = new PKCS12ParametersGenerator(AndroidDigestFactory.getSHA384());
+=======
+                case GOST3411:
+                    generator = new PKCS12ParametersGenerator(new GOST3411Digest());
+                    break;
+                case SHA224:
+                    generator = new PKCS12ParametersGenerator(DigestFactory.createSHA224());
+                    break;
+                case SHA384:
+                    generator = new PKCS12ParametersGenerator(DigestFactory.createSHA384());
+                    break;
+                case SHA512:
+                    generator = new PKCS12ParametersGenerator(DigestFactory.createSHA512());
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
                     break;
                 case SHA512:
                     generator = new PKCS12ParametersGenerator(AndroidDigestFactory.getSHA512());
@@ -284,11 +360,6 @@ public interface PBE
                 }
             }
 
-            for (int i = 0; i != key.length; i++)
-            {
-                key[i] = 0;
-            }
-
             return param;
         }
 
@@ -358,11 +429,6 @@ public interface PBE
                 }
             }
 
-            for (int i = 0; i != key.length; i++)
-            {
-                key[i] = 0;
-            }
-
             return param;
         }
 
@@ -388,11 +454,6 @@ public interface PBE
             generator.init(key, pbeParam.getSalt(), pbeParam.getIterationCount());
 
             param = generator.generateDerivedMacParameters(pbeKey.getKeySize());
-    
-            for (int i = 0; i != key.length; i++)
-            {
-                key[i] = 0;
-            }
 
             return param;
         }

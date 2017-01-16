@@ -10,6 +10,7 @@ import org.bouncycastle.crypto.digests.AndroidDigestFactory;
 import org.bouncycastle.crypto.params.DSAParameterGenerationParameters;
 import org.bouncycastle.crypto.params.DSAParameters;
 import org.bouncycastle.crypto.params.DSAValidationParameters;
+import org.bouncycastle.crypto.util.DigestFactory;
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.BigIntegers;
 import org.bouncycastle.util.encoders.Hex;
@@ -33,9 +34,13 @@ public class DSAParametersGenerator
 
     public DSAParametersGenerator()
     {
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
         // BEGIN android-changed
         this(AndroidDigestFactory.getSHA1());
         // END android-changed
+=======
+        this(DigestFactory.createSHA1());
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     public DSAParametersGenerator(Digest digest)

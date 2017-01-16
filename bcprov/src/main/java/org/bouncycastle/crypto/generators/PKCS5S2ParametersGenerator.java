@@ -4,12 +4,16 @@ import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.Mac;
 import org.bouncycastle.crypto.PBEParametersGenerator;
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
 // BEGIN android-changed
 import org.bouncycastle.crypto.digests.AndroidDigestFactory;
 // END android-changed
+=======
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.crypto.macs.HMac;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
+import org.bouncycastle.crypto.util.DigestFactory;
 import org.bouncycastle.util.Arrays;
 
 /**
@@ -31,9 +35,13 @@ public class PKCS5S2ParametersGenerator
      */
     public PKCS5S2ParametersGenerator()
     {
+<<<<<<< HEAD   (fba1a1 Merge "bouncycastle: add support for PKCS5S2 algorithm param)
         // BEGIN android-changed
         this(AndroidDigestFactory.getSHA1());
         // END android-changed
+=======
+        this(DigestFactory.createSHA1());
+>>>>>>> BRANCH (eaf604 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     public PKCS5S2ParametersGenerator(Digest digest)
