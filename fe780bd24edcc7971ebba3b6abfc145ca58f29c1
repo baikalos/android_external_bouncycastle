@@ -22,6 +22,30 @@
       "revId": "fe780bd24edcc7971ebba3b6abfc145ca58f29c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c666d7b_0a58995b",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/cert/jcajce/JcaX509CertificateConverter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2017-02-10T17:18:56Z",
+      "side": 1,
+      "message": "So we don\u0027t have to pull in more files than needed.",
+      "parentUuid": "fd5bb8b1_eb298711",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "fe780bd24edcc7971ebba3b6abfc145ca58f29c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
