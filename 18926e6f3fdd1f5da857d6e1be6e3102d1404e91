@@ -16,6 +16,24 @@
       "revId": "18926e6f3fdd1f5da857d6e1be6e3102d1404e91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09b46478_ccf8353d",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/JCERSAPrivateKey.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2017-02-10T17:17:41Z",
+      "side": 0,
+      "message": "Yes, they changed it to BCRSAPrivateKey a while ago, I believe.",
+      "parentUuid": "57e70c00_82d06919",
+      "revId": "18926e6f3fdd1f5da857d6e1be6e3102d1404e91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
