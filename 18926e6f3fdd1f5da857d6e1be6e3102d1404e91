@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57e70c00_82d06919",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/JCERSAPrivateKey.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2017-02-10T09:12:03Z",
+      "side": 0,
+      "message": "There\u0027s a TODO on line 1365 of CipherTest that mentions this class.  Are we sure it\u0027s impossible to access?  If so, probably modify that TODO to mention something more relevant.",
+      "revId": "18926e6f3fdd1f5da857d6e1be6e3102d1404e91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
