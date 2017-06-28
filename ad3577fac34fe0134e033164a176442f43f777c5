@@ -70,6 +70,30 @@
       "revId": "ad3577fac34fe0134e033164a176442f43f777c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9947ecb2_f8209cfa",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/dh/KeyPairGeneratorSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2017-06-28T14:27:35Z",
+      "side": 1,
+      "message": "\u003e Given it\u0027s a conscious decision and one we may need to revisit for\n \u003e app-compat, can you document it in the commit comment as an\n \u003e intended change to Android behavior as a consequence of the update?\n\nDone.",
+      "parentUuid": "f0812964_4185d63f",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "ad3577fac34fe0134e033164a176442f43f777c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
