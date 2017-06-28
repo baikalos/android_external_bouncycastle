@@ -8,10 +8,16 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
 // BEGIN android-removed
 // import org.bouncycastle.asn1.anssi.ANSSINamedCurves;
 // import org.bouncycastle.asn1.cryptopro.ECGOST3410NamedCurves;
 // END android-removed
+=======
+import org.bouncycastle.asn1.anssi.ANSSINamedCurves;
+import org.bouncycastle.asn1.cryptopro.ECGOST3410NamedCurves;
+import org.bouncycastle.asn1.gm.GMNamedCurves;
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.asn1.nist.NISTNamedCurves;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.asn1.sec.SECNamedCurves;
@@ -337,6 +343,7 @@ public class ECUtil
             {
                 oid = NISTNamedCurves.getOID(name);
             }
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
             // BEGIN android-removed
             // if (oid == null)
             // {
@@ -351,6 +358,24 @@ public class ECUtil
             //     oid = ANSSINamedCurves.getOID(name);
             // }
             // END android-removed
+=======
+            if (oid == null)
+            {
+                oid = TeleTrusTNamedCurves.getOID(name);
+            }
+            if (oid == null)
+            {
+                oid = ECGOST3410NamedCurves.getOID(name);
+            }
+            if (oid == null)
+            {
+                oid = ANSSINamedCurves.getOID(name);
+            }
+            if (oid == null)
+            {
+                oid = GMNamedCurves.getOID(name);
+            }
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
         }
 
         return oid;
@@ -393,12 +418,23 @@ public class ECUtil
             {
                 params = NISTNamedCurves.getByOID(oid);
             }
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
             // BEGIN android-removed
             // if (params == null)
             // {
             //     params = TeleTrusTNamedCurves.getByOID(oid);
             // }
             // END android-removed
+=======
+            if (params == null)
+            {
+                params = TeleTrusTNamedCurves.getByOID(oid);
+            }
+            if (params == null)
+            {
+                params = GMNamedCurves.getByOID(oid);
+            }
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
         }
 
         return params;
@@ -420,12 +456,23 @@ public class ECUtil
             {
                 params = NISTNamedCurves.getByName(curveName);
             }
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
             // BEGIN android-removed
             // if (params == null)
             // {
             //     params = TeleTrusTNamedCurves.getByName(curveName);
             // }
             // END android-removed
+=======
+            if (params == null)
+            {
+                params = TeleTrusTNamedCurves.getByName(curveName);
+            }
+            if (params == null)
+            {
+                params = GMNamedCurves.getByName(curveName);
+            }
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
         }
 
         return params;

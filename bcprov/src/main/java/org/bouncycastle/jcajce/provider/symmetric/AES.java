@@ -11,6 +11,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.InvalidParameterSpecException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.crypto.spec.IvParameterSpec;
 
@@ -32,6 +34,7 @@ import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.bouncycastle.crypto.Mac;
 import org.bouncycastle.crypto.engines.AESEngine;
 import org.bouncycastle.crypto.engines.AESWrapEngine;
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
 // BEGIN android-removed
 // import org.bouncycastle.crypto.engines.RFC3211WrapEngine;
 // import org.bouncycastle.crypto.engines.RFC5649WrapEngine;
@@ -39,6 +42,14 @@ import org.bouncycastle.crypto.engines.AESWrapEngine;
 // import org.bouncycastle.crypto.macs.CMac;
 // import org.bouncycastle.crypto.macs.GMac;
 // END android-removed
+=======
+import org.bouncycastle.crypto.engines.AESWrapPadEngine;
+import org.bouncycastle.crypto.engines.RFC3211WrapEngine;
+import org.bouncycastle.crypto.engines.RFC5649WrapEngine;
+import org.bouncycastle.crypto.generators.Poly1305KeyGenerator;
+import org.bouncycastle.crypto.macs.CMac;
+import org.bouncycastle.crypto.macs.GMac;
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.crypto.modes.CBCBlockCipher;
 // BEGIN android-removed
 // import org.bouncycastle.crypto.modes.CCMBlockCipher;
@@ -66,6 +77,14 @@ import org.bouncycastle.jcajce.spec.AEADParameterSpec;
 public final class AES
 {
     private static final Class gcmSpecClass = lookup("javax.crypto.spec.GCMParameterSpec");
+
+    private static final Map<String, String> generalAesAttributes = new HashMap<String, String>();
+
+    static
+    {
+        generalAesAttributes.put("SupportedKeyClasses", "javax.crypto.SecretKey");
+        generalAesAttributes.put("SupportedKeyFormats", "RAW");
+    }
 
     private AES()
     {
@@ -261,6 +280,7 @@ public final class AES
         }
     }
 
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
     // BEGIN android-removed
     // public static class RFC3211Wrap
     //     extends BaseWrapCipher
@@ -270,6 +290,25 @@ public final class AES
     //         super(new RFC3211WrapEngine(new AESEngine()), 16);
     //     }
     // }
+=======
+    public static class WrapPad
+        extends BaseWrapCipher
+    {
+        public WrapPad()
+        {
+            super(new AESWrapPadEngine());
+        }
+    }
+
+    public static class RFC3211Wrap
+        extends BaseWrapCipher
+    {
+        public RFC3211Wrap()
+        {
+            super(new RFC3211WrapEngine(new AESEngine()), 16);
+        }
+    }
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
 
     // public static class RFC5649Wrap
     //     extends BaseWrapCipher
@@ -852,10 +891,12 @@ public final class AES
             // provider.addAlgorithm("Alg.Alias.AlgorithmParameterGenerator." + NISTObjectIdentifiers.id_aes256_CBC, "AES");
             // END android-removed
 
+            provider.addAttributes("Cipher.AES", generalAesAttributes);
             provider.addAlgorithm("Cipher.AES", PREFIX + "$ECB");
             provider.addAlgorithm("Alg.Alias.Cipher." + wrongAES128, "AES");
             provider.addAlgorithm("Alg.Alias.Cipher." + wrongAES192, "AES");
             provider.addAlgorithm("Alg.Alias.Cipher." + wrongAES256, "AES");
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
             // BEGIN android-removed
             // provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes128_ECB, PREFIX + "$ECB");
             // provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes192_ECB, PREFIX + "$ECB");
@@ -870,12 +911,29 @@ public final class AES
             // provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes192_CFB, PREFIX + "$CFB");
             // provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes256_CFB, PREFIX + "$CFB");
             // END android-removed
+=======
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes128_ECB, PREFIX + "$ECB");
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes192_ECB, PREFIX + "$ECB");
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes256_ECB, PREFIX + "$ECB");
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes128_CBC, PREFIX + "$CBC");
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes192_CBC, PREFIX + "$CBC");
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes256_CBC, PREFIX + "$CBC");
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes128_OFB, PREFIX + "$OFB");
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes192_OFB, PREFIX + "$OFB");
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes256_OFB, PREFIX + "$OFB");
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes128_CFB, PREFIX + "$CFB");
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes192_CFB, PREFIX + "$CFB");
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes256_CFB, PREFIX + "$CFB");
+
+            provider.addAttributes("Cipher.AESWRAP", generalAesAttributes);
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
             provider.addAlgorithm("Cipher.AESWRAP", PREFIX + "$Wrap");
             provider.addAlgorithm("Alg.Alias.Cipher", NISTObjectIdentifiers.id_aes128_wrap, "AESWRAP");
             provider.addAlgorithm("Alg.Alias.Cipher", NISTObjectIdentifiers.id_aes192_wrap, "AESWRAP");
             provider.addAlgorithm("Alg.Alias.Cipher", NISTObjectIdentifiers.id_aes256_wrap, "AESWRAP");
             provider.addAlgorithm("Alg.Alias.Cipher.AESKW", "AESWRAP");
 
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
             // BEGIN android-removed
             // provider.addAlgorithm("Cipher.AESRFC3211WRAP", PREFIX + "$RFC3211Wrap");
             // provider.addAlgorithm("Cipher.AESRFC5649WRAP", PREFIX + "$RFC5649Wrap");
@@ -895,15 +953,51 @@ public final class AES
             // provider.addAlgorithm("Alg.Alias.AlgorithmParameterGenerator." + NISTObjectIdentifiers.id_aes192_GCM, "GCM");
             // provider.addAlgorithm("Alg.Alias.AlgorithmParameterGenerator." + NISTObjectIdentifiers.id_aes256_GCM, "GCM");
             // END android-removed
+=======
+            provider.addAttributes("Cipher.AESWRAPPAD", generalAesAttributes);
+            provider.addAlgorithm("Cipher.AESWRAPPAD", PREFIX + "$WrapPad");
+            provider.addAlgorithm("Alg.Alias.Cipher", NISTObjectIdentifiers.id_aes128_wrap_pad, "AESWRAPPAD");
+            provider.addAlgorithm("Alg.Alias.Cipher", NISTObjectIdentifiers.id_aes192_wrap_pad, "AESWRAPPAD");
+            provider.addAlgorithm("Alg.Alias.Cipher", NISTObjectIdentifiers.id_aes256_wrap_pad, "AESWRAPPAD");
+            provider.addAlgorithm("Alg.Alias.Cipher.AESKWP", "AESWRAPPAD");
 
+            provider.addAlgorithm("Cipher.AESRFC3211WRAP", PREFIX + "$RFC3211Wrap");
+            provider.addAlgorithm("Cipher.AESRFC5649WRAP", PREFIX + "$RFC5649Wrap");
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
+
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
             // BEGIN android-changed
             provider.addAlgorithm("Cipher.AES/GCM/NOPADDING", PREFIX + "$GCM");
             provider.addAlgorithm("Alg.Alias.Cipher." + NISTObjectIdentifiers.id_aes128_GCM, "AES/GCM/NOPADDING");
             provider.addAlgorithm("Alg.Alias.Cipher." + NISTObjectIdentifiers.id_aes192_GCM, "AES/GCM/NOPADDING");
             provider.addAlgorithm("Alg.Alias.Cipher." + NISTObjectIdentifiers.id_aes256_GCM, "AES/GCM/NOPADDING");
             // END android-changed
+=======
+            provider.addAlgorithm("AlgorithmParameterGenerator.CCM", PREFIX + "$AlgParamGenCCM");
+            provider.addAlgorithm("Alg.Alias.AlgorithmParameterGenerator." + NISTObjectIdentifiers.id_aes128_CCM, "CCM");
+            provider.addAlgorithm("Alg.Alias.AlgorithmParameterGenerator." + NISTObjectIdentifiers.id_aes192_CCM, "CCM");
+            provider.addAlgorithm("Alg.Alias.AlgorithmParameterGenerator." + NISTObjectIdentifiers.id_aes256_CCM, "CCM");
+
+            provider.addAttributes("Cipher.CCM", generalAesAttributes);
+            provider.addAlgorithm("Cipher.CCM", PREFIX + "$CCM");
+            provider.addAlgorithm("Alg.Alias.Cipher", NISTObjectIdentifiers.id_aes128_CCM, "CCM");
+            provider.addAlgorithm("Alg.Alias.Cipher", NISTObjectIdentifiers.id_aes192_CCM, "CCM");
+            provider.addAlgorithm("Alg.Alias.Cipher", NISTObjectIdentifiers.id_aes256_CCM, "CCM");
+
+            provider.addAlgorithm("AlgorithmParameterGenerator.GCM", PREFIX + "$AlgParamGenGCM");
+            provider.addAlgorithm("Alg.Alias.AlgorithmParameterGenerator." + NISTObjectIdentifiers.id_aes128_GCM, "GCM");
+            provider.addAlgorithm("Alg.Alias.AlgorithmParameterGenerator." + NISTObjectIdentifiers.id_aes192_GCM, "GCM");
+            provider.addAlgorithm("Alg.Alias.AlgorithmParameterGenerator." + NISTObjectIdentifiers.id_aes256_GCM, "GCM");
+
+            provider.addAttributes("Cipher.GCM", generalAesAttributes);
+            provider.addAlgorithm("Cipher.GCM", PREFIX + "$GCM");
+            provider.addAlgorithm("Alg.Alias.Cipher", NISTObjectIdentifiers.id_aes128_GCM, "GCM");
+            provider.addAlgorithm("Alg.Alias.Cipher", NISTObjectIdentifiers.id_aes192_GCM, "GCM");
+            provider.addAlgorithm("Alg.Alias.Cipher", NISTObjectIdentifiers.id_aes256_GCM, "GCM");
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
 
             provider.addAlgorithm("KeyGenerator.AES", PREFIX + "$KeyGen");
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
             // BEGIN android-removed
             // provider.addAlgorithm("KeyGenerator." + wrongAES128, PREFIX + "$KeyGen128");
             // provider.addAlgorithm("KeyGenerator." + wrongAES192, PREFIX + "$KeyGen192");
@@ -930,6 +1024,37 @@ public final class AES
             // provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes128_CCM, PREFIX + "$KeyGen128");
             // provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes192_CCM, PREFIX + "$KeyGen192");
             // provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes256_CCM, PREFIX + "$KeyGen256");
+=======
+            provider.addAlgorithm("KeyGenerator." + wrongAES128, PREFIX + "$KeyGen128");
+            provider.addAlgorithm("KeyGenerator." + wrongAES192, PREFIX + "$KeyGen192");
+            provider.addAlgorithm("KeyGenerator." + wrongAES256, PREFIX + "$KeyGen256");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes128_ECB, PREFIX + "$KeyGen128");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes128_CBC, PREFIX + "$KeyGen128");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes128_OFB, PREFIX + "$KeyGen128");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes128_CFB, PREFIX + "$KeyGen128");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes192_ECB, PREFIX + "$KeyGen192");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes192_CBC, PREFIX + "$KeyGen192");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes192_OFB, PREFIX + "$KeyGen192");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes192_CFB, PREFIX + "$KeyGen192");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes256_ECB, PREFIX + "$KeyGen256");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes256_CBC, PREFIX + "$KeyGen256");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes256_OFB, PREFIX + "$KeyGen256");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes256_CFB, PREFIX + "$KeyGen256");
+            provider.addAlgorithm("KeyGenerator.AESWRAP", PREFIX + "$KeyGen");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes128_wrap, PREFIX + "$KeyGen128");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes192_wrap, PREFIX + "$KeyGen192");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes256_wrap, PREFIX + "$KeyGen256");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes128_GCM, PREFIX + "$KeyGen128");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes192_GCM, PREFIX + "$KeyGen192");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes256_GCM, PREFIX + "$KeyGen256");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes128_CCM, PREFIX + "$KeyGen128");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes192_CCM, PREFIX + "$KeyGen192");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes256_CCM, PREFIX + "$KeyGen256");
+            provider.addAlgorithm("KeyGenerator.AESWRAPPAD", PREFIX + "$KeyGen");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes128_wrap_pad, PREFIX + "$KeyGen128");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes192_wrap_pad, PREFIX + "$KeyGen192");
+            provider.addAlgorithm("KeyGenerator", NISTObjectIdentifiers.id_aes256_wrap_pad, PREFIX + "$KeyGen256");
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
 
             // provider.addAlgorithm("Mac.AESCMAC", PREFIX + "$AESCMAC");
 

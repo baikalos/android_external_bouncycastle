@@ -16,10 +16,15 @@ import javax.crypto.spec.DHParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.crypto.DerivationFunction;
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
 // BEGIN android-removed
 // import org.bouncycastle.crypto.agreement.kdf.DHKEKGenerator;
 // import org.bouncycastle.crypto.util.DigestFactory;
 // END android-removed
+=======
+import org.bouncycastle.crypto.agreement.kdf.DHKEKGenerator;
+import org.bouncycastle.crypto.util.DigestFactory;
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.jcajce.provider.asymmetric.util.BaseAgreementSpi;
 import org.bouncycastle.jcajce.spec.UserKeyingMaterialSpec;
 
