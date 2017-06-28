@@ -21,6 +21,7 @@ import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.DSA;
 import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.digests.NullDigest;
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
 // BEGIN android-added
 import org.bouncycastle.crypto.digests.AndroidDigestFactory;
 // END android-added
@@ -35,6 +36,8 @@ import org.bouncycastle.crypto.digests.AndroidDigestFactory;
 import org.bouncycastle.crypto.params.DSAKeyParameters;
 import org.bouncycastle.crypto.params.DSAParameters;
 // END android-added
+=======
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.crypto.params.ParametersWithRandom;
 // BEGIN android-removed
 // import org.bouncycastle.crypto.digests.SHA1Digest;

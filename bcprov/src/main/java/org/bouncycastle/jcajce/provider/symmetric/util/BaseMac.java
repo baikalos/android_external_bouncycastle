@@ -18,6 +18,7 @@ import javax.crypto.spec.RC2ParameterSpec;
 
 import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.Mac;
+import org.bouncycastle.crypto.macs.HMac;
 import org.bouncycastle.crypto.params.AEADParameters;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
@@ -39,8 +40,8 @@ public class BaseMac
     private Mac macEngine;
 
     private int scheme = PKCS12;
-    private int                     pbeHash = SHA1;
-    private int                     keySize = 160;
+    private int pbeHash = SHA1;
+    private int keySize = 160;
 
     protected BaseMac(
         Mac macEngine)
@@ -102,6 +103,7 @@ public class BaseMac
 
             int digest = SHA1;
             int keySize = 160;
+<<<<<<< HEAD   (9cea60 Merge "Add OWNERS in external/bouncycastle")
             // BEGIN android-removed
             // if (macEngine.getAlgorithmName().startsWith("GOST"))
             // {
@@ -112,9 +114,47 @@ public class BaseMac
             // Was: else if (macEngine.getAlgorithmName().startsWith("SHA256"))
             if (macEngine.getAlgorithmName().startsWith("SHA256"))
             // END android-changed
+=======
+            if (macEngine.getAlgorithmName().startsWith("GOST"))
             {
-                digest = SHA256;
+                digest = GOST3411;
                 keySize = 256;
+            }
+            else if (macEngine instanceof HMac)
+>>>>>>> BRANCH (1e6eca Merge "bouncycastle: Android tree with upstream code for ver)
+            {
+                if (!macEngine.getAlgorithmName().startsWith("SHA-1"))
+                {
+                    if (macEngine.getAlgorithmName().startsWith("SHA-224"))
+                    {
+                        digest = SHA224;
+                        keySize = 224;
+                    }
+                    else if (macEngine.getAlgorithmName().startsWith("SHA-256"))
+                    {
+                        digest = SHA256;
+                        keySize = 256;
+                    }
+                    else if (macEngine.getAlgorithmName().startsWith("SHA-384"))
+                    {
+                        digest = SHA384;
+                        keySize = 384;
+                    }
+                    else if (macEngine.getAlgorithmName().startsWith("SHA-512"))
+                    {
+                        digest = SHA512;
+                        keySize = 512;
+                    }
+                    else if (macEngine.getAlgorithmName().startsWith("RIPEMD160"))
+                    {
+                        digest = RIPEMD160;
+                        keySize = 160;
+                    }
+                    else
+                    {
+                        throw new InvalidAlgorithmParameterException("no PKCS12 mapping for HMAC: " + macEngine.getAlgorithmName());
+                    }
+                }
             }
             // TODO: add correct handling for other digests
             param = PBE.Util.makePBEMacParameters(k, PKCS12, digest, keySize, pbeSpec);
