@@ -22,6 +22,30 @@
       "revId": "ad3577fac34fe0134e033164a176442f43f777c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc1d90f7_426e31c1",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/dh/KeyPairGeneratorSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2017-06-28T13:27:28Z",
+      "side": 1,
+      "message": "\u003e Should we keep it at 1024 for compatibility?\n\nI\u0027m inclined to go with the increase in size here, since 1024-bit DH keys are at the edge of acceptability at this point.  DSA is a bit of a special case since allowing the increase would cause the default set of parameters to literally cease to function, whereas this will work, just use longer keys (more CPU but better security).",
+      "parentUuid": "f34b4ea4_e39d208a",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "ad3577fac34fe0134e033164a176442f43f777c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
