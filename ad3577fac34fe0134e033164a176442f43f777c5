@@ -46,6 +46,30 @@
       "revId": "ad3577fac34fe0134e033164a176442f43f777c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0812964_4185d63f",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/dh/KeyPairGeneratorSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-06-28T14:23:43Z",
+      "side": 1,
+      "message": "Given it\u0027s a conscious decision and one we may need to revisit for app-compat, can you document it in the commit comment as an intended change to Android behavior as a consequence of the update?\n\nThe rest are perhaps obvious because of the associated test changes in libcore.",
+      "parentUuid": "cc1d90f7_426e31c1",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "ad3577fac34fe0134e033164a176442f43f777c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
