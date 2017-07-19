@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b079329_c23c773a",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/ASN1GeneralizedTime.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-07-19T15:15:01Z",
+      "side": 1,
+      "message": "We could probably upstream these",
+      "range": {
+        "startLine": 304,
+        "startChar": 40,
+        "endLine": 304,
+        "endChar": 49
+      },
+      "revId": "9ee535ae08a561b7d26dedead17e913d9b725cad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d1991ec_8f45befc",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/ASN1ObjectIdentifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-07-19T15:15:01Z",
+      "side": 1,
+      "message": "Is this one worth upstreaming?",
+      "range": {
+        "startLine": 158,
+        "startChar": 19,
+        "endLine": 158,
+        "endChar": 26
+      },
+      "revId": "9ee535ae08a561b7d26dedead17e913d9b725cad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f29d9ace_5de75cdb",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/StreamUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-07-19T15:15:01Z",
+      "side": 1,
+      "message": "Maybe another that could be upstreamed.",
+      "range": {
+        "startLine": 52,
+        "startChar": 44,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "9ee535ae08a561b7d26dedead17e913d9b725cad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "870fbee6_f462b251",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/x509/Time.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-07-19T15:15:01Z",
+      "side": 1,
+      "message": "This probably makes some sense, but smells a bit weird. Do we want alternative calendars?",
+      "range": {
+        "startLine": 92,
+        "startChar": 35,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "9ee535ae08a561b7d26dedead17e913d9b725cad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db4bb152_e86684ab",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/x509/X509Name.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-07-19T15:15:01Z",
+      "side": 1,
+      "message": "There isn\u0027t a local change here?",
+      "range": {
+        "startLine": 451,
+        "startChar": 25,
+        "endLine": 451,
+        "endChar": 35
+      },
+      "revId": "9ee535ae08a561b7d26dedead17e913d9b725cad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a5228d8_c5822460",
+        "filename": "bcprov/src/main/java/org/bouncycastle/crypto/modes/GCMBlockCipher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-07-19T15:15:01Z",
+      "side": 1,
+      "message": "Is this Android-specific or could be upstreamed?",
+      "range": {
+        "startLine": 27,
+        "startChar": 43,
+        "endLine": 27,
+        "endChar": 53
+      },
+      "revId": "9ee535ae08a561b7d26dedead17e913d9b725cad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bda1ed5_5cce8b22",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/dsa/DSAUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-07-19T15:15:01Z",
+      "side": 1,
+      "message": "Android specific?",
+      "range": {
+        "startLine": 30,
+        "startChar": 28,
+        "endLine": 30,
+        "endChar": 44
+      },
+      "revId": "9ee535ae08a561b7d26dedead17e913d9b725cad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a084d322_d2614cd9",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/ec/KeyPairGeneratorSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-07-19T15:15:01Z",
+      "side": 1,
+      "message": "Android specific?",
+      "range": {
+        "startLine": 91,
+        "startChar": 21,
+        "endLine": 91,
+        "endChar": 28
+      },
+      "revId": "9ee535ae08a561b7d26dedead17e913d9b725cad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
