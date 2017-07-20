@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "872b62f4_68e3a345",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/x509/X509Name.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-07-20T08:06:27Z",
+      "side": 1,
+      "message": "Crikey. I assume the compiler wouldn\u0027t recognize that as something it could replace with a singleton. Another upstream possibility if you feel the urge.",
+      "parentUuid": "f0e2ebf5_45670bde",
+      "range": {
+        "startLine": 451,
+        "startChar": 25,
+        "endLine": 451,
+        "endChar": 35
+      },
+      "revId": "9ee535ae08a561b7d26dedead17e913d9b725cad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a5228d8_c5822460",
         "filename": "bcprov/src/main/java/org/bouncycastle/crypto/modes/GCMBlockCipher.java",
         "patchSetId": 1
