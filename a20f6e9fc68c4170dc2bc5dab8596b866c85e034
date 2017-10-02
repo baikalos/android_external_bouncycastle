@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6db95ec_72284740",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/RC2.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-10-02T15:06:50Z",
+      "side": 1,
+      "message": "Does this cover all the rows beneath this, or just the following two? Perhaps we can be more explicit.",
+      "range": {
+        "startLine": 496,
+        "startChar": 46,
+        "endLine": 496,
+        "endChar": 56
+      },
+      "revId": "a20f6e9fc68c4170dc2bc5dab8596b866c85e034",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
