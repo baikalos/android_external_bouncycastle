@@ -493,6 +493,7 @@ public final class RC2
             */
             // END Android-removed: Unsupported algorithms
 
+            // Android-note: The non-disabled algorithms here are all necessary for KeyStore.PKCS12
             provider.addAlgorithm("Alg.Alias.SecretKeyFactory.PBEWITHMD5ANDRC2-CBC", "PBEWITHMD5ANDRC2");
 
             provider.addAlgorithm("Alg.Alias.SecretKeyFactory.PBEWITHSHA1ANDRC2-CBC", "PBEWITHSHA1ANDRC2");
