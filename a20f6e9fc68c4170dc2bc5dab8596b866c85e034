@@ -22,6 +22,30 @@
       "revId": "a20f6e9fc68c4170dc2bc5dab8596b866c85e034",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cc542a3_e4d1d594",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/RC2.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2017-10-03T08:07:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6db95ec_72284740",
+      "range": {
+        "startLine": 496,
+        "startChar": 46,
+        "endLine": 496,
+        "endChar": 56
+      },
+      "revId": "a20f6e9fc68c4170dc2bc5dab8596b866c85e034",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
