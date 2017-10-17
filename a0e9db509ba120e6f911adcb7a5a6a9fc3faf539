@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75f365e0_0edf7bfc",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-10-17T22:53:40Z",
+      "side": 1,
+      "message": "This may end up getting weird -- pdk_config.mk does a bunch of copies of intermediate java library dirs. That\u0027s not going to work for Soong.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "a0e9db509ba120e6f911adcb7a5a6a9fc3faf539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
