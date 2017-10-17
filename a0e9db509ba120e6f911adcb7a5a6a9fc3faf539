@@ -46,6 +46,30 @@
       "revId": "a0e9db509ba120e6f911adcb7a5a6a9fc3faf539",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b54a997_b3efabfe",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-10-17T23:16:16Z",
+      "side": 1,
+      "message": "Yeah, it\u0027ll continue working for Make code, but for any soong code, we\u0027ll need to do something so that you can still depend on these in the pdk.",
+      "parentUuid": "f0db0474_9792be17",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "a0e9db509ba120e6f911adcb7a5a6a9fc3faf539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
