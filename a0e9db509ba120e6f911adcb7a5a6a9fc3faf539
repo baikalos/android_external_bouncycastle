@@ -22,6 +22,30 @@
       "revId": "a0e9db509ba120e6f911adcb7a5a6a9fc3faf539",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0db0474_9792be17",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2017-10-17T23:09:33Z",
+      "side": 1,
+      "message": "It\u0027s just pulling javalib.jar and classes.jar, which I attempt to put in place for soong java libraries.",
+      "parentUuid": "75f365e0_0edf7bfc",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "a0e9db509ba120e6f911adcb7a5a6a9fc3faf539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
