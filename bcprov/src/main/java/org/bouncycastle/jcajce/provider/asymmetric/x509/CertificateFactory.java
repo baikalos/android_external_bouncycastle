@@ -1,7 +1,10 @@
 package org.bouncycastle.jcajce.provider.asymmetric.x509;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+// Android-added: Use PushbackInputStream
 import java.io.PushbackInputStream;
 import java.security.cert.CRL;
 import java.security.cert.CRLException;
@@ -26,6 +29,7 @@ import org.bouncycastle.asn1.x509.Certificate;
 import org.bouncycastle.asn1.x509.CertificateList;
 import org.bouncycastle.jcajce.util.BCJcaJceHelper;
 import org.bouncycastle.jcajce.util.JcaJceHelper;
+import org.bouncycastle.util.io.Streams;
 
 /**
  * class for dealing with X509 certificates.
@@ -41,6 +45,7 @@ public class CertificateFactory
 
     private static final PEMUtil PEM_CERT_PARSER = new PEMUtil("CERTIFICATE");
     private static final PEMUtil PEM_CRL_PARSER = new PEMUtil("CRL");
+    private static final PEMUtil PEM_PKCS7_PARSER = new PEMUtil("PKCS7");
 
     private ASN1Set sData = null;
     private int                sDataObjectCount = 0;
@@ -54,8 +59,24 @@ public class CertificateFactory
         ASN1InputStream dIn)
         throws IOException, CertificateParsingException
     {
-        ASN1Sequence seq = (ASN1Sequence)dIn.readObject();
+        return getCertificate(ASN1Sequence.getInstance(dIn.readObject()));
+    }
 
+    private java.security.cert.Certificate readPEMCertificate(
+        InputStream in)
+        throws IOException, CertificateParsingException
+    {
+        return getCertificate(PEM_CERT_PARSER.readPEMObject(in));
+    }
+
+    private java.security.cert.Certificate getCertificate(ASN1Sequence seq)
+        throws CertificateParsingException
+    {
+        if (seq == null)
+        {
+            return null;
+        }
+        
         if (seq.size() > 1
                 && seq.getObjectAt(0) instanceof ASN1ObjectIdentifier)
         {
@@ -92,23 +113,9 @@ public class CertificateFactory
         return null;
     }
 
-    private java.security.cert.Certificate readPEMCertificate(
-        InputStream in)
-        throws IOException, CertificateParsingException
-    {
-        ASN1Sequence seq = PEM_CERT_PARSER.readPEMObject(in);
-
-        if (seq != null)
-        {
-            return new X509CertificateObject(bcHelper,
-                            Certificate.getInstance(seq));
-        }
-
-        return null;
-    }
 
     protected CRL createCRL(CertificateList c)
-    throws CRLException
+        throws CRLException
     {
         return new X509CRLObject(bcHelper, c);
     }
@@ -117,23 +124,24 @@ public class CertificateFactory
         InputStream in)
         throws IOException, CRLException
     {
-        ASN1Sequence seq = PEM_CRL_PARSER.readPEMObject(in);
-
-        if (seq != null)
-        {
-            return createCRL(
-                            CertificateList.getInstance(seq));
-        }
-
-        return null;
+        return getCRL(PEM_CRL_PARSER.readPEMObject(in));
     }
 
     private CRL readDERCRL(
         ASN1InputStream aIn)
         throws IOException, CRLException
     {
-        ASN1Sequence seq = (ASN1Sequence)aIn.readObject();
+        return getCRL(ASN1Sequence.getInstance(aIn.readObject()));
+    }
 
+    private CRL getCRL(ASN1Sequence seq)
+        throws CRLException
+    {
+        if (seq == null)
+        {
+            return null;
+        }
+        
         if (seq.size() > 1
                 && seq.getObjectAt(0) instanceof ASN1ObjectIdentifier)
         {
@@ -141,7 +149,7 @@ public class CertificateFactory
             {
                 sCrlData = SignedData.getInstance(ASN1Sequence.getInstance(
                     (ASN1TaggedObject)seq.getObjectAt(1), true)).getCRLs();
-    
+
                 return getCRL();
             }
         }
@@ -200,7 +208,30 @@ public class CertificateFactory
                 }
             }
 
-            PushbackInputStream pis = new PushbackInputStream(in);
+            InputStream pis;
+
+            if (in.markSupported())
+            {
+                pis = in;
+            }
+            else
+            {
+                // Android-changed: Use PushbackInputStream instead of ByteArrayInputStream.
+                // we want {@code in.available()} to return the number of available bytes if
+                // there is trailing data (otherwise it breaks
+                // libcore.java.security.cert.X509CertificateTest#test_Provider
+                // ). Which is not possible if we read the whole stream at this point.
+                // // pis = new ByteArrayInputStream(Streams.readAll(in));
+                pis = new PushbackInputStream(in);
+            }
+
+            // BEGIN Android-changed: Use PushbackInputStream
+            // pis.mark(1);
+            if (in.markSupported()) {
+                pis.mark(1);
+            }
+            // END Android-changed: Use PushbackInputStream
+
             int tag = pis.read();
 
             if (tag == -1)
@@ -208,7 +239,16 @@ public class CertificateFactory
                 return null;
             }
 
-            pis.unread(tag);
+            // BEGIN Android-changed: Use PushbackInputStream
+            // pis.reset
+            if (in.markSupported()) {
+                pis.reset();
+            }
+            else
+            {
+                ((PushbackInputStream) pis).unread(tag);
+            }
+            // END Android-changed: Use PushbackInputStream
 
             if (tag != 0x30)  // assume ascii PEM encoded.
             {
@@ -234,8 +274,16 @@ public class CertificateFactory
         throws CertificateException
     {
         java.security.cert.Certificate     cert;
+        // Android-removed: Don't read entire stream immediately.
+        // we want {@code in.available()} to return the number of available bytes if
+        // there is trailing data (otherwise it breaks
+        // libcore.java.security.cert.X509CertificateTest#test_Provider
+        // ). Which is not possible if we read the whole stream at this point.
+        // BufferedInputStream in = new BufferedInputStream(inStream);
         List certs = new ArrayList();
 
+        // Android-changed: Read from original stream
+        // while ((cert = engineGenerateCertificate(in)) != null)
         while ((cert = engineGenerateCertificate(inStream)) != null)
         {
             certs.add(cert);
@@ -249,18 +297,18 @@ public class CertificateFactory
      * it with the data read from the input stream inStream.
      */
     public CRL engineGenerateCRL(
-        InputStream inStream)
+        InputStream in)
         throws CRLException
     {
         if (currentCrlStream == null)
         {
-            currentCrlStream = inStream;
+            currentCrlStream = in;
             sCrlData = null;
             sCrlDataObjectCount = 0;
         }
-        else if (currentCrlStream != inStream) // reset if input stream has changed
+        else if (currentCrlStream != in) // reset if input stream has changed
         {
-            currentCrlStream = inStream;
+            currentCrlStream = in;
             sCrlData = null;
             sCrlDataObjectCount = 0;
         }
@@ -281,7 +329,18 @@ public class CertificateFactory
                 }
             }
 
-            PushbackInputStream pis = new PushbackInputStream(inStream);
+            InputStream pis;
+
+            if (in.markSupported())
+            {
+                pis = in;
+            }
+            else
+            {
+                pis = new ByteArrayInputStream(Streams.readAll(in));
+            }
+
+            pis.mark(1);
             int tag = pis.read();
 
             if (tag == -1)
@@ -289,8 +348,7 @@ public class CertificateFactory
                 return null;
             }
 
-            pis.unread(tag);
-
+            pis.reset();
             if (tag != 0x30)  // assume ascii PEM encoded.
             {
                 return readPEMCRL(pis);
@@ -325,8 +383,9 @@ public class CertificateFactory
     {
         CRL crl;
         List crls = new ArrayList();
+        BufferedInputStream in = new BufferedInputStream(inStream);
 
-        while ((crl = engineGenerateCRL(inStream)) != null)
+        while ((crl = engineGenerateCRL(in)) != null)
         {
             crls.add(crl);
         }

@@ -18,10 +18,9 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEParameterSpec;
-// BEGIN android-removed
+// Android-removed: Unsupported algorithms
 // import javax.crypto.spec.RC2ParameterSpec;
 // import javax.crypto.spec.RC5ParameterSpec;
-// END android-removed
 import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
@@ -41,10 +40,9 @@ public abstract class BaseCipherSpi
                                     {
                                         IvParameterSpec.class,
                                         PBEParameterSpec.class,
-                                        // BEGIN android-removed
+                                        // Android-removed: Unsupported algorithms
                                         // RC2ParameterSpec.class,
                                         // RC5ParameterSpec.class
-                                        // END android-removed
                                     };
 
     private final JcaJceHelper helper = new BCJcaJceHelper();
@@ -156,9 +154,15 @@ public abstract class BaseCipherSpi
         {
             throw new InvalidKeyException(e.getMessage());
         }
-        catch (BadPaddingException e)
+        catch (final BadPaddingException e)
         {
-            throw new InvalidKeyException(e.getMessage());
+            throw new InvalidKeyException("unable to unwrap")
+            {
+                public synchronized Throwable getCause()
+                {
+                    return e;
+                }
+            };
         }
         catch (IllegalBlockSizeException e2)
         {

@@ -141,13 +141,20 @@ public class KeyFactorySpi
         KeySpec keySpec)
         throws InvalidKeySpecException
     {
-        if (keySpec instanceof ECPublicKeySpec)
+        try
         {
-            return new BCECPublicKey(algorithm, (ECPublicKeySpec)keySpec, configuration);
+            if (keySpec instanceof ECPublicKeySpec)
+            {
+                return new BCECPublicKey(algorithm, (ECPublicKeySpec)keySpec, configuration);
+            }
+            else if (keySpec instanceof java.security.spec.ECPublicKeySpec)
+            {
+                return new BCECPublicKey(algorithm, (java.security.spec.ECPublicKeySpec)keySpec, configuration);
+            }
         }
-        else if (keySpec instanceof java.security.spec.ECPublicKeySpec)
+        catch (Exception e)
         {
-            return new BCECPublicKey(algorithm, (java.security.spec.ECPublicKeySpec)keySpec, configuration);
+            throw new InvalidKeySpecException("invalid KeySpec: " + e.getMessage(), e);
         }
 
         return super.engineGeneratePublic(keySpec);
@@ -201,16 +208,18 @@ public class KeyFactorySpi
         }
     }
 
-    // BEGIN android-removed
-    // public static class ECGOST3410
-    //     extends KeyFactorySpi
-    // {
-    //     public ECGOST3410()
-    //     {
-    //         super("ECGOST3410", BouncyCastleProvider.CONFIGURATION);
-    //     }
-    // }
-    // END android-removed
+    // BEGIN Android-removed: Unsupported algorithm
+    /*
+    public static class ECGOST3410
+        extends KeyFactorySpi
+    {
+        public ECGOST3410()
+        {
+            super("ECGOST3410", BouncyCastleProvider.CONFIGURATION);
+        }
+    }
+    */
+    // END Android-removed: Unsupported algorithm
 
     public static class ECDH
         extends KeyFactorySpi

@@ -5,6 +5,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.InvalidParameterException;
 import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
 
@@ -14,10 +15,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.ShortBufferException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEParameterSpec;
-// BEGIN android-removed
+// Android-removed: Unsupported algorithms
 // import javax.crypto.spec.RC2ParameterSpec;
 // import javax.crypto.spec.RC5ParameterSpec;
-// END android-removed
 
 import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.DataLengthException;
@@ -36,10 +36,9 @@ public class BaseStreamCipher
     //
     private Class[]                 availableSpecs =
                                     {
-                                        // BEGIN android-removed
+                                        // Android-removed: Unsupported algorithms
                                         // RC2ParameterSpec.class,
                                         // RC5ParameterSpec.class,
-                                        // END android-removed
                                         IvParameterSpec.class,
                                         PBEParameterSpec.class
                                     };
@@ -123,10 +122,11 @@ public class BaseStreamCipher
      */
     protected void engineSetMode(
         String  mode)
+        throws NoSuchAlgorithmException
     {
         if (!mode.equalsIgnoreCase("ECB"))
         {
-            throw new IllegalArgumentException("can't support mode " + mode);
+            throw new NoSuchAlgorithmException("can't support mode " + mode);
         }
     }
 

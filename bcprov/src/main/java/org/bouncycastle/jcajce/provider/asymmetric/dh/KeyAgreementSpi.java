@@ -16,10 +16,9 @@ import javax.crypto.spec.DHParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.crypto.DerivationFunction;
-// BEGIN android-removed
+// Android-removed: Unsupported algorithm
 // import org.bouncycastle.crypto.agreement.kdf.DHKEKGenerator;
-// END android-removed
-import org.bouncycastle.crypto.digests.SHA1Digest;
+// import org.bouncycastle.crypto.util.DigestFactory;
 import org.bouncycastle.jcajce.provider.asymmetric.util.BaseAgreementSpi;
 import org.bouncycastle.jcajce.spec.UserKeyingMaterialSpec;
 
@@ -31,9 +30,14 @@ import org.bouncycastle.jcajce.spec.UserKeyingMaterialSpec;
 public class KeyAgreementSpi
     extends BaseAgreementSpi
 {
+    private static final BigInteger ONE = BigInteger.valueOf(1);
+    private static final BigInteger TWO = BigInteger.valueOf(2);
+
     private BigInteger      x;
     private BigInteger      p;
     private BigInteger      g;
+
+    private BigInteger     result;
 
     public KeyAgreementSpi()
     {
@@ -101,14 +105,22 @@ public class KeyAgreementSpi
             throw new InvalidKeyException("DHPublicKey not for this KeyAgreement!");
         }
 
+        BigInteger peerY = ((DHPublicKey)key).getY();
+        if (peerY == null || peerY.compareTo(TWO) < 0
+            || peerY.compareTo(p.subtract(ONE)) >= 0)
+        {
+            throw new InvalidKeyException("Invalid DH PublicKey");
+        }
+
+        result = peerY.modPow(x, p);
+        if (result.compareTo(ONE) == 0)
+        {
+            throw new InvalidKeyException("Shared key can't be 1");
+        }
+
         if (lastPhase)
         {
-            result = ((DHPublicKey)key).getY().modPow(x, p);
             return null;
-        }
-        else
-        {
-            result = ((DHPublicKey)key).getY().modPow(x, p);
         }
 
         return new BCDHPublicKey(result, pubKey.getParams());
@@ -216,14 +228,21 @@ public class KeyAgreementSpi
         this.x = this.result = privKey.getX();
     }
 
-    // BEGIN android-removed
-    // public static class DHwithRFC2631KDF
-    //     extends KeyAgreementSpi
-    // {
-    //     public DHwithRFC2631KDF()
-    //     {
-    //         super("DHwithRFC2631KDF", new DHKEKGenerator(new SHA1Digest()));
-    //     }
-    // }
-    // END android-removed
+    protected byte[] calcSecret()
+    {
+        return bigIntToBytes(result);
+    }
+
+    // BEGIN Android-removed: Unsupported algorithm
+    /*
+    public static class DHwithRFC2631KDF
+        extends KeyAgreementSpi
+    {
+        public DHwithRFC2631KDF()
+        {
+            super("DHwithRFC2631KDF", new DHKEKGenerator(DigestFactory.createSHA1()));
+        }
+    }
+    */
+    // END Android-removed: Unsupported algorithm
 }

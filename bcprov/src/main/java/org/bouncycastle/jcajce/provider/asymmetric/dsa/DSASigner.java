@@ -8,7 +8,6 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.SignatureException;
 import java.security.SignatureSpi;
-import java.security.interfaces.DSAKey;
 import java.security.spec.AlgorithmParameterSpec;
 
 import org.bouncycastle.asn1.ASN1Encoding;
@@ -17,30 +16,21 @@ import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
-import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.asn1.x509.X509ObjectIdentifiers;
 import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.DSA;
 import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.digests.NullDigest;
-// BEGIN android-added
-import org.bouncycastle.crypto.digests.AndroidDigestFactory;
-// END android-added
-// BEGIN android-removed
-// import org.bouncycastle.crypto.digests.SHA1Digest;
-// import org.bouncycastle.crypto.digests.SHA224Digest;
-// import org.bouncycastle.crypto.digests.SHA256Digest;
-// import org.bouncycastle.crypto.digests.SHA384Digest;
-// import org.bouncycastle.crypto.digests.SHA512Digest;
-// END android-removed
-// BEGIN android-added
+// Android-added: Check DSA keys when generated
 import org.bouncycastle.crypto.params.DSAKeyParameters;
 import org.bouncycastle.crypto.params.DSAParameters;
-// END android-added
 import org.bouncycastle.crypto.params.ParametersWithRandom;
-// BEGIN android-removed
+// Android-removed: Unsupported algorithm
 // import org.bouncycastle.crypto.signers.HMacDSAKCalculator;
-// END android-removed
+// Android-changed: Use Android digests
+// import org.bouncycastle.crypto.util.DigestFactory;
+import org.bouncycastle.crypto.digests.AndroidDigestFactory;
+import org.bouncycastle.util.Arrays;
 
 public class DSASigner
     extends SignatureSpi
@@ -62,34 +52,7 @@ public class DSASigner
         PublicKey   publicKey)
         throws InvalidKeyException
     {
-        CipherParameters    param;
-
-        if (publicKey instanceof DSAKey)
-        {
-            param = DSAUtil.generatePublicKeyParameter(publicKey);
-        }
-        else
-        {
-            try
-            {
-                byte[]  bytes = publicKey.getEncoded();
-
-                publicKey = new BCDSAPublicKey(SubjectPublicKeyInfo.getInstance(bytes));
-
-                if (publicKey instanceof DSAKey)
-                {
-                    param = DSAUtil.generatePublicKeyParameter(publicKey);
-                }
-                else
-                {
-                    throw new InvalidKeyException("can't recognise key type in DSA based signer");
-                }
-            }
-            catch (Exception e)
-            {
-                throw new InvalidKeyException("can't recognise key type in DSA based signer");
-            }
-        }
+        CipherParameters    param = DSAUtil.generatePublicKeyParameter(publicKey);
 
         digest.reset();
         signer.init(false, param);
@@ -108,13 +71,11 @@ public class DSASigner
         PrivateKey  privateKey)
         throws InvalidKeyException
     {
-        CipherParameters    param;
+        CipherParameters    param = DSAUtil.generatePrivateKeyParameter(privateKey);
 
-        param = DSAUtil.generatePrivateKeyParameter(privateKey);
-        // BEGIN android-added
+        // Android-added: Check DSA keys when generated
         DSAParameters dsaParam = ((DSAKeyParameters) param).getParameters();
         checkKey(dsaParam);
-        // END android-added
 
         if (random != null)
         {
@@ -188,7 +149,7 @@ public class DSASigner
         throw new UnsupportedOperationException("engineSetParameter unsupported");
     }
 
-    // BEGIN android-added
+    // BEGIN Android-added: Check DSA keys when generated
     protected void checkKey(DSAParameters params) throws InvalidKeyException {
         int valueL = params.getP().bitLength();
         int valueN = params.getQ().bitLength();
@@ -209,7 +170,7 @@ public class DSASigner
         }
     }
 
-    // END android-added
+    // END Android-added: Check DSA keys when generated
     /**
      * @deprecated replaced with <a href = "#engineSetParameter(java.security.spec.AlgorithmParameterSpec)">
      */
@@ -243,6 +204,15 @@ public class DSASigner
         throws IOException
     {
         ASN1Sequence s = (ASN1Sequence)ASN1Primitive.fromByteArray(encoding);
+        if (s.size() != 2)
+        {
+            throw new IOException("malformed signature");
+        }
+        if (!Arrays.areEqual(encoding, s.getEncoded(ASN1Encoding.DER)))
+        {
+            throw new IOException("malformed signature");
+        }
+
         return new BigInteger[]{
             ((ASN1Integer)s.getObjectAt(0)).getValue(),
             ((ASN1Integer)s.getObjectAt(1)).getValue()
@@ -254,102 +224,180 @@ public class DSASigner
     {
         public stdDSA()
         {
-            // BEGIN android-changed
+            // Android-changed: Use Android digests
+            // super(DigestFactory.createSHA1(), new org.bouncycastle.crypto.signers.DSASigner());
             super(AndroidDigestFactory.getSHA1(), new org.bouncycastle.crypto.signers.DSASigner());
-            // END android-changed
         }
     }
 
-    // BEGIN android-removed
-    // static public class detDSA
-    //     extends DSASigner
-    // {
-    //     public detDSA()
-    //     {
-    //         super(new SHA1Digest(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(new SHA1Digest())));
-    //     }
-    // }
-    // END android-removed
+    // BEGIN Android-removed: Unsupported algorithm
+    /*
+    static public class detDSA
+        extends DSASigner
+    {
+        public detDSA()
+        {
+            super(DigestFactory.createSHA1(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(DigestFactory.createSHA1())));
+        }
+    }
+    */
+    // END Android-removed: Unsupported algorithm
 
     static public class dsa224
         extends DSASigner
     {
         public dsa224()
         {
-            // BEGIN android-changed
+            // Android-changed: Use Android digests
+            // super(DigestFactory.createSHA224(), new org.bouncycastle.crypto.signers.DSASigner());
             super(AndroidDigestFactory.getSHA224(), new org.bouncycastle.crypto.signers.DSASigner());
-            // END android-changed
         }
     }
 
-    // BEGIN android-removed
-    // static public class detDSA224
-    //     extends DSASigner
-    // {
-    //     public detDSA224()
-    //     {
-    //         super(new SHA224Digest(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(new SHA224Digest())));
-    //     }
-    // }
-    // END android-removed
+    // BEGIN Android-removed: Unsupported algorithm
+    /*
+    static public class detDSA224
+        extends DSASigner
+    {
+        public detDSA224()
+        {
+            super(DigestFactory.createSHA224(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(DigestFactory.createSHA224())));
+        }
+    }
+    */
+    // END Android-removed: Unsupported algorithm
 
     static public class dsa256
         extends DSASigner
     {
         public dsa256()
         {
-            // BEGIN android-changed
+            // Android-changed: Use Android digests
+            // super(DigestFactory.createSHA256(), new org.bouncycastle.crypto.signers.DSASigner());
             super(AndroidDigestFactory.getSHA256(), new org.bouncycastle.crypto.signers.DSASigner());
-            // END android-changed
         }
     }
 
-    // BEGIN android-removed
-    // static public class detDSA256
-    //     extends DSASigner
-    // {
-    //     public detDSA256()
-    //     {
-    //         super(new SHA256Digest(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(new SHA256Digest())));
-    //     }
-    // }
-    //
-    // static public class dsa384
-    //     extends DSASigner
-    // {
-    //     public dsa384()
-    //     {
-    //         super(new SHA384Digest(), new org.bouncycastle.crypto.signers.DSASigner());
-    //     }
-    // }
-    //
-    // static public class detDSA384
-    //     extends DSASigner
-    // {
-    //     public detDSA384()
-    //     {
-    //         super(new SHA384Digest(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(new SHA384Digest())));
-    //     }
-    // }
-    //
-    // static public class dsa512
-    //     extends DSASigner
-    // {
-    //     public dsa512()
-    //     {
-    //         super(new SHA512Digest(), new org.bouncycastle.crypto.signers.DSASigner());
-    //     }
-    // }
-    //
-    // static public class detDSA512
-    //     extends DSASigner
-    // {
-    //     public detDSA512()
-    //     {
-    //         super(new SHA512Digest(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(new SHA512Digest())));
-    //     }
-    // }
-    // END android-removed
+    // BEGIN Android-removed: Unsupported algorithms
+    /*
+    static public class detDSA256
+        extends DSASigner
+    {
+        public detDSA256()
+        {
+            super(DigestFactory.createSHA256(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(DigestFactory.createSHA256())));
+        }
+    }
+
+    static public class dsa384
+        extends DSASigner
+    {
+        public dsa384()
+        {
+            super(DigestFactory.createSHA384(), new org.bouncycastle.crypto.signers.DSASigner());
+        }
+    }
+
+    static public class detDSA384
+        extends DSASigner
+    {
+        public detDSA384()
+        {
+            super(DigestFactory.createSHA384(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(DigestFactory.createSHA384())));
+        }
+    }
+
+    static public class dsa512
+        extends DSASigner
+    {
+        public dsa512()
+        {
+            super(DigestFactory.createSHA512(), new org.bouncycastle.crypto.signers.DSASigner());
+        }
+    }
+
+    static public class detDSA512
+        extends DSASigner
+    {
+        public detDSA512()
+        {
+            super(DigestFactory.createSHA512(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(DigestFactory.createSHA512())));
+        }
+    }
+
+    static public class dsaSha3_224
+        extends DSASigner
+    {
+        public dsaSha3_224()
+        {
+            super(DigestFactory.createSHA3_224(), new org.bouncycastle.crypto.signers.DSASigner());
+        }
+    }
+
+    static public class detDSASha3_224
+        extends DSASigner
+    {
+        public detDSASha3_224()
+        {
+            super(DigestFactory.createSHA3_224(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(DigestFactory.createSHA3_224())));
+        }
+    }
+
+    static public class dsaSha3_256
+        extends DSASigner
+    {
+        public dsaSha3_256()
+        {
+            super(DigestFactory.createSHA3_256(), new org.bouncycastle.crypto.signers.DSASigner());
+        }
+    }
+
+    static public class detDSASha3_256
+        extends DSASigner
+    {
+        public detDSASha3_256()
+        {
+            super(DigestFactory.createSHA3_256(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(DigestFactory.createSHA3_256())));
+        }
+    }
+
+    static public class dsaSha3_384
+        extends DSASigner
+    {
+        public dsaSha3_384()
+        {
+            super(DigestFactory.createSHA3_384(), new org.bouncycastle.crypto.signers.DSASigner());
+        }
+    }
+
+    static public class detDSASha3_384
+        extends DSASigner
+    {
+        public detDSASha3_384()
+        {
+            super(DigestFactory.createSHA3_384(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(DigestFactory.createSHA3_384())));
+        }
+    }
+
+    static public class dsaSha3_512
+        extends DSASigner
+    {
+        public dsaSha3_512()
+        {
+            super(DigestFactory.createSHA3_512(), new org.bouncycastle.crypto.signers.DSASigner());
+        }
+    }
+
+    static public class detDSASha3_512
+        extends DSASigner
+    {
+        public detDSASha3_512()
+        {
+            super(DigestFactory.createSHA3_512(), new org.bouncycastle.crypto.signers.DSASigner(new HMacDSAKCalculator(DigestFactory.createSHA3_512())));
+        }
+    }
+    */
+    // END Android-removed: Unsupported algorithms
 
     static public class noneDSA
         extends DSASigner

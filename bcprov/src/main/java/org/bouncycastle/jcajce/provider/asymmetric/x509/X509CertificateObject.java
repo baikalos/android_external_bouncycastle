@@ -56,9 +56,9 @@ import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.Extensions;
 import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.asn1.x509.KeyUsage;
-// BEGIN android-added
+// BEGIN Android-added: Unknown reason
 import org.bouncycastle.asn1.x509.X509Name;
-// END android-added
+// END Android-added: Unknown reason
 import org.bouncycastle.jcajce.provider.asymmetric.util.PKCS12BagAttributeCarrierImpl;
 import org.bouncycastle.jcajce.util.JcaJceHelper;
 import org.bouncycastle.jce.X509Principal;
@@ -68,11 +68,7 @@ import org.bouncycastle.util.Integers;
 import org.bouncycastle.util.Strings;
 import org.bouncycastle.util.encoders.Hex;
 
-// BEGIN ANDROID-CHANGED
-// Was: class X509CertificateObject
-// Changed to public so that it can be accessed from X509V3CertificateGenerator
-public class X509CertificateObject
-// END ANDROID-CHANGED
+class X509CertificateObject
     extends X509Certificate
     implements PKCS12BagAttributeCarrier
 {
@@ -546,20 +542,19 @@ public class X509CertificateObject
         }
     }
 
-    // BEGIN android-changed
+    // Android-added: Cache the encoded certificate
     private byte[] encoded;
-    // END android-changed
     public byte[] getEncoded()
         throws CertificateEncodingException
     {
         try
         {
-            // BEGIN android-changed
+            // BEGIN Android-changed: Cache the encoded certificate
             if (encoded == null) {
                 encoded = c.getEncoded(ASN1Encoding.DER);
             }
             return encoded;
-            // END android-changed
+            // END Android-changed: Cache the encoded certificate
         }
         catch (IOException e)
         {
@@ -883,9 +878,9 @@ public class X509CertificateObject
                     list.add(genName.getEncoded());
                     break;
                 case GeneralName.directoryName:
-                    // BEGIN android-changed
+                    // Android-changed: Unknown reason
+                    // list.add(X500Name.getInstance(RFC4519Style.INSTANCE, genName.getName()).toString());
                     list.add(X509Name.getInstance(genName.getName()).toString(true, X509Name.DefaultSymbols));
-                    // END android-changed
                     break;
                 case GeneralName.dNSName:
                 case GeneralName.rfc822Name:

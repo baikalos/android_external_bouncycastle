@@ -8,6 +8,7 @@ import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.ECGenParameterSpec;
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.x9.ECNamedCurveTable;
@@ -42,9 +43,10 @@ public abstract class KeyPairGeneratorSpi
         ECKeyGenerationParameters   param;
         ECKeyPairGenerator          engine = new ECKeyPairGenerator();
         Object                      ecParams = null;
-        // BEGIN android-changed
+        // Android-changed: Use 256-bit keys by default.
+        // 239-bit keys (the Bouncy Castle default) are less widely-supported than 256-bit ones,
+        // so we've changed the default strength to 256 for increased compatibility
         int                         strength = 256;
-        // BEGIN android-changed
         int                         certainty = 50;
         SecureRandom                random = new SecureRandom();
         boolean                     initialised = false;
@@ -86,13 +88,13 @@ public abstract class KeyPairGeneratorSpi
             SecureRandom    random)
         {
             this.strength = strength;
-            // BEGIN android-added
+            // BEGIN Android-changed: Don't override this.random with null.
+            // Passing null just means to use a default random, which this.random is already
+            // initialized to, so just use that
             if (random != null) {
-            // END android-added
-            this.random = random;
-            // BEGIN android-added
+                this.random = random;
             }
-            // END android-added
+            // END Android-changed: Don't override this.random with null.
 
             ECGenParameterSpec ecParams = (ECGenParameterSpec)ecParameters.get(Integers.valueOf(strength));
             if (ecParams == null)
@@ -115,11 +117,11 @@ public abstract class KeyPairGeneratorSpi
             SecureRandom            random)
             throws InvalidAlgorithmParameterException
         {
-            // BEGIN android-added
+            // BEGIN Android-added: Use existing SecureRandom if none is provided.
             if (random == null) {
                 random = this.random;
             }
-            // END android-added
+            // END Android-added: Use existing SecureRandom if none is provided.
             if (params == null)
             {
                 ECParameterSpec implicitCA = configuration.getEcImplicitlyCa();
@@ -194,7 +196,7 @@ public abstract class KeyPairGeneratorSpi
 
         protected ECKeyGenerationParameters createKeyGenParamsBC(ECParameterSpec p, SecureRandom r)
         {
-            return new ECKeyGenerationParameters(new ECDomainParameters(p.getCurve(), p.getG(), p.getN()), r);
+            return new ECKeyGenerationParameters(new ECDomainParameters(p.getCurve(), p.getG(), p.getN(), p.getH()), r);
         }
 
         protected ECKeyGenerationParameters createKeyGenParamsJCE(java.security.spec.ECParameterSpec p, SecureRandom r)
@@ -221,7 +223,14 @@ public abstract class KeyPairGeneratorSpi
                     p = ECNamedCurveTable.getByOID(new ASN1ObjectIdentifier(curveName));
                     if (p == null)
                     {
-                        throw new InvalidAlgorithmParameterException("unknown curve OID: " + curveName);
+                        Map extraCurves = configuration.getAdditionalECParameters();
+
+                        p = (X9ECParameters)extraCurves.get(new ASN1ObjectIdentifier(curveName));
+
+                        if (p == null)
+                        {
+                            throw new InvalidAlgorithmParameterException("unknown curve OID: " + curveName);
+                        }
                     }
                 }
                 catch (IllegalArgumentException ex)
