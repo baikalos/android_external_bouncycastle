@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f1d2d00_bae72e2b",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-11-28T17:59:10Z",
+      "side": 1,
+      "message": "Perhaps this could be raised with BC folks? Seems like a bug, or at least something they could make more obvious.",
+      "range": {
+        "startLine": 275,
+        "startChar": 31,
+        "endLine": 275,
+        "endChar": 38
+      },
+      "revId": "6b5b8b2f1e184da74aa4b2d083cb3f6a3c227844",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
