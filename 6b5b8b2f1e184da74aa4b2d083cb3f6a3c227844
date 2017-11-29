@@ -22,6 +22,30 @@
       "revId": "6b5b8b2f1e184da74aa4b2d083cb3f6a3c227844",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5cb98bc_6a598fcc",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2017-11-29T10:10:03Z",
+      "side": 1,
+      "message": "\u003e Perhaps this could be raised with BC folks? Seems like a bug, or at\n \u003e least something they could make more obvious.\n\nProbably worth doing.  It\u0027s useful to note that they won\u0027t have a problem in the upstream version (because that always uses the BC versions, which allows bare arrays), we only have the problem because we don\u0027t use the BC versions.",
+      "parentUuid": "0f1d2d00_bae72e2b",
+      "range": {
+        "startLine": 275,
+        "startChar": 31,
+        "endLine": 275,
+        "endChar": 38
+      },
+      "revId": "6b5b8b2f1e184da74aa4b2d083cb3f6a3c227844",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
