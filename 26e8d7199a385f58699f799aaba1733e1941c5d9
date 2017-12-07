@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3ec254c1_3dd7d830",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2017-12-07T14:03:59Z",
+      "side": 1,
+      "message": "\u003e Did you confirm that this gets logged correctly when run as a\n \u003e normal android app ? (i.e, via a CTS test using cts-tradefed - not\n \u003e vogar)\n\nYep, it gets logged under tag \"System.err\" under the app\u0027s process ID.",
+      "parentUuid": "cd67f829_b3b765f9",
+      "range": {
+        "startLine": 889,
+        "startChar": 20,
+        "endLine": 889,
+        "endChar": 38
+      },
+      "revId": "26e8d7199a385f58699f799aaba1733e1941c5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abfc3950_e83536fa",
         "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
         "patchSetId": 1
