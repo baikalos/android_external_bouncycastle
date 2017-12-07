@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "052bf3b9_8b880e59",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2017-12-07T12:51:49Z",
+      "side": 1,
+      "message": "\u003e i don\u0027t think this logs to the \"main\" log (logcat) for regular\n \u003e android apps. you might have to use System.logE (which is an\n \u003e android specific hidden API, but should be available to this\n \u003e class..)\n\nUnfortunately, the BC libraries support building for host, so it can\u0027t use Android-specific APIs.",
+      "parentUuid": "ac9eb7a2_f76a2273",
+      "range": {
+        "startLine": 889,
+        "startChar": 20,
+        "endLine": 889,
+        "endChar": 38
+      },
+      "revId": "26e8d7199a385f58699f799aaba1733e1941c5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abfc3950_e83536fa",
         "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T11:19:08Z",
       "side": 1,
       "message": "we should probably log the stack trace here..",
+      "range": {
+        "startLine": 894,
+        "startChar": 19,
+        "endLine": 894,
+        "endChar": 62
+      },
+      "revId": "26e8d7199a385f58699f799aaba1733e1941c5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a77160f7_48f290ff",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2017-12-07T12:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abfc3950_e83536fa",
       "range": {
         "startLine": 894,
         "startChar": 19,
