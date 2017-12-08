@@ -1,0 +1,8 @@
+Code-Review+2: Narayan Kamath <narayan@google.com>
+Verified+1: Adam Vartanian <flooey@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Adam Vartanian <flooey@google.com>
+Submitted-at: Fri, 08 Dec 2017 09:29:40 +0000
+Reviewed-on: https://android-review.googlesource.com/559659
+Project: platform/external/bouncycastle
+Branch: refs/heads/master
