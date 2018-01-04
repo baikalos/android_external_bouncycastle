@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "690507a5_a88b8341",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-01-04T14:18:52Z",
+      "side": 1,
+      "message": "Is \"conscrypt\" needed here? It doesn\u0027t actually have any src and just puts jarjar on top of the other rule so I\u0027m wondering what it needs it for.",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 21
+      },
+      "revId": "666fcf7bbe1e90d209987159598633a9b35d8821",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
