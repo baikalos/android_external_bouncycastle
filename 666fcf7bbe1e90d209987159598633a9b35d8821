@@ -22,6 +22,30 @@
       "revId": "666fcf7bbe1e90d209987159598633a9b35d8821",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91124f70_862ee515",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2018-01-05T11:19:05Z",
+      "side": 1,
+      "message": "\u003e Is \"conscrypt\" needed here? It doesn\u0027t actually have any src and\n \u003e just puts jarjar on top of the other rule so I\u0027m wondering what it\n \u003e needs it for.\n\nIt doesn\u0027t appear to be necessary, so I\u0027ve removed it.",
+      "parentUuid": "690507a5_a88b8341",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 21
+      },
+      "revId": "666fcf7bbe1e90d209987159598633a9b35d8821",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
