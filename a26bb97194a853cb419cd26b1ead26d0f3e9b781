@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "445aa292_3ae5bee6",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-02-27T18:54:48Z",
+      "side": 1,
+      "message": "This comment probably needs attention.\n\nAny idea if okhttp-tests are run on the ART buildbots? It\u0027s the only reason I can think why this might have unintended side-effects.\n\nokhttp will need a change too.",
+      "range": {
+        "startLine": 46,
+        "startChar": 25,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "a26bb97194a853cb419cd26b1ead26d0f3e9b781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
