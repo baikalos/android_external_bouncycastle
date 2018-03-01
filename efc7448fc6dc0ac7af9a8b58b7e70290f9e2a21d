@@ -16,6 +16,24 @@
       "revId": "efc7448fc6dc0ac7af9a8b58b7e70290f9e2a21d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8626b8_2ee68d65",
+        "filename": "bcprov/src/main/java/org/bouncycastle/crypto/digests/AndroidDigestFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-03-01T12:37:37Z",
+      "side": 1,
+      "message": "This is in place to deal with the way that AndroidDigestFactoryOpenSSL instantiates is Digest object. It first needs to construct a MessageDigest object that\u0027s backed by OpenSSL and then wrap it in a BC wrapper. We can\u0027t know whether OpenSSL on older devices supported this properly so we\u0027re being paranoid and falling back to the BC version in case something bad happens.",
+      "parentUuid": "da2abecb_79f7586b",
+      "revId": "efc7448fc6dc0ac7af9a8b58b7e70290f9e2a21d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
