@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25d3fa31_ab19b603",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2018-03-28T10:54:56Z",
+      "side": 1,
+      "message": "\u003e Whose upstream?\n\nFixed, I meant upstream Conscrypt.\n\n \u003e Are you planning to upstream this to BC?\n \u003e Can you include an upstream bug number?\n\nYep, I plan to send this upstream.  I haven\u0027t put together a bug/pull request yet, was going to once this is in.",
+      "parentUuid": "756d454a_1a636415",
+      "range": {
+        "startLine": 21,
+        "startChar": 52,
+        "endLine": 21,
+        "endChar": 60
+      },
+      "revId": "200fbd68679d65ea0738c9ecb13957c172533dba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e79b5071_eaf72b18",
         "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/rsa/CipherSpi.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-03-28T10:28:12Z",
       "side": 1,
       "message": "Maybe move one of the components being added on the left to a subtraction on the right to avoid overflow when output.length nears Integer.MAX_VALUE.\n\nOr do it all in long by adding a cast to one side or the other?",
+      "range": {
+        "startLine": 506,
+        "startChar": 66,
+        "endLine": 506,
+        "endChar": 72
+      },
+      "revId": "200fbd68679d65ea0738c9ecb13957c172533dba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08f3110_471685e8",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/rsa/CipherSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2018-03-28T10:54:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e79b5071_eaf72b18",
       "range": {
         "startLine": 506,
         "startChar": 66,
