@@ -14,10 +14,22 @@
 // limitations under the License.
 //
 
+java_defaults {
+    name: "bouncycastle-errorprone-defaults",
+    errorprone: {
+        javacflags: [
+            "-Xep:MissingOverride:OFF",  // Ignore missing @Override.
+        ],
+    },
+}
+
 // These cannot build in the PDK, because the PDK requires all libraries
 // compile against SDK versions.
 java_defaults {
     name: "bouncycastle-defaults",
+    defaults: [
+        "bouncycastle-errorprone-defaults",
+    ],
     host_supported: true,
     hostdex: true,
     target: {
@@ -33,7 +45,7 @@ java_defaults {
 
 // non-jarjar version to build okhttp-tests
 java_library_static {
-    name: "bouncycastle-nojarjar",
+    name: "bouncycastle-unbundled",
     defaults: ["bouncycastle-defaults"],
 
     srcs: ["bcprov/src/main/java/**/*.java"],
@@ -41,23 +53,7 @@ java_library_static {
         "bcprov/src/main/java/org/bouncycastle/asn1/ocsp/**/*.java",
     ],
 
-    target: {
-        android: {
-            // used for bouncycastle for target where we want to be sure to use OpenSSLDigest
-            exclude_srcs: [
-                "bcprov/src/main/java/org/bouncycastle/crypto/digests/AndroidDigestFactoryBouncyCastle.java",
-            ],
-        },
-        host: {
-            // used for bouncycastle for host where we can't use OpenSSLDigest
-            exclude_srcs: [
-                "bcprov/src/main/java/org/bouncycastle/crypto/digests/AndroidDigestFactoryOpenSSL.java",
-                "bcprov/src/main/java/org/bouncycastle/crypto/digests/OpenSSLDigest.java",
-            ],
-        },
-    },
-    libs: ["conscrypt"],
-    no_framework_libs: true,
+    sdk_version: "9",
     java_version: "1.7",
 }
 
@@ -65,8 +61,7 @@ java_library {
     name: "bouncycastle",
     defaults: ["bouncycastle-defaults"],
 
-    static_libs: ["bouncycastle-nojarjar"],
-    libs: ["conscrypt"],
+    static_libs: ["bouncycastle-unbundled"],
     no_framework_libs: true,
     java_version: "1.7",
 
@@ -84,47 +79,20 @@ java_library {
     name: "bouncycastle-testdex",
     defaults: ["bouncycastle-defaults"],
 
-    static_libs: ["bouncycastle-nojarjar"],
-    libs: ["conscrypt"],
+    static_libs: ["bouncycastle-unbundled"],
     no_framework_libs: true,
     jarjar_rules: "jarjar-rules.txt",
     java_version: "1.7",
 }
 
-// unbundled bouncycastle jar
-java_library_static {
-    name: "bouncycastle-unbundled",
-
-    sdk_version: "9",
-    srcs: ["bcprov/src/main/java/**/*.java"],
-    exclude_srcs: [
-        "bcprov/src/main/java/org/bouncycastle/asn1/ocsp/**/*.java",
-        "bcprov/src/main/java/org/bouncycastle/crypto/digests/AndroidDigestFactoryOpenSSL.java",
-        "bcprov/src/main/java/org/bouncycastle/crypto/digests/OpenSSLDigest.java",
-    ],
-}
-
 // PKIX classes used for testing
-java_library_static {
-    name: "bouncycastle-bcpkix-nojarjar",
-    defaults: ["bouncycastle-defaults"],
-
-    srcs: ["bcpkix/src/main/java/**/*.java"],
-    exclude_srcs: ["bcpkix/src/main/java/org/bouncycastle/cert/ocsp/**/*.java"],
-    no_framework_libs: true,
-    libs: [
-        "bouncycastle-nojarjar",
-        "conscrypt",
-    ],
-}
-
 java_library_static {
     name: "bouncycastle-bcpkix",
     defaults: ["bouncycastle-defaults"],
 
-    static_libs: ["bouncycastle-bcpkix-nojarjar"],
-    libs: ["conscrypt"],
+    static_libs: ["bouncycastle-bcpkix-unbundled"],
     no_framework_libs: true,
+    java_version: "1.7",
 
     target: {
         android: {
@@ -133,23 +101,41 @@ java_library_static {
     },
 }
 
+java_library_static {
+    name: "bouncycastle-bcpkix-unbundled",
+    defaults: [
+        "bouncycastle-defaults",
+    ],
+    libs: [ "bouncycastle-unbundled" ],
+    sdk_version: "9",
+    srcs: ["bcpkix/src/main/java/**/*.java"],
+    exclude_srcs: ["bcpkix/src/main/java/org/bouncycastle/cert/ocsp/**/*.java"],
+}
+
+
 // OCSP classes used for testing
 java_library_static {
     name: "bouncycastle-ocsp",
     defaults: ["bouncycastle-defaults"],
 
+    static_libs: ["bouncycastle-ocsp-unbundled"],
+    jarjar_rules: "jarjar-rules.txt",
+    java_version: "1.7",
+    no_framework_libs: true,
+}
+
+java_library_static {
+    name: "bouncycastle-ocsp-unbundled",
+    defaults: [
+        "bouncycastle-defaults",
+    ],
+    libs: [ "bouncycastle-unbundled",
+            "bouncycastle-bcpkix-unbundled" ],
+    sdk_version: "9",
     srcs: [
         "bcpkix/src/main/java/org/bouncycastle/cert/ocsp/**/*.java",
         "bcprov/src/main/java/org/bouncycastle/asn1/ocsp/**/*.java",
     ],
-    libs: [
-        "bouncycastle-nojarjar",
-        "bouncycastle-bcpkix-nojarjar",
-        "conscrypt",
-    ],
-    jarjar_rules: "jarjar-rules.txt",
-    java_version: "1.7",
-    no_framework_libs: true,
 }
 
 // For compatibilityy with old bouncycastle-host and bouncycastle-bcpkix-host names
