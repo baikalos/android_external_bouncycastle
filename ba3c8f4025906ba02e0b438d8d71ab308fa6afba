@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9b40c49_9fc84567",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2018-07-20T05:05:12Z",
+      "side": 1,
+      "message": "It\u0027s certainly possible to use a genrule to do this source transformation during the build. Is there a reason we\u0027re checking it in vs doing that?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 12
+      },
+      "revId": "ba3c8f4025906ba02e0b438d8d71ab308fa6afba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
