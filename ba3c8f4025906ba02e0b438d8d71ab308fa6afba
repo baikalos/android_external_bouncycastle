@@ -22,6 +22,30 @@
       "revId": "ba3c8f4025906ba02e0b438d8d71ab308fa6afba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d842e4_c40a8fb0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-07-20T08:38:39Z",
+      "side": 1,
+      "message": "We use it in ICU4J like this. I\u0027m not against doing it at build time but I have found some advantages (a few unexpected) from doing it this way:\n\n1) Simplicity / clarity on device and in gerrit. The generated code is clearly visible. It makes it easier to verify correctness of the transform code. Some of the transforms in ICU4J are non-obvious - e.g. we add @hide and replace various javadoc comments. This one is easy right now because I\u0027m just going for parity with the jarjar bytecode, but may include injection of annotations on certain methods / fields in a follow up to help define a new API surface.\n\n2) Easier integration with other tools (e.g. doclava) - no need to know the intermediate code location. Since there\u0027s nothing special about the libraries built this way (although this is probably easy for somebody that knows the build system better)\n\n3) Speed. The source transform I wrote is optimized for clarity, not speed. It\u0027s not slow but I don\u0027t see the point of burdening every eng with the cost of something that should be fully deterministic and should only change once every few months.\n\n4) Ease of debugging - it\u0027s easy to set up ones IDE to point to the generated source being used on device. It\u0027s also easy to debug the source generation when something doesn\u0027t work as expected because it\u0027s invoked by engineers, not the build system.",
+      "parentUuid": "e9b40c49_9fc84567",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 12
+      },
+      "revId": "ba3c8f4025906ba02e0b438d8d71ab308fa6afba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
