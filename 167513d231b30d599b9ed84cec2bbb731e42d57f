@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9213505c_9cb69e6b",
+        "filename": "srcgen/src/main/java/com/android/bouncycastle/srcgen/BouncyCastleTransform.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2018-08-16T09:09:40Z",
+      "side": 1,
+      "message": "The reference to jarjar here won\u0027t make sense to a future reader, because we\u0027re not using jarjar anymore once this is committed.  It probably should be something like \"Repackages Bouncy Castle source files and writes them out into a new directory.\"",
+      "revId": "167513d231b30d599b9ed84cec2bbb731e42d57f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
