@@ -16,6 +16,24 @@
       "revId": "167513d231b30d599b9ed84cec2bbb731e42d57f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9e5172_82364b3d",
+        "filename": "srcgen/src/main/java/com/android/bouncycastle/srcgen/BouncyCastleTransform.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-08-16T09:40:45Z",
+      "side": 1,
+      "message": "Er yes. I have no idea why I wrote this.",
+      "parentUuid": "9213505c_9cb69e6b",
+      "revId": "167513d231b30d599b9ed84cec2bbb731e42d57f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
