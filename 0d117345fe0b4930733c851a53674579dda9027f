@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e88c7163_5b5af964",
+        "filename": "srcgen/generate_android_src.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-09-18T16:39:48Z",
+      "side": 1,
+      "message": "Can probably remove now.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 3
+      },
+      "revId": "0d117345fe0b4930733c851a53674579dda9027f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
