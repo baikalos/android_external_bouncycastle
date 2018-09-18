@@ -34,6 +34,24 @@
       "revId": "167513d231b30d599b9ed84cec2bbb731e42d57f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ef7b8a_9ec4bc83",
+        "filename": "srcgen/src/main/java/com/android/bouncycastle/srcgen/BouncyCastleTransform.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-09-18T15:46:26Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "0b9e5172_82364b3d",
+      "revId": "167513d231b30d599b9ed84cec2bbb731e42d57f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
