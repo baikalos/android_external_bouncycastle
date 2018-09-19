@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e765ac3f_737b1048",
+        "filename": "Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-09-19T08:17:47Z",
+      "side": 0,
+      "message": "Oh, it occurred to me I probably forgot to delete this file.",
+      "range": {
+        "startLine": 70,
+        "startChar": 26,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "8ac7044ca44505764fdc9fa4e96fe79c11a2736a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
