@@ -22,6 +22,30 @@
       "revId": "8ac7044ca44505764fdc9fa4e96fe79c11a2736a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02714a3_bbd0060a",
+        "filename": "Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-09-19T11:09:56Z",
+      "side": 0,
+      "message": "You did delete it. It\u0027s at the bottom of the 800+ file list.",
+      "parentUuid": "e765ac3f_737b1048",
+      "range": {
+        "startLine": 70,
+        "startChar": 26,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "8ac7044ca44505764fdc9fa4e96fe79c11a2736a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
