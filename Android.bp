@@ -44,7 +44,7 @@ java_defaults {
 
 // A bouncycastle library in the original org.bouncycastle package for use
 // outside of the platform. e.g. for host or in unbundled apps.
-java_library_static {
+java_library {
     name: "bouncycastle-unbundled",
     defaults: ["bouncycastle-defaults"],
     host_supported: true,
@@ -54,7 +54,7 @@ java_library_static {
         "bcprov/src/main/java/org/bouncycastle/asn1/ocsp/**/*.java",
     ],
 
-    sdk_version: "9",
+    sdk_version: "core_current",
     java_version: "1.7",
 }
 
@@ -102,7 +102,7 @@ java_library {
 
 // Bouncycastle PKIX classes repackaged in com.android.org.bouncycastle and used
 // for testing.
-java_library_static {
+java_library {
     name: "bouncycastle-bcpkix",
     defaults: ["bouncycastle-defaults"],
 
@@ -118,7 +118,7 @@ java_library_static {
 
 // Bouncycastle PKIX classes in the original org.bouncycastle package for use
 // outside of the platform. e.g. for host or in unbundled apps.
-java_library_static {
+java_library {
     name: "bouncycastle-bcpkix-unbundled",
     defaults: ["bouncycastle-defaults"],
     host_supported: true,
@@ -133,7 +133,7 @@ java_library_static {
 
 // Bouncycastle OCSP classes repackaged in com.android.org.bouncycastle and
 // used for testing.
-java_library_static {
+java_library {
     name: "bouncycastle-ocsp",
     defaults: ["bouncycastle-defaults"],
 
@@ -150,7 +150,7 @@ java_library_static {
 
 // Bouncycastle OCSP classes in the original org.bouncycastle package for use
 // outside of the platform. e.g. for host or in unbundled apps.
-java_library_static {
+java_library {
     name: "bouncycastle-ocsp-unbundled",
     defaults: ["bouncycastle-defaults"],
     host_supported: true,
