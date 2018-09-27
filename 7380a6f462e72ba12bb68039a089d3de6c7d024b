@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2300494b_693e0250",
+        "filename": "srcgen/core-platform-api.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-09-27T17:17:49Z",
+      "side": 1,
+      "message": "The tool is just to help. Once we have the list I expect we\u0027ll be adding things in ones and twos as needed. I think it makes sense just to have it sorted.\n\nDoesn\u0027t have to be initially, but we should aim to do it.",
+      "range": {
+        "startLine": 77,
+        "startChar": 27,
+        "endLine": 77,
+        "endChar": 31
+      },
+      "revId": "7380a6f462e72ba12bb68039a089d3de6c7d024b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
