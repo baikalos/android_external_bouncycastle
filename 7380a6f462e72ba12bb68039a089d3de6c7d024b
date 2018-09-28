@@ -22,6 +22,30 @@
       "revId": "7380a6f462e72ba12bb68039a089d3de6c7d024b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1804f859_a224cd1e",
+        "filename": "srcgen/core-platform-api.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-09-28T12:08:48Z",
+      "side": 1,
+      "message": "Agreed. The comments and separation are there to keep track of the issues that I have found in either the tool or the stubs generation. Although manually patching this file was quicker than fixing the tool it will be worth spending some time to fix the tool to minimize the patching I have to do later when I do this for all the non-framework dependencies of bouncycastle, plus all the dependencies of conscript and libcore.",
+      "parentUuid": "2300494b_693e0250",
+      "range": {
+        "startLine": 77,
+        "startChar": 27,
+        "endLine": 77,
+        "endChar": 31
+      },
+      "revId": "7380a6f462e72ba12bb68039a089d3de6c7d024b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
