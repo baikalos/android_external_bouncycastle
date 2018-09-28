@@ -46,6 +46,30 @@
       "revId": "7380a6f462e72ba12bb68039a089d3de6c7d024b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e61bbd2_66e7e6dc",
+        "filename": "srcgen/core-platform-api.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-09-28T12:13:56Z",
+      "side": 1,
+      "message": "I expect the tool to be mostly a one-off affair, but let\u0027s see how things shake out.",
+      "parentUuid": "1804f859_a224cd1e",
+      "range": {
+        "startLine": 77,
+        "startChar": 27,
+        "endLine": 77,
+        "endChar": 31
+      },
+      "revId": "7380a6f462e72ba12bb68039a089d3de6c7d024b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
