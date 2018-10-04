@@ -78,7 +78,12 @@ java_library {
 
     srcs: [":bouncycastle_java_files"],
 
-    no_framework_libs: true,
+    no_standard_libs: true,
+    libs: [
+        "core-oj",
+        "core-libart",
+    ],
+    system_modules: "none",
     java_version: "1.7",
 }
 
@@ -92,7 +97,12 @@ java_library {
 
     srcs: [":bouncycastle_java_files"],
 
-    no_framework_libs: true,
+    no_standard_libs: true,
+    libs: [
+        "core-oj",
+        "core-libart",
+    ],
+    system_modules: "none",
     java_version: "1.7",
 }
 
@@ -104,9 +114,14 @@ java_library_static {
 
     srcs: ["android_bcpkix/src/main/java/**/*.java"],
     exclude_srcs: ["android_bcpkix/src/main/java/org/bouncycastle/cert/ocsp/**/*.java"],
-    libs: ["bouncycastle"],
 
-    no_framework_libs: true,
+    no_standard_libs: true,
+    libs: [
+        "core-oj",
+        "core-libart",
+        "bouncycastle",
+    ],
+    system_modules: "none",
     java_version: "1.7",
 }
 
@@ -136,7 +151,13 @@ java_library_static {
         "android_bcprov/src/main/java/org/bouncycastle/asn1/ocsp/**/*.java",
     ],
 
-    no_framework_libs: true,
+    no_standard_libs: true,
+    libs: [
+        "core-oj",
+        "core-libart",
+        "bouncycastle",
+    ],
+    system_modules: "none",
     java_version: "1.7",
 }
 
