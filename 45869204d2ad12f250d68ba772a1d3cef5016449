@@ -16,6 +16,24 @@
       "revId": "45869204d2ad12f250d68ba772a1d3cef5016449",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2ccc89_04d95186",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-10-08T17:30:33Z",
+      "side": 1,
+      "message": "Or set it to \"core-all-system-modules\" now, which I think will do what you need.",
+      "parentUuid": "0b15e8c3_d7e32919",
+      "revId": "45869204d2ad12f250d68ba772a1d3cef5016449",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
