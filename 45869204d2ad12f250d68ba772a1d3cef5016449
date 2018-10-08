@@ -70,6 +70,24 @@
       "revId": "45869204d2ad12f250d68ba772a1d3cef5016449",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bebb1ff7_4ad85d91",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-10-08T18:27:43Z",
+      "side": 1,
+      "message": "Darn, you\u0027re right. :/ It might have to do be core-all-system-modules, or perhaps we can introduce the former semantics of core-system-modules under a different name.",
+      "parentUuid": "9b62c483_5e4d045c",
+      "revId": "45869204d2ad12f250d68ba772a1d3cef5016449",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
