@@ -52,6 +52,24 @@
       "revId": "45869204d2ad12f250d68ba772a1d3cef5016449",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b62c483_5e4d045c",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-10-08T18:21:52Z",
+      "side": 1,
+      "message": "no_standard_libs requires you to specify something here, even if it is \"\" or \"core-system-modules\".\n\nI don\u0027t think it can be \"core-system-modules\", as the libcore change in the topic adds bouncycastle to the libraries in core-system-modules.",
+      "parentUuid": "1b459e38_42f3ca59",
+      "revId": "45869204d2ad12f250d68ba772a1d3cef5016449",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
