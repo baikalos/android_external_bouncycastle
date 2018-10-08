@@ -34,6 +34,24 @@
       "revId": "45869204d2ad12f250d68ba772a1d3cef5016449",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b459e38_42f3ca59",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-10-08T18:09:49Z",
+      "side": 1,
+      "message": "Probably better to just drop the line and use core-system-modules, which is the default. (core-system-modules as opposed to core-all-system-modules, since that one is only for building core-all).\n\nUnlike core-system-modules, core-all-system-modules also includes a module-info.java which is only appropriate for core-all, not for this new larger set of bootclasspath libs; it\u0027s not clear to me whether we need to set up a new module-info.java for this new set of bootclasspath libs.",
+      "parentUuid": "0c2ccc89_04d95186",
+      "revId": "45869204d2ad12f250d68ba772a1d3cef5016449",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
