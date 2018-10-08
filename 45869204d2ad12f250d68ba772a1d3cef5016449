@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b15e8c3_d7e32919",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-10-08T17:28:46Z",
+      "side": 1,
+      "message": "This will need updating in the future if you ever remove java_version: \"1.7\", otherwise you\u0027ll have no definition of the java.* APIs when compiling with 1.9.  Maybe worth a comment?",
+      "revId": "45869204d2ad12f250d68ba772a1d3cef5016449",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
