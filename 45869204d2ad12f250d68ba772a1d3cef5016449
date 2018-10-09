@@ -88,6 +88,24 @@
       "revId": "45869204d2ad12f250d68ba772a1d3cef5016449",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11ed85a_41b6b23d",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-10-09T08:53:39Z",
+      "side": 1,
+      "message": "Agreed. The easiest thing for me to do to unblock this is to use core-all-system-modules. I\u0027ll adjust \"libs:\" to use core-all instead of core-oj/core-libart to match. I didn\u0027t particularly want to depend on core-all outside of the libcore git project but consistency between libs/system-modules trumps that desire and I don\u0027t want to proliferate system module definitions if I can help it.\n\nThis is only really an issue for libs that I am moving to the default set. i.e. okhttp, conscrypt and bouncycastle. There are multiple ways to move this forward if/when we want to remove target 1.7/1.8 on okhttp / bouncycastle. \n\nConscrypt is becoming a separate unit in its own right and doesn\u0027t set a target version so has already been dealt with differently: it depends on core.intra.stubs / core-intra-stubs-system-modules. We could treat okhttp and bouncycastle the same as those if we liked even though they\u0027re not going to be split out.\n\nMore radical would be to just include okhttp and bouncycastle in core-libart.jar, just like we do with ICU. That would need further (non-technical) consideration and unlike ICU there aren\u0027t compile-time bidirectional dependencies so it\u0027s not required. It also would modify long-standing members of the boot classpath so may have further consequences harder to predict.",
+      "parentUuid": "bebb1ff7_4ad85d91",
+      "revId": "45869204d2ad12f250d68ba772a1d3cef5016449",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
