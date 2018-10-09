@@ -54,7 +54,12 @@ java_library_static {
         "bcprov/src/main/java/org/bouncycastle/asn1/ocsp/**/*.java",
     ],
 
-    sdk_version: "9",
+    no_standard_libs: true,
+    libs: [
+        "core-all",
+    ],
+    system_modules: "core-all-system-modules",
+
     java_version: "1.7",
 }
 
