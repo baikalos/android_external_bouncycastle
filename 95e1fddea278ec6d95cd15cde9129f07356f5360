@@ -22,6 +22,30 @@
       "revId": "95e1fddea278ec6d95cd15cde9129f07356f5360",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de47a111_450fbf70",
+        "filename": "srcgen/generate_android_src.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-10-16T07:45:09Z",
+      "side": 0,
+      "message": "Whoops. Thanks!",
+      "parentUuid": "43640ff9_43c77e20",
+      "range": {
+        "startLine": 32,
+        "startChar": 36,
+        "endLine": 32,
+        "endChar": 54
+      },
+      "revId": "95e1fddea278ec6d95cd15cde9129f07356f5360",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
