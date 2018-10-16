@@ -1,3 +1,4 @@
+# TODO: Remove comments and sort.
 field:com.android.org.bouncycastle.asn1.DERNull#INSTANCE
 field:com.android.org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers#sha256WithRSAEncryption
 field:com.android.org.bouncycastle.asn1.x509.X509Name#CN
@@ -12,8 +13,10 @@ method:com.android.org.bouncycastle.asn1.ASN1InputStream#ASN1InputStream(byte[])
 method:com.android.org.bouncycastle.asn1.ASN1InputStream#readObject()
 method:com.android.org.bouncycastle.asn1.ASN1Integer#ASN1Integer(BigInteger)
 method:com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier#getId()
+method:com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier#getInstance(Object)
 method:com.android.org.bouncycastle.asn1.ASN1OctetString#getOctets()
 method:com.android.org.bouncycastle.asn1.ASN1OctetString#hashCode()
+method:com.android.org.bouncycastle.asn1.ASN1TaggedObject#hashCode()
 method:com.android.org.bouncycastle.asn1.DERBitString#DERBitString(byte[])
 method:com.android.org.bouncycastle.asn1.DERInteger#DERInteger(long)
 method:com.android.org.bouncycastle.asn1.DERSequence#DERSequence()
@@ -67,11 +70,14 @@ type:com.android.org.bouncycastle.asn1.ASN1Integer
 type:com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier
 type:com.android.org.bouncycastle.asn1.ASN1OctetString
 type:com.android.org.bouncycastle.asn1.ASN1Primitive
+type:com.android.org.bouncycastle.asn1.ASN1TaggedObject
 type:com.android.org.bouncycastle.asn1.DERBitString
 type:com.android.org.bouncycastle.asn1.DERInteger
 type:com.android.org.bouncycastle.asn1.DERNull
 type:com.android.org.bouncycastle.asn1.DEROctetString
 type:com.android.org.bouncycastle.asn1.DERSequence
+type:com.android.org.bouncycastle.asn1.DERTaggedObject
+type:com.android.org.bouncycastle.asn1.DERUTF8String
 type:com.android.org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers
 type:com.android.org.bouncycastle.asn1.pkcs.PrivateKeyInfo
 type:com.android.org.bouncycastle.asn1.x509.AlgorithmIdentifier
@@ -118,5 +124,7 @@ type:com.android.org.bouncycastle.asn1.ASN1Null
 type:com.android.org.bouncycastle.asn1.ASN1Sequence
 method:com.android.org.bouncycastle.asn1.ASN1BitString#hashCode()
 method:com.android.org.bouncycastle.asn1.ASN1Null#hashCode()
+method:com.android.org.bouncycastle.asn1.ASN1Sequence#getObjectAt(int)
 method:com.android.org.bouncycastle.asn1.ASN1Sequence#hashCode()
+method:com.android.org.bouncycastle.asn1.ASN1Sequence#size()
 # END

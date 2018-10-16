@@ -9,6 +9,7 @@ import java.io.IOException;
  * rules (as with sequences).
  * @hide This class is not part of the Android public SDK API
  */
+@libcore.api.CorePlatformApi
 public abstract class ASN1TaggedObject
     extends ASN1Primitive
     implements ASN1TaggedObjectParser
@@ -128,6 +129,7 @@ public abstract class ASN1TaggedObject
         return true;
     }
     
+    @libcore.api.CorePlatformApi
     public int hashCode()
     {
         int code = tagNo;

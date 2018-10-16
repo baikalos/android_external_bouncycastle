@@ -10,6 +10,7 @@ import com.android.org.bouncycastle.util.Strings;
  * DER UTF8String object.
  * @hide This class is not part of the Android public SDK API
  */
+@libcore.api.CorePlatformApi
 public class DERUTF8String
     extends ASN1Primitive
     implements ASN1String
