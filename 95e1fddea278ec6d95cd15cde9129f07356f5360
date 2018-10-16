@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43640ff9_43c77e20",
+        "filename": "srcgen/generate_android_src.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2018-10-16T07:41:03Z",
+      "side": 0,
+      "message": "This looks like you removed both transformations, so this script does nothing now.",
+      "range": {
+        "startLine": 32,
+        "startChar": 36,
+        "endLine": 32,
+        "endChar": 54
+      },
+      "revId": "95e1fddea278ec6d95cd15cde9129f07356f5360",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
