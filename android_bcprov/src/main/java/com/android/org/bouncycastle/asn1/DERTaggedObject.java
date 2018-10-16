@@ -9,6 +9,7 @@ import java.io.IOException;
  * rules (as with sequences).
  * @hide This class is not part of the Android public SDK API
  */
+@libcore.api.CorePlatformApi
 public class DERTaggedObject
     extends ASN1TaggedObject
 {
