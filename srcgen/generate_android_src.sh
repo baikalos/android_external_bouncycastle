@@ -33,6 +33,10 @@ function do_transform() {
        --unsupported-app-usage-file ${UNSUPPORTED_APP_USAGE_FILE}
 }
 
+REPACKAGED_DIR=${BOUNCY_CASTLE_DIR}/repackaged
 BCPROV_SRC_IN_DIR=${BOUNCY_CASTLE_DIR}/bcprov/src/main/java
-BCPROV_SRC_OUT_DIR=${BOUNCY_CASTLE_DIR}/android_bcprov/src/main/java
+BCPROV_SRC_OUT_DIR=${REPACKAGED_DIR}/bcprov/src/main/java
 do_transform ${BCPROV_SRC_IN_DIR} ${BCPROV_SRC_OUT_DIR}
+
+# Remove some unused source files:
+rm -fr ${REPACKAGED_DIR}/bcprov/src/main/java/com/android/org/bouncycastle/asn1/ocsp/
