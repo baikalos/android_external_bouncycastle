@@ -72,6 +72,7 @@ java_library {
     name: "bouncycastle",
     defaults: ["bouncycastle-defaults"],
     installable: true,
+    core_platform: true,
 
     srcs: [":bouncycastle_java_files"],
 
