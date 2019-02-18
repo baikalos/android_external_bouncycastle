@@ -84,10 +84,13 @@ public class DSA
             provider.addAlgorithm("Alg.Alias.Signature.DSAWithSHA1", "SHA1withDSA");
             // END Android-changed: Change primary ID from DSA to SHA1withDSA
 
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
             // BEGIN Android-removed: Unsupported algorithms
             // provider.addAlgorithm("Alg.Alias.Signature.1.2.840.10040.4.3", "DSA");
             // END Android-removed: Unsupported algorithms
 
+=======
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
             AsymmetricKeyInfoConverter keyFact = new KeyFactorySpi();
 
             for (int i = 0; i != DSAUtil.dsaOids.length; i++)

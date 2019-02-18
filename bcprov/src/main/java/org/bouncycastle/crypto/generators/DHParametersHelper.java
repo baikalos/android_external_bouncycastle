@@ -34,9 +34,13 @@ class DHParametersHelper
 
         for (;;)
         {
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
             // Android-added: Log long-running operation
             tries++;
             q = new BigInteger(qLength, 2, random);
+=======
+            q = BigIntegers.createRandomPrime(qLength, 2, random);
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
 
             // p <- 2q + 1
             p = q.shiftLeft(1).add(ONE);

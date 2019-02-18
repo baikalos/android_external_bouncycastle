@@ -14,9 +14,14 @@ import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERTaggedObject;
 import org.bouncycastle.crypto.Digest;
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
 // Android-changed: Use Android digests
 // import org.bouncycastle.crypto.digests.SHA1Digest;
 import org.bouncycastle.crypto.digests.AndroidDigestFactory;
+=======
+import org.bouncycastle.crypto.digests.SHA1Digest;
+import org.bouncycastle.util.encoders.Hex;
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
 
 /**
  * The AuthorityKeyIdentifier object.
@@ -230,6 +235,6 @@ public class AuthorityKeyIdentifier
 
     public String toString()
     {
-        return ("AuthorityKeyIdentifier: KeyID(" + this.keyidentifier.getOctets() + ")");
+        return ("AuthorityKeyIdentifier: KeyID(" + ((keyidentifier != null) ? Hex.toHexString(this.keyidentifier.getOctets()) : "null") + ")");
     }
 }

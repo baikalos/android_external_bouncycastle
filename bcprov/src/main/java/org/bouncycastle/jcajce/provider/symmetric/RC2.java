@@ -12,9 +12,15 @@ import javax.crypto.spec.RC2ParameterSpec;
 
 import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.asn1.pkcs.RC2CBCParameter;
 // import org.bouncycastle.crypto.CipherKeyGenerator;
+=======
+import org.bouncycastle.asn1.pkcs.RC2CBCParameter;
+import org.bouncycastle.crypto.CipherKeyGenerator;
+import org.bouncycastle.crypto.CryptoServicesRegistrar;
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.crypto.engines.RC2Engine;
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.engines.RC2WrapEngine;
@@ -241,7 +247,7 @@ public final class RC2
 
                 if (random == null)
                 {
-                    random = new SecureRandom();
+                    random = CryptoServicesRegistrar.getSecureRandom();
                 }
 
                 random.nextBytes(iv);

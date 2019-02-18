@@ -4,11 +4,17 @@ import java.math.BigInteger;
 
 import org.bouncycastle.crypto.BasicAgreement;
 import org.bouncycastle.crypto.CipherParameters;
+import org.bouncycastle.crypto.params.ECDomainParameters;
 import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
 import org.bouncycastle.crypto.params.ECPublicKeyParameters;
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
 // BEGIN android-added
 import org.bouncycastle.math.ec.ECCurve;
 // END android-added
+=======
+import org.bouncycastle.math.ec.ECAlgorithms;
+import org.bouncycastle.math.ec.ECConstants;
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.math.ec.ECPoint;
 
 /**
@@ -60,13 +66,34 @@ public class ECDHBasicAgreement
         ECPoint pubPoint = myCurve.createPoint(peerPoint.getXCoord().toBigInteger(),
             peerPoint.getYCoord().toBigInteger());
         ECPublicKeyParameters pub = (ECPublicKeyParameters)pubKey;
-        if (!pub.getParameters().equals(key.getParameters()))
+        ECDomainParameters params = key.getParameters();
+        if (!params.equals(pub.getParameters()))
         {
             throw new IllegalStateException("ECDH public key has wrong domain parameters");
         }
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
         ECPoint P = pubPoint.multiply(key.getD()).normalize();
         // END android-changed
+=======
 
+        BigInteger d = key.getD();
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
+
+        // Always perform calculations on the exact curve specified by our private key's parameters
+        ECPoint Q = ECAlgorithms.cleanPoint(params.getCurve(), pub.getQ());
+        if (Q.isInfinity())
+        {
+            throw new IllegalStateException("Infinity is not a valid public key for ECDH");
+        }
+
+        BigInteger h = params.getH();
+        if (!h.equals(ECConstants.ONE))
+        {
+            d = params.getHInv().multiply(d).mod(params.getN());
+            Q = ECAlgorithms.referenceMultiply(Q, h);
+        }
+
+        ECPoint P = Q.multiply(d).normalize();
         if (P.isInfinity())
         {
             throw new IllegalStateException("Infinity is not a valid agreement value for ECDH");

@@ -18,11 +18,35 @@ import org.bouncycastle.util.Strings;
  * <p>
  * The main difference between these and UTC time is a 4 digit year.
  * </p>
+ * <p>
+ * One second resolution date+time on UTC timezone (Z)
+ * with 4 digit year (valid from 0001 to 9999).
+ * </p><p>
+ * Timestamp format is:  yyyymmddHHMMSS'Z'
+ * </p><p>
+ * <h2>X.690</h2>
+ * This is what is called "restricted string",
+ * and it uses ASCII characters to encode digits and supplemental data.
+ *
+ * <h3>11: Restrictions on BER employed by both CER and DER</h3>
+ * <h4>11.7 GeneralizedTime </h4>
+ * <p>
+ * <b>11.7.1</b> The encoding shall terminate with a "Z",
+ * as described in the ITU-T Rec. X.680 | ISO/IEC 8824-1 clause on
+ * GeneralizedTime.
+ * </p><p>
+ * <b>11.7.2</b> The seconds element shall always be present.
+ * </p>
+ * <p>
+ * <b>11.7.3</b> The fractional-seconds elements, if present,
+ * shall omit all trailing zeros; if the elements correspond to 0,
+ * they shall be wholly omitted, and the decimal point element also
+ * shall be omitted.
  */
 public class ASN1GeneralizedTime
     extends ASN1Primitive
 {
-    private byte[] time;
+    protected byte[] time;
 
     /**
      * return a generalized time from the passed in object
@@ -111,9 +135,13 @@ public class ASN1GeneralizedTime
     public ASN1GeneralizedTime(
         Date time)
     {
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
         // Android-changed: Use localized version
         // SimpleDateFormat dateF = new SimpleDateFormat("yyyyMMddHHmmss'Z'");
         SimpleDateFormat dateF = new SimpleDateFormat("yyyyMMddHHmmss'Z'", Locale.US);
+=======
+        SimpleDateFormat dateF = new SimpleDateFormat("yyyyMMddHHmmss'Z'", DateUtil.EN_Locale);
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
 
         dateF.setTimeZone(new SimpleTimeZone(0, "Z"));
 
@@ -169,7 +197,6 @@ public class ASN1GeneralizedTime
      * </pre>
      * To read in the time and get a date which is compatible with our local
      * time zone.
-     * </p>
      * @return a String representation of the time.
      */
     public String getTime()
@@ -264,11 +291,19 @@ public class ASN1GeneralizedTime
                 // dateF = new SimpleDateFormat("yyyyMMddHHmmss.SSS'Z'");
                 dateF = new SimpleDateFormat("yyyyMMddHHmmss.SSS'Z'", Locale.US);
             }
-            else
+            else if (hasSeconds())
             {
                 // Android-changed: Use localized version
                 // dateF = new SimpleDateFormat("yyyyMMddHHmmss'Z'");
                 dateF = new SimpleDateFormat("yyyyMMddHHmmss'Z'", Locale.US);
+            }
+            else if (hasMinutes())
+            {
+                dateF = new SimpleDateFormat("yyyyMMddHHmm'Z'");
+            }
+            else
+            {
+                dateF = new SimpleDateFormat("yyyyMMddHH'Z'");
             }
 
             dateF.setTimeZone(new SimpleTimeZone(0, "Z"));
@@ -282,11 +317,19 @@ public class ASN1GeneralizedTime
                 // dateF = new SimpleDateFormat("yyyyMMddHHmmss.SSSz");
                 dateF = new SimpleDateFormat("yyyyMMddHHmmss.SSSz", Locale.US);
             }
-            else
+            else if (hasSeconds())
             {
                 // Android-changed: Use localized version
                 // dateF = new SimpleDateFormat("yyyyMMddHHmmssz");
                 dateF = new SimpleDateFormat("yyyyMMddHHmmssz", Locale.US);
+            }
+            else if (hasMinutes())
+            {
+                dateF = new SimpleDateFormat("yyyyMMddHHmmz");
+            }
+            else
+            {
+                dateF = new SimpleDateFormat("yyyyMMddHHz");
             }
 
             dateF.setTimeZone(new SimpleTimeZone(0, "Z"));
@@ -299,11 +342,19 @@ public class ASN1GeneralizedTime
                 // dateF = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
                 dateF = new SimpleDateFormat("yyyyMMddHHmmss.SSS", Locale.US);
             }
-            else
+            else if (hasSeconds())
             {
                 // Android-changed: Use localized version
                 // dateF = new SimpleDateFormat("yyyyMMddHHmmss");
                 dateF = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
+            }
+            else if (hasMinutes())
+            {
+                dateF = new SimpleDateFormat("yyyyMMddHHmm");
+            }
+            else
+            {
+                dateF = new SimpleDateFormat("yyyyMMddHH");
             }
 
             dateF.setTimeZone(new SimpleTimeZone(0, TimeZone.getDefault().getID()));
@@ -340,10 +391,10 @@ public class ASN1GeneralizedTime
             }
         }
 
-        return dateF.parse(d);
+        return DateUtil.epochAdjust(dateF.parse(d));
     }
 
-    private boolean hasFractionalSeconds()
+    protected boolean hasFractionalSeconds()
     {
         for (int i = 0; i != time.length; i++)
         {
@@ -356,6 +407,21 @@ public class ASN1GeneralizedTime
             }
         }
         return false;
+    }
+
+    protected boolean hasSeconds()
+    {
+        return isDigit(12) && isDigit(13);
+    }
+
+    protected boolean hasMinutes()
+    {
+        return isDigit(10) && isDigit(11);
+    }
+
+    private boolean isDigit(int pos)
+    {
+        return time.length > pos && time[pos] >= '0' && time[pos] <= '9';
     }
 
     boolean isConstructed()
@@ -375,6 +441,11 @@ public class ASN1GeneralizedTime
         throws IOException
     {
         out.writeEncoded(BERTags.GENERALIZED_TIME, time);
+    }
+
+    ASN1Primitive toDERObject()
+    {
+        return new DERGeneralizedTime(time);
     }
 
     boolean asn1Equals(

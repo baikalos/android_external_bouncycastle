@@ -4,10 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.asn1.cryptopro.CryptoProObjectIdentifiers;
 // import org.bouncycastle.asn1.gnu.GNUObjectIdentifiers;
 // import org.bouncycastle.asn1.iso.ISOIECObjectIdentifiers;
+=======
+import org.bouncycastle.asn1.cryptopro.CryptoProObjectIdentifiers;
+import org.bouncycastle.asn1.gm.GMObjectIdentifiers;
+import org.bouncycastle.asn1.gnu.GNUObjectIdentifiers;
+import org.bouncycastle.asn1.iso.ISOIECObjectIdentifiers;
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.asn1.nist.NISTObjectIdentifiers;
 import org.bouncycastle.asn1.oiw.OIWObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
@@ -44,8 +51,12 @@ public class MessageDigestUtils
         digestOidMap.put(NISTObjectIdentifiers.id_sha3_256, "SHA3-256");
         digestOidMap.put(NISTObjectIdentifiers.id_sha3_384, "SHA3-384");
         digestOidMap.put(NISTObjectIdentifiers.id_sha3_512, "SHA3-512");
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
         */
         // END Android-removed: Unsupported algorithms
+=======
+        digestOidMap.put(GMObjectIdentifiers.sm3, "SM3");
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     /**

@@ -1,26 +1,20 @@
 package org.bouncycastle.jcajce.provider.asymmetric.ec;
 
-import java.io.IOException;
-import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1Encoding;
-import org.bouncycastle.asn1.ASN1Integer;
-import org.bouncycastle.asn1.ASN1Primitive;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.DSA;
+import org.bouncycastle.crypto.DSAExt;
 import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.digests.NullDigest;
 // BEGIN Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.digests.RIPEMD160Digest;
 // END Android-removed: Unsupported algorithms
 import org.bouncycastle.crypto.params.ParametersWithRandom;
+import org.bouncycastle.crypto.signers.DSAEncoding;
 import org.bouncycastle.crypto.signers.ECDSASigner;
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
 // BEGIN Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.signers.ECNRSigner;
 // import org.bouncycastle.crypto.signers.HMacDSAKCalculator;
@@ -28,17 +22,22 @@ import org.bouncycastle.crypto.signers.ECDSASigner;
 // BEGIN Android-changed: Use Android digests
 // import org.bouncycastle.crypto.util.DigestFactory;
 import org.bouncycastle.crypto.digests.AndroidDigestFactory;
+=======
+import org.bouncycastle.crypto.signers.ECNRSigner;
+import org.bouncycastle.crypto.signers.HMacDSAKCalculator;
+import org.bouncycastle.crypto.signers.PlainDSAEncoding;
+import org.bouncycastle.crypto.signers.StandardDSAEncoding;
+import org.bouncycastle.crypto.util.DigestFactory;
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.jcajce.provider.asymmetric.util.DSABase;
-import org.bouncycastle.jcajce.provider.asymmetric.util.DSAEncoder;
 import org.bouncycastle.jcajce.provider.asymmetric.util.ECUtil;
-import org.bouncycastle.util.Arrays;
 
 public class SignatureSpi
     extends DSABase
 {
-    SignatureSpi(Digest digest, DSA signer, DSAEncoder encoder)
+    SignatureSpi(Digest digest, DSAExt signer, DSAEncoding encoding)
     {
-        super(digest, signer, encoder);
+        super(digest, signer, encoding);
     }
 
     protected void engineInitVerify(PublicKey publicKey)
@@ -73,9 +72,13 @@ public class SignatureSpi
     {
         public ecDSA()
         {
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
             // Android-changed: Use Android digests
             // super(DigestFactory.createSHA1(), new ECDSASigner(), new StdDSAEncoder());
             super(AndroidDigestFactory.getSHA1(), new ECDSASigner(), new StdDSAEncoder());
+=======
+            super(DigestFactory.createSHA1(), new ECDSASigner(), StandardDSAEncoding.INSTANCE);
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
         }
     }
 
@@ -86,7 +89,7 @@ public class SignatureSpi
     {
         public ecDetDSA()
         {
-            super(DigestFactory.createSHA1(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA1())), new StdDSAEncoder());
+            super(DigestFactory.createSHA1(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA1())), StandardDSAEncoding.INSTANCE);
         }
     }
     */
@@ -97,7 +100,7 @@ public class SignatureSpi
     {
         public ecDSAnone()
         {
-            super(new NullDigest(), new ECDSASigner(), new StdDSAEncoder());
+            super(new NullDigest(), new ECDSASigner(), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -106,9 +109,13 @@ public class SignatureSpi
     {
         public ecDSA224()
         {
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
             // Android-changed: Use Android digests
             // super(DigestFactory.createSHA224(), new ECDSASigner(), new StdDSAEncoder());
             super(AndroidDigestFactory.getSHA224(), new ECDSASigner(), new StdDSAEncoder());
+=======
+            super(DigestFactory.createSHA224(), new ECDSASigner(), StandardDSAEncoding.INSTANCE);
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
         }
     }
 
@@ -119,7 +126,7 @@ public class SignatureSpi
     {
         public ecDetDSA224()
         {
-            super(DigestFactory.createSHA224(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA224())), new StdDSAEncoder());
+            super(DigestFactory.createSHA224(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA224())), StandardDSAEncoding.INSTANCE);
         }
     }
     */
@@ -130,9 +137,13 @@ public class SignatureSpi
     {
         public ecDSA256()
         {
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
             // Android-changed: Use Android digests
             // super(DigestFactory.createSHA256(), new ECDSASigner(), new StdDSAEncoder());
             super(AndroidDigestFactory.getSHA256(), new ECDSASigner(), new StdDSAEncoder());
+=======
+            super(DigestFactory.createSHA256(), new ECDSASigner(), StandardDSAEncoding.INSTANCE);
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
         }
     }
 
@@ -143,7 +154,7 @@ public class SignatureSpi
     {
         public ecDetDSA256()
         {
-            super(DigestFactory.createSHA256(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA256())), new StdDSAEncoder());
+            super(DigestFactory.createSHA256(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA256())), StandardDSAEncoding.INSTANCE);
         }
     }
     */
@@ -154,9 +165,13 @@ public class SignatureSpi
     {
         public ecDSA384()
         {
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
             // Android-changed: Use Android digests
             // super(DigestFactory.createSHA384(), new ECDSASigner(), new StdDSAEncoder());
             super(AndroidDigestFactory.getSHA384(), new ECDSASigner(), new StdDSAEncoder());
+=======
+            super(DigestFactory.createSHA384(), new ECDSASigner(), StandardDSAEncoding.INSTANCE);
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
         }
     }
 
@@ -167,7 +182,7 @@ public class SignatureSpi
     {
         public ecDetDSA384()
         {
-            super(DigestFactory.createSHA384(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA384())), new StdDSAEncoder());
+            super(DigestFactory.createSHA384(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA384())), StandardDSAEncoding.INSTANCE);
         }
     }
     */
@@ -178,9 +193,13 @@ public class SignatureSpi
     {
         public ecDSA512()
         {
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
             // Android-changed: Use Android digests
             // super(DigestFactory.createSHA512(), new ECDSASigner(), new StdDSAEncoder());
             super(AndroidDigestFactory.getSHA512(), new ECDSASigner(), new StdDSAEncoder());
+=======
+            super(DigestFactory.createSHA512(), new ECDSASigner(), StandardDSAEncoding.INSTANCE);
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
         }
     }
 
@@ -191,7 +210,7 @@ public class SignatureSpi
     {
         public ecDetDSA512()
         {
-            super(DigestFactory.createSHA512(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA512())), new StdDSAEncoder());
+            super(DigestFactory.createSHA512(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA512())), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -200,7 +219,7 @@ public class SignatureSpi
     {
         public ecDSASha3_224()
         {
-            super(DigestFactory.createSHA3_224(), new ECDSASigner(), new StdDSAEncoder());
+            super(DigestFactory.createSHA3_224(), new ECDSASigner(), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -209,7 +228,7 @@ public class SignatureSpi
     {
         public ecDetDSASha3_224()
         {
-            super(DigestFactory.createSHA3_224(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA3_224())), new StdDSAEncoder());
+            super(DigestFactory.createSHA3_224(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA3_224())), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -218,7 +237,7 @@ public class SignatureSpi
     {
         public ecDSASha3_256()
         {
-            super(DigestFactory.createSHA3_256(), new ECDSASigner(), new StdDSAEncoder());
+            super(DigestFactory.createSHA3_256(), new ECDSASigner(), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -227,7 +246,7 @@ public class SignatureSpi
     {
         public ecDetDSASha3_256()
         {
-            super(DigestFactory.createSHA3_256(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA3_256())), new StdDSAEncoder());
+            super(DigestFactory.createSHA3_256(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA3_256())), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -236,7 +255,7 @@ public class SignatureSpi
     {
         public ecDSASha3_384()
         {
-            super(DigestFactory.createSHA3_384(), new ECDSASigner(), new StdDSAEncoder());
+            super(DigestFactory.createSHA3_384(), new ECDSASigner(), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -245,7 +264,7 @@ public class SignatureSpi
     {
         public ecDetDSASha3_384()
         {
-            super(DigestFactory.createSHA3_384(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA3_384())), new StdDSAEncoder());
+            super(DigestFactory.createSHA3_384(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA3_384())), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -254,7 +273,7 @@ public class SignatureSpi
     {
         public ecDSASha3_512()
         {
-            super(DigestFactory.createSHA3_512(), new ECDSASigner(), new StdDSAEncoder());
+            super(DigestFactory.createSHA3_512(), new ECDSASigner(), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -263,7 +282,7 @@ public class SignatureSpi
     {
         public ecDetDSASha3_512()
         {
-            super(DigestFactory.createSHA3_512(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA3_512())), new StdDSAEncoder());
+            super(DigestFactory.createSHA3_512(), new ECDSASigner(new HMacDSAKCalculator(DigestFactory.createSHA3_512())), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -272,7 +291,7 @@ public class SignatureSpi
     {
         public ecDSARipeMD160()
         {
-            super(new RIPEMD160Digest(), new ECDSASigner(), new StdDSAEncoder());
+            super(new RIPEMD160Digest(), new ECDSASigner(), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -281,7 +300,7 @@ public class SignatureSpi
     {
         public ecNR()
         {
-            super(DigestFactory.createSHA1(), new ECNRSigner(), new StdDSAEncoder());
+            super(DigestFactory.createSHA1(), new ECNRSigner(), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -290,7 +309,7 @@ public class SignatureSpi
     {
         public ecNR224()
         {
-            super(DigestFactory.createSHA224(), new ECNRSigner(), new StdDSAEncoder());
+            super(DigestFactory.createSHA224(), new ECNRSigner(), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -299,7 +318,7 @@ public class SignatureSpi
     {
         public ecNR256()
         {
-            super(DigestFactory.createSHA256(), new ECNRSigner(), new StdDSAEncoder());
+            super(DigestFactory.createSHA256(), new ECNRSigner(), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -308,7 +327,7 @@ public class SignatureSpi
     {
         public ecNR384()
         {
-            super(DigestFactory.createSHA384(), new ECNRSigner(), new StdDSAEncoder());
+            super(DigestFactory.createSHA384(), new ECNRSigner(), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -317,7 +336,7 @@ public class SignatureSpi
     {
         public ecNR512()
         {
-            super(DigestFactory.createSHA512(), new ECNRSigner(), new StdDSAEncoder());
+            super(DigestFactory.createSHA512(), new ECNRSigner(), StandardDSAEncoding.INSTANCE);
         }
     }
 
@@ -326,7 +345,7 @@ public class SignatureSpi
     {
         public ecCVCDSA()
         {
-            super(DigestFactory.createSHA1(), new ECDSASigner(), new PlainDSAEncoder());
+            super(DigestFactory.createSHA1(), new ECDSASigner(), PlainDSAEncoding.INSTANCE);
         }
     }
 
@@ -335,7 +354,7 @@ public class SignatureSpi
     {
         public ecCVCDSA224()
         {
-            super(DigestFactory.createSHA224(), new ECDSASigner(), new PlainDSAEncoder());
+            super(DigestFactory.createSHA224(), new ECDSASigner(), PlainDSAEncoding.INSTANCE);
         }
     }
 
@@ -344,7 +363,7 @@ public class SignatureSpi
     {
         public ecCVCDSA256()
         {
-            super(DigestFactory.createSHA256(), new ECDSASigner(), new PlainDSAEncoder());
+            super(DigestFactory.createSHA256(), new ECDSASigner(), PlainDSAEncoding.INSTANCE);
         }
     }
 
@@ -353,7 +372,7 @@ public class SignatureSpi
     {
         public ecCVCDSA384()
         {
-            super(DigestFactory.createSHA384(), new ECDSASigner(), new PlainDSAEncoder());
+            super(DigestFactory.createSHA384(), new ECDSASigner(), PlainDSAEncoding.INSTANCE);
         }
     }
 
@@ -362,7 +381,7 @@ public class SignatureSpi
     {
         public ecCVCDSA512()
         {
-            super(DigestFactory.createSHA512(), new ECDSASigner(), new PlainDSAEncoder());
+            super(DigestFactory.createSHA512(), new ECDSASigner(), PlainDSAEncoding.INSTANCE);
         }
     }
 
@@ -371,9 +390,10 @@ public class SignatureSpi
     {
         public ecPlainDSARP160()
         {
-            super(new RIPEMD160Digest(), new ECDSASigner(), new PlainDSAEncoder());
+            super(new RIPEMD160Digest(), new ECDSASigner(), PlainDSAEncoding.INSTANCE);
         }
     }
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
     */
     // END Android-removed: Unsupported algorithms
 
@@ -483,3 +503,6 @@ public class SignatureSpi
     */
     // END Android-removed: Unsupported algorithms
 }
+=======
+}
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)

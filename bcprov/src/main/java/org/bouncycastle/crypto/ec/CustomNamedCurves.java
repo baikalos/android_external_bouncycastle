@@ -6,11 +6,14 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.cryptlib.CryptlibObjectIdentifiers;
+import org.bouncycastle.asn1.gm.GMObjectIdentifiers;
 import org.bouncycastle.asn1.sec.SECObjectIdentifiers;
 import org.bouncycastle.asn1.x9.X9ECParameters;
 import org.bouncycastle.asn1.x9.X9ECParametersHolder;
 import org.bouncycastle.asn1.x9.X9ECPoint;
 import org.bouncycastle.math.ec.ECCurve;
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
 import org.bouncycastle.math.ec.ECPoint;
 // BEGIN android-removed
 // import org.bouncycastle.math.ec.custom.djb.Curve25519;
@@ -19,6 +22,14 @@ import org.bouncycastle.math.ec.ECPoint;
 // import org.bouncycastle.math.ec.custom.sec.SecP160R1Curve;
 // import org.bouncycastle.math.ec.custom.sec.SecP160R2Curve;
 // END android-removed
+=======
+import org.bouncycastle.math.ec.custom.djb.Curve25519;
+import org.bouncycastle.math.ec.custom.gm.SM2P256V1Curve;
+import org.bouncycastle.math.ec.custom.sec.SecP128R1Curve;
+import org.bouncycastle.math.ec.custom.sec.SecP160K1Curve;
+import org.bouncycastle.math.ec.custom.sec.SecP160R1Curve;
+import org.bouncycastle.math.ec.custom.sec.SecP160R2Curve;
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.math.ec.custom.sec.SecP192K1Curve;
 import org.bouncycastle.math.ec.custom.sec.SecP192R1Curve;
 import org.bouncycastle.math.ec.custom.sec.SecP224K1Curve;
@@ -627,7 +638,22 @@ public class CustomNamedCurves
     */
     // END Android-removed: Unsupported curves
 
-    
+    /*
+     * sm2p256v1
+     */
+    static X9ECParametersHolder sm2p256v1 = new X9ECParametersHolder()
+    {
+        protected X9ECParameters createParameters()
+        {
+            byte[] S = null;
+            ECCurve curve = configureCurve(new SM2P256V1Curve());
+            X9ECPoint G = new X9ECPoint(curve, Hex.decode("04"
+                + "32C4AE2C1F1981195F9904466A39C9948FE30BBFF2660BE1715A4589334C74C7"
+                + "BC3736A2F4F6779C59BDCEE36B692153D0A9877CC62A474002DF32E52139F0A0"));
+            return new X9ECParameters(curve, G, curve.getOrder(), curve.getCofactor(), S);
+        }
+    };
+
     static final Hashtable nameToCurve = new Hashtable();
     static final Hashtable nameToOID = new Hashtable();
     static final Hashtable oidToCurve = new Hashtable();
@@ -666,9 +692,13 @@ public class CustomNamedCurves
 
     static
     {
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
         // BEGIN Android-removed: Unsupported curves
         /*
         defineCurve("curve25519", curve25519);
+=======
+        defineCurveWithOID("curve25519", CryptlibObjectIdentifiers.curvey25519, curve25519);
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
 
 //        defineCurveWithOID("secp112r1", SECObjectIdentifiers.secp112r1, secp112r1);
 //        defineCurveWithOID("secp112r2", SECObjectIdentifiers.secp112r2, secp112r2);
@@ -708,6 +738,8 @@ public class CustomNamedCurves
         defineCurveWithOID("sect409r1", SECObjectIdentifiers.sect409r1, sect409r1);
         defineCurveWithOID("sect571k1", SECObjectIdentifiers.sect571k1, sect571k1);
         defineCurveWithOID("sect571r1", SECObjectIdentifiers.sect571r1, sect571r1);
+
+        defineCurveWithOID("sm2p256v1", GMObjectIdentifiers.sm2p256v1, sm2p256v1);
 
         defineCurveAlias("B-163", SECObjectIdentifiers.sect163r2);
         defineCurveAlias("B-233", SECObjectIdentifiers.sect233r1);

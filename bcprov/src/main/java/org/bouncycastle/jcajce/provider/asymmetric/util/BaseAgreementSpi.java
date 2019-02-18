@@ -26,6 +26,7 @@ import org.bouncycastle.crypto.DerivationFunction;
 // import org.bouncycastle.crypto.agreement.kdf.DHKEKGenerator;
 import org.bouncycastle.crypto.params.DESParameters;
 import org.bouncycastle.crypto.params.KDFParameters;
+import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.Integers;
 import org.bouncycastle.util.Strings;
 
@@ -80,6 +81,10 @@ public abstract class BaseAgreementSpi
         keySizes.put(PKCSObjectIdentifiers.id_alg_CMS3DESwrap.getId(), i192);
         keySizes.put(PKCSObjectIdentifiers.des_EDE3_CBC.getId(), i192);
         keySizes.put(OIWObjectIdentifiers.desCBC.getId(), i64);
+
+        keySizes.put(CryptoProObjectIdentifiers.gostR28147_gcfb.getId(), i256);
+        keySizes.put(CryptoProObjectIdentifiers.id_Gost28147_89_None_KeyWrap.getId(), i256);
+        keySizes.put(CryptoProObjectIdentifiers.id_Gost28147_89_CryptoPro_KeyWrap.getId(), i256);
 
         keySizes.put(PKCSObjectIdentifiers.id_hmacWithSHA1.getId(), Integers.valueOf(160));
         keySizes.put(PKCSObjectIdentifiers.id_hmacWithSHA256.getId(), i256);
@@ -138,8 +143,8 @@ public abstract class BaseAgreementSpi
         des.put(PKCSObjectIdentifiers.id_alg_CMS3DESwrap.getId(), "DES");
     }
 
-    private final String kaAlgorithm;
-    private final DerivationFunction kdf;
+    protected final String kaAlgorithm;
+    protected final DerivationFunction kdf;
 
     protected byte[]     ukmParameters;
 
@@ -220,8 +225,15 @@ public abstract class BaseAgreementSpi
     {
         if (kdf != null)
         {
-            throw new UnsupportedOperationException(
-                "KDF can only be used when algorithm is known");
+            byte[] secret = calcSecret();
+            try
+            {
+                return getSharedSecretBytes(secret, null, secret.length * 8);
+            }
+            catch (NoSuchAlgorithmException e)
+            {
+                throw new IllegalStateException(e.getMessage());
+            }
         }
 
         return calcSecret();
@@ -248,7 +260,6 @@ public abstract class BaseAgreementSpi
         String algorithm)
         throws NoSuchAlgorithmException
     {
-        byte[] secret = calcSecret();
         String algKey = Strings.toUpperCase(algorithm);
         String oidAlgorithm = algorithm;
 
@@ -259,6 +270,21 @@ public abstract class BaseAgreementSpi
 
         int    keySize = getKeySize(oidAlgorithm);
 
+        byte[] secret = getSharedSecretBytes(calcSecret(), oidAlgorithm, keySize);
+
+        String algName = getAlgorithm(algorithm);
+
+        if (des.containsKey(algName))
+        {
+            DESParameters.setOddParity(secret);
+        }
+
+        return new SecretKeySpec(secret, algName);
+    }
+
+    private byte[] getSharedSecretBytes(byte[] secret, String oidAlgorithm, int keySize)
+        throws NoSuchAlgorithmException
+    {
         if (kdf != null)
         {
             if (keySize < 0)
@@ -271,6 +297,10 @@ public abstract class BaseAgreementSpi
             /*
             if (kdf instanceof DHKEKGenerator)
             {
+                if (oidAlgorithm == null)
+                {
+                    throw new NoSuchAlgorithmException("algorithm OID is null");
+                }
                 ASN1ObjectIdentifier oid;
                 try
                 {
@@ -295,7 +325,9 @@ public abstract class BaseAgreementSpi
 
             kdf.generateBytes(keyBytes, 0, keyBytes.length);
 
-            secret = keyBytes;
+            Arrays.clear(secret);
+
+            return keyBytes;
         }
         else
         {
@@ -305,18 +337,13 @@ public abstract class BaseAgreementSpi
 
                 System.arraycopy(secret, 0, keyBytes, 0, keyBytes.length);
 
-                secret = keyBytes;
+                Arrays.clear(secret);
+
+                return keyBytes;
             }
+
+            return secret;
         }
-
-        String algName = getAlgorithm(algorithm);
-
-        if (des.containsKey(algName))
-        {
-            DESParameters.setOddParity(secret);
-        }
-
-        return new SecretKeySpec(secret, algName);
     }
 
     protected abstract byte[] calcSecret();

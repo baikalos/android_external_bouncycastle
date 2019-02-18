@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.security.AlgorithmParameters;
 import java.security.GeneralSecurityException;
 import java.security.KeyFactory;
+import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyAgreement;
 
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
@@ -35,11 +37,13 @@ import org.bouncycastle.asn1.ntt.NTTObjectIdentifiers;
 import org.bouncycastle.asn1.oiw.OIWObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.RSASSAPSSparams;
+import org.bouncycastle.asn1.rosstandart.RosstandartObjectIdentifiers;
 import org.bouncycastle.asn1.teletrust.TeleTrusTObjectIdentifiers;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
 import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.jcajce.util.AlgorithmParametersUtils;
 import org.bouncycastle.jcajce.util.JcaJceHelper;
 import org.bouncycastle.jcajce.util.MessageDigestUtils;
@@ -64,6 +68,7 @@ class OperatorHelper
         oids.put(PKCSObjectIdentifiers.sha256WithRSAEncryption, "SHA256WITHRSA");
         oids.put(PKCSObjectIdentifiers.sha384WithRSAEncryption, "SHA384WITHRSA");
         oids.put(PKCSObjectIdentifiers.sha512WithRSAEncryption, "SHA512WITHRSA");
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
         // BEGIN Android-removed: Unsupported algorithms
         // oids.put(CryptoProObjectIdentifiers.gostR3411_94_with_gostR3410_94, "GOST3411WITHGOST3410");
         // oids.put(CryptoProObjectIdentifiers.gostR3411_94_with_gostR3410_2001, "GOST3411WITHECGOST3410");
@@ -79,6 +84,23 @@ class OperatorHelper
         // oids.put(EACObjectIdentifiers.id_TA_ECDSA_SHA_384, "SHA384WITHCVC-ECDSA");
         // oids.put(EACObjectIdentifiers.id_TA_ECDSA_SHA_512, "SHA512WITHCVC-ECDSA");
         // END Android-removed: Unsupported algorithms
+=======
+        oids.put(CryptoProObjectIdentifiers.gostR3411_94_with_gostR3410_94, "GOST3411WITHGOST3410");
+        oids.put(CryptoProObjectIdentifiers.gostR3411_94_with_gostR3410_2001, "GOST3411WITHECGOST3410");
+        oids.put(RosstandartObjectIdentifiers.id_tc26_signwithdigest_gost_3410_12_256, "GOST3411-2012-256WITHECGOST3410-2012-256");
+        oids.put(RosstandartObjectIdentifiers.id_tc26_signwithdigest_gost_3410_12_512, "GOST3411-2012-512WITHECGOST3410-2012-512");
+        oids.put(BSIObjectIdentifiers.ecdsa_plain_SHA1, "SHA1WITHPLAIN-ECDSA");
+        oids.put(BSIObjectIdentifiers.ecdsa_plain_SHA224, "SHA224WITHPLAIN-ECDSA");
+        oids.put(BSIObjectIdentifiers.ecdsa_plain_SHA256, "SHA256WITHPLAIN-ECDSA");
+        oids.put(BSIObjectIdentifiers.ecdsa_plain_SHA384, "SHA384WITHPLAIN-ECDSA");
+        oids.put(BSIObjectIdentifiers.ecdsa_plain_SHA512, "SHA512WITHPLAIN-ECDSA");
+        oids.put(BSIObjectIdentifiers.ecdsa_plain_RIPEMD160, "RIPEMD160WITHPLAIN-ECDSA");
+        oids.put(EACObjectIdentifiers.id_TA_ECDSA_SHA_1, "SHA1WITHCVC-ECDSA");
+        oids.put(EACObjectIdentifiers.id_TA_ECDSA_SHA_224, "SHA224WITHCVC-ECDSA");
+        oids.put(EACObjectIdentifiers.id_TA_ECDSA_SHA_256, "SHA256WITHCVC-ECDSA");
+        oids.put(EACObjectIdentifiers.id_TA_ECDSA_SHA_384, "SHA384WITHCVC-ECDSA");
+        oids.put(EACObjectIdentifiers.id_TA_ECDSA_SHA_512, "SHA512WITHCVC-ECDSA");
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
 
         oids.put(new ASN1ObjectIdentifier("1.2.840.113549.1.1.4"), "MD5WITHRSA");
         // BEGIN Android-removed: Unsupported algorithms
@@ -95,16 +117,18 @@ class OperatorHelper
         oids.put(NISTObjectIdentifiers.dsa_with_sha224, "SHA224WITHDSA");
         oids.put(NISTObjectIdentifiers.dsa_with_sha256, "SHA256WITHDSA");
 
-        oids.put(OIWObjectIdentifiers.idSHA1, "SHA-1");
-        oids.put(NISTObjectIdentifiers.id_sha224, "SHA-224");
-        oids.put(NISTObjectIdentifiers.id_sha256, "SHA-256");
-        oids.put(NISTObjectIdentifiers.id_sha384, "SHA-384");
-        oids.put(NISTObjectIdentifiers.id_sha512, "SHA-512");
+        oids.put(OIWObjectIdentifiers.idSHA1, "SHA1");
+        oids.put(NISTObjectIdentifiers.id_sha224, "SHA224");
+        oids.put(NISTObjectIdentifiers.id_sha256, "SHA256");
+        oids.put(NISTObjectIdentifiers.id_sha384, "SHA384");
+        oids.put(NISTObjectIdentifiers.id_sha512, "SHA512");
         oids.put(TeleTrusTObjectIdentifiers.ripemd128, "RIPEMD128");
         oids.put(TeleTrusTObjectIdentifiers.ripemd160, "RIPEMD160");
         oids.put(TeleTrusTObjectIdentifiers.ripemd256, "RIPEMD256");
 
         asymmetricWrapperAlgNames.put(PKCSObjectIdentifiers.rsaEncryption, "RSA/ECB/PKCS1Padding");
+
+        asymmetricWrapperAlgNames.put(CryptoProObjectIdentifiers.gostR3410_2001, "ECGOST3410");
 
         symmetricWrapperAlgNames.put(PKCSObjectIdentifiers.id_alg_CMS3DESwrap, "DESEDEWrap");
         symmetricWrapperAlgNames.put(PKCSObjectIdentifiers.id_alg_CMSRC2wrap, "RC2Wrap");
@@ -150,6 +174,73 @@ class OperatorHelper
     int getKeySizeInBits(ASN1ObjectIdentifier algOid)
     {
         return ((Integer)symmetricWrapperKeySizes.get(algOid)).intValue();
+    }
+
+    KeyPairGenerator createKeyPairGenerator(ASN1ObjectIdentifier algorithm)
+        throws CMSException
+    {
+        try
+        {
+            String agreementName = null; //(String)BASE_CIPHER_NAMES.get(algorithm);
+
+            if (agreementName != null)
+            {
+                try
+                {
+                    // this is reversed as the Sun policy files now allow unlimited strength RSA
+                    return helper.createKeyPairGenerator(agreementName);
+                }
+                catch (NoSuchAlgorithmException e)
+                {
+                    // Ignore
+                }
+            }
+            return helper.createKeyPairGenerator(algorithm.getId());
+        }
+        catch (GeneralSecurityException e)
+        {
+            throw new CMSException("cannot create key agreement: " + e.getMessage(), e);
+        }
+    }
+
+    Cipher createCipher(ASN1ObjectIdentifier algorithm)
+        throws OperatorCreationException
+    {
+        try
+        {
+            return helper.createCipher(algorithm.getId());
+        }
+        catch (GeneralSecurityException e)
+        {
+            throw new OperatorCreationException("cannot create cipher: " + e.getMessage(), e);
+        }
+    }
+
+    KeyAgreement createKeyAgreement(ASN1ObjectIdentifier algorithm)
+        throws OperatorCreationException
+    {
+        try
+        {
+            String agreementName = null; //(String)BASE_CIPHER_NAMES.get(algorithm);
+
+            if (agreementName != null)
+            {
+                try
+                {
+                    // this is reversed as the Sun policy files now allow unlimited strength RSA
+                    return helper.createKeyAgreement(agreementName);
+                }
+                catch (NoSuchAlgorithmException e)
+                {
+                    // Ignore
+                }
+            }
+            return helper.createKeyAgreement(algorithm.getId());
+        }
+        catch (GeneralSecurityException e)
+        {
+            throw new OperatorCreationException("cannot create key agreement: " + e.getMessage(), e);
+        }
     }
 
     Cipher createAsymmetricWrapper(ASN1ObjectIdentifier algorithm, Map extraAlgNames)
@@ -280,7 +371,7 @@ class OperatorHelper
             //
             if (oids.get(digAlgId.getAlgorithm()) != null)
             {
-                String  digestAlgorithm = (String)oids.get(digAlgId.getAlgorithm());
+                String digestAlgorithm = (String)oids.get(digAlgId.getAlgorithm());
 
                 dig = helper.createDigest(digestAlgorithm);
             }
@@ -296,7 +387,7 @@ class OperatorHelper
     Signature createSignature(AlgorithmIdentifier sigAlgId)
         throws GeneralSecurityException
     {
-        Signature   sig;
+        Signature sig;
 
         try
         {
@@ -309,7 +400,7 @@ class OperatorHelper
             //
             if (oids.get(sigAlgId.getAlgorithm()) != null)
             {
-                String  signatureAlgorithm = (String)oids.get(sigAlgId.getAlgorithm());
+                String signatureAlgorithm = (String)oids.get(sigAlgId.getAlgorithm());
 
                 sig = helper.createSignature(signatureAlgorithm);
             }
@@ -322,7 +413,7 @@ class OperatorHelper
         if (sigAlgId.getAlgorithm().equals(PKCSObjectIdentifiers.id_RSASSA_PSS))
         {
             ASN1Sequence seq = ASN1Sequence.getInstance(sigAlgId.getParameters());
-          
+
             if (notDefaultPSSParams(seq))
             {
                 try
@@ -345,7 +436,7 @@ class OperatorHelper
 
     public Signature createRawSignature(AlgorithmIdentifier algorithm)
     {
-        Signature   sig;
+        Signature sig;
 
         try
         {
@@ -409,7 +500,7 @@ class OperatorHelper
             return name.substring(0, dIndex) + name.substring(dIndex + 1);
         }
 
-        return MessageDigestUtils.getDigestName(oid);
+        return name;
     }
 
     public X509Certificate convertCertificate(X509CertificateHolder certHolder)

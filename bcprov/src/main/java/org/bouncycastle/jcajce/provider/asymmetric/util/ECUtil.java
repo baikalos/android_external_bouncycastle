@@ -8,18 +8,23 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.asn1.anssi.ANSSINamedCurves;
 // import org.bouncycastle.asn1.cryptopro.ECGOST3410NamedCurves;
 // import org.bouncycastle.asn1.gm.GMNamedCurves;
 import org.bouncycastle.asn1.nist.NISTNamedCurves;
+=======
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
 import org.bouncycastle.asn1.sec.SECNamedCurves;
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.asn1.teletrust.TeleTrusTNamedCurves;
+=======
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.asn1.x9.ECNamedCurveTable;
-import org.bouncycastle.asn1.x9.X962NamedCurves;
 import org.bouncycastle.asn1.x9.X962Parameters;
 import org.bouncycastle.asn1.x9.X9ECParameters;
 import org.bouncycastle.crypto.ec.CustomNamedCurves;
@@ -34,6 +39,11 @@ import org.bouncycastle.jce.interfaces.ECPublicKey;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
 import org.bouncycastle.jce.spec.ECParameterSpec;
+import org.bouncycastle.math.ec.ECCurve;
+import org.bouncycastle.math.ec.ECPoint;
+import org.bouncycastle.util.Arrays;
+import org.bouncycastle.util.Fingerprint;
+import org.bouncycastle.util.Strings;
 
 /**
  * utility class for converting jce/jca ECDSA, ECDH, and ECDHC
@@ -235,9 +245,20 @@ public class ECUtil
                 s = BouncyCastleProvider.CONFIGURATION.getEcImplicitlyCa();
             }
 
-            return new ECPrivateKeyParameters(
-                            k.getD(),
-                            new ECDomainParameters(s.getCurve(), s.getG(), s.getN(), s.getH(), s.getSeed()));
+            if (k.getParameters() instanceof ECNamedCurveParameterSpec)
+            {
+                String name = ((ECNamedCurveParameterSpec)k.getParameters()).getName();
+                return new ECPrivateKeyParameters(
+                    k.getD(),
+                    new ECNamedDomainParameters(ECNamedCurveTable.getOID(name),
+                        s.getCurve(), s.getG(), s.getN(), s.getH(), s.getSeed()));
+            }
+            else
+            {
+                return new ECPrivateKeyParameters(
+                    k.getD(),
+                    new ECDomainParameters(s.getCurve(), s.getG(), s.getN(), s.getH(), s.getSeed()));
+            }
         }
         else if (key instanceof java.security.interfaces.ECPrivateKey)
         {
@@ -297,15 +318,12 @@ public class ECUtil
     public static ASN1ObjectIdentifier getNamedCurveOid(
         String curveName)
     {
-        String name;
+        String name = curveName;
 
-        if (curveName.indexOf(' ') > 0)
+        int spacePos = name.indexOf(' ');
+        if (spacePos > 0)
         {
-            name = curveName.substring(curveName.indexOf(' ') + 1);
-        }
-        else
-        {
-            name = curveName;
+            name = name.substring(spacePos + 1);
         }
 
         try
@@ -314,13 +332,10 @@ public class ECUtil
             {
                 return new ASN1ObjectIdentifier(name);
             }
-            else
-            {
-                return lookupOidByName(name);
-            }
         }
         catch (IllegalArgumentException ex)
         {
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
             return lookupOidByName(name);
         }
     }
@@ -356,9 +371,11 @@ public class ECUtil
             }
             */
             // END Android-removed: Unsupported algorithms
+=======
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
         }
 
-        return oid;
+        return ECNamedCurveTable.getOID(name);
     }
 
     public static ASN1ObjectIdentifier getNamedCurveOid(
@@ -389,6 +406,7 @@ public class ECUtil
 
         if (params == null)
         {
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
             params = X962NamedCurves.getByOID(oid);
             if (params == null)
             {
@@ -410,6 +428,9 @@ public class ECUtil
             }
             */
             // END Android-removed: Unsupported algorithms
+=======
+            params = ECNamedCurveTable.getByOID(oid);
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
         }
 
         return params;
@@ -422,6 +443,7 @@ public class ECUtil
 
         if (params == null)
         {
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
             params = X962NamedCurves.getByName(curveName);
             if (params == null)
             {
@@ -443,6 +465,9 @@ public class ECUtil
             }
             */
             // END Android-removed: Unsupported algorithms
+=======
+            params = ECNamedCurveTable.getByName(curveName);
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
         }
 
         return params;
@@ -451,10 +476,50 @@ public class ECUtil
     public static String getCurveName(
         ASN1ObjectIdentifier oid)
     {
-        String name = X962NamedCurves.getName(oid);
-        
-        if (name == null)
+        return ECNamedCurveTable.getName(oid);
+    }
+
+    public static String privateKeyToString(String algorithm, BigInteger d, org.bouncycastle.jce.spec.ECParameterSpec spec)
+    {
+        StringBuffer buf = new StringBuffer();
+        String nl = Strings.lineSeparator();
+
+        org.bouncycastle.math.ec.ECPoint q = calculateQ(d, spec);
+
+        buf.append(algorithm);
+        buf.append(" Private Key [").append(ECUtil.generateKeyFingerprint(q, spec)).append("]").append(nl);
+        buf.append("            X: ").append(q.getAffineXCoord().toBigInteger().toString(16)).append(nl);
+        buf.append("            Y: ").append(q.getAffineYCoord().toBigInteger().toString(16)).append(nl);
+
+        return buf.toString();
+    }
+
+    private static org.bouncycastle.math.ec.ECPoint calculateQ(BigInteger d, org.bouncycastle.jce.spec.ECParameterSpec spec)
+    {
+        return spec.getG().multiply(d).normalize();
+    }
+
+    public static String publicKeyToString(String algorithm, org.bouncycastle.math.ec.ECPoint q, org.bouncycastle.jce.spec.ECParameterSpec spec)
+    {
+        StringBuffer buf = new StringBuffer();
+        String nl = Strings.lineSeparator();
+
+        buf.append(algorithm);
+        buf.append(" Public Key [").append(ECUtil.generateKeyFingerprint(q, spec)).append("]").append(nl);
+        buf.append("            X: ").append(q.getAffineXCoord().toBigInteger().toString(16)).append(nl);
+        buf.append("            Y: ").append(q.getAffineYCoord().toBigInteger().toString(16)).append(nl);
+
+        return buf.toString();
+    }
+
+    public static String generateKeyFingerprint(ECPoint publicPoint, org.bouncycastle.jce.spec.ECParameterSpec spec)
+    {
+        ECCurve curve = spec.getCurve();
+        ECPoint g = spec.getG();
+
+        if (curve != null)
         {
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
             name = SECNamedCurves.getName(oid);
             if (name == null)
             {
@@ -472,8 +537,11 @@ public class ECUtil
             }
             */
             // END Android-removed: Unsupported algorithms
+=======
+            return new Fingerprint(Arrays.concatenate(publicPoint.getEncoded(false), curve.getA().getEncoded(), curve.getB().getEncoded(), g.getEncoded(false))).toString();
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
         }
 
-        return name;
+        return new Fingerprint(publicPoint.getEncoded(false)).toString();
     }
 }

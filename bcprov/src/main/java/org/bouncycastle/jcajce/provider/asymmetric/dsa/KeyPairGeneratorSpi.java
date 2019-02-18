@@ -9,6 +9,7 @@ import java.security.spec.DSAParameterSpec;
 import java.util.Hashtable;
 
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
+import org.bouncycastle.crypto.CryptoServicesRegistrar;
 import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.crypto.generators.DSAKeyPairGenerator;
 import org.bouncycastle.crypto.generators.DSAParametersGenerator;
@@ -18,6 +19,7 @@ import org.bouncycastle.crypto.params.DSAParameters;
 import org.bouncycastle.crypto.params.DSAPrivateKeyParameters;
 import org.bouncycastle.crypto.params.DSAPublicKeyParameters;
 import org.bouncycastle.jcajce.provider.asymmetric.util.PrimeCertaintyCalculator;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.Integers;
 import org.bouncycastle.util.Properties;
 
@@ -29,6 +31,7 @@ public class KeyPairGeneratorSpi
 
     DSAKeyGenerationParameters param;
     DSAKeyPairGenerator engine = new DSAKeyPairGenerator();
+<<<<<<< HEAD   (bdfb20 Merge "Fix the spelling error in ReasonsMask")
     // Android-changed: Change default strength to 1024
     // In 1.57, the default strength was changed to 2048.  We keep it at 1024 for app
     // compatibility, particularly because the default digest (SHA-1) doesn't have
@@ -36,6 +39,10 @@ public class KeyPairGeneratorSpi
     int strength = 1024;
 
     SecureRandom random = new SecureRandom();
+=======
+    int strength = 2048;
+    SecureRandom random = CryptoServicesRegistrar.getSecureRandom();
+>>>>>>> BRANCH (1b335c Merge "bouncycastle: Android tree with upstream code for ver)
     boolean initialised = false;
 
     public KeyPairGeneratorSpi()
@@ -52,9 +59,21 @@ public class KeyPairGeneratorSpi
             throw new InvalidParameterException("strength must be from 512 - 4096 and a multiple of 1024 above 1024");
         }
 
-        this.strength = strength;
-        this.random = random;
-        this.initialised = false;
+        DSAParameterSpec spec = BouncyCastleProvider.CONFIGURATION.getDSADefaultParameters(strength);
+
+        if (spec != null)
+        {
+            param = new DSAKeyGenerationParameters(random, new DSAParameters(spec.getP(), spec.getQ(), spec.getG()));
+
+            engine.init(param);
+            this.initialised = true;
+        }
+        else
+        {
+            this.strength = strength;
+            this.random = random;
+            this.initialised = false;
+        }
     }
 
     public void initialize(
