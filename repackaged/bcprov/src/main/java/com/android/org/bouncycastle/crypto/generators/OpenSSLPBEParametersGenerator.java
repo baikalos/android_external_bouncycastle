@@ -18,6 +18,7 @@ import com.android.org.bouncycastle.crypto.digests.AndroidDigestFactory;
  * <p>
  * @hide This class is not part of the Android public SDK API
  */
+@libcore.api.CorePlatformApi
 public class OpenSSLPBEParametersGenerator
     extends PBEParametersGenerator
 {
@@ -28,6 +29,7 @@ public class OpenSSLPBEParametersGenerator
     /**
      * Construct a OpenSSL Parameters generator. 
      */
+    @libcore.api.CorePlatformApi
     public OpenSSLPBEParametersGenerator()
     {
     }

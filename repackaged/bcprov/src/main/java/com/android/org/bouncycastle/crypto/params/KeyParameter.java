@@ -6,6 +6,7 @@ import com.android.org.bouncycastle.crypto.CipherParameters;
 /**
  * @hide This class is not part of the Android public SDK API
  */
+@libcore.api.CorePlatformApi
 public class KeyParameter
     implements CipherParameters
 {

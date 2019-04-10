@@ -123,3 +123,16 @@ type:com.android.org.bouncycastle.util.io.pem.PemReader
 type:com.android.org.bouncycastle.util.io.pem.PemWriter
 type:com.android.org.bouncycastle.util.Iterable
 type:com.android.org.bouncycastle.x509.X509V3CertificateGenerator
+
+# Classes and methods used by Huawei frameworks code (see b/129440746)
+method:com.android.org.bouncycastle.crypto.PBEParametersGenerator#PBEParametersGenerator()
+method:com.android.org.bouncycastle.crypto.generators.OpenSSLPBEParametersGenerator#OpenSSLPBEParametersGenerator()
+method:com.android.org.bouncycastle.jce.X509Principal#X509Principal(Vector,Hashtable)
+method:com.android.org.bouncycastle.util.io.pem.PemObject#PemObject(String,List,byte[])
+type:com.android.org.bouncycastle.asn1.x500.style.BCStyle
+type:com.android.org.bouncycastle.crypto.PBEParametersGenerator
+type:com.android.org.bouncycastle.crypto.generators.OpenSSLPBEParametersGenerator
+type:com.android.org.bouncycastle.crypto.params.KeyParameter
+type:com.android.org.bouncycastle.jcajce.util.DefaultJcaJceHelper
+type:com.android.org.bouncycastle.util.io.pem.PemHeader
+type:com.android.org.bouncycastle.x509.X509V1CertificateGenerator

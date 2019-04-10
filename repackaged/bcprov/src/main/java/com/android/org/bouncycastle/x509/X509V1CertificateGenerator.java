@@ -41,6 +41,7 @@ import com.android.org.bouncycastle.jce.X509Principal;
  * @deprecated use org.bouncycastle.cert.X509v1CertificateBuilder.
  * @hide This class is not part of the Android public SDK API
  */
+@libcore.api.CorePlatformApi
 public class X509V1CertificateGenerator
 {
     private final JcaJceHelper bcHelper = new BCJcaJceHelper(); // needed to force provider loading

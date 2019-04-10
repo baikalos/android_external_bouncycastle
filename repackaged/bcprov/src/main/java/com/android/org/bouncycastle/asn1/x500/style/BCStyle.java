@@ -17,6 +17,7 @@ import com.android.org.bouncycastle.asn1.x509.X509ObjectIdentifiers;
 /**
  * @hide This class is not part of the Android public SDK API
  */
+@libcore.api.CorePlatformApi
 public class BCStyle
     extends AbstractX500NameStyle
 {

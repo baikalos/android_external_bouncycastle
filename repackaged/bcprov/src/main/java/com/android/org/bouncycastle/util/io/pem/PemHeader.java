@@ -5,6 +5,7 @@ package com.android.org.bouncycastle.util.io.pem;
  * Class representing a PEM header (name, value) pair.
  * @hide This class is not part of the Android public SDK API
  */
+@libcore.api.CorePlatformApi
 public class PemHeader
 {
     private String name;
