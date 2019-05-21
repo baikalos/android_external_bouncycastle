@@ -41,6 +41,7 @@ import com.android.org.bouncycastle.jce.X509Principal;
  * @deprecated use org.bouncycastle.cert.X509v1CertificateBuilder.
  * @hide This class is not part of the Android public SDK API
  */
+@libcore.api.CorePlatformApi
 public class X509V1CertificateGenerator
 {
     private final JcaJceHelper bcHelper = new BCJcaJceHelper(); // needed to force provider loading
@@ -51,6 +52,7 @@ public class X509V1CertificateGenerator
     private AlgorithmIdentifier         sigAlgId;
     private String                      signatureAlgorithm;
 
+    @libcore.api.CorePlatformApi
     public X509V1CertificateGenerator()
     {
         tbsGen = new V1TBSCertificateGenerator();
@@ -67,6 +69,7 @@ public class X509V1CertificateGenerator
     /**
      * set the serial number for the certificate.
      */
+    @libcore.api.CorePlatformApi
     public void setSerialNumber(
         BigInteger      serialNumber)
     {
@@ -82,6 +85,7 @@ public class X509V1CertificateGenerator
      * Set the issuer distinguished name - the issuer is the entity whose private key is used to sign the
      * certificate.
      */
+    @libcore.api.CorePlatformApi
     public void setIssuerDN(
         X500Principal   issuer)
     {
@@ -105,12 +109,14 @@ public class X509V1CertificateGenerator
         tbsGen.setIssuer(issuer);
     }
 
+    @libcore.api.CorePlatformApi
     public void setNotBefore(
         Date    date)
     {
         tbsGen.setStartDate(new Time(date));
     }
 
+    @libcore.api.CorePlatformApi
     public void setNotAfter(
         Date    date)
     {
@@ -120,6 +126,7 @@ public class X509V1CertificateGenerator
     /**
      * Set the subject distinguished name. The subject describes the entity associated with the public key.
      */
+    @libcore.api.CorePlatformApi
     public void setSubjectDN(
         X500Principal   subject)
     {
@@ -142,6 +149,7 @@ public class X509V1CertificateGenerator
         tbsGen.setSubject(subject);
     }
 
+    @libcore.api.CorePlatformApi
     public void setPublicKey(
         PublicKey       key)
     {
@@ -161,6 +169,7 @@ public class X509V1CertificateGenerator
      * 
      * @param signatureAlgorithm string representation of the algorithm name.
      */
+    @libcore.api.CorePlatformApi
     public void setSignatureAlgorithm(
         String  signatureAlgorithm)
     {
@@ -315,6 +324,7 @@ public class X509V1CertificateGenerator
      * using the passed in provider for the signing, and the passed in source
      * of randomness (if required).
      */
+    @libcore.api.CorePlatformApi
     public X509Certificate generate(
         PrivateKey      key,
         String          provider)
