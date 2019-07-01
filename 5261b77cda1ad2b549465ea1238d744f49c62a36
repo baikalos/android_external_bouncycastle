@@ -22,6 +22,30 @@
       "revId": "5261b77cda1ad2b549465ea1238d744f49c62a36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b1a339_9db9bf40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-07-01T16:38:04Z",
+      "side": 1,
+      "message": "Agreed, should be clearer:\n\nIs this updating BigIntegers.java\n\n  (a) to exactly equal an upstream version (which one?), \n  (b) to have all changes up to a particular version but including some local patches,\n  (c) to integrate a particular upstream commit (which one?)?\n\nUpstream version could be a version number, or a commit SHA, or both.\n\nRe. \"Contains\", does or doesn\u0027t this CL also contain anything other than that particular fix for that particular performance issue?",
+      "parentUuid": "ec1089bd_5aef4a3c",
+      "range": {
+        "startLine": 9,
+        "startChar": 9,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "5261b77cda1ad2b549465ea1238d744f49c62a36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
