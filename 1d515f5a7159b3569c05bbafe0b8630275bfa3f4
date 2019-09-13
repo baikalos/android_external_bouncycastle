@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43e84073_2594cfdc",
+        "filename": "repackaged/bcprov/src/main/java/com/android/org/bouncycastle/crypto/digests/MD4Digest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-09-13T22:14:00Z",
+      "side": 1,
+      "message": "Port of BouncyCastle MD4 implementation from:\n\nhttps://github.com/bcgit/bc-java/blob/master/core/src/main/java/org/bouncycastle/crypto/digests/MD4Digest.java",
+      "revId": "1d515f5a7159b3569c05bbafe0b8630275bfa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
