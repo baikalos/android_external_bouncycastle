@@ -66,6 +66,7 @@ java_library {
         "//art/build/apex",
         "//external/wycheproof",
         "//libcore",
+        "//build/soong/java", // for the dexpreopt module
     ],
     defaults: ["bouncycastle-defaults"],
     installable: true,
