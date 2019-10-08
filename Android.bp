@@ -73,10 +73,7 @@ java_library {
     srcs: [":bouncycastle_java_files"],
 
     sdk_version: "none",
-    libs: [
-        "core-all",
-    ],
-    system_modules: "core-all-system-modules",
+    system_modules: "art-module-intra-core-api-stubs-system-modules",
 }
 
 // A guaranteed unstripped version of bouncycastle.
@@ -93,13 +90,10 @@ java_library {
     srcs: [":bouncycastle_java_files"],
 
     sdk_version: "none",
-    libs: [
-        "core-all",
-    ],
+    system_modules: "art-module-intra-core-api-stubs-system-modules",
     dex_preopt: {
         enabled: false,
     },
-    system_modules: "core-all-system-modules",
     java_version: "1.7",
 }
 
