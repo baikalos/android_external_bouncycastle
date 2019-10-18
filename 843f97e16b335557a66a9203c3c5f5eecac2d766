@@ -1,0 +1,8 @@
+Autosubmit+1: Roshan Pius <rpius@google.com>
+Code-Review+2: Pete Bentley <prb@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 18 Oct 2019 18:02:32 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/external/bouncycastle/+/1146957
+Project: platform/external/bouncycastle
+Branch: refs/heads/master
