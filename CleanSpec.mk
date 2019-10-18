@@ -44,6 +44,10 @@
 #$(call add-clean-step, find $(OUT_DIR) -type f -name "IGTalkSession*" -print0 | xargs -0 rm -f)
 #$(call add-clean-step, rm -rf $(PRODUCT_OUT)/data/*)
 
+# Remove Android Core Library artifacts from the system partition, now
+# that they live in the ART APEX (b/142944799).
+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/framework/bouncycastle.jar)
+
 # ************************************************
 # NEWER CLEAN STEPS MUST BE AT THE END OF THE LIST
 # ************************************************
