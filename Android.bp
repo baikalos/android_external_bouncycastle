@@ -67,6 +67,11 @@ java_library {
         "//external/wycheproof",
         "//libcore",
     ],
+    apex_available: [
+        "com.android.art.release",
+        "com.android.art.debug",
+        "//apex_available:platform_noinstall",
+    ],
     defaults: ["bouncycastle-defaults"],
     installable: true,
 
