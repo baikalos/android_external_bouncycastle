@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ab277c4_73c76eb9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:10:17Z",
+      "side": 1,
+      "message": "Double space?",
+      "range": {
+        "startLine": 10,
+        "startChar": 35,
+        "endLine": 10,
+        "endChar": 37
+      },
+      "revId": "eeaef299fa5b867625ba2a8b65c4c3f028a64b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af0c9802_9b2a21f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:10:17Z",
+      "side": 1,
+      "message": "authentication schemes? I think that\u0027s the only place we use this, yeah?",
+      "range": {
+        "startLine": 10,
+        "startChar": 44,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "eeaef299fa5b867625ba2a8b65c4c3f028a64b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7bac57f_62468548",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:10:17Z",
+      "side": 1,
+      "message": "This could probably be more concise by saying:\n\nTo avoid adding the entire bouncycastle-unbundled jar into the IKE library (due to classpath size concerns), a new minimal library is defined and used instead.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 56
+      },
+      "revId": "eeaef299fa5b867625ba2a8b65c4c3f028a64b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040161b4_8b5ced25",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:10:17Z",
+      "side": 1,
+      "message": "will",
+      "range": {
+        "startLine": 18,
+        "startChar": 49,
+        "endLine": 18,
+        "endChar": 53
+      },
+      "revId": "eeaef299fa5b867625ba2a8b65c4c3f028a64b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902cbfc9_dae4bfa5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:10:17Z",
+      "side": 1,
+      "message": "single word?",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "eeaef299fa5b867625ba2a8b65c4c3f028a64b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1aed9b_3022e559",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:10:17Z",
+      "side": 1,
+      "message": "Suggest \"FrameworksIkeTests passing\"\n\nMaybe if we can also run FrameworksNetTests to make sure it doesn\u0027t break other things there, that\u0027d be good to add here too",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "eeaef299fa5b867625ba2a8b65c4c3f028a64b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a774a19f_28dfcc89",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-06T00:10:17Z",
+      "side": 1,
+      "message": "authentication",
+      "range": {
+        "startLine": 183,
+        "startChar": 10,
+        "endLine": 183,
+        "endChar": 20
+      },
+      "revId": "eeaef299fa5b867625ba2a8b65c4c3f028a64b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
