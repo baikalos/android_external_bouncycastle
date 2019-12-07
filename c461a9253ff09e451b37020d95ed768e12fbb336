@@ -22,6 +22,30 @@
       "revId": "c461a9253ff09e451b37020d95ed768e12fbb336",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81124aa_8ad941fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-07T02:08:29Z",
+      "side": 1,
+      "message": "Hmm, it may not be. Maybe filegroup? (Commit title also will need to change in that case)",
+      "parentUuid": "a4e0f6ac_8f7f5658",
+      "range": {
+        "startLine": 17,
+        "startChar": 48,
+        "endLine": 17,
+        "endChar": 55
+      },
+      "revId": "c461a9253ff09e451b37020d95ed768e12fbb336",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
