@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.io.ByteArrayInputStream;
 import java.io.EOFException;
 import java.io.FilterInputStream;
@@ -26,7 +28,7 @@ public class ASN1InputStream
 
     private final byte[][] tmpBuffers;
 
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public ASN1InputStream(
         InputStream is)
@@ -40,7 +42,7 @@ public class ASN1InputStream
      * 
      * @param input array containing ASN.1 encoded data.
      */
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public ASN1InputStream(
         byte[] input)
@@ -217,7 +219,7 @@ public class ASN1InputStream
         return new ASN1InputStream(dIn).buildEncodableVector();
     }
 
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public ASN1Primitive readObject()
         throws IOException

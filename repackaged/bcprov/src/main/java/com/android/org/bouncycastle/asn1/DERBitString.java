@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.io.IOException;
 
 /**
@@ -97,7 +99,7 @@ public class DERBitString
         super(data, padBits);
     }
 
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public DERBitString(
         byte[]  data)

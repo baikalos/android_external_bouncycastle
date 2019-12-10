@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1.x509;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 // Android-added: Localization support
@@ -54,7 +56,7 @@ public class Time
      *
      * @param time a date object representing the time of interest.
      */
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public Time(
         Date    time)

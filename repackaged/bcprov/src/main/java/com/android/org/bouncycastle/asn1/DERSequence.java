@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.io.IOException;
 import java.util.Enumeration;
 
@@ -20,7 +22,7 @@ public class DERSequence
     /**
      * Create an empty sequence
      */
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public DERSequence()
     {
@@ -40,7 +42,7 @@ public class DERSequence
      * Create a sequence containing a vector of objects.
      * @param v the vector of objects to make up the sequence.
      */
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public DERSequence(
         ASN1EncodableVector v)

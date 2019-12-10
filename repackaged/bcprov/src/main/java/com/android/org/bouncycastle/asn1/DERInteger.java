@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.math.BigInteger;
 
 /**
@@ -21,13 +23,13 @@ public class DERInteger
         super(bytes, true);
     }
 
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     public DERInteger(BigInteger value)
     {
         super(value);
     }
 
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public DERInteger(long value)
     {

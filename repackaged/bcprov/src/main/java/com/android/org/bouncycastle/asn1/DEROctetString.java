@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.io.IOException;
 
 /**
@@ -16,7 +18,7 @@ public class DEROctetString
      *
      * @param string the octets making up the octet string.
      */
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public DEROctetString(
         byte[]  string)

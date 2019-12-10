@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -11,7 +13,7 @@ import java.io.OutputStream;
 public class DEROutputStream
     extends ASN1OutputStream
 {
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     public DEROutputStream(
         OutputStream    os)
     {

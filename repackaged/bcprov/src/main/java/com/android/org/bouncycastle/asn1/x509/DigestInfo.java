@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1.x509;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.util.Enumeration;
 
 import com.android.org.bouncycastle.asn1.ASN1EncodableVector;
@@ -50,7 +52,7 @@ public class DigestInfo
         return null;
     }
 
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     public DigestInfo(
         AlgorithmIdentifier  algId,
         byte[]               digest)

@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -16,7 +18,7 @@ public class ASN1EncodableVector
     /**
      * Base constructor.
      */
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public ASN1EncodableVector()
     {
@@ -27,7 +29,7 @@ public class ASN1EncodableVector
      *
      * @param obj the encodable to add.
      */
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public void add(ASN1Encodable obj)
     {

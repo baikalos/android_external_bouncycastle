@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1.x509;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import com.android.org.bouncycastle.asn1.ASN1Encodable;
 import com.android.org.bouncycastle.asn1.ASN1EncodableVector;
 import com.android.org.bouncycastle.asn1.ASN1Object;
@@ -42,7 +44,7 @@ public class AlgorithmIdentifier
         return null;
     }
 
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public AlgorithmIdentifier(
         ASN1ObjectIdentifier algorithm)
@@ -50,7 +52,7 @@ public class AlgorithmIdentifier
         this.algorithm = algorithm;
     }
 
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public AlgorithmIdentifier(
         ASN1ObjectIdentifier algorithm,

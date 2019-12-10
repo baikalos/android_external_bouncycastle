@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1.x509;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.io.IOException;
 import java.util.Enumeration;
 
@@ -34,7 +36,7 @@ public class SubjectPublicKeyInfo
         return getInstance(ASN1Sequence.getInstance(obj, explicit));
     }
 
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public static SubjectPublicKeyInfo getInstance(
         Object  obj)

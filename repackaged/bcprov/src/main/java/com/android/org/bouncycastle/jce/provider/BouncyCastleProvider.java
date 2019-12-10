@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.jce.provider;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.io.IOException;
 import java.security.AccessController;
 import java.security.PrivateKey;
@@ -152,7 +154,7 @@ public final class BouncyCastleProvider extends Provider
      * using runtime registration of the provider using the
      * <code>Security.addProvider()</code> mechanism.
      */
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public BouncyCastleProvider()
     {

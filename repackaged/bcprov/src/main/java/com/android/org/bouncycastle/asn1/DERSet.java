@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.io.IOException;
 import java.util.Enumeration;
 
@@ -41,7 +43,7 @@ public class DERSet
      * create a set containing a vector of objects.
      * @param v the vector of objects to make up the set.
      */
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     public DERSet(
         ASN1EncodableVector v)
     {

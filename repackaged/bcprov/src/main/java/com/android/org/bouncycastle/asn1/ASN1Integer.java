@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import java.io.IOException;
 import java.math.BigInteger;
 
@@ -89,7 +91,7 @@ public class ASN1Integer
      *
      * @param value the BigInteger representing the value desired.
      */
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public ASN1Integer(
         BigInteger value)

@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1.x9;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier;
 
 /**
@@ -55,7 +57,7 @@ public interface X9ObjectIdentifiers
     ASN1ObjectIdentifier ecdsa_with_SHA224 = ecdsa_with_SHA2.branch("1");
 
     /** OID: 1.2.840.10045.4.3.2 */
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     ASN1ObjectIdentifier ecdsa_with_SHA256 = ecdsa_with_SHA2.branch("2");
 

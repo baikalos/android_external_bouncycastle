@@ -1,6 +1,8 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.asn1;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 /**
  *
  * @deprecated Use ASN1ObjectIdentifier instead of this,
@@ -9,7 +11,7 @@ package com.android.org.bouncycastle.asn1;
 public class DERObjectIdentifier
     extends ASN1ObjectIdentifier
 {
-    @dalvik.annotation.compat.UnsupportedAppUsage
+    @UnsupportedAppUsage
     public DERObjectIdentifier(String identifier)
     {
         super(identifier);
