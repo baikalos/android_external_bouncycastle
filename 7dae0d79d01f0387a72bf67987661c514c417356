@@ -22,6 +22,30 @@
       "revId": "7dae0d79d01f0387a72bf67987661c514c417356",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e82ccd_3d5205d9",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-12-17T15:43:03Z",
+      "side": 1,
+      "message": "The default only defines some compile flags at the moment; they also are used in other libraries that don\u0027t need unsupportedappusage. Keeping as is for now.",
+      "parentUuid": "4a254a9b_eb9a23e7",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 34
+      },
+      "revId": "7dae0d79d01f0387a72bf67987661c514c417356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
