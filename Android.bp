@@ -70,6 +70,8 @@ java_library {
     apex_available: [
         "com.android.art.release",
         "com.android.art.debug",
+        "com.android.art.host",
+        "com.android.art.testing",
     ],
     defaults: ["bouncycastle-defaults"],
     installable: true,
