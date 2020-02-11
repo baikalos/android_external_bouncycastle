@@ -67,10 +67,16 @@ java_library {
         "//external/wycheproof",
         "//libcore",
     ],
+    apex_available: [
+        "com.android.art.release",
+        "com.android.art.debug",
+    ],
     defaults: ["bouncycastle-defaults"],
     installable: true,
 
     srcs: [":bouncycastle_java_files"],
+
+    libs: ["unsupportedappusage"],
 
     sdk_version: "none",
     system_modules: "art-module-intra-core-api-stubs-system-modules",
@@ -88,6 +94,8 @@ java_library {
     installable: true,
 
     srcs: [":bouncycastle_java_files"],
+
+    libs: ["unsupportedappusage"],
 
     sdk_version: "none",
     system_modules: "art-module-intra-core-api-stubs-system-modules",
@@ -110,6 +118,8 @@ unbundled_visibility = [
     "//external/robolectric-shadows/robolectric",
     "//external/robolectric-shadows/shadows/supportv4",
     "//external/robolectric-shadows/shadows/httpclient",
+    "//frameworks/opt/net/wifi/service",
+    "//frameworks/opt/net/wifi/tests/wifitests",
     "//libcore",
     "//system/extras/verity",
 ]
@@ -173,4 +183,23 @@ java_library_static {
 java_library_host {
     name: "bouncycastle-host",
     static_libs: ["bouncycastle-unbundled"],
+}
+
+// Bouncycastle filegroup for use by frameworks/opt/net/ike project.
+//
+// Specifically, SHA1Digest and MD4Digest (and their dependencies) must be used by IKEv2 to support
+// legacy authentication methods.
+filegroup {
+    name: "bouncycastle_ike_digests",
+    visibility: ["//frameworks/opt/net/ike"],
+    srcs: [
+        "bcprov/src/main/java/org/bouncycastle/crypto/Digest.java",
+        "bcprov/src/main/java/org/bouncycastle/crypto/ExtendedDigest.java",
+        "bcprov/src/main/java/org/bouncycastle/crypto/digests/EncodableDigest.java",
+        "bcprov/src/main/java/org/bouncycastle/crypto/digests/GeneralDigest.java",
+        "bcprov/src/main/java/org/bouncycastle/crypto/digests/MD4Digest.java",
+        "bcprov/src/main/java/org/bouncycastle/crypto/digests/SHA1Digest.java",
+        "bcprov/src/main/java/org/bouncycastle/util/Memoable.java",
+        "bcprov/src/main/java/org/bouncycastle/util/Pack.java",
+    ],
 }
