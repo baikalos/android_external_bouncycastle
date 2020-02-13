@@ -12,6 +12,7 @@ import org.bouncycastle.asn1.DERNull;
 import org.bouncycastle.asn1.x9.ECNamedCurveTable;
 import org.bouncycastle.asn1.x9.X962Parameters;
 import org.bouncycastle.asn1.x9.X9ECParameters;
+import org.bouncycastle.asn1.x9.X9ECPoint;
 import org.bouncycastle.jcajce.provider.asymmetric.util.EC5Util;
 import org.bouncycastle.jcajce.provider.asymmetric.util.ECUtil;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -162,7 +163,7 @@ public class AlgorithmParametersSpi
                 org.bouncycastle.jce.spec.ECParameterSpec ecSpec = EC5Util.convertSpec(ecParameterSpec, false);
                 X9ECParameters ecP = new X9ECParameters(
                     ecSpec.getCurve(),
-                    ecSpec.getG(),
+                    new X9ECPoint(ecSpec.getG(), false),
                     ecSpec.getN(),
                     ecSpec.getH(),
                     ecSpec.getSeed());

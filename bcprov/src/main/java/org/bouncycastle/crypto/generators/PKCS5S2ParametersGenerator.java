@@ -117,7 +117,7 @@ public class PKCS5S2ParametersGenerator
     {
         keySize = keySize / 8;
 
-        byte[]  dKey = Arrays.copyOfRange(generateDerivedKey(keySize), 0, keySize);
+        byte[] dKey = generateDerivedKey(keySize);
 
         return new KeyParameter(dKey, 0, keySize);
     }
@@ -138,7 +138,7 @@ public class PKCS5S2ParametersGenerator
         keySize = keySize / 8;
         ivSize = ivSize / 8;
 
-        byte[]  dKey = generateDerivedKey(keySize + ivSize);
+        byte[] dKey = generateDerivedKey(keySize + ivSize);
 
         return new ParametersWithIV(new KeyParameter(dKey, 0, keySize), dKey, keySize, ivSize);
     }
