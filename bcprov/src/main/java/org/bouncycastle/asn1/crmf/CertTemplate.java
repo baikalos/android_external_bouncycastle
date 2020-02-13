@@ -99,7 +99,7 @@ public class CertTemplate
     {
         if (version != null)
         {
-            return version.intValueExact();
+            return version.getValue().intValue();
         }
 
         return -1;

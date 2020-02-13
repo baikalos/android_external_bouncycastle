@@ -5,7 +5,7 @@ import java.util.Stack;
 
 
 class BDSTreeHash
-    implements Serializable, Cloneable
+    implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
@@ -156,20 +156,7 @@ class BDSTreeHash
 
     public XMSSNode getTailNode()
     {
-        return tailNode;
-    }
-
-    protected BDSTreeHash clone()
-    {
-        BDSTreeHash th = new BDSTreeHash(this.initialHeight);
-
-        th.tailNode = this.tailNode;
-        th.height = this.height;
-        th.nextIndex = this.nextIndex;
-        th.initialized = this.initialized;
-        th.finished = this.finished;
-
-        return th;
+        return tailNode.clone();
     }
 }
 

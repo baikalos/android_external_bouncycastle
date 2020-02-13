@@ -174,7 +174,7 @@ public class ASN1ObjectIdentifier
     {
         if (identifier == null)
         {
-            throw new NullPointerException("'identifier' cannot be null");
+            throw new IllegalArgumentException("'identifier' cannot be null");
         }
         if (!isValidIdentifier(identifier))
         {
@@ -327,9 +327,15 @@ public class ASN1ObjectIdentifier
         return 1 + StreamUtil.calculateBodyLength(length) + length;
     }
 
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(
+        ASN1OutputStream out)
+        throws IOException
     {
-        out.writeEncoded(withTag, BERTags.OBJECT_IDENTIFIER, getBody());
+        byte[] enc = getBody();
+
+        out.write(BERTags.OBJECT_IDENTIFIER);
+        out.writeLength(enc.length);
+        out.write(enc);
     }
 
     public int hashCode()
@@ -361,40 +367,35 @@ public class ASN1ObjectIdentifier
     private static boolean isValidBranchID(
         String branchID, int start)
     {
-        int digitCount = 0;
+        boolean periodAllowed = false;
 
         int pos = branchID.length();
         while (--pos >= start)
         {
             char ch = branchID.charAt(pos);
 
+            // TODO Leading zeroes?
+            if ('0' <= ch && ch <= '9')
+            {
+                periodAllowed = true;
+                continue;
+            }
+
             if (ch == '.')
             {
-                if (0 == digitCount
-                    || (digitCount > 1 && branchID.charAt(pos + 1) == '0'))
+                if (!periodAllowed)
                 {
                     return false;
                 }
 
-                digitCount = 0;
+                periodAllowed = false;
+                continue;
             }
-            else if ('0' <= ch && ch <= '9')
-            {
-                ++digitCount;
-            }
-            else
-            {
-                return false;
-            }
-        }
 
-        if (0 == digitCount
-            || (digitCount > 1 && branchID.charAt(pos + 1) == '0'))
-        {
             return false;
         }
 
-        return true;
+        return periodAllowed;
     }
 
     private static boolean isValidIdentifier(

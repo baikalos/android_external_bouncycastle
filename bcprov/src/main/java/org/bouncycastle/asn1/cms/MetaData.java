@@ -91,7 +91,7 @@ public class MetaData
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(4);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(hashProtected);
 

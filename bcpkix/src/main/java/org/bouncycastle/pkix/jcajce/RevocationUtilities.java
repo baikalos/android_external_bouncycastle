@@ -153,7 +153,7 @@ class RevocationUtilities
         Exception invalidKeyEx = null;
 
         X509CertSelector certSelectX509 = new X509CertSelector();
-        X500Name certIssuer = getIssuer(cert);
+        X500Name certIssuer = X500Name.getInstance(cert.getIssuerX500Principal());
 
         try
         {
@@ -184,7 +184,7 @@ class RevocationUtilities
             {
                 try
                 {
-                    X500Name caName = getX500Name(trust.getCA());
+                    X500Name caName = X500Name.getInstance(trust.getCA().getEncoded());
                     if (certIssuer.equals(caName))
                     {
                         trustPublicKey = trust.getCAPublicKey();
@@ -487,12 +487,14 @@ class RevocationUtilities
                 {
                     try
                     {
-                        issuers.add(X500Name.getInstance(genNames[j].getName()));
+                        issuers.add(X500Name.getInstance(genNames[j].getName()
+                            .toASN1Primitive().getEncoded()));
                     }
-                    catch (IllegalArgumentException e)
+                    catch (IOException e)
                     {
                         throw new AnnotatedException(
-                            "CRL issuer information from distribution point cannot be decoded.", e);
+                            "CRL issuer information from distribution point cannot be decoded.",
+                            e);
                     }
                 }
             }
@@ -573,6 +575,12 @@ class RevocationUtilities
         }
     }
 
+    private static BigInteger getSerialNumber(
+        Object cert)
+    {
+        return ((X509Certificate)cert).getSerialNumber();
+    }
+
     protected static void getCertStatus(
         Date validDate,
         X509CRL crl,
@@ -580,6 +588,8 @@ class RevocationUtilities
         CertStatus certStatus)
         throws AnnotatedException
     {
+        X509CRLEntry crl_entry = null;
+
         boolean isIndirect;
         try
         {
@@ -590,82 +600,86 @@ class RevocationUtilities
             throw new AnnotatedException("Failed check for indirect CRL.", exception);
         }
 
-        X509Certificate x509Cert = (X509Certificate)cert;
-        X500Name x509CertIssuer = getIssuer(x509Cert);
-
-        if (!isIndirect)
+        if (isIndirect)
         {
-            X500Name crlIssuer = getIssuer(crl);
-            if (!x509CertIssuer.equals(crlIssuer))
+            crl_entry = crl.getRevokedCertificate(getSerialNumber(cert));
+
+            if (crl_entry == null)
             {
                 return;
             }
-        }
 
-        X509CRLEntry crl_entry = crl.getRevokedCertificate(x509Cert.getSerialNumber());
-        if (null == crl_entry)
-        {
-            return;
-        }
-
-        if (isIndirect)
-        {
             X500Principal certificateIssuer = crl_entry.getCertificateIssuer();
 
-            X500Name expectedCertIssuer;
-            if (null == certificateIssuer)
+            X500Name certIssuer;
+            if (certificateIssuer == null)
             {
-                expectedCertIssuer = getIssuer(crl);
+                certIssuer = X500Name.getInstance(crl.getIssuerX500Principal());
             }
             else
             {
-                expectedCertIssuer = getX500Name(certificateIssuer);
+                certIssuer = X500Name.getInstance(certificateIssuer.getEncoded());
             }
 
-            if (!x509CertIssuer.equals(expectedCertIssuer))
+            if (!X500Name.getInstance(((X509Certificate)cert).getIssuerX500Principal().getEncoded()).equals(certIssuer))
+            {
+                return;
+            }
+        }
+        else if (!X500Name.getInstance(((X509Certificate)cert).getIssuerX500Principal().getEncoded()).equals(X500Name.getInstance(crl.getIssuerX500Principal().getEncoded())))
+        {
+            return;  // not for our issuer, ignore
+        }
+        else
+        {
+            crl_entry = crl.getRevokedCertificate(getSerialNumber(cert));
+
+            if (crl_entry == null)
             {
                 return;
             }
         }
 
-        int reasonCodeValue = CRLReason.unspecified;
-
+        ASN1Enumerated reasonCode = null;
         if (crl_entry.hasExtensions())
         {
             try
             {
-                ASN1Primitive extValue = RevocationUtilities.getExtensionValue(crl_entry, Extension.reasonCode);
-                ASN1Enumerated reasonCode = ASN1Enumerated.getInstance(extValue);
-                if (null != reasonCode)
-                {
-                    reasonCodeValue = reasonCode.intValueExact();
-                }
+                reasonCode = ASN1Enumerated
+                    .getInstance(RevocationUtilities
+                        .getExtensionValue(crl_entry,
+                            Extension.reasonCode));
             }
             catch (Exception e)
             {
-                throw new AnnotatedException("Reason code CRL entry extension could not be decoded.", e);
+                throw new AnnotatedException(
+                    "Reason code CRL entry extension could not be decoded.",
+                    e);
             }
         }
 
-        Date revocationDate = crl_entry.getRevocationDate();
-
-        if (validDate.before(revocationDate))
+        // for reason keyCompromise, caCompromise, aACompromise or
+        // unspecified
+        if (!(validDate.getTime() < crl_entry.getRevocationDate().getTime())
+            || reasonCode == null
+            || reasonCode.getValue().intValue() == 0
+            || reasonCode.getValue().intValue() == 1
+            || reasonCode.getValue().intValue() == 2
+            || reasonCode.getValue().intValue() == 8)
         {
-            switch (reasonCodeValue)
-            {
-            case CRLReason.unspecified:
-            case CRLReason.keyCompromise:
-            case CRLReason.cACompromise:
-            case CRLReason.aACompromise:
-                break;
-            default:
-                return;
-            }
-        }
 
-        // (i) or (j)
-        certStatus.setCertStatus(reasonCodeValue);
-        certStatus.setRevocationDate(revocationDate);
+            // (i) or (j) (1)
+            if (reasonCode != null)
+            {
+                certStatus.setCertStatus(reasonCode.getValue().intValue());
+            }
+            // (i) or (j) (2)
+            else
+            {
+                certStatus.setCertStatus(CRLReason.unspecified);
+            }
+            certStatus.setRevocationDate(crl_entry.getRevocationDate());
+        }
     }
 
     /**
@@ -685,12 +699,14 @@ class RevocationUtilities
         // 5.2.4 (a)
         try
         {
-            baseDeltaSelect.addIssuerName(completeCRL.getIssuerX500Principal().getEncoded());
+            baseDeltaSelect.addIssuerName(X500Name.getInstance(completeCRL.getIssuerX500Principal().getEncoded()).getEncoded());
         }
         catch (IOException e)
         {
             throw new AnnotatedException("cannot extract issuer from CRL.", e);
         }
+
+
 
         BigInteger completeCRLNumber = null;
         try
@@ -785,7 +801,8 @@ class RevocationUtilities
         try
         {
             Set issuers = new HashSet();
-            issuers.add(getIssuer((X509Certificate)cert));
+
+            issuers.add(X500Name.getInstance(((X509Certificate)cert).getIssuerX500Principal().getEncoded()));
 
             RevocationUtilities.getCRLIssuersFromDistributionPoint(dp, issuers, baseCrlSelect);
         }
@@ -1039,10 +1056,9 @@ class RevocationUtilities
 //            }
 //            else
             {
-                X500Name certIssuer = getIssuer((X509Certificate)cert);
+                X509Certificate xCert = (X509Certificate)cert;
 
-                throw new CRLNotFoundException(
-                    "No CRLs found for issuer \"" + RFC4519Style.INSTANCE.toString(certIssuer) + "\"");
+                throw new CRLNotFoundException("No CRLs found for issuer \"" + RFC4519Style.INSTANCE.toString(X500Name.getInstance(((X509Certificate)xCert).getIssuerX500Principal().getEncoded())) + "\"");
             }
         }
     }
@@ -1061,20 +1077,5 @@ class RevocationUtilities
             throw new CRLException(
                     "exception reading IssuingDistributionPoint", e);
         }
-    }
-
-    private static X500Name getIssuer(X509Certificate cert)
-    {
-        return getX500Name(cert.getIssuerX500Principal());
-    }
-
-    private static X500Name getIssuer(X509CRL crl)
-    {
-        return getX500Name(crl.getIssuerX500Principal());
-    }
-
-    private static X500Name getX500Name(X500Principal principal)
-    {
-        return X500Name.getInstance(principal.getEncoded());
     }
 }

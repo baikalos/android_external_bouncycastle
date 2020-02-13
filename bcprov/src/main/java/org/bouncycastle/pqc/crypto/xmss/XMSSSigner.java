@@ -9,9 +9,9 @@ public class XMSSSigner
     implements StateAwareMessageSigner
 {
     private XMSSPrivateKeyParameters privateKey;
+    private XMSSPrivateKeyParameters nextKeyGenerator;
     private XMSSPublicKeyParameters publicKey;
     private XMSSParameters params;
-    private WOTSPlus wotsPlus;
     private KeyedHashFunctions khf;
 
     private boolean initSign;
@@ -24,7 +24,10 @@ public class XMSSSigner
             initSign = true;
             hasGenerated = false;
             privateKey = (XMSSPrivateKeyParameters)param;
+            nextKeyGenerator = privateKey;
+
             params = privateKey.getParameters();
+            khf = params.getWOTSPlus().getKhf();
         }
         else
         {
@@ -32,10 +35,8 @@ public class XMSSSigner
             publicKey = (XMSSPublicKeyParameters)param;
 
             params = publicKey.getParameters();
+            khf = params.getWOTSPlus().getKhf();
         }
-
-        wotsPlus = params.getWOTSPlus();
-        khf = wotsPlus.getKhf();
     }
 
     public byte[] generateSignature(byte[] message)
@@ -55,44 +56,42 @@ public class XMSSSigner
         {
             throw new IllegalStateException("signer not initialized for signature generation");
         }
-
-        synchronized (privateKey)
+        if (privateKey.getBDSState().getAuthenticationPath().isEmpty())
         {
-            if (privateKey.getUsagesRemaining() <= 0)
-            {
-                throw new IllegalStateException("no usages of private key remaining");
-            }
-            if (privateKey.getBDSState().getAuthenticationPath().isEmpty())
-            {
-                throw new IllegalStateException("not initialized");
-            }
-
-            try
-            {
-                int index = privateKey.getIndex();
-
-                hasGenerated = true;
-
-                /* create (randomized keyed) messageDigest of message */
-                byte[] random = khf.PRF(privateKey.getSecretKeyPRF(), XMSSUtil.toBytesBigEndian(index, 32));
-                byte[] concatenated = Arrays.concatenate(random, privateKey.getRoot(),
-                    XMSSUtil.toBytesBigEndian(index, params.getTreeDigestSize()));
-                byte[] messageDigest = khf.HMsg(concatenated, message);
-
-                /* create signature for messageDigest */
-                OTSHashAddress otsHashAddress = (OTSHashAddress)new OTSHashAddress.Builder().withOTSAddress(index).build();
-                WOTSPlusSignature wotsPlusSignature = wotsSign(messageDigest, otsHashAddress);
-                return new XMSSSignature.Builder(params).withIndex(index).withRandom(random)
-                    .withWOTSPlusSignature(wotsPlusSignature)
-                    .withAuthPath(privateKey.getBDSState().getAuthenticationPath())
-                    .build().toByteArray();
-            }
-            finally
-            {
-                privateKey.getBDSState().markUsed();
-                privateKey.rollKey();
-            }
+            throw new IllegalStateException("not initialized");
         }
+        int index = privateKey.getIndex();
+        if (!XMSSUtil.isIndexValid(params.getHeight(), index))
+        {
+            throw new IllegalStateException("index out of bounds");
+        }
+
+		/* create (randomized keyed) messageDigest of message */
+        byte[] random = khf.PRF(privateKey.getSecretKeyPRF(), XMSSUtil.toBytesBigEndian(index, 32));
+        byte[] concatenated = Arrays.concatenate(random, privateKey.getRoot(),
+            XMSSUtil.toBytesBigEndian(index, params.getDigestSize()));
+        byte[] messageDigest = khf.HMsg(concatenated, message);
+
+		/* create signature for messageDigest */
+        OTSHashAddress otsHashAddress = (OTSHashAddress)new OTSHashAddress.Builder().withOTSAddress(index).build();
+        WOTSPlusSignature wotsPlusSignature = wotsSign(messageDigest, otsHashAddress);
+        XMSSSignature signature = (XMSSSignature)new XMSSSignature.Builder(params).withIndex(index).withRandom(random)
+            .withWOTSPlusSignature(wotsPlusSignature).withAuthPath(privateKey.getBDSState().getAuthenticationPath())
+            .build();
+
+        hasGenerated = true;
+
+        if (nextKeyGenerator != null)
+        {
+            privateKey = nextKeyGenerator.getNextKey();
+            nextKeyGenerator = privateKey;
+        }
+        else
+        {
+            privateKey = null;
+        }
+
+        return signature.toByteArray();
     }
 
     public long getUsagesRemaining()
@@ -108,11 +107,11 @@ public class XMSSSigner
 
         int index = sig.getIndex();
         		/* reinitialize WOTS+ object */
-        wotsPlus.importKeys(new byte[params.getTreeDigestSize()], publicKey.getPublicSeed());
+        params.getWOTSPlus().importKeys(new byte[params.getDigestSize()], publicKey.getPublicSeed());
 
         		/* create message digest */
         byte[] concatenated = Arrays.concatenate(sig.getRandom(), publicKey.getRoot(),
-            XMSSUtil.toBytesBigEndian(index, params.getTreeDigestSize()));
+            XMSSUtil.toBytesBigEndian(index, params.getDigestSize()));
         byte[] messageDigest = khf.HMsg(concatenated, message);
 
         int xmssHeight = params.getHeight();
@@ -120,7 +119,7 @@ public class XMSSSigner
 
         		/* get root from signature */
         OTSHashAddress otsHashAddress = (OTSHashAddress)new OTSHashAddress.Builder().withOTSAddress(index).build();
-        XMSSNode rootNodeFromSignature = XMSSVerifierUtil.getRootNodeFromSignature(wotsPlus, xmssHeight, messageDigest, sig, otsHashAddress, indexLeaf);
+        XMSSNode rootNodeFromSignature = XMSSVerifierUtil.getRootNodeFromSignature(params.getWOTSPlus(), xmssHeight, messageDigest, sig, otsHashAddress, indexLeaf);
 
         return Arrays.constantTimeAreEqual(rootNodeFromSignature.getValue(), publicKey.getRoot());
     }
@@ -129,33 +128,28 @@ public class XMSSSigner
     {
         // if we've generated a signature return the last private key generated
         // if we've only initialised leave it in place and return the next one instead.
-        synchronized (privateKey)
+        if (hasGenerated)
         {
-            if (hasGenerated)
-            {
-                XMSSPrivateKeyParameters privKey = privateKey;
+            XMSSPrivateKeyParameters privKey = privateKey;
 
-                privateKey = null;
+            privateKey = null;
+            nextKeyGenerator = null;
 
-                return privKey;
-            }
-            else
-            {
-                XMSSPrivateKeyParameters privKey = privateKey;
+            return privKey;
+        }
+        else
+        {
+            XMSSPrivateKeyParameters privKey = nextKeyGenerator.getNextKey();
 
-                if (privKey != null)
-                {
-                    privateKey = privateKey.getNextKey();
-                }
+            nextKeyGenerator = null;
 
-                return privKey;
-            }
+            return privKey;
         }
     }
 
     private WOTSPlusSignature wotsSign(byte[] messageDigest, OTSHashAddress otsHashAddress)
     {
-        if (messageDigest.length != params.getTreeDigestSize())
+        if (messageDigest.length != params.getDigestSize())
         {
             throw new IllegalArgumentException("size of messageDigest needs to be equal to size of digest");
         }
@@ -164,8 +158,8 @@ public class XMSSSigner
             throw new NullPointerException("otsHashAddress == null");
         }
         /* (re)initialize WOTS+ instance */
-        wotsPlus.importKeys(wotsPlus.getWOTSPlusSecretKey(privateKey.getSecretKeySeed(), otsHashAddress), privateKey.getPublicSeed());
+        params.getWOTSPlus().importKeys(params.getWOTSPlus().getWOTSPlusSecretKey(privateKey.getSecretKeySeed(), otsHashAddress), privateKey.getPublicSeed());
 		/* create WOTS+ signature */
-        return wotsPlus.sign(messageDigest, otsHashAddress);
+        return params.getWOTSPlus().sign(messageDigest, otsHashAddress);
     }
 }

@@ -76,7 +76,7 @@ public class SignatureCheck
 
     public ASN1BitString getSignature()
     {
-        return new DERBitString(signatureValue.getBytes(), signatureValue.getPadBits());
+        return new DERBitString(Arrays.clone(signatureValue.getBytes()), signatureValue.getPadBits());
     }
 
     public AlgorithmIdentifier getSignatureAlgorithm()
@@ -103,7 +103,7 @@ public class SignatureCheck
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(3);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(signatureAlgorithm);
         if (certificates != null)

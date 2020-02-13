@@ -130,7 +130,7 @@ public class CertificationRequest
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(3);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(certificationRequestInfo);
         v.add(signatureAlgorithm);
@@ -201,7 +201,7 @@ public class CertificationRequest
 
         public ASN1Primitive toASN1Primitive()
         {
-            ASN1EncodableVector v = new ASN1EncodableVector(4);
+            ASN1EncodableVector v = new ASN1EncodableVector();
 
             v.add(version);
             v.add(subject);

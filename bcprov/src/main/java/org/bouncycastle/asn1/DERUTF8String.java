@@ -129,8 +129,9 @@ public class DERUTF8String
         return 1 + StreamUtil.calculateBodyLength(string.length) + string.length;
     }
 
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(ASN1OutputStream out)
+        throws IOException
     {
-        out.writeEncoded(withTag, BERTags.UTF8_STRING, string);
+        out.writeEncoded(BERTags.UTF8_STRING, string);
     }
 }

@@ -91,11 +91,6 @@ public class Ed25519ctxSigner
 
         synchronized boolean verifySignature(Ed25519PublicKeyParameters publicKey, byte[] ctx, byte[] signature)
         {
-            if (Ed25519.SIGNATURE_SIZE != signature.length)
-            {
-                return false;
-            }
-
             byte[] pk = publicKey.getEncoded();
             boolean result = Ed25519.verify(signature, 0, pk, 0, ctx, buf, 0, count);
             reset();

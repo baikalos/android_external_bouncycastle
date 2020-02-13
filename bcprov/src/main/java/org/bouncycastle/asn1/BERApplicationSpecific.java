@@ -97,14 +97,18 @@ public class BERApplicationSpecific
     /* (non-Javadoc)
      * @see org.bouncycastle.asn1.ASN1Primitive#encode(org.bouncycastle.asn1.DEROutputStream)
      */
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(ASN1OutputStream out) throws IOException
     {
-        int flags = BERTags.APPLICATION;
+        int classBits = BERTags.APPLICATION;
         if (isConstructed)
         {
-            flags |= BERTags.CONSTRUCTED;
+            classBits |= BERTags.CONSTRUCTED;
         }
 
-        out.writeEncodedIndef(withTag, flags, tag, octets);
+        out.writeTag(classBits, tag);
+        out.write(0x80);
+        out.write(octets);
+        out.write(0x00);
+        out.write(0x00);
     }
 }

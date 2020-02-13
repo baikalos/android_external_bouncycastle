@@ -288,10 +288,20 @@ public class ProfessionInfo
                           String registrationNumber, ASN1OctetString addProfessionInfo)
     {
         this.namingAuthority = namingAuthority;
-        this.professionItems = new DERSequence(professionItems);
+        ASN1EncodableVector v = new ASN1EncodableVector();
+        for (int i = 0; i != professionItems.length; i++)
+        {
+            v.add(professionItems[i]);
+        }
+        this.professionItems = new DERSequence(v);
         if (professionOIDs != null)
         {
-            this.professionOIDs = new DERSequence(professionOIDs);
+            v = new ASN1EncodableVector();
+            for (int i = 0; i != professionOIDs.length; i++)
+            {
+                v.add(professionOIDs[i]);
+            }
+            this.professionOIDs = new DERSequence(v);
         }
         this.registrationNumber = registrationNumber;
         this.addProfessionInfo = addProfessionInfo;
@@ -316,7 +326,7 @@ public class ProfessionInfo
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector vec = new ASN1EncodableVector(5);
+        ASN1EncodableVector vec = new ASN1EncodableVector();
         if (namingAuthority != null)
         {
             vec.add(new DERTaggedObject(true, 0, namingAuthority));

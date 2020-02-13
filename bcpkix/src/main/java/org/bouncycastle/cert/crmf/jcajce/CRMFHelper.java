@@ -287,14 +287,14 @@ class CRMFHelper
                 try
                 {
                     // this is reversed as the Sun policy files now allow unlimited strength RSA
-                    return helper.createMessageDigest(digestName);
+                    return helper.createDigest(digestName);
                 }
                 catch (NoSuchAlgorithmException e)
                 {
                     // Ignore
                 }
             }
-            return helper.createMessageDigest(algorithm.getId());
+            return helper.createDigest(algorithm.getId());
         }
         catch (GeneralSecurityException e)
         {

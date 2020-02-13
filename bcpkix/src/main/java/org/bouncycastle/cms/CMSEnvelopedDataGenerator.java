@@ -55,6 +55,11 @@ public class CMSEnvelopedDataGenerator
         OutputEncryptor contentEncryptor)
         throws CMSException
     {
+        if (!oldRecipientInfoGenerators.isEmpty())
+        {
+            throw new IllegalStateException("can only use addRecipientGenerator() with this method");
+        }
+
         ASN1EncodableVector     recipientInfos = new ASN1EncodableVector();
         AlgorithmIdentifier     encAlgId;
         ASN1OctetString         encContent;

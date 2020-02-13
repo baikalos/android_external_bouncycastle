@@ -100,7 +100,7 @@ public class DistributionPoint
     
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(3);
+        ASN1EncodableVector  v = new ASN1EncodableVector();
         
         if (distributionPoint != null)
         {

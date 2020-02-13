@@ -88,7 +88,7 @@ public class ASN1UTCTime
         }
         else
         {
-            return new ASN1UTCTime(ASN1OctetString.getInstance(o).getOctets());
+            return new ASN1UTCTime(((ASN1OctetString)o).getOctets());
         }
     }
 
@@ -151,15 +151,7 @@ public class ASN1UTCTime
     ASN1UTCTime(
         byte[] time)
     {
-        if (time.length < 2)
-        {
-            throw new IllegalArgumentException("UTCTime string too short");
-        }
         this.time = time;
-        if (!(isDigit(0) && isDigit(1)))
-        {
-            throw new IllegalArgumentException("illegal characters in UTCTime string");
-        }
     }
 
     /**
@@ -271,11 +263,6 @@ public class ASN1UTCTime
         }
     }
 
-    private boolean isDigit(int pos)
-    {
-        return time.length > pos && time[pos] >= '0' && time[pos] <= '9';
-    }
-
     boolean isConstructed()
     {
         return false;
@@ -288,9 +275,20 @@ public class ASN1UTCTime
         return 1 + StreamUtil.calculateBodyLength(length) + length;
     }
 
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(
+        ASN1OutputStream  out)
+        throws IOException
     {
-        out.writeEncoded(withTag, BERTags.UTC_TIME, time);
+        out.write(BERTags.UTC_TIME);
+
+        int length = time.length;
+
+        out.writeLength(length);
+
+        for (int i = 0; i != length; i++)
+        {
+            out.write((byte)time[i]);
+        }
     }
 
     boolean asn1Equals(

@@ -22,7 +22,6 @@ import org.bouncycastle.operator.ContentVerifierProvider;
 import org.bouncycastle.util.Encodable;
 
 /**
- * OCSP RFC 2560, RFC 6960
  * <pre>
  * BasicOCSPResponse       ::= SEQUENCE {
  *    tbsResponseData      ResponseData,
@@ -74,7 +73,7 @@ public class BasicOCSPResp
 
     public int getVersion()
     {
-        return data.getVersion().intValueExact() + 1;
+        return data.getVersion().getValue().intValue() + 1;
     }
 
     public RespID getResponderId()

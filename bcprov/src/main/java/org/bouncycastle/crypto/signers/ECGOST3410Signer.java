@@ -16,7 +16,6 @@ import org.bouncycastle.math.ec.ECConstants;
 import org.bouncycastle.math.ec.ECMultiplier;
 import org.bouncycastle.math.ec.ECPoint;
 import org.bouncycastle.math.ec.FixedPointCombMultiplier;
-import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.BigIntegers;
 
 /**
@@ -69,7 +68,12 @@ public class ECGOST3410Signer
     public BigInteger[] generateSignature(
         byte[] message)
     {
-        byte[] mRev = Arrays.reverse(message); // conversion is little-endian
+        byte[] mRev = new byte[message.length]; // conversion is little-endian
+        for (int i = 0; i != mRev.length; i++)
+        {
+            mRev[i] = message[mRev.length - 1 - i];
+        }
+
         BigInteger e = new BigInteger(1, mRev);
 
         ECDomainParameters ec = key.getParameters();
@@ -114,7 +118,12 @@ public class ECGOST3410Signer
         BigInteger  r,
         BigInteger  s)
     {
-        byte[] mRev = Arrays.reverse(message); // conversion is little-endian
+        byte[] mRev = new byte[message.length]; // conversion is little-endian
+        for (int i = 0; i != mRev.length; i++)
+        {
+            mRev[i] = message[mRev.length - 1 - i];
+        }
+        
         BigInteger e = new BigInteger(1, mRev);
         BigInteger n = key.getParameters().getN();
 

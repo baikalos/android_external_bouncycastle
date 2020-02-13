@@ -12,7 +12,7 @@ class XMSSVerifierUtil
     static XMSSNode getRootNodeFromSignature(WOTSPlus wotsPlus, int height, byte[] messageDigest, XMSSReducedSignature signature,
                                               OTSHashAddress otsHashAddress, int indexLeaf)
     {
-        if (messageDigest.length != wotsPlus.getParams().getTreeDigestSize())
+        if (messageDigest.length != wotsPlus.getParams().getDigestSize())
         {
             throw new IllegalArgumentException("size of messageDigest needs to be equal to size of digest");
         }

@@ -133,7 +133,7 @@ public class RSAESOAEPparams
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(3);
+        ASN1EncodableVector v = new ASN1EncodableVector();
         
         if (!hashAlgorithm.equals(DEFAULT_HASH_ALGORITHM))
         {

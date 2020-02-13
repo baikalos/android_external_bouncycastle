@@ -2,7 +2,6 @@ package org.bouncycastle.asn1;
 
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Iterator;
 
 /**
  * Note: this class is for processing DER/DL encoded sequences only.
@@ -12,117 +11,99 @@ class LazyEncodedSequence
 {
     private byte[] encoded;
 
-    LazyEncodedSequence(byte[] encoded) throws IOException
+    LazyEncodedSequence(
+        byte[] encoded)
+        throws IOException
     {
-        // NOTE: Initially, the actual 'elements' will be empty
-        super();
-
         this.encoded = encoded;
+    }
+
+    private void parse()
+    {
+        Enumeration en = new LazyConstructionEnumeration(encoded);
+
+        while (en.hasMoreElements())
+        {
+            seq.addElement(en.nextElement());
+        }
+
+        encoded = null;
     }
 
     public synchronized ASN1Encodable getObjectAt(int index)
     {
-        force();
+        if (encoded != null)
+        {
+            parse();
+        }
 
         return super.getObjectAt(index);
     }
 
     public synchronized Enumeration getObjects()
     {
-        if (null != encoded)
+        if (encoded == null)
         {
-            return new LazyConstructionEnumeration(encoded);
+            return super.getObjects();
         }
 
-        return super.getObjects();
-    }
-
-    public synchronized int hashCode()
-    {
-        force();
-
-        return super.hashCode();
-    }
-
-    public synchronized Iterator<ASN1Encodable> iterator()
-    {
-        force();
-
-        return super.iterator();
+        return new LazyConstructionEnumeration(encoded);
     }
 
     public synchronized int size()
     {
-        force();
+        if (encoded != null)
+        {
+            parse();
+        }
 
         return super.size();
     }
 
-    public synchronized ASN1Encodable[] toArray()
+    ASN1Primitive toDERObject()
     {
-        force();
-
-        return super.toArray();
-    }
-
-    ASN1Encodable[] toArrayInternal()
-    {
-        force();
-
-        return super.toArrayInternal();
-    }
-
-    synchronized int encodedLength()
-        throws IOException
-    {
-        if (null != encoded)
+        if (encoded != null)
         {
-            return 1 + StreamUtil.calculateBodyLength(encoded.length) + encoded.length;
+            parse();
         }
-
-        return super.toDLObject().encodedLength();
-    }
-
-    synchronized void encode(ASN1OutputStream out, boolean withTag) throws IOException
-    {
-        if (null != encoded)
-        {
-            out.writeEncoded(withTag, BERTags.SEQUENCE | BERTags.CONSTRUCTED, encoded);
-        }
-        else
-        {
-            super.toDLObject().encode(out, withTag);
-        }
-    }
-
-    synchronized ASN1Primitive toDERObject()
-    {
-        force();
 
         return super.toDERObject();
     }
 
-    synchronized ASN1Primitive toDLObject()
+    ASN1Primitive toDLObject()
     {
-        force();
+        if (encoded != null)
+        {
+            parse();
+        }
 
         return super.toDLObject();
     }
 
-    private void force()
+    int encodedLength()
+        throws IOException
     {
-        if (null != encoded)
+        if (encoded != null)
         {
-            ASN1EncodableVector v = new ASN1EncodableVector();
+            return 1 + StreamUtil.calculateBodyLength(encoded.length) + encoded.length;
+        }
+        else
+        {
+            return super.toDLObject().encodedLength();
+        }
+    }
 
-            Enumeration en = new LazyConstructionEnumeration(encoded);
-            while (en.hasMoreElements())
-            {
-                v.add((ASN1Primitive)en.nextElement());
-            }
-
-            this.elements = v.takeElements();
-            this.encoded = null;
+    void encode(
+        ASN1OutputStream out)
+        throws IOException
+    {
+        if (encoded != null)
+        {
+            out.writeEncoded(BERTags.SEQUENCE | BERTags.CONSTRUCTED, encoded);
+        }
+        else
+        {
+            super.toDLObject().encode(out);
         }
     }
 }

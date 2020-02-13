@@ -210,21 +210,13 @@ public class TimeStampResponse
     }
 
     /**
-     * return the ASN.1 encoded representation of this object for the specific encoding type.
-     *
-     * @param encoding encoding style ("DER", "DL", "BER")
+     * return the ASN.1 encoded representation of this object.
      */
     public byte[] getEncoded(String encoding) throws IOException
     {
         if (ASN1Encoding.DL.equals(encoding))
         {
-            if (timeStampToken == null)
-            {
-                return new DLSequence(resp.getStatus()).getEncoded(encoding);
-            }
-
-            return new DLSequence(new ASN1Encodable[] { resp.getStatus(),
-                timeStampToken.toCMSSignedData().toASN1Structure() }).getEncoded(encoding);
+            return new DLSequence(new ASN1Encodable[] { resp.getStatus(), timeStampToken.toCMSSignedData().toASN1Structure() }).getEncoded(encoding);
         }
         return resp.getEncoded(encoding);
     }

@@ -232,7 +232,7 @@ public class CMSSignedData
      */
     public int getVersion()
     {
-        return signedData.getVersion().intValueExact();
+        return signedData.getVersion().getValue().intValue();
     }
 
     /**

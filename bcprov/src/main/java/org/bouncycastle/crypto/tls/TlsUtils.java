@@ -41,8 +41,6 @@ import org.bouncycastle.util.io.Streams;
 
 /**
  * Some helper functions for MicroTLS.
- *
- * @deprecated Migrate to the (D)TLS API in org.bouncycastle.tls (bctls jar).
  */
 public class TlsUtils
 {

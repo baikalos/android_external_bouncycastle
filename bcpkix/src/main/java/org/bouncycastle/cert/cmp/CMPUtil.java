@@ -3,17 +3,20 @@ package org.bouncycastle.cert.cmp;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.bouncycastle.asn1.ASN1Encoding;
-import org.bouncycastle.asn1.ASN1Object;
+import org.bouncycastle.asn1.ASN1Encodable;
+import org.bouncycastle.asn1.DEROutputStream;
 
 class CMPUtil
 {
-    static void derEncodeToStream(ASN1Object obj, OutputStream stream)
+    static void derEncodeToStream(ASN1Encodable obj, OutputStream stream)
     {
+        DEROutputStream dOut = new DEROutputStream(stream);
+
         try
         {
-            obj.encodeTo(stream, ASN1Encoding.DER);
-            stream.close();
+            dOut.writeObject(obj);
+
+            dOut.close();
         }
         catch (IOException e)
         {

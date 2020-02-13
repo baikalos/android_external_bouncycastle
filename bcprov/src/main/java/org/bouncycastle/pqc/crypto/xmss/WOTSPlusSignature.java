@@ -29,7 +29,7 @@ final class WOTSPlusSignature
         }
         for (int i = 0; i < signature.length; i++)
         {
-            if (signature[i].length != params.getTreeDigestSize())
+            if (signature[i].length != params.getDigestSize())
             {
                 throw new IllegalArgumentException("wrong signature format");
             }

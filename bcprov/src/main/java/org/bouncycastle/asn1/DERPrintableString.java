@@ -151,9 +151,11 @@ public class DERPrintableString
         return 1 + StreamUtil.calculateBodyLength(string.length) + string.length;
     }
 
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(
+        ASN1OutputStream out)
+        throws IOException
     {
-        out.writeEncoded(withTag, BERTags.PRINTABLE_STRING, string);
+        out.writeEncoded(BERTags.PRINTABLE_STRING, string);
     }
 
     public int hashCode()

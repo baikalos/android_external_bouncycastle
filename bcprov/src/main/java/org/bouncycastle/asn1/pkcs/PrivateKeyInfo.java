@@ -88,12 +88,12 @@ public class PrivateKeyInfo
 
     private static int getVersionValue(ASN1Integer version)
     {
-        int versionValue = version.intValueExact();
-        if (versionValue < 0 || versionValue > 1)
+        BigInteger bigValue = version.getValue();
+        if (bigValue.compareTo(BigIntegers.ZERO) < 0 || bigValue.compareTo(BigIntegers.ONE) > 0)
         {
             throw new IllegalArgumentException("invalid version for private key info");
         }
-        return versionValue;
+        return bigValue.intValue();
     }
 
     public PrivateKeyInfo(
@@ -228,7 +228,7 @@ public class PrivateKeyInfo
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(5);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(version);
         v.add(privateKeyAlgorithm);

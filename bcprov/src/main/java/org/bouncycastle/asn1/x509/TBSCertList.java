@@ -217,7 +217,7 @@ public class TBSCertList
         {
             return 1;
         }
-        return version.intValueExact() + 1;
+        return version.getValue().intValue() + 1;
     }
 
     public ASN1Integer getVersion()
@@ -279,7 +279,7 @@ public class TBSCertList
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(7);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         if (version != null)
         {

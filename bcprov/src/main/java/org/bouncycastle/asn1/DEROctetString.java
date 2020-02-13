@@ -41,23 +41,18 @@ public class DEROctetString
         return 1 + StreamUtil.calculateBodyLength(string.length) + string.length;
     }
 
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(
+        ASN1OutputStream out)
+        throws IOException
     {
-        out.writeEncoded(withTag, BERTags.OCTET_STRING, string);
+        out.writeEncoded(BERTags.OCTET_STRING, string);
     }
 
-    ASN1Primitive toDERObject()
+    static void encode(
+        DEROutputStream derOut,
+        byte[]          bytes)
+        throws IOException
     {
-        return this;
-    }
-
-    ASN1Primitive toDLObject()
-    {
-        return this;
-    }
-
-    static void encode(ASN1OutputStream derOut, boolean withTag, byte[] buf, int off, int len) throws IOException
-    {
-        derOut.writeEncoded(withTag, BERTags.OCTET_STRING, buf, off, len);
+        derOut.writeEncoded(BERTags.OCTET_STRING, bytes);
     }
 }

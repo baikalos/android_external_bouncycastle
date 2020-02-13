@@ -1,5 +1,6 @@
 package org.bouncycastle.asn1.crmf;
 
+import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1Object;
 import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.ASN1Sequence;
@@ -37,7 +38,12 @@ public class Controls
 
     public Controls(AttributeTypeAndValue[] atvs)
     {
-        content = new DERSequence(atvs);
+        ASN1EncodableVector v = new ASN1EncodableVector();
+        for (int i = 0; i < atvs.length; i++)
+        {
+            v.add(atvs[i]);
+        }
+        content = new DERSequence(v);
     }
 
     public AttributeTypeAndValue[] toAttributeTypeAndValueArray()

@@ -199,11 +199,11 @@ public class GeneralSubtree
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(3);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(base);
 
-        if (minimum != null && !minimum.hasValue(ZERO))
+        if (minimum != null && !minimum.getValue().equals(ZERO))
         {
             v.add(new DERTaggedObject(false, 0, minimum));
         }

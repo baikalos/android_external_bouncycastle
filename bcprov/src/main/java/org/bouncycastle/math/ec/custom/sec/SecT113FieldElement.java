@@ -159,18 +159,6 @@ public class SecT113FieldElement extends ECFieldElement.AbstractF2m
         return new SecT113FieldElement(z);
     }
 
-    public ECFieldElement halfTrace()
-    {
-        long[] z = Nat128.create64();
-        SecT113Field.halfTrace(x, z);
-        return new SecT113FieldElement(z); 
-    }
-
-    public boolean hasFastTrace()
-    {
-        return true;
-    }
-
     public int trace()
     {
         return SecT113Field.trace(x);

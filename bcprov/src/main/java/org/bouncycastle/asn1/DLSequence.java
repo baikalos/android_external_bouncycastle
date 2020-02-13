@@ -1,6 +1,7 @@
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * The DLSequence encodes a SEQUENCE using definite length form.
@@ -19,56 +20,56 @@ public class DLSequence
 
     /**
      * create a sequence containing one object
-     * @param element the object to go in the sequence.
+     * @param obj the object to go in the sequence.
      */
-    public DLSequence(ASN1Encodable element)
+    public DLSequence(
+        ASN1Encodable obj)
     {
-        super(element);
+        super(obj);
     }
 
     /**
      * create a sequence containing a vector of objects.
-     * @param elementVector the vector of objects to make up the sequence.
+     * @param v the vector of objects to make up the sequence.
      */
-    public DLSequence(ASN1EncodableVector elementVector)
+    public DLSequence(
+        ASN1EncodableVector v)
     {
-        super(elementVector);
+        super(v);
     }
 
     /**
      * create a sequence containing an array of objects.
-     * @param elements the array of objects to make up the sequence.
+     * @param array the array of objects to make up the sequence.
      */
-    public DLSequence(ASN1Encodable[] elements)
+    public DLSequence(
+        ASN1Encodable[] array)
     {
-        super(elements);
+        super(array);
     }
 
-    DLSequence(ASN1Encodable[] elements, boolean clone)
-    {
-        super(elements, clone);
-    }
-
-    private int getBodyLength() throws IOException
+    private int getBodyLength()
+        throws IOException
     {
         if (bodyLength < 0)
         {
-            int count = elements.length;
-            int totalLength = 0;
+            int length = 0;
 
-            for (int i = 0; i < count; ++i)
+            for (Enumeration e = this.getObjects(); e.hasMoreElements();)
             {
-                ASN1Primitive dlObject = elements[i].toASN1Primitive().toDLObject();
-                totalLength += dlObject.encodedLength();
+                Object obj = e.nextElement();
+
+                length += ((ASN1Encodable)obj).toASN1Primitive().toDLObject().encodedLength();
             }
 
-            this.bodyLength = totalLength;
+            bodyLength = length;
         }
 
         return bodyLength;
     }
 
-    int encodedLength() throws IOException
+    int encodedLength()
+        throws IOException
     {
         int length = getBodyLength();
 
@@ -83,49 +84,21 @@ public class DLSequence
      * ASN.1 descriptions given. Rather than just outputting SEQUENCE,
      * we also have to specify CONSTRUCTED, and the objects length.
      */
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(
+        ASN1OutputStream out)
+        throws IOException
     {
-        if (withTag)
+        ASN1OutputStream dOut = out.getDLSubStream();
+        int length = getBodyLength();
+
+        out.write(BERTags.SEQUENCE | BERTags.CONSTRUCTED);
+        out.writeLength(length);
+
+        for (Enumeration e = this.getObjects(); e.hasMoreElements();)
         {
-            out.write(BERTags.SEQUENCE | BERTags.CONSTRUCTED);
+            Object obj = e.nextElement();
+
+            dOut.writeObject((ASN1Encodable)obj);
         }
-
-        ASN1OutputStream dlOut = out.getDLSubStream();
-
-        int count = elements.length;
-        if (bodyLength >= 0 || count > 16)
-        {
-            out.writeLength(getBodyLength());
-
-            for (int i = 0; i < count; ++i)
-            {
-                dlOut.writePrimitive(elements[i].toASN1Primitive(), true);
-            }
-        }
-        else
-        {
-            int totalLength = 0;
-
-            ASN1Primitive[] dlObjects = new ASN1Primitive[count];
-            for (int i = 0; i < count; ++i)
-            {
-                ASN1Primitive dlObject = elements[i].toASN1Primitive().toDLObject();
-                dlObjects[i] = dlObject;
-                totalLength += dlObject.encodedLength();
-            }
-
-            this.bodyLength = totalLength;
-            out.writeLength(totalLength);
-
-            for (int i = 0; i < count; ++i)
-            {
-                dlOut.writePrimitive(dlObjects[i], true);
-            }
-        }
-    }
-
-    ASN1Primitive toDLObject()
-    {
-        return this;
     }
 }

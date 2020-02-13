@@ -1,7 +1,6 @@
 package org.bouncycastle.pqc.crypto.xmss;
 
-public interface XMSSOid
-{
+public interface XMSSOid {
 
 	int getOid();
 

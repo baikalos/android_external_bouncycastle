@@ -10,6 +10,8 @@ import java.io.IOException;
 public class DERTaggedObject
     extends ASN1TaggedObject
 {
+    private static final byte[] ZERO_BYTES = new byte[0];
+
     /**
      * @param explicit true if an explicitly tagged object.
      * @param tagNo the tag number for this object.
@@ -30,55 +32,87 @@ public class DERTaggedObject
 
     boolean isConstructed()
     {
-        return explicit || obj.toASN1Primitive().toDERObject().isConstructed();
+        if (!empty)
+        {
+            if (explicit)
+            {
+                return true;
+            }
+            else
+            {
+                ASN1Primitive primitive = obj.toASN1Primitive().toDERObject();
+
+                return primitive.isConstructed();
+            }
+        }
+        else
+        {
+            return true;
+        }
     }
 
     int encodedLength()
         throws IOException
     {
-        ASN1Primitive primitive = obj.toASN1Primitive().toDERObject();
-        int length = primitive.encodedLength();
-
-        if (explicit)
+        if (!empty)
         {
-            return StreamUtil.calculateTagLength(tagNo) + StreamUtil.calculateBodyLength(length) + length;
+            ASN1Primitive primitive = obj.toASN1Primitive().toDERObject();
+            int length = primitive.encodedLength();
+
+            if (explicit)
+            {
+                return StreamUtil.calculateTagLength(tagNo) + StreamUtil.calculateBodyLength(length) + length;
+            }
+            else
+            {
+                // header length already in calculation
+                length = length - 1;
+
+                return StreamUtil.calculateTagLength(tagNo) + length;
+            }
         }
         else
         {
-            // header length already in calculation
-            length = length - 1;
-
-            return StreamUtil.calculateTagLength(tagNo) + length;
+            return StreamUtil.calculateTagLength(tagNo) + 1;
         }
     }
 
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(
+        ASN1OutputStream out)
+        throws IOException
     {
-        ASN1Primitive primitive = obj.toASN1Primitive().toDERObject();
-
-        int flags = BERTags.TAGGED;
-        if (explicit || primitive.isConstructed())
+        if (!empty)
         {
-            flags |= BERTags.CONSTRUCTED;
+            ASN1Primitive primitive = obj.toASN1Primitive().toDERObject();
+
+            if (explicit)
+            {
+                out.writeTag(BERTags.CONSTRUCTED | BERTags.TAGGED, tagNo);
+                out.writeLength(primitive.encodedLength());
+                out.writeObject(primitive);
+            }
+            else
+            {
+                //
+                // need to mark constructed types...
+                //
+                int flags;
+                if (primitive.isConstructed())
+                {
+                    flags = BERTags.CONSTRUCTED | BERTags.TAGGED;
+                }
+                else
+                {
+                    flags = BERTags.TAGGED;
+                }
+
+                out.writeTag(flags, tagNo);
+                out.writeImplicitObject(primitive);
+            }
         }
-
-        out.writeTag(withTag, flags, tagNo);
-
-        if (explicit)
+        else
         {
-            out.writeLength(primitive.encodedLength());
+            out.writeEncoded(BERTags.CONSTRUCTED | BERTags.TAGGED, tagNo, ZERO_BYTES);
         }
-
-        primitive.encode(out.getDERSubStream(), explicit);
-    }
-
-    ASN1Primitive toDERObject()
-    {
-        return this;
-    }
-
-    ASN1Primitive toDLObject()
-    {
-        return this;
     }
 }

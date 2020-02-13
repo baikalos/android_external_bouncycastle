@@ -164,7 +164,7 @@ public class EnvelopedData
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector  v = new ASN1EncodableVector(5);
+        ASN1EncodableVector  v = new ASN1EncodableVector();
         
         v.add(version);
 
@@ -202,7 +202,7 @@ public class EnvelopedData
             {
                 RecipientInfo   ri = RecipientInfo.getInstance(e.nextElement());
 
-                if (ri.getVersion().intValueExact() != version)
+                if (ri.getVersion().getValue().intValue() != version)
                 {
                     version = 2;
                     break;

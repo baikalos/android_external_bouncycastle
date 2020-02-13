@@ -110,7 +110,7 @@ public class SemanticsInformation
     
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector seq = new ASN1EncodableVector(2);
+        ASN1EncodableVector seq = new ASN1EncodableVector();
         
         if (this.semanticsIdentifier != null)
         {
@@ -118,9 +118,14 @@ public class SemanticsInformation
         }
         if (this.nameRegistrationAuthorities != null)
         {
-            seq.add(new DERSequence(nameRegistrationAuthorities));
+            ASN1EncodableVector seqname = new ASN1EncodableVector();
+            for (int i = 0; i < nameRegistrationAuthorities.length; i++) 
+            {
+                seqname.add(nameRegistrationAuthorities[i]);
+            }            
+            seq.add(new DERSequence(seqname));
         }            
-
+        
         return new DERSequence(seq);
     }
 

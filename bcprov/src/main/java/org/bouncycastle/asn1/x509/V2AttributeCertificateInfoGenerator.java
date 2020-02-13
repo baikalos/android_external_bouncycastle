@@ -126,7 +126,7 @@ public class V2AttributeCertificateInfoGenerator
             throw new IllegalStateException("not all mandatory fields set in V2 AttributeCertificateInfo generator");
         }
 
-        ASN1EncodableVector  v = new ASN1EncodableVector(9);
+        ASN1EncodableVector  v = new ASN1EncodableVector();
 
         v.add(version);
         v.add(holder);

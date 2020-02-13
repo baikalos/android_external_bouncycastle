@@ -505,10 +505,9 @@ public abstract class Nat192
             c += x_i * y_5 + (zz[i + 5] & M);
             zz[i + 5] = (int)c;
             c >>>= 32;
-
-            zc += c + (zz[i + 6] & M);
-            zz[i + 6] = (int)zc;
-            zc >>>= 32;
+            c += zc + (zz[i + 6] & M);
+            zz[i + 6] = (int)c;
+            zc = c >>> 32;
         }
         return (int)zc;
     }
@@ -544,10 +543,9 @@ public abstract class Nat192
             c += x_i * y_5 + (zz[zzOff + 5] & M);
             zz[zzOff + 5] = (int)c;
             c >>>= 32;
-
-            zc += c + (zz[zzOff + 6] & M);
-            zz[zzOff + 6] = (int)zc;
-            zc >>>= 32;
+            c += zc + (zz[zzOff + 6] & M);
+            zz[zzOff + 6] = (int)c;
+            zc = c >>> 32;
             ++zzOff;
         }
         return (int)zc;

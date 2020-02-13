@@ -7,7 +7,6 @@ import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1TaggedObject;
-import org.bouncycastle.asn1.DLSequence;
 
 /**
  * Implementation of the EncryptionInfo element defined in RFC 4998:
@@ -85,12 +84,18 @@ public class EncryptionInfo
         this.encryptionInfoValue = encryptionInfoValue;
     }
 
+    private EncryptionInfo()
+    {
+
+    }
+
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(2);
+
+        final ASN1EncodableVector v = new ASN1EncodableVector();
         v.add(encryptionInfoType);
         v.add(encryptionInfoValue);
 
-        return new DLSequence(v);
+        return ASN1Sequence.getInstance(v);
     }
 }

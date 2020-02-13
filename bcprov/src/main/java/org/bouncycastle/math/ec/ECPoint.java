@@ -46,6 +46,8 @@ public abstract class ECPoint
     protected ECFieldElement y;
     protected ECFieldElement[] zs;
 
+    protected boolean withCompression;
+
     // Hashtable is (String -> PreCompInfo)
     protected Hashtable preCompTable = null;
 
@@ -258,12 +260,20 @@ public abstract class ECPoint
 
     protected ECPoint createScaledPoint(ECFieldElement sx, ECFieldElement sy)
     {
-        return this.getCurve().createRawPoint(getRawXCoord().multiply(sx), getRawYCoord().multiply(sy));
+        return this.getCurve().createRawPoint(getRawXCoord().multiply(sx), getRawYCoord().multiply(sy), this.withCompression);
     }
 
     public boolean isInfinity()
     {
         return x == null || y == null || (zs.length > 0 && zs[0].isZero());
+    }
+
+    /**
+     * @deprecated per-point compression property will be removed, refer {@link #getEncoded(boolean)}
+     */
+    public boolean isCompressed()
+    {
+        return this.withCompression;
     }
 
     public boolean isValid()
@@ -326,28 +336,14 @@ public abstract class ECPoint
     {
         return isInfinity()
             ?   this
-            :   getCurve().createRawPoint(getRawXCoord().multiply(scale), getRawYCoord(), getRawZCoords());
-    }
-
-    public ECPoint scaleXNegateY(ECFieldElement scale)
-    {
-        return isInfinity()
-            ?   this
-            :   getCurve().createRawPoint(getRawXCoord().multiply(scale), getRawYCoord().negate(), getRawZCoords());
+            :   getCurve().createRawPoint(getRawXCoord().multiply(scale), getRawYCoord(), getRawZCoords(), this.withCompression);
     }
 
     public ECPoint scaleY(ECFieldElement scale)
     {
         return isInfinity()
             ?   this
-            :   getCurve().createRawPoint(getRawXCoord(), getRawYCoord().multiply(scale), getRawZCoords());
-    }
-
-    public ECPoint scaleYNegateX(ECFieldElement scale)
-    {
-        return isInfinity()
-            ?   this
-            :   getCurve().createRawPoint(getRawXCoord().negate(), getRawYCoord().multiply(scale), getRawZCoords());
+            :   getCurve().createRawPoint(getRawXCoord(), getRawYCoord().multiply(scale), getRawZCoords(), this.withCompression);
     }
 
     public boolean equals(ECPoint other)
@@ -451,6 +447,15 @@ public abstract class ECPoint
         }
         sb.append(')');
         return sb.toString();
+    }
+
+    /**
+     * @deprecated per-point compression property will be removed, refer {@link #getEncoded(boolean)}
+     * @return a byte encoding.
+     */
+    public byte[] getEncoded()
+    {
+        return getEncoded(this.withCompression);
     }
 
     /**
@@ -608,19 +613,38 @@ public abstract class ECPoint
      */
     public static class Fp extends AbstractFp
     {
-        Fp(ECCurve curve, ECFieldElement x, ECFieldElement y)
+        /**
+         * Create a point that encodes with or without point compression.
+         * 
+         * @param curve the curve to use
+         * @param x affine x co-ordinate
+         * @param y affine y co-ordinate
+         * @param withCompression if true encode with point compression
+         * 
+         * @deprecated per-point compression property will be removed, refer {@link #getEncoded(boolean)}
+         */
+        public Fp(ECCurve curve, ECFieldElement x, ECFieldElement y, boolean withCompression)
         {
             super(curve, x, y);
+
+            if ((x == null) != (y == null))
+            {
+                throw new IllegalArgumentException("Exactly one of the field elements is null");
+            }
+
+            this.withCompression = withCompression;
         }
 
-        Fp(ECCurve curve, ECFieldElement x, ECFieldElement y, ECFieldElement[] zs)
+        Fp(ECCurve curve, ECFieldElement x, ECFieldElement y, ECFieldElement[] zs, boolean withCompression)
         {
             super(curve, x, y, zs);
+
+            this.withCompression = withCompression;
         }
 
         protected ECPoint detach()
         {
-            return new ECPoint.Fp(null, this.getAffineXCoord(), this.getAffineYCoord());
+            return new ECPoint.Fp(null, this.getAffineXCoord(), this.getAffineYCoord(), false);
         }
 
         public ECFieldElement getZCoord(int index)
@@ -677,7 +701,7 @@ public abstract class ECPoint
                 ECFieldElement X3 = gamma.square().subtract(X1).subtract(X2);
                 ECFieldElement Y3 = gamma.multiply(X1.subtract(X3)).subtract(Y1);
 
-                return new ECPoint.Fp(curve, X3, Y3);
+                return new ECPoint.Fp(curve, X3, Y3, this.withCompression);
             }
 
             case ECCurve.COORD_HOMOGENEOUS:
@@ -719,7 +743,7 @@ public abstract class ECPoint
                 ECFieldElement Y3 = vSquaredV2.subtract(A).multiplyMinusProduct(u, u2, vCubed);
                 ECFieldElement Z3 = vCubed.multiply(w);
 
-                return new ECPoint.Fp(curve, X3, Y3, new ECFieldElement[]{ Z3 });
+                return new ECPoint.Fp(curve, X3, Y3, new ECFieldElement[]{ Z3 }, this.withCompression);
             }
 
             case ECCurve.COORD_JACOBIAN:
@@ -842,7 +866,7 @@ public abstract class ECPoint
                     zs = new ECFieldElement[]{ Z3 };
                 }
 
-                return new ECPoint.Fp(curve, X3, Y3, zs);
+                return new ECPoint.Fp(curve, X3, Y3, zs, this.withCompression);
             }
 
             default:
@@ -881,7 +905,7 @@ public abstract class ECPoint
                 ECFieldElement X3 = gamma.square().subtract(two(X1));
                 ECFieldElement Y3 = gamma.multiply(X1.subtract(X3)).subtract(Y1);
     
-                return new ECPoint.Fp(curve, X3, Y3);
+                return new ECPoint.Fp(curve, X3, Y3, this.withCompression);
             }
 
             case ECCurve.COORD_HOMOGENEOUS:
@@ -911,7 +935,7 @@ public abstract class ECPoint
                 ECFieldElement _4sSquared = Z1IsOne ? two(_2t) : _2s.square();
                 ECFieldElement Z3 = two(_4sSquared).multiply(s);
 
-                return new ECPoint.Fp(curve, X3, Y3, new ECFieldElement[]{ Z3 });
+                return new ECPoint.Fp(curve, X3, Y3, new ECFieldElement[]{ Z3 }, this.withCompression);
             }
 
             case ECCurve.COORD_JACOBIAN:
@@ -970,7 +994,7 @@ public abstract class ECPoint
                 // Alternative calculation of Z3 using fast square
 //                ECFieldElement Z3 = doubleProductFromSquares(Y1, Z1, Y1Squared, Z1Squared);
 
-                return new ECPoint.Fp(curve, X3, Y3, new ECFieldElement[]{ Z3 });
+                return new ECPoint.Fp(curve, X3, Y3, new ECFieldElement[]{ Z3 }, this.withCompression);
             }
 
             case ECCurve.COORD_JACOBIAN_MODIFIED:
@@ -1049,7 +1073,7 @@ public abstract class ECPoint
                 ECFieldElement X4 = (L2.subtract(L1)).multiply(L1.add(L2)).add(X2);
                 ECFieldElement Y4 = (X1.subtract(X4)).multiply(L2).subtract(Y1);
 
-                return new ECPoint.Fp(curve, X4, Y4);
+                return new ECPoint.Fp(curve, X4, Y4, this.withCompression);
             }
             case ECCurve.COORD_JACOBIAN_MODIFIED:
             {
@@ -1102,7 +1126,7 @@ public abstract class ECPoint
 
                 ECFieldElement X4 = (L2.subtract(L1)).multiply(L1.add(L2)).add(X1);
                 ECFieldElement Y4 = (X1.subtract(X4)).multiply(L2).subtract(Y1); 
-                return new ECPoint.Fp(curve, X4, Y4);
+                return new ECPoint.Fp(curve, X4, Y4, this.withCompression);
             }
             case ECCurve.COORD_JACOBIAN_MODIFIED:
             {
@@ -1198,15 +1222,15 @@ public abstract class ECPoint
             {
             case ECCurve.COORD_AFFINE:
                 ECFieldElement zInv = Z1.invert(), zInv2 = zInv.square(), zInv3 = zInv2.multiply(zInv);
-                return new Fp(curve, X1.multiply(zInv2), Y1.multiply(zInv3));
+                return new Fp(curve, X1.multiply(zInv2), Y1.multiply(zInv3), this.withCompression);
             case ECCurve.COORD_HOMOGENEOUS:
                 X1 = X1.multiply(Z1);
                 Z1 = Z1.multiply(Z1.square());
-                return new Fp(curve, X1, Y1, new ECFieldElement[]{ Z1 });
+                return new Fp(curve, X1, Y1, new ECFieldElement[]{ Z1 }, this.withCompression);
             case ECCurve.COORD_JACOBIAN:
-                return new Fp(curve, X1, Y1, new ECFieldElement[]{ Z1 });
+                return new Fp(curve, X1, Y1, new ECFieldElement[]{ Z1 }, this.withCompression);
             case ECCurve.COORD_JACOBIAN_MODIFIED:
-                return new Fp(curve, X1, Y1, new ECFieldElement[]{ Z1, W1 });
+                return new Fp(curve, X1, Y1, new ECFieldElement[]{ Z1, W1 }, this.withCompression);
             default:
                 throw new IllegalStateException("unsupported coordinate system");
             }
@@ -1254,10 +1278,10 @@ public abstract class ECPoint
 
             if (ECCurve.COORD_AFFINE != coord)
             {
-                return new ECPoint.Fp(curve, this.x, this.y.negate(), this.zs);
+                return new ECPoint.Fp(curve, this.x, this.y.negate(), this.zs, this.withCompression);
             }
 
-            return new ECPoint.Fp(curve, this.x, this.y.negate());
+            return new ECPoint.Fp(curve, this.x, this.y.negate(), this.withCompression);
         }
 
         protected ECFieldElement calculateJacobianModifiedW(ECFieldElement Z, ECFieldElement ZSquared)
@@ -1313,7 +1337,7 @@ public abstract class ECPoint
             ECFieldElement W3 = calculateW ? two(_8T.multiply(W1)) : null;
             ECFieldElement Z3 = Z1.isOne() ? _2Y1 : _2Y1.multiply(Z1);
 
-            return new ECPoint.Fp(this.getCurve(), X3, Y3, new ECFieldElement[]{ Z3, W3 });
+            return new ECPoint.Fp(this.getCurve(), X3, Y3, new ECFieldElement[]{ Z3, W3 }, this.withCompression);
         }
     }
 
@@ -1403,46 +1427,35 @@ public abstract class ECPoint
             if (ECConstants.TWO.equals(cofactor))
             {
                 /*
-                 * Check that 0 == Tr(X + A); then there exists a solution to L^2 + L = X + A, and
-                 * so a halving is possible, so this point is the double of another.
-                 * 
-                 * Note: Tr(A) == 1 for cofactor 2 curves.
+                 *  Check that the trace of (X + A) is 0, then there exists a solution to L^2 + L = X + A,
+                 *  and so a halving is possible, so this point is the double of another.  
                  */
                 ECPoint N = this.normalize();
                 ECFieldElement X = N.getAffineXCoord();
-                return 0 != ((ECFieldElement.AbstractF2m)X).trace();
+                ECFieldElement rhs = X.add(curve.getA());
+                return ((ECFieldElement.AbstractF2m)rhs).trace() == 0;
             }
             if (ECConstants.FOUR.equals(cofactor))
             {
                 /*
                  * Solve L^2 + L = X + A to find the half of this point, if it exists (fail if not).
+                 * Generate both possibilities for the square of the half-point's x-coordinate (w),
+                 * and check if Tr(w + A) == 0 for at least one; then a second halving is possible
+                 * (see comments for cofactor 2 above), so this point is four times another.
                  * 
-                 * Note: Tr(A) == 0 for cofactor 4 curves.
+                 * Note: Tr(x^2) == Tr(x). 
                  */
                 ECPoint N = this.normalize();
                 ECFieldElement X = N.getAffineXCoord();
-                ECFieldElement L = ((ECCurve.AbstractF2m)curve).solveQuadraticEquation(X.add(curve.getA()));
-                if (null == L)
+                ECFieldElement lambda = ((ECCurve.AbstractF2m)curve).solveQuadraticEquation(X.add(curve.getA()));
+                if (lambda == null)
                 {
                     return false;
                 }
-
-                /*
-                 * A solution exists, therefore 0 == Tr(X + A) == Tr(X).
-                 */
-                ECFieldElement Y = N.getAffineYCoord();
-                ECFieldElement T = X.multiply(L).add(Y);
-
-                /*
-                 * Either T or (T + X) is the square of a half-point's x coordinate (hx). In either
-                 * case, the half-point can be halved again when 0 == Tr(hx + A).
-                 * 
-                 * Note: Tr(hx + A) == Tr(hx) == Tr(hx^2) == Tr(T) == Tr(T + X)
-                 *
-                 * Check that 0 == Tr(T); then there exists a solution to L^2 + L = hx + A, and so a
-                 * second halving is possible and this point is four times some other.
-                 */
-                return 0 == ((ECFieldElement.AbstractF2m)T).trace();
+                ECFieldElement w = X.multiply(lambda).add(N.getAffineYCoord()); 
+                ECFieldElement t = w.add(curve.getA());
+                return ((ECFieldElement.AbstractF2m)t).trace() == 0
+                    || ((ECFieldElement.AbstractF2m)(t.add(X))).trace() == 0;
             }
 
             return super.satisfiesOrder();
@@ -1467,7 +1480,7 @@ public abstract class ECPoint
                 ECFieldElement X2 = X.multiply(scale);
                 ECFieldElement L2 = L.add(X).divide(scale).add(X2);
 
-                return this.getCurve().createRawPoint(X, L2, this.getRawZCoords()); // earlier JDK
+                return this.getCurve().createRawPoint(X, L2, this.getRawZCoords(), this.withCompression); // earlier JDK
             }
             case ECCurve.COORD_LAMBDA_PROJECTIVE:
             {
@@ -1479,18 +1492,13 @@ public abstract class ECPoint
                 ECFieldElement L2 = L.add(X).add(X2);
                 ECFieldElement Z2 = Z.multiply(scale);
 
-                return this.getCurve().createRawPoint(X2, L2, new ECFieldElement[]{ Z2 }); // earlier JDK
+                return this.getCurve().createRawPoint(X2, L2, new ECFieldElement[]{ Z2 }, this.withCompression); // earlier JDK
             }
             default:
             {
                 return super.scaleX(scale);
             }
             }
-        }
-
-        public ECPoint scaleXNegateY(ECFieldElement scale)
-        {
-            return scaleX(scale);
         }
 
         public ECPoint scaleY(ECFieldElement scale)
@@ -1512,18 +1520,13 @@ public abstract class ECPoint
                 // Y is actually Lambda (X + Y/X) here
                 ECFieldElement L2 = L.add(X).multiply(scale).add(X);
 
-                return this.getCurve().createRawPoint(X, L2, this.getRawZCoords()); // earlier JDK
+                return this.getCurve().createRawPoint(X, L2, this.getRawZCoords(), this.withCompression); // earlier JDK
             }
             default:
             {
                 return super.scaleY(scale);
             }
             }
-        }
-
-        public ECPoint scaleYNegateX(ECFieldElement scale)
-        {
-            return scaleY(scale);
         }
 
         public ECPoint subtract(ECPoint b)
@@ -1555,14 +1558,14 @@ public abstract class ECPoint
             case ECCurve.COORD_LAMBDA_AFFINE:
             {
                 ECFieldElement Y1 = this.y;
-                return (ECPoint.AbstractF2m)curve.createRawPoint(X1.square(), Y1.square());
+                return (ECPoint.AbstractF2m)curve.createRawPoint(X1.square(), Y1.square(), this.withCompression);
             }
             case ECCurve.COORD_HOMOGENEOUS:
             case ECCurve.COORD_LAMBDA_PROJECTIVE:
             {
                 ECFieldElement Y1 = this.y, Z1 = this.zs[0];
                 return (ECPoint.AbstractF2m)curve.createRawPoint(X1.square(), Y1.square(),
-                    new ECFieldElement[]{ Z1.square() });
+                    new ECFieldElement[]{ Z1.square() }, this.withCompression);
             }
             default:
             {
@@ -1589,14 +1592,14 @@ public abstract class ECPoint
             case ECCurve.COORD_LAMBDA_AFFINE:
             {
                 ECFieldElement Y1 = this.y;
-                return (ECPoint.AbstractF2m)curve.createRawPoint(X1.squarePow(pow), Y1.squarePow(pow));
+                return (ECPoint.AbstractF2m)curve.createRawPoint(X1.squarePow(pow), Y1.squarePow(pow), this.withCompression);
             }
             case ECCurve.COORD_HOMOGENEOUS:
             case ECCurve.COORD_LAMBDA_PROJECTIVE:
             {
                 ECFieldElement Y1 = this.y, Z1 = this.zs[0];
                 return (ECPoint.AbstractF2m)curve.createRawPoint(X1.squarePow(pow), Y1.squarePow(pow),
-                    new ECFieldElement[]{ Z1.squarePow(pow) });
+                    new ECFieldElement[]{ Z1.squarePow(pow) }, this.withCompression);
             }
             default:
             {
@@ -1611,23 +1614,52 @@ public abstract class ECPoint
      */
     public static class F2m extends AbstractF2m
     {
-        F2m(ECCurve curve, ECFieldElement x, ECFieldElement y)
+        /**
+         * @param curve base curve
+         * @param x x point
+         * @param y y point
+         * @param withCompression true if encode with point compression.
+         * 
+         * @deprecated per-point compression property will be removed, refer {@link #getEncoded(boolean)}
+         */
+        public F2m(ECCurve curve, ECFieldElement x, ECFieldElement y, boolean withCompression)
         {
             super(curve, x, y);
+
+            if ((x == null) != (y == null))
+            {
+                throw new IllegalArgumentException("Exactly one of the field elements is null");
+            }
+
+            if (x != null)
+            {
+                // Check if x and y are elements of the same field
+                ECFieldElement.F2m.checkFieldElements(this.x, this.y);
+
+                // Check if x and a are elements of the same field
+                if (curve != null)
+                {
+                    ECFieldElement.F2m.checkFieldElements(this.x, this.curve.getA());
+                }
+            }
+
+            this.withCompression = withCompression;
 
 //            checkCurveEquation();
         }
 
-        F2m(ECCurve curve, ECFieldElement x, ECFieldElement y, ECFieldElement[] zs)
+        F2m(ECCurve curve, ECFieldElement x, ECFieldElement y, ECFieldElement[] zs, boolean withCompression)
         {
             super(curve, x, y, zs);
+
+            this.withCompression = withCompression;
 
 //            checkCurveEquation();
         }
 
         protected ECPoint detach()
         {
-            return new ECPoint.F2m(null, this.getAffineXCoord(), this.getAffineYCoord()); // earlier JDK
+            return new ECPoint.F2m(null, this.getAffineXCoord(), this.getAffineYCoord(), false); // earlier JDK
         }
 
         public ECFieldElement getYCoord()
@@ -1730,7 +1762,7 @@ public abstract class ECPoint
                 ECFieldElement X3 = L.square().add(L).add(dx).add(curve.getA());
                 ECFieldElement Y3 = L.multiply(X1.add(X3)).add(X3).add(Y1);
 
-                return new ECPoint.F2m(curve, X3, Y3);
+                return new ECPoint.F2m(curve, X3, Y3, this.withCompression);
             }
             case ECCurve.COORD_HOMOGENEOUS:
             {
@@ -1767,7 +1799,7 @@ public abstract class ECPoint
                 ECFieldElement Y3 = U.multiplyPlusProduct(X1, V, Y1).multiplyPlusProduct(VSqZ2, uv, A);
                 ECFieldElement Z3 = VCu.multiply(W);
 
-                return new ECPoint.F2m(curve, X3, Y3, new ECFieldElement[]{ Z3 });
+                return new ECPoint.F2m(curve, X3, Y3, new ECFieldElement[]{ Z3 }, this.withCompression);
             }
             case ECCurve.COORD_LAMBDA_PROJECTIVE:
             {
@@ -1827,7 +1859,7 @@ public abstract class ECPoint
                     X3 = L.square().add(L).add(X1).add(curve.getA());
                     if (X3.isZero())
                     {
-                        return new ECPoint.F2m(curve, X3, curve.getB().sqrt());
+                        return new ECPoint.F2m(curve, X3, curve.getB().sqrt(), this.withCompression);
                     }
 
                     ECFieldElement Y3 = L.multiply(X1.add(X3)).add(X3).add(Y1);
@@ -1844,7 +1876,7 @@ public abstract class ECPoint
                     X3 = AU1.multiply(AU2);
                     if (X3.isZero())
                     {
-                        return new ECPoint.F2m(curve, X3, curve.getB().sqrt());
+                        return new ECPoint.F2m(curve, X3, curve.getB().sqrt(), this.withCompression);
                     }
 
                     ECFieldElement ABZ2 = A.multiply(B);
@@ -1862,7 +1894,7 @@ public abstract class ECPoint
                     }
                 }
 
-                return new ECPoint.F2m(curve, X3, L3, new ECFieldElement[]{ Z3 });
+                return new ECPoint.F2m(curve, X3, L3, new ECFieldElement[]{ Z3 }, this.withCompression);
             }
             default:
             {
@@ -1900,7 +1932,7 @@ public abstract class ECPoint
                 ECFieldElement X3 = L1.square().add(L1).add(curve.getA());
                 ECFieldElement Y3 = X1.squarePlusProduct(X3, L1.addOne());
 
-                return new ECPoint.F2m(curve, X3, Y3);
+                return new ECPoint.F2m(curve, X3, Y3, this.withCompression);
             }
             case ECCurve.COORD_HOMOGENEOUS:
             {
@@ -1921,7 +1953,7 @@ public abstract class ECPoint
                 ECFieldElement Y3 = X1Sq.square().multiplyPlusProduct(V, h, sv);
                 ECFieldElement Z3 = V.multiply(vSquared);    
 
-                return new ECPoint.F2m(curve, X3, Y3, new ECFieldElement[]{ Z3 });
+                return new ECPoint.F2m(curve, X3, Y3, new ECFieldElement[]{ Z3 }, this.withCompression);
             }
             case ECCurve.COORD_LAMBDA_PROJECTIVE:
             {
@@ -1935,7 +1967,7 @@ public abstract class ECPoint
                 ECFieldElement T = L1.square().add(L1Z1).add(aZ1Sq);
                 if (T.isZero())
                 {
-                    return new ECPoint.F2m(curve, T, curve.getB().sqrt());
+                    return new ECPoint.F2m(curve, T, curve.getB().sqrt(), withCompression);
                 }
 
                 ECFieldElement X3 = T.square();
@@ -1972,7 +2004,7 @@ public abstract class ECPoint
                     L3 = X1Z1.squarePlusProduct(T, L1Z1).add(X3).add(Z3);
                 }
 
-                return new ECPoint.F2m(curve, X3, L3, new ECFieldElement[]{ Z3 });
+                return new ECPoint.F2m(curve, X3, L3, new ECFieldElement[]{ Z3 }, this.withCompression);
             }
             default:
             {
@@ -2040,14 +2072,14 @@ public abstract class ECPoint
 
                 if (A.isZero())
                 {
-                    return new ECPoint.F2m(curve, A, curve.getB().sqrt());
+                    return new ECPoint.F2m(curve, A, curve.getB().sqrt(), withCompression);
                 }
 
                 ECFieldElement X3 = A.square().multiply(X2Z1Sq);
                 ECFieldElement Z3 = A.multiply(B).multiply(Z1Sq);
                 ECFieldElement L3 = A.add(B).square().multiplyPlusProduct(T, L2plus1, Z3);
 
-                return new ECPoint.F2m(curve, X3, L3, new ECFieldElement[]{ Z3 });
+                return new ECPoint.F2m(curve, X3, L3, new ECFieldElement[]{ Z3 }, this.withCompression);
             }
             default:
             {
@@ -2074,23 +2106,23 @@ public abstract class ECPoint
             case ECCurve.COORD_AFFINE:
             {
                 ECFieldElement Y = this.y;
-                return new ECPoint.F2m(curve, X, Y.add(X));
+                return new ECPoint.F2m(curve, X, Y.add(X), this.withCompression);
             }
             case ECCurve.COORD_HOMOGENEOUS:
             {
                 ECFieldElement Y = this.y, Z = this.zs[0];
-                return new ECPoint.F2m(curve, X, Y.add(X), new ECFieldElement[]{ Z });
+                return new ECPoint.F2m(curve, X, Y.add(X), new ECFieldElement[]{ Z }, this.withCompression);
             }
             case ECCurve.COORD_LAMBDA_AFFINE:
             {
                 ECFieldElement L = this.y;
-                return new ECPoint.F2m(curve, X, L.addOne());
+                return new ECPoint.F2m(curve, X, L.addOne(), this.withCompression);
             }
             case ECCurve.COORD_LAMBDA_PROJECTIVE:
             {
                 // L is actually Lambda (X + Y/X) here
                 ECFieldElement L = this.y, Z = this.zs[0];
-                return new ECPoint.F2m(curve, X, L.add(Z), new ECFieldElement[]{ Z });
+                return new ECPoint.F2m(curve, X, L.add(Z), new ECFieldElement[]{ Z }, this.withCompression);
             }
             default:
             {

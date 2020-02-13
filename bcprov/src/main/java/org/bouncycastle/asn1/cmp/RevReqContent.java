@@ -1,5 +1,6 @@
 package org.bouncycastle.asn1.cmp;
 
+import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1Object;
 import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.ASN1Sequence;
@@ -37,7 +38,14 @@ public class RevReqContent
 
     public RevReqContent(RevDetails[] revDetailsArray)
     {
-        this.content = new DERSequence(revDetailsArray);
+        ASN1EncodableVector v = new ASN1EncodableVector();
+
+        for (int i = 0; i != revDetailsArray.length; i++)
+        {
+            v.add(revDetailsArray[i]);
+        }
+
+        this.content = new DERSequence(v);
     }
 
     public RevDetails[] toRevDetailsArray()

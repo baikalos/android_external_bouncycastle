@@ -183,13 +183,6 @@ public class Extension
     private boolean             critical;
     private ASN1OctetString      value;
 
-    /**
-     * Constructor using an ASN1Boolean and an OCTET STRING for the value.
-     *
-     * @param extnId the OID associated with this extension.
-     * @param critical will evaluate to true if the extension is critical, false otherwise.
-     * @param value the extension's value wrapped in an OCTET STRING.
-     */
     public Extension(
         ASN1ObjectIdentifier extnId,
         ASN1Boolean critical,
@@ -198,13 +191,6 @@ public class Extension
         this(extnId, critical.isTrue(), value);
     }
 
-    /**
-     * Constructor using a byte[] for the value.
-     *
-     * @param extnId the OID associated with this extension.
-     * @param critical true if the extension is critical, false otherwise.
-     * @param value the extension's value as a byte[] to be wrapped in an OCTET STRING.
-     */
     public Extension(
         ASN1ObjectIdentifier extnId,
         boolean critical,
@@ -213,13 +199,6 @@ public class Extension
         this(extnId, critical, new DEROctetString(value));
     }
 
-    /**
-     * Constructor using an OCTET STRING for the value.
-     *
-     * @param extnId the OID associated with this extension.
-     * @param critical true if the extension is critical, false otherwise.
-     * @param value the extension's value wrapped in an OCTET STRING.
-     */
     public Extension(
         ASN1ObjectIdentifier extnId,
         boolean critical,
@@ -228,24 +207,6 @@ public class Extension
         this.extnId = extnId;
         this.critical = critical;
         this.value = value;
-    }
-
-    /**
-     * Helper method to create an extension from any ASN.1 encodable object.
-     *
-     * @param extnId the OID associated with this extension.
-     * @param critical true if the extension is critical, false otherwise.
-     * @param value the value to be encoded into the extension's OCTET STRING.
-     * @return a new Extension with the encoding of value in the bytes of the extension's OCTET STRING.
-     * @throws IOException if the value cannot be encoded into bytes.
-     */
-    public static Extension create(
-        ASN1ObjectIdentifier extnId,
-        boolean critical,
-        ASN1Encodable value)
-        throws IOException
-    {
-        return new Extension(extnId, critical, value.toASN1Primitive().getEncoded());
     }
 
     private Extension(ASN1Sequence seq)
@@ -329,7 +290,7 @@ public class Extension
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(3);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(extnId);
 

@@ -65,7 +65,7 @@ public class PartialHashtree
 
     public PartialHashtree(byte[][] values)
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(values.length);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         for (int i = 0; i != values.length; i++)
         {

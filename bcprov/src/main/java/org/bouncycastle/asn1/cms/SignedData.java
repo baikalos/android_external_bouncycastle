@@ -206,7 +206,7 @@ public class SignedData
         {
             SignerInfo s = SignerInfo.getInstance(e.nextElement());
 
-            if (s.getVersion().intValueExact() == 3)
+            if (s.getVersion().getValue().intValue() == 3)
             {
                 return true;
             }
@@ -293,7 +293,7 @@ public class SignedData
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(6);
+        ASN1EncodableVector  v = new ASN1EncodableVector();
 
         v.add(version);
         v.add(digestAlgorithms);

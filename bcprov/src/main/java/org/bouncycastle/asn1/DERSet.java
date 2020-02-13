@@ -1,7 +1,7 @@
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.util.Enumeration;
 
 /**
  * A DER encoded SET object
@@ -16,11 +16,6 @@ import java.io.OutputStream;
 public class DERSet
     extends ASN1Set
 {
-    public static DERSet convert(ASN1Set set)
-    {
-        return (DERSet)set.toDERObject();
-    }
-
     private int bodyLength = -1;
 
     /**
@@ -32,56 +27,63 @@ public class DERSet
 
     /**
      * create a set containing one object
-     * @param element the object to go in the set
+     * @param obj the object to go in the set
      */
-    public DERSet(ASN1Encodable element)
+    public DERSet(
+        ASN1Encodable obj)
     {
-        super(element);
+        super(obj);
     }
 
     /**
      * create a set containing a vector of objects.
-     * @param elementVector the vector of objects to make up the set.
+     * @param v the vector of objects to make up the set.
      */
-    public DERSet(ASN1EncodableVector elementVector)
+    public DERSet(
+        ASN1EncodableVector v)
     {
-        super(elementVector, true);
+        super(v, true);
     }
-
+    
     /**
      * create a set containing an array of objects.
-     * @param elements the array of objects to make up the set.
+     * @param a the array of objects to make up the set.
      */
-    public DERSet(ASN1Encodable[] elements)
+    public DERSet(
+        ASN1Encodable[]   a)
     {
-        super(elements, true);
+        super(a, true);
     }
 
-    DERSet(boolean isSorted, ASN1Encodable[] elements)
+    DERSet(
+        ASN1EncodableVector v,
+        boolean                  doSort)
     {
-        super(checkSorted(isSorted), elements);
+        super(v, doSort);
     }
 
-    private int getBodyLength() throws IOException
+    private int getBodyLength()
+        throws IOException
     {
         if (bodyLength < 0)
         {
-            int count = elements.length;
-            int totalLength = 0;
+            int length = 0;
 
-            for (int i = 0; i < count; ++i)
+            for (Enumeration e = this.getObjects(); e.hasMoreElements();)
             {
-                ASN1Primitive derObject = elements[i].toASN1Primitive().toDERObject();
-                totalLength += derObject.encodedLength();
+                Object    obj = e.nextElement();
+
+                length += ((ASN1Encodable)obj).toASN1Primitive().toDERObject().encodedLength();
             }
 
-            this.bodyLength = totalLength;
+            bodyLength = length;
         }
 
         return bodyLength;
     }
 
-    int encodedLength() throws IOException
+    int encodedLength()
+        throws IOException
     {
         int length = getBodyLength();
 
@@ -96,64 +98,21 @@ public class DERSet
      * ASN.1 descriptions given. Rather than just outputting SET,
      * we also have to specify CONSTRUCTED, and the objects length.
      */
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(
+        ASN1OutputStream out)
+        throws IOException
     {
-        if (withTag)
+        ASN1OutputStream        dOut = out.getDERSubStream();
+        int                     length = getBodyLength();
+
+        out.write(BERTags.SET | BERTags.CONSTRUCTED);
+        out.writeLength(length);
+
+        for (Enumeration e = this.getObjects(); e.hasMoreElements();)
         {
-            out.write(BERTags.SET | BERTags.CONSTRUCTED);
+            Object    obj = e.nextElement();
+
+            dOut.writeObject((ASN1Encodable)obj);
         }
-
-        DEROutputStream derOut = out.getDERSubStream();
-
-        int count = elements.length;
-        if (bodyLength >= 0 || count > 16)
-        {
-            out.writeLength(getBodyLength());
-
-            for (int i = 0; i < count; ++i)
-            {
-                ASN1Primitive derObject = elements[i].toASN1Primitive().toDERObject();
-                derObject.encode(derOut, true);
-            }
-        }
-        else
-        {
-            int totalLength = 0;
-
-            ASN1Primitive[] derObjects = new ASN1Primitive[count];
-            for (int i = 0; i < count; ++i)
-            {
-                ASN1Primitive derObject = elements[i].toASN1Primitive().toDERObject();
-                derObjects[i] = derObject;
-                totalLength += derObject.encodedLength();
-            }
-
-            this.bodyLength = totalLength;
-            out.writeLength(totalLength);
-
-            for (int i = 0; i < count; ++i)
-            {
-                derObjects[i].encode(derOut, true);
-            }
-        }
-    }
-
-    ASN1Primitive toDERObject()
-    {
-        return isSorted ? this : super.toDERObject();
-    }
-
-    ASN1Primitive toDLObject()
-    {
-        return this;
-    }
-
-    private static boolean checkSorted(boolean isSorted)
-    {
-        if (!isSorted)
-        {
-            throw new IllegalStateException("DERSet elements should always be in sorted order");
-        }
-        return isSorted;
     }
 }

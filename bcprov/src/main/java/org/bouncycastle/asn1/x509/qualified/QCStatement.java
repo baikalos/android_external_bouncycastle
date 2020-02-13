@@ -82,7 +82,7 @@ public class QCStatement
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector seq = new ASN1EncodableVector(2);
+        ASN1EncodableVector seq = new ASN1EncodableVector();
         seq.add(qcStatementId);       
         
         if (qcStatementInfo != null)

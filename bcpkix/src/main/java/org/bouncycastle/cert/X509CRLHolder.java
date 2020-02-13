@@ -10,15 +10,14 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
 
-import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Primitive;
+import org.bouncycastle.asn1.DEROutputStream;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.CertificateList;
 import org.bouncycastle.asn1.x509.Extension;
@@ -27,7 +26,6 @@ import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.asn1.x509.GeneralNames;
 import org.bouncycastle.asn1.x509.IssuingDistributionPoint;
 import org.bouncycastle.asn1.x509.TBSCertList;
-import org.bouncycastle.asn1.x509.Time;
 import org.bouncycastle.operator.ContentVerifier;
 import org.bouncycastle.operator.ContentVerifierProvider;
 import org.bouncycastle.util.Encodable;
@@ -143,22 +141,6 @@ public class X509CRLHolder
         return X500Name.getInstance(x509CRL.getIssuer());
     }
 
-    public Date getThisUpdate()
-    {
-        return x509CRL.getThisUpdate().getDate();
-    }
-
-    public Date getNextUpdate()
-    {
-        Time update = x509CRL.getNextUpdate();
-
-        if (update != null)
-        {
-            return update.getDate();
-        }
-
-        return null;
-    }
     public X509CRLEntryHolder getRevokedCertificate(BigInteger serialNumber)
     {
         GeneralNames currentCA = issuerName;
@@ -166,7 +148,7 @@ public class X509CRLHolder
         {
             TBSCertList.CRLEntry entry = (TBSCertList.CRLEntry)en.nextElement();
 
-            if (entry.getUserCertificate().hasValue(serialNumber))
+            if (entry.getUserCertificate().getValue().equals(serialNumber))
             {
                 return new X509CRLEntryHolder(entry, isIndirect, currentCA);
             }
@@ -314,7 +296,10 @@ public class X509CRLHolder
             verifier = verifierProvider.get((tbsCRL.getSignature()));
 
             OutputStream sOut = verifier.getOutputStream();
-            tbsCRL.encodeTo(sOut, ASN1Encoding.DER);
+            DEROutputStream dOut = new DEROutputStream(sOut);
+
+            dOut.writeObject(tbsCRL);
+
             sOut.close();
         }
         catch (Exception e)

@@ -109,7 +109,7 @@ public class ASN1InputStream
     protected int readLength()
         throws IOException
     {
-        return readLength(this, limit, false);
+        return readLength(this, limit);
     }
 
     protected void readFully(
@@ -139,7 +139,7 @@ public class ASN1InputStream
     {
         boolean isConstructed = (tag & CONSTRUCTED) != 0;
 
-        DefiniteLengthInputStream defIn = new DefiniteLengthInputStream(this, length, limit);
+        DefiniteLengthInputStream defIn = new DefiniteLengthInputStream(this, length);
 
         if ((tag & APPLICATION) != 0)
         {
@@ -160,20 +160,12 @@ public class ASN1InputStream
                     //
                     // yes, people actually do this...
                     //
-                    ASN1EncodableVector v = readVector(defIn);
+                    ASN1EncodableVector v = buildDEREncodableVector(defIn);
                     ASN1OctetString[] strings = new ASN1OctetString[v.size()];
 
                     for (int i = 0; i != strings.length; i++)
                     {
-                        ASN1Encodable asn1Obj = v.get(i);
-                        if (asn1Obj instanceof ASN1OctetString)
-                        {
-                            strings[i] = (ASN1OctetString)asn1Obj;
-                        }
-                        else
-                        {
-                            throw new ASN1Exception("unknown object encountered in constructed OCTET STRING: " + asn1Obj.getClass());
-                        }
+                        strings[i] = (ASN1OctetString)v.get(i);
                     }
 
                     return new BEROctetString(strings);
@@ -184,12 +176,12 @@ public class ASN1InputStream
                     }
                     else
                     {
-                        return DLFactory.createSequence(readVector(defIn));   
+                        return DERFactory.createSequence(buildDEREncodableVector(defIn));   
                     }
                 case SET:
-                    return DLFactory.createSet(readVector(defIn));
+                    return DERFactory.createSet(buildDEREncodableVector(defIn));
                 case EXTERNAL:
-                    return new DLExternal(readVector(defIn));
+                    return new DLExternal(buildDEREncodableVector(defIn));
                 default:
                     throw new IOException("unknown tag " + tagNo + " encountered");
             }
@@ -198,21 +190,24 @@ public class ASN1InputStream
         return createPrimitiveDERObject(tagNo, defIn, tmpBuffers);
     }
 
-    ASN1EncodableVector readVector(DefiniteLengthInputStream dIn) throws IOException
+    ASN1EncodableVector buildEncodableVector()
+        throws IOException
     {
-        if (dIn.getRemaining() < 1)
+        ASN1EncodableVector v = new ASN1EncodableVector();
+        ASN1Primitive o;
+
+        while ((o = readObject()) != null)
         {
-            return new ASN1EncodableVector(0);
+            v.add(o);
         }
 
-        ASN1InputStream subStream = new ASN1InputStream(dIn);
-        ASN1EncodableVector v = new ASN1EncodableVector();
-        ASN1Primitive p;
-        while ((p = subStream.readObject()) != null)
-        {
-            v.add(p);
-        }
         return v;
+    }
+
+    ASN1EncodableVector buildDEREncodableVector(
+        DefiniteLengthInputStream dIn) throws IOException
+    {
+        return new ASN1InputStream(dIn).buildEncodableVector();
     }
 
     public ASN1Primitive readObject()
@@ -328,7 +323,7 @@ public class ASN1InputStream
         return tagNo;
     }
 
-    static int readLength(InputStream s, int limit, boolean isParsing)
+    static int readLength(InputStream s, int limit)
         throws IOException
     {
         int length = s.read();
@@ -370,9 +365,9 @@ public class ASN1InputStream
                 throw new IOException("corrupted stream - negative length found");
             }
 
-            if (length >= limit && !isParsing)   // after all we must have read at least 1 byte
+            if (length >= limit)   // after all we must have read at least 1 byte
             {
-                throw new IOException("corrupted stream - out of bounds length found: " + length + " >= " + limit);
+                throw new IOException("corrupted stream - out of bounds length found");
             }
         }
 
@@ -405,53 +400,25 @@ public class ASN1InputStream
     private static char[] getBMPCharBuffer(DefiniteLengthInputStream defIn)
         throws IOException
     {
-        int remainingBytes = defIn.getRemaining();
-        if (0 != (remainingBytes & 1))
+        int len = defIn.getRemaining() / 2;
+        char[] buf = new char[len];
+        int totalRead = 0;
+        while (totalRead < len)
         {
-            throw new IOException("malformed BMPString encoding encountered");
-        }
-
-        char[] string = new char[remainingBytes / 2];
-        int stringPos = 0;
-
-        byte[] buf = new byte[8];
-        while (remainingBytes >= 8)
-        {
-            if (Streams.readFully(defIn, buf, 0, 8) != 8)
+            int ch1 = defIn.read();
+            if (ch1 < 0)
             {
-                throw new EOFException("EOF encountered in middle of BMPString");
+                break;
             }
-
-            string[stringPos    ] = (char)((buf[0] << 8) | (buf[1] & 0xFF));
-            string[stringPos + 1] = (char)((buf[2] << 8) | (buf[3] & 0xFF));
-            string[stringPos + 2] = (char)((buf[4] << 8) | (buf[5] & 0xFF));
-            string[stringPos + 3] = (char)((buf[6] << 8) | (buf[7] & 0xFF));
-            stringPos += 4;
-            remainingBytes -= 8;
-        }
-        if (remainingBytes > 0)
-        {
-            if (Streams.readFully(defIn, buf, 0, remainingBytes) != remainingBytes)
+            int ch2 = defIn.read();
+            if (ch2 < 0)
             {
-                throw new EOFException("EOF encountered in middle of BMPString");
+                break;
             }
-
-            int bufPos = 0;
-            do
-            {
-                int b1 = buf[bufPos++] << 8;
-                int b2 = buf[bufPos++] & 0xFF;
-                string[stringPos++] = (char)(b1 | b2);
-            }
-            while (bufPos < remainingBytes);
+            buf[totalRead++] = (char)((ch1 << 8) | (ch2 & 0xff));
         }
 
-        if (0 != defIn.getRemaining() || string.length != stringPos)
-        {
-            throw new IllegalStateException();
-        }
-
-        return string;
+        return buf;
     }
 
     static ASN1Primitive createPrimitiveDERObject(

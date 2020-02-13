@@ -10,23 +10,24 @@ import org.bouncycastle.asn1.DERSequence;
 public class DSTU4145BinaryField
     extends ASN1Object
 {
+
     private int m, k, j, l;
 
     private DSTU4145BinaryField(ASN1Sequence seq)
     {
-        m = ASN1Integer.getInstance(seq.getObjectAt(0)).intPositiveValueExact();
+        m = ASN1Integer.getInstance(seq.getObjectAt(0)).getPositiveValue().intValue();
 
         if (seq.getObjectAt(1) instanceof ASN1Integer)
         {
-            k = ((ASN1Integer)seq.getObjectAt(1)).intPositiveValueExact();
+            k = ((ASN1Integer)seq.getObjectAt(1)).getPositiveValue().intValue();
         }
         else if (seq.getObjectAt(1) instanceof ASN1Sequence)
         {
             ASN1Sequence coefs = ASN1Sequence.getInstance(seq.getObjectAt(1));
 
-            k = ASN1Integer.getInstance(coefs.getObjectAt(0)).intPositiveValueExact();
-            j = ASN1Integer.getInstance(coefs.getObjectAt(1)).intPositiveValueExact();
-            l = ASN1Integer.getInstance(coefs.getObjectAt(2)).intPositiveValueExact();
+            k = ASN1Integer.getInstance(coefs.getObjectAt(0)).getPositiveValue().intValue();
+            j = ASN1Integer.getInstance(coefs.getObjectAt(1)).getPositiveValue().intValue();
+            l = ASN1Integer.getInstance(coefs.getObjectAt(2)).getPositiveValue().intValue();
         }
         else
         {
@@ -94,7 +95,8 @@ public class DSTU4145BinaryField
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(2);
+
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(new ASN1Integer(m));
         if (j == 0) //Trinomial
@@ -103,7 +105,7 @@ public class DSTU4145BinaryField
         }
         else
         {
-            ASN1EncodableVector coefs = new ASN1EncodableVector(3);
+            ASN1EncodableVector coefs = new ASN1EncodableVector();
             coefs.add(new ASN1Integer(k));
             coefs.add(new ASN1Integer(j));
             coefs.add(new ASN1Integer(l));

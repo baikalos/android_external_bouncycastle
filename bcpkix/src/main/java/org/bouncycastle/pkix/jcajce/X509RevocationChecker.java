@@ -50,10 +50,7 @@ import org.bouncycastle.asn1.x509.GeneralName;
 import org.bouncycastle.asn1.x509.GeneralNames;
 import org.bouncycastle.jcajce.PKIXCRLStore;
 import org.bouncycastle.jcajce.PKIXExtendedParameters;
-import org.bouncycastle.jcajce.util.DefaultJcaJceHelper;
 import org.bouncycastle.jcajce.util.JcaJceHelper;
-import org.bouncycastle.jcajce.util.NamedJcaJceHelper;
-import org.bouncycastle.jcajce.util.ProviderJcaJceHelper;
 import org.bouncycastle.util.CollectionStore;
 import org.bouncycastle.util.Iterable;
 import org.bouncycastle.util.Selector;
@@ -269,7 +266,7 @@ public class X509RevocationChecker
     private final boolean isCheckEEOnly;
     private final List<Store<CRL>> crls;
     private final List<CertStore> crlCertStores;
-    private final JcaJceHelper helper;
+    private final PKIXJcaJceHelper helper;
     private final boolean canSoftFail;
     private final long failLogMaxTime;
     private final long failHardMaxTime;
@@ -290,15 +287,15 @@ public class X509RevocationChecker
 
         if (bldr.provider != null)
         {
-            this.helper = new ProviderJcaJceHelper(bldr.provider);
+            this.helper = new PKIXProviderJcaJceHelper(bldr.provider);
         }
         else if (bldr.providerName != null)
         {
-            helper = new NamedJcaJceHelper(bldr.providerName);
+            helper = new PKIXNamedJcaJceHelper(bldr.providerName);
         }
         else
         {
-            helper = new DefaultJcaJceHelper();
+            helper = new PKIXDefaultJcaJceHelper();
         }
     }
 
@@ -692,7 +689,7 @@ public class X509RevocationChecker
         X509Certificate sign,
         PublicKey workingPublicKey,
         List certPathCerts,
-        JcaJceHelper helper)
+        PKIXJcaJceHelper helper)
         throws AnnotatedException, CertPathValidatorException
     {
         AnnotatedException lastException = null;

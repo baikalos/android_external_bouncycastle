@@ -6,12 +6,10 @@ import org.bouncycastle.math.ec.ECFieldElement;
 import org.bouncycastle.math.raw.Mod;
 import org.bouncycastle.math.raw.Nat256;
 import org.bouncycastle.util.Arrays;
-import org.bouncycastle.util.encoders.Hex;
 
 public class SM2P256V1FieldElement extends ECFieldElement.AbstractFp
 {
-    public static final BigInteger Q = new BigInteger(1,
-        Hex.decodeStrict("FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFF"));
+    public static final BigInteger Q = SM2P256V1Curve.q;
 
     protected int[] x;
 

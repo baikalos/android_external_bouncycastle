@@ -3,7 +3,7 @@ package org.bouncycastle.asn1;
 import java.io.IOException;
 
 /**
- * @deprecated Use DLSetParser instead
+ * Parser class for DER SETs.
  */
 public class DERSetParser
     implements ASN1SetParser
@@ -36,7 +36,7 @@ public class DERSetParser
     public ASN1Primitive getLoadedObject()
         throws IOException
     {
-        return new DLSet(_parser.readVector());
+        return new DERSet(_parser.readVector(), false);
     }
 
     /**

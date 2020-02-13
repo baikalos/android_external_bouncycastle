@@ -388,10 +388,9 @@ public abstract class Nat160
             c += x_i * y_4 + (zz[i + 4] & M);
             zz[i + 4] = (int)c;
             c >>>= 32;
-
-            zc += c + (zz[i + 5] & M);
-            zz[i + 5] = (int)zc;
-            zc >>>= 32;
+            c += zc + (zz[i + 5] & M);
+            zz[i + 5] = (int)c;
+            zc = c >>> 32;
         }
         return (int)zc;
     }
@@ -423,10 +422,9 @@ public abstract class Nat160
             c += x_i * y_4 + (zz[zzOff + 4] & M);
             zz[zzOff + 4] = (int)c;
             c >>>= 32;
-
-            zc += c + (zz[zzOff + 5] & M);
-            zz[zzOff + 5] = (int)zc;
-            zc >>>= 32;
+            c += zc + (zz[zzOff + 5] & M);
+            zz[zzOff + 5] = (int)c;
+            zc = c >>> 32;
             ++zzOff;
         }
         return (int)zc;

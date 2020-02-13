@@ -53,7 +53,7 @@ public class CAST5CBCParameters
 
     public int getKeyLength()
     {
-        return keyLength.intValueExact();
+        return keyLength.getValue().intValue();
     }
 
     /**
@@ -69,7 +69,7 @@ public class CAST5CBCParameters
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(2);
+        ASN1EncodableVector  v = new ASN1EncodableVector();
 
         v.add(iv);
         v.add(keyLength);

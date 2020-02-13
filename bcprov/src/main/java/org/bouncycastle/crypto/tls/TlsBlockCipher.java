@@ -12,8 +12,6 @@ import org.bouncycastle.util.Arrays;
 
 /**
  * A generic TLS 1.0-1.2 / SSLv3 block cipher. This can be used for AES or 3DES for example.
- *
- * @deprecated Migrate to the (D)TLS API in org.bouncycastle.tls (bctls jar).
  */
 public class TlsBlockCipher
     implements TlsCipher

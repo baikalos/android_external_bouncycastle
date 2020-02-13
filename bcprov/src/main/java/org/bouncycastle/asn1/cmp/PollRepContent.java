@@ -97,11 +97,11 @@ public class PollRepContent
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector outer = new ASN1EncodableVector(certReqId.length);
+        ASN1EncodableVector outer = new ASN1EncodableVector();
 
         for (int i = 0; i != certReqId.length; i++)
         {
-            ASN1EncodableVector v = new ASN1EncodableVector(3);
+            ASN1EncodableVector v = new ASN1EncodableVector();
 
             v.add(certReqId[i]);
             v.add(checkAfter[i]);

@@ -68,7 +68,7 @@ public class LDSSecurityObject
 
         ASN1Sequence datagroupHashSeq = ASN1Sequence.getInstance(e.nextElement());
 
-        if (version.intValueExact() == 1)
+        if (version.getValue().intValue() == 1)
         {
             versionInfo = LDSVersionInfo.getInstance(e.nextElement());
         }
@@ -116,7 +116,7 @@ public class LDSSecurityObject
 
     public int getVersion()
     {
-        return version.intValueExact();
+        return version.getValue().intValue();
     }
 
     public AlgorithmIdentifier getDigestAlgorithmIdentifier()
@@ -136,11 +136,17 @@ public class LDSSecurityObject
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector seq = new ASN1EncodableVector(4);
+        ASN1EncodableVector seq = new ASN1EncodableVector();
 
         seq.add(version);
         seq.add(digestAlgorithmIdentifier);
-        seq.add(new DERSequence(datagroupHash));
+
+        ASN1EncodableVector seqname = new ASN1EncodableVector();
+        for (int i = 0; i < datagroupHash.length; i++)
+        {
+            seqname.add(datagroupHash[i]);
+        }
+        seq.add(new DERSequence(seqname));
 
         if (versionInfo != null)
         {

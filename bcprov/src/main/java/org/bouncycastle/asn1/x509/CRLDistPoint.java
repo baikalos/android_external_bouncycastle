@@ -1,5 +1,6 @@
 package org.bouncycastle.asn1.x509;
 
+import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1Object;
 import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.ASN1Sequence;
@@ -48,7 +49,14 @@ public class CRLDistPoint
     public CRLDistPoint(
         DistributionPoint[] points)
     {
-        seq = new DERSequence(points);
+        ASN1EncodableVector  v = new ASN1EncodableVector();
+
+        for (int i = 0; i != points.length; i++)
+        {
+            v.add(points[i]);
+        }
+
+        seq = new DERSequence(v);
     }
 
     /**

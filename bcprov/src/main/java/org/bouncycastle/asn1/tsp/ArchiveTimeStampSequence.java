@@ -45,9 +45,9 @@ public class ArchiveTimeStampSequence
     private ArchiveTimeStampSequence(final ASN1Sequence sequence)
         throws IllegalArgumentException
     {
-        final ASN1EncodableVector vector = new ASN1EncodableVector(sequence.size());
-
+        final ASN1EncodableVector vector = new ASN1EncodableVector();
         Enumeration objects = sequence.getObjects();
+
         while (objects.hasMoreElements())
         {
             vector.add(ArchiveTimeStampChain.getInstance(objects.nextElement()));
@@ -96,7 +96,7 @@ public class ArchiveTimeStampSequence
      */
     public ArchiveTimeStampSequence append(ArchiveTimeStampChain chain) {
 
-        ASN1EncodableVector v = new ASN1EncodableVector(archiveTimeStampChains.size() + 1);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         for (int i = 0; i != archiveTimeStampChains.size(); i++)
         {

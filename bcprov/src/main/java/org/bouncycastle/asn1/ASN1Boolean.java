@@ -2,10 +2,12 @@ package org.bouncycastle.asn1;
 
 import java.io.IOException;
 
+import org.bouncycastle.util.Arrays;
+
 /**
  * Public facade of ASN.1 Boolean data.
  * <p>
- * Use following to place a new instance of ASN.1 Boolean in your data:
+ * Use following to place a new instance of ASN.1 Boolean in your dataset:
  * <ul>
  * <li> ASN1Boolean.TRUE literal</li>
  * <li> ASN1Boolean.FALSE literal</li>
@@ -16,13 +18,13 @@ import java.io.IOException;
 public class ASN1Boolean
     extends ASN1Primitive
 {
-    private static final byte FALSE_VALUE = 0x00;
-    private static final byte TRUE_VALUE = (byte)0xFF;
+    private static final byte[] TRUE_VALUE = new byte[] { (byte)0xff };
+    private static final byte[] FALSE_VALUE = new byte[] { 0 };
 
-    public static final ASN1Boolean FALSE = new ASN1Boolean(FALSE_VALUE);
-    public static final ASN1Boolean TRUE  = new ASN1Boolean(TRUE_VALUE);
+    private final byte[]         value;
 
-    private final byte value;
+    public static final ASN1Boolean FALSE = new ASN1Boolean(false);
+    public static final ASN1Boolean TRUE  = new ASN1Boolean(true);
 
     /**
      * Return a boolean from the passed in object.
@@ -60,9 +62,10 @@ public class ASN1Boolean
      * @param value true or false depending on the ASN1Boolean wanted.
      * @return an ASN1Boolean instance.
      */
-    public static ASN1Boolean getInstance(boolean value)
+    public static ASN1Boolean getInstance(
+        boolean  value)
     {
-        return value ? TRUE : FALSE;
+        return (value ? TRUE : FALSE);
     }
 
     /**
@@ -70,9 +73,10 @@ public class ASN1Boolean
      * @param value non-zero (true) or zero (false) depending on the ASN1Boolean wanted.
      * @return an ASN1Boolean instance.
      */
-    public static ASN1Boolean getInstance(int value)
+    public static ASN1Boolean getInstance(
+        int value)
     {
-        return value != 0 ? TRUE : FALSE;
+        return (value != 0 ? TRUE : FALSE);
     }
 
     /**
@@ -85,7 +89,9 @@ public class ASN1Boolean
      *               be converted.
      * @return an ASN1Boolean instance.
      */
-    public static ASN1Boolean getInstance(ASN1TaggedObject obj, boolean explicit)
+    public static ASN1Boolean getInstance(
+        ASN1TaggedObject obj,
+        boolean          explicit)
     {
         ASN1Primitive o = obj.getObject();
 
@@ -95,18 +101,45 @@ public class ASN1Boolean
         }
         else
         {
-            return ASN1Boolean.fromOctetString(ASN1OctetString.getInstance(o).getOctets());
+            return ASN1Boolean.fromOctetString(((ASN1OctetString)o).getOctets());
         }
     }
 
-    private ASN1Boolean(byte value)
+    ASN1Boolean(
+        byte[] value)
     {
-        this.value = value;
+        if (value.length != 1)
+        {
+            throw new IllegalArgumentException("byte value should have 1 byte in it");
+        }
+
+        if (value[0] == 0)
+        {
+            this.value = FALSE_VALUE;
+        }
+        else if ((value[0] & 0xff) == 0xff)
+        {
+            this.value = TRUE_VALUE;
+        }
+        else
+        {
+            this.value = Arrays.clone(value);
+        }
+    }
+
+    /**
+     * @deprecated use getInstance(boolean) method.
+     * @param value true or false.
+     */
+    public ASN1Boolean(
+        boolean     value)
+    {
+        this.value = (value) ? TRUE_VALUE : FALSE_VALUE;
     }
 
     public boolean isTrue()
     {
-        return value != FALSE_VALUE;
+        return (value[0] != 0);
     }
 
     boolean isConstructed()
@@ -119,36 +152,33 @@ public class ASN1Boolean
         return 3;
     }
 
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(
+        ASN1OutputStream out)
+        throws IOException
     {
-        out.writeEncoded(withTag, BERTags.BOOLEAN, value);
+        out.writeEncoded(BERTags.BOOLEAN, value);
     }
 
-    boolean asn1Equals(ASN1Primitive other)
+    protected boolean asn1Equals(
+        ASN1Primitive  o)
     {
-        if (!(other instanceof ASN1Boolean))
+        if (o instanceof ASN1Boolean)
         {
-            return false;
+            return (value[0] == ((ASN1Boolean)o).value[0]);
         }
 
-        ASN1Boolean that = (ASN1Boolean)other;
-
-        return this.isTrue() == that.isTrue();
+        return false;
     }
 
     public int hashCode()
     {
-        return isTrue() ? 1 : 0;
+        return value[0];
     }
 
-    ASN1Primitive toDERObject()
-    {
-        return isTrue() ? TRUE : FALSE;
-    }
 
     public String toString()
     {
-      return isTrue() ? "TRUE" : "FALSE";
+      return (value[0] != 0) ? "TRUE" : "FALSE";
     }
 
     static ASN1Boolean fromOctetString(byte[] value)
@@ -158,12 +188,17 @@ public class ASN1Boolean
             throw new IllegalArgumentException("BOOLEAN value should have 1 byte in it");
         }
 
-        byte b = value[0];
-        switch (b)
+        if (value[0] == 0)
         {
-        case FALSE_VALUE:   return FALSE;
-        case TRUE_VALUE:    return TRUE;
-        default:            return new ASN1Boolean(b);
+            return FALSE;
+        }
+        else if ((value[0] & 0xff) == 0xff)
+        {
+            return TRUE;
+        }
+        else
+        {
+            return new ASN1Boolean(value);
         }
     }
 }

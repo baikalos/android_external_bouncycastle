@@ -111,17 +111,15 @@ public class PathProcInput
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(4);
+        ASN1EncodableVector v = new ASN1EncodableVector();
+        ASN1EncodableVector pV = new ASN1EncodableVector();
 
+        for (int i = 0; i != acceptablePolicySet.length; i++)
         {
-            ASN1EncodableVector pV = new ASN1EncodableVector(acceptablePolicySet.length);
-            for (int i = 0; i != acceptablePolicySet.length; i++)
-            {
-                pV.add(acceptablePolicySet[i]);
-            }
-    
-            v.add(new DERSequence(pV));
+            pV.add(acceptablePolicySet[i]);
         }
+
+        v.add(new DERSequence(pV));
 
         if (inhibitPolicyMapping)
         {

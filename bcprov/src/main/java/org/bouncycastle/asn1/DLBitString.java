@@ -63,13 +63,24 @@ public class DLBitString
         }
         else
         {
-            return fromOctetString(ASN1OctetString.getInstance(o).getOctets());
+            return fromOctetString(((ASN1OctetString)o).getOctets());
         }
     }
 
-    protected DLBitString(byte data, int padBits)
+    protected DLBitString(
+        byte    data,
+        int     padBits)
     {
-        super(data, padBits);
+        this(toByteArray(data), padBits);
+    }
+
+    private static byte[] toByteArray(byte data)
+    {
+        byte[] rv = new byte[1];
+
+        rv[0] = data;
+
+        return rv;
     }
 
     /**
@@ -112,14 +123,17 @@ public class DLBitString
         return 1 + StreamUtil.calculateBodyLength(data.length + 1) + data.length + 1;
     }
 
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(
+        ASN1OutputStream out)
+        throws IOException
     {
-        out.writeEncoded(withTag, BERTags.BIT_STRING, (byte)padBits, data);
-    }
+        byte[] string = data;
+        byte[] bytes = new byte[string.length + 1];
 
-    ASN1Primitive toDLObject()
-    {
-        return this;
+        bytes[0] = (byte)getPadBits();
+        System.arraycopy(string, 0, bytes, 1, bytes.length - 1);
+
+        out.writeEncoded(BERTags.BIT_STRING, bytes);
     }
 
     static DLBitString fromOctetString(byte[] bytes)

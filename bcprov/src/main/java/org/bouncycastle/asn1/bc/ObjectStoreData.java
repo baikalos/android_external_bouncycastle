@@ -103,7 +103,7 @@ public class ObjectStoreData
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(6);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(new ASN1Integer(version));
         v.add(integrityAlgorithm);

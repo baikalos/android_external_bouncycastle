@@ -29,7 +29,7 @@ public class SM2Signer
     implements Signer, ECConstants
 {
     private final DSAKCalculator kCalculator = new RandomDSAKCalculator();
-    private final Digest digest;
+    private final SM3Digest digest = new SM3Digest();
     private final DSAEncoding encoding;
 
     private ECDomainParameters ecParams;
@@ -39,24 +39,12 @@ public class SM2Signer
 
     public SM2Signer()
     {
-        this(StandardDSAEncoding.INSTANCE, new SM3Digest());
-    }
-
-    public SM2Signer(Digest digest)
-    {
-        this(StandardDSAEncoding.INSTANCE, digest);
+        this(StandardDSAEncoding.INSTANCE);
     }
 
     public SM2Signer(DSAEncoding encoding)
     {
         this.encoding = encoding;
-        this.digest = new SM3Digest();
-    }
-
-    public SM2Signer(DSAEncoding encoding, Digest digest)
-    {
-        this.encoding = encoding;
-        this.digest = digest;
     }
 
     public void init(boolean forSigning, CipherParameters param)
@@ -68,17 +56,11 @@ public class SM2Signer
         {
             baseParam = ((ParametersWithID)param).getParameters();
             userID = ((ParametersWithID)param).getID();
-
-            if (userID.length >= 8192)
-            {
-                throw new IllegalArgumentException("SM2 user ID must be less than 2^16 bits long");
-            }
         }
         else
         {
             baseParam = param;
-            // the default value, string value is "1234567812345678"
-            userID = Hex.decodeStrict("31323334353637383132333435363738");
+            userID = Hex.decode("31323334353637383132333435363738"); // the default value
         }
 
         if (forSigning)
@@ -152,7 +134,7 @@ public class SM2Signer
         byte[] eHash = digestDoFinal();
 
         BigInteger n = ecParams.getN();
-        BigInteger e = calculateE(n, eHash);
+        BigInteger e = calculateE(eHash);
         BigInteger d = ((ECPrivateKeyParameters)ecKey).getD();
 
         BigInteger r, s;
@@ -216,7 +198,7 @@ public class SM2Signer
         byte[] eHash = digestDoFinal();
 
         // B4
-        BigInteger e = calculateE(n, eHash);
+        BigInteger e = calculateE(eHash);
 
         // B5
         BigInteger t = r.add(s).mod(n);
@@ -288,9 +270,8 @@ public class SM2Signer
         return new FixedPointCombMultiplier();
     }
 
-    protected BigInteger calculateE(BigInteger n, byte[] message)
+    protected BigInteger calculateE(byte[] message)
     {
-        // TODO Should hashes larger than the order be truncated as with ECDSA?
         return new BigInteger(1, message);
     }
 }

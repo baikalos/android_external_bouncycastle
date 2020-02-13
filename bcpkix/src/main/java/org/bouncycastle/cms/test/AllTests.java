@@ -28,7 +28,6 @@ public class AllTests
         suite.addTest(NewCompressedDataStreamTest.suite());
         suite.addTest(NewSignedDataStreamTest.suite());
         suite.addTest(NewEnvelopedDataStreamTest.suite());
-        suite.addTest(AuthEnvelopedDataTest.suite());
 
         suite.addTest(MiscDataStreamTest.suite());
         suite.addTest(Rfc4134Test.suite());

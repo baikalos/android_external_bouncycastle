@@ -79,7 +79,7 @@ public class DecryptedPOP
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(3);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(bodyPartID);
         v.add(thePOPAlgID);

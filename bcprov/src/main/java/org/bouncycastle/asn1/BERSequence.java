@@ -1,6 +1,7 @@
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * Indefinite length SEQUENCE of objects.
@@ -23,43 +24,56 @@ public class BERSequence
     /**
      * Create a sequence containing one object
      */
-    public BERSequence(ASN1Encodable element)
+    public BERSequence(
+        ASN1Encodable obj)
     {
-        super(element);
+        super(obj);
     }
 
     /**
      * Create a sequence containing a vector of objects.
      */
-    public BERSequence(ASN1EncodableVector elementVector)
+    public BERSequence(
+        ASN1EncodableVector v)
     {
-        super(elementVector);
+        super(v);
     }
 
     /**
      * Create a sequence containing an array of objects.
      */
-    public BERSequence(ASN1Encodable[] elements)
+    public BERSequence(
+        ASN1Encodable[]   array)
     {
-        super(elements);
+        super(array);
     }
 
-    int encodedLength() throws IOException
+    int encodedLength()
+        throws IOException
     {
-        int count = elements.length;
-        int totalLength = 0;
-
-        for (int i = 0; i < count; ++i)
+        int length = 0;
+        for (Enumeration e = getObjects(); e.hasMoreElements();)
         {
-            ASN1Primitive p = elements[i].toASN1Primitive();
-            totalLength += p.encodedLength();
+            length += ((ASN1Encodable)e.nextElement()).toASN1Primitive().encodedLength();
         }
 
-        return 2 + totalLength + 2;
+        return 2 + length + 2;
     }
 
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(
+        ASN1OutputStream out)
+        throws IOException
     {
-        out.writeEncodedIndef(withTag, BERTags.SEQUENCE | BERTags.CONSTRUCTED, elements);
+        out.write(BERTags.SEQUENCE | BERTags.CONSTRUCTED);
+        out.write(0x80);
+
+        Enumeration e = getObjects();
+        while (e.hasMoreElements())
+        {
+            out.writeObject((ASN1Encodable)e.nextElement());
+        }
+
+        out.write(0x00);
+        out.write(0x00);
     }
 }

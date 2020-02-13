@@ -12,9 +12,6 @@ import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.util.PublicKeyFactory;
 import org.bouncycastle.util.Arrays;
 
-/**
- * @deprecated Migrate to the (D)TLS API in org.bouncycastle.tls (bctls jar).
- */
 public class TlsServerProtocol
     extends TlsProtocol
 {
@@ -91,8 +88,6 @@ public class TlsServerProtocol
 
         this.tlsServer.init(tlsServerContext);
         this.recordStream.init(tlsServerContext);
-
-        tlsServer.notifyCloseHandle(this);
 
         this.recordStream.setRestrictReadVersion(false);
 

@@ -168,23 +168,21 @@ public class IetfAttrSyntax
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(2);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         if (policyAuthority != null)
         {
             v.add(new DERTaggedObject(0, policyAuthority));
         }
 
-        {
-            ASN1EncodableVector v2 = new ASN1EncodableVector(values.size());
+        ASN1EncodableVector v2 = new ASN1EncodableVector();
 
-            for (Enumeration i = values.elements(); i.hasMoreElements();)
-            {
-                v2.add((ASN1Encodable)i.nextElement());
-            }
-    
-            v.add(new DERSequence(v2));
+        for (Enumeration i = values.elements(); i.hasMoreElements();)
+        {
+            v2.add((ASN1Encodable)i.nextElement());
         }
+
+        v.add(new DERSequence(v2));
 
         return new DERSequence(v);
     }

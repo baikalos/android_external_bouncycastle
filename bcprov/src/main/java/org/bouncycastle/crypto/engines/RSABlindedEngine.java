@@ -38,31 +38,15 @@ public class RSABlindedEngine
 
         if (param instanceof ParametersWithRandom)
         {
-            ParametersWithRandom rParam = (ParametersWithRandom)param;
+            ParametersWithRandom    rParam = (ParametersWithRandom)param;
 
-            this.key = (RSAKeyParameters)rParam.getParameters();
-
-            if (key instanceof RSAPrivateCrtKeyParameters)
-            {
-                this.random = rParam.getRandom();
-            }
-            else
-            {
-                this.random = null;
-            }
+            key = (RSAKeyParameters)rParam.getParameters();
+            random = rParam.getRandom();
         }
         else
         {
-            this.key = (RSAKeyParameters)param;
-
-            if (key instanceof RSAPrivateCrtKeyParameters)
-            {
-                this.random = CryptoServicesRegistrar.getSecureRandom();
-            }
-            else
-            {
-                this.random = null;
-            }
+            key = (RSAKeyParameters)param;
+            random = CryptoServicesRegistrar.getSecureRandom();
         }
     }
 

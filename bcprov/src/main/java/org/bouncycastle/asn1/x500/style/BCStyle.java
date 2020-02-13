@@ -43,7 +43,6 @@ public class BCStyle
 
     /**
      * device serial number name - StringType(SIZE(1..64))
-     * @deprecated use SERIALNUMBER or SURNAME
      */
     public static final ASN1ObjectIdentifier SN = new ASN1ObjectIdentifier("2.5.4.5").intern();
 
@@ -55,7 +54,7 @@ public class BCStyle
     /**
      * device serial number name - StringType(SIZE(1..64))
      */
-    public static final ASN1ObjectIdentifier SERIALNUMBER = new ASN1ObjectIdentifier("2.5.4.5").intern();
+    public static final ASN1ObjectIdentifier SERIALNUMBER = SN;
 
     /**
      * locality name - StringType(SIZE(1..64))
@@ -204,7 +203,7 @@ public class BCStyle
         DefaultSymbols.put(CN, "CN");
         DefaultSymbols.put(L, "L");
         DefaultSymbols.put(ST, "ST");
-        DefaultSymbols.put(SERIALNUMBER, "SERIALNUMBER");
+        DefaultSymbols.put(SN, "SERIALNUMBER");
         DefaultSymbols.put(EmailAddress, "E");
         DefaultSymbols.put(DC, "DC");
         DefaultSymbols.put(UID, "UID");
@@ -238,8 +237,8 @@ public class BCStyle
         DefaultLookUp.put("cn", CN);
         DefaultLookUp.put("l", L);
         DefaultLookUp.put("st", ST);
-        DefaultLookUp.put("sn", SURNAME);
-        DefaultLookUp.put("serialnumber", SERIALNUMBER);
+        DefaultLookUp.put("sn", SN);
+        DefaultLookUp.put("serialnumber", SN);
         DefaultLookUp.put("street", STREET);
         DefaultLookUp.put("emailaddress", E);
         DefaultLookUp.put("dc", DC);
@@ -255,7 +254,7 @@ public class BCStyle
         DefaultLookUp.put("dn", DN_QUALIFIER);
         DefaultLookUp.put("pseudonym", PSEUDONYM);
         DefaultLookUp.put("postaladdress", POSTAL_ADDRESS);
-        DefaultLookUp.put("nameatbirth", NAME_AT_BIRTH);
+        DefaultLookUp.put("nameofbirth", NAME_AT_BIRTH);
         DefaultLookUp.put("countryofcitizenship", COUNTRY_OF_CITIZENSHIP);
         DefaultLookUp.put("countryofresidence", COUNTRY_OF_RESIDENCE);
         DefaultLookUp.put("gender", GENDER);
@@ -344,4 +343,6 @@ public class BCStyle
 
         return buf.toString();
     }
+
+
 }

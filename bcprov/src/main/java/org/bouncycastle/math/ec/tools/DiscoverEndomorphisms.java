@@ -2,15 +2,9 @@ package org.bouncycastle.math.ec.tools;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.bouncycastle.asn1.x9.ECNamedCurveTable;
 import org.bouncycastle.asn1.x9.X9ECParameters;
-import org.bouncycastle.crypto.ec.CustomNamedCurves;
 import org.bouncycastle.math.ec.ECAlgorithms;
 import org.bouncycastle.math.ec.ECConstants;
 import org.bouncycastle.math.ec.ECCurve;
@@ -24,23 +18,15 @@ public class DiscoverEndomorphisms
 
     public static void main(String[] args)
     {
-        if (args.length > 0)
+        if (args.length < 1)
         {
-            for (int i = 0; i < args.length; ++i)
-            {
-                discoverEndomorphisms(args[i]);
-            }
+            System.err.println("Expected a list of curve names as arguments");
+            return;
         }
-        else
-        {
-            SortedSet curveNames = new TreeSet(enumToList(ECNamedCurveTable.getNames()));
-            curveNames.addAll(enumToList(CustomNamedCurves.getNames()));
 
-            Iterator it = curveNames.iterator();
-            while (it.hasNext())
-            {
-                discoverEndomorphisms((String)it.next());
-            }
+        for (int i = 0; i < args.length; ++i)
+        {
+            discoverEndomorphisms(args[i]);
         }
     }
 
@@ -51,116 +37,58 @@ public class DiscoverEndomorphisms
             throw new NullPointerException("x9");
         }
 
-        discoverEndomorphisms(x9, "<UNKNOWN>");
-    }
-
-    private static void discoverEndomorphisms(String curveName)
-    {
-        X9ECParameters x9 = CustomNamedCurves.getByName(curveName);
-        if (x9 == null)
-        {
-            x9 = ECNamedCurveTable.getByName(curveName);
-            if (x9 == null)
-            {
-                System.err.println("Unknown curve: " + curveName);
-                return;
-            }
-        }
-
-//        System.out.println("[" + curveName + "]");
-        discoverEndomorphisms(x9, curveName);
-    }
-
-    private static void discoverEndomorphisms(X9ECParameters x9, String displayName)
-    {
         ECCurve c = x9.getCurve();
-
         if (ECAlgorithms.isFpCurve(c))
         {
             BigInteger characteristic = c.getField().getCharacteristic();
 
-            if (c.getB().isZero() && characteristic.mod(ECConstants.FOUR).equals(ECConstants.ONE))
-            {
-                System.out.println("Curve '" + displayName + "' has a 'GLV Type A' endomorphism with these parameters:");
-                printGLVTypeAParameters(x9);
-            }
-
             if (c.getA().isZero() && characteristic.mod(ECConstants.THREE).equals(ECConstants.ONE))
             {
-                System.out.println("Curve '" + displayName + "' has a 'GLV Type B' endomorphism with these parameters:");
+                System.out.println("Curve has a 'GLV Type B' endomorphism with these parameters:");
                 printGLVTypeBParameters(x9);
             }
         }
     }
 
-    private static void printGLVTypeAParameters(X9ECParameters x9)
+    private static void discoverEndomorphisms(String curveName)
     {
-        // x^2 + 1 = 0 mod n
-        BigInteger[] lambdas = solveQuadraticEquation(x9.getN(),
-            ECConstants.ONE, ECConstants.ZERO, ECConstants.ONE);
-
-        /*
-         * The 'i' values are field elements of order 4. There are only two such values besides 1
-         * and -1, each corresponding to one choice for 'lambda'.
-         */
-        ECFieldElement[] iValues = findNonTrivialOrder4FieldElements(x9.getCurve());
-
-        printGLVTypeAParameters(x9, lambdas[0], iValues);
-        System.out.println("OR");
-        printGLVTypeAParameters(x9, lambdas[1], iValues);
-    }
-
-    private static void printGLVTypeAParameters(X9ECParameters x9, BigInteger lambda, ECFieldElement[] iValues)
-    {
-        /*
-         * Check the basic premise of the endomorphism: that multiplying a point by lambda negates the x-coordinate
-         */
-        ECPoint G = x9.getG().normalize();
-        ECPoint mapG = G.multiply(lambda).normalize();
-        if (!G.getXCoord().negate().equals(mapG.getXCoord()))
+        X9ECParameters x9 = ECNamedCurveTable.getByName(curveName);
+        if (x9 == null)
         {
-            throw new IllegalStateException("Derivation of GLV Type A parameters failed unexpectedly");
+            System.err.println("Unknown curve: " + curveName);
+            return;
         }
 
-        /*
-         * Determine which of the i values corresponds with this choice of lambda, by checking that it scales
-         * the y-coordinate the same way a point-multiplication by lambda does.
-         */
-        ECFieldElement i = iValues[0];
-        if (!G.getYCoord().multiply(i).equals(mapG.getYCoord()))
+        ECCurve c = x9.getCurve();
+        if (ECAlgorithms.isFpCurve(c))
         {
-            i = iValues[1];
-            if (!G.getYCoord().multiply(i).equals(mapG.getYCoord()))
+            BigInteger characteristic = c.getField().getCharacteristic();
+
+            if (c.getA().isZero() && characteristic.mod(ECConstants.THREE).equals(ECConstants.ONE))
             {
-                throw new IllegalStateException("Derivation of GLV Type A parameters failed unexpectedly");
+                System.out.println("Curve '" + curveName + "' has a 'GLV Type B' endomorphism with these parameters:");
+                printGLVTypeBParameters(x9);
             }
         }
-
-        printProperty("Point map", "lambda * (x, y) = (-x, i * y)");
-        printProperty("i", i.toBigInteger().toString(radix));
-        printProperty("lambda", lambda.toString(radix));
-
-        printScalarDecompositionParameters(x9.getN(), lambda);
     }
 
     private static void printGLVTypeBParameters(X9ECParameters x9)
     {
         // x^2 + x + 1 = 0 mod n
-        BigInteger[] lambdas = solveQuadraticEquation(x9.getN(),
-            ECConstants.ONE, ECConstants.ONE, ECConstants.ONE);
+        BigInteger[] lambdas = solveQuadraticEquation(x9.getN(), ECConstants.ONE, ECConstants.ONE);
 
         /*
-         * The 'beta' values are field elements of order 3. There are only two such values besides
-         * 1, each corresponding to one choice for 'lambda'.
+         * The 'Beta' values are field elements of order 3. There are only two such values besides 1, each corresponding
+         * to one choice for 'Lambda'.
          */
-        ECFieldElement[] betaValues = findNonTrivialOrder3FieldElements(x9.getCurve());
+        ECFieldElement[] betas = findBetaValues(x9.getCurve());
 
-        printGLVTypeBParameters(x9, lambdas[0], betaValues);
+        printGLVTypeBParameters(x9, lambdas[0], betas);
         System.out.println("OR");
-        printGLVTypeBParameters(x9, lambdas[1], betaValues);
+        printGLVTypeBParameters(x9, lambdas[1], betas);
     }
 
-    private static void printGLVTypeBParameters(X9ECParameters x9, BigInteger lambda, ECFieldElement[] betaValues)
+    private static void printGLVTypeBParameters(X9ECParameters x9, BigInteger lambda, ECFieldElement[] betas)
     {
         /*
          * Check the basic premise of the endomorphism: that multiplying a point by lambda preserves the y-coordinate
@@ -176,41 +104,20 @@ public class DiscoverEndomorphisms
          * Determine which of the beta values corresponds with this choice of lambda, by checking that it scales
          * the x-coordinate the same way a point-multiplication by lambda does.
          */
-        ECFieldElement beta = betaValues[0];
+        ECFieldElement beta = betas[0];
         if (!G.getXCoord().multiply(beta).equals(mapG.getXCoord()))
         {
-            beta = betaValues[1];
+            beta = betas[1];
             if (!G.getXCoord().multiply(beta).equals(mapG.getXCoord()))
             {
                 throw new IllegalStateException("Derivation of GLV Type B parameters failed unexpectedly");
             }
         }
 
-        printProperty("Point map", "lambda * (x, y) = (beta * x, y)");
-        printProperty("beta", beta.toBigInteger().toString(radix));
-        printProperty("lambda", lambda.toString(radix));
-
-        printScalarDecompositionParameters(x9.getN(), lambda);
-    }
-
-    private static void printProperty(String name, Object value)
-    {
-        StringBuffer sb = new StringBuffer("  ");
-        sb.append(name);
-        while (sb.length() < 20)
-        {
-            sb.append(' ');
-        }
-        sb.append(": ");
-        sb.append(value.toString());
-        System.out.println(sb.toString());
-    }
-
-    private static void printScalarDecompositionParameters(BigInteger n, BigInteger lambda)
-    {
         /*
-         * Search for parameters to allow efficient decomposition of full-length scalars
+         * Now search for parameters to allow efficient decomposition of full-length scalars
          */
+        BigInteger n = x9.getN();
         BigInteger[] v1 = null;
         BigInteger[] v2 = null;
 
@@ -288,12 +195,27 @@ public class DiscoverEndomorphisms
         BigInteger g1 = roundQuotient(v2[1].shiftLeft(bits), d);
         BigInteger g2 = roundQuotient(v1[1].shiftLeft(bits), d).negate();
 
+        printProperty("Beta", beta.toBigInteger().toString(radix));
+        printProperty("Lambda", lambda.toString(radix));
         printProperty("v1", "{ " + v1[0].toString(radix) + ", " + v1[1].toString(radix) + " }");
         printProperty("v2", "{ " + v2[0].toString(radix) + ", " + v2[1].toString(radix) + " }");
         printProperty("d", d.toString(radix));
         printProperty("(OPT) g1", g1.toString(radix));
         printProperty("(OPT) g2", g2.toString(radix));
         printProperty("(OPT) bits", Integer.toString(bits));
+    }
+
+    private static void printProperty(String name, Object value)
+    {
+        StringBuffer sb = new StringBuffer("  ");
+        sb.append(name);
+        while (sb.length() < 20)
+        {
+            sb.append(' ');
+        }
+        sb.append("= ");
+        sb.append(value.toString());
+        System.out.println(sb.toString());
     }
 
     private static boolean areRelativelyPrime(BigInteger a, BigInteger b)
@@ -306,16 +228,6 @@ public class DiscoverEndomorphisms
         BigInteger i1 = mid.subtract(off).divide(div);
         BigInteger i2 = mid.add(off).divide(div);
         return order(i1, i2);
-    }
-
-    private static ArrayList enumToList(Enumeration en)
-    {
-        ArrayList rv = new ArrayList();
-        while (en.hasMoreElements())
-        {
-            rv.add(en.nextElement());
-        }
-        return rv;
     }
 
     private static BigInteger[] extEuclidBezout(BigInteger[] ab)
@@ -457,25 +369,28 @@ public class DiscoverEndomorphisms
         return negative ? result.negate() : result;
     }
 
-    private static BigInteger[] solveQuadraticEquation(BigInteger n, BigInteger a, BigInteger b, BigInteger c)
+    private static BigInteger[] solveQuadraticEquation(BigInteger n, BigInteger r, BigInteger s)
     {
-        BigInteger det = b.multiply(b).subtract(a.multiply(c).shiftLeft(2)).mod(n);
-        ECFieldElement rootFE = new ECFieldElement.Fp(n, det).sqrt();
-        if (rootFE == null)
+        BigInteger det = r.multiply(r).subtract(s.shiftLeft(2)).mod(n);
+
+        BigInteger root1 = new ECFieldElement.Fp(n, det).sqrt().toBigInteger(), root2 = n.subtract(root1);
+        if (root1.testBit(0))
         {
-            throw new IllegalStateException("Solving quadratic equation failed unexpectedly");
+            root2 = root2.add(n);
+        }
+        else
+        {
+            root1 = root1.add(n);
         }
 
-        BigInteger root = rootFE.toBigInteger();
-        BigInteger invDenom = a.shiftLeft(1).modInverse(n);
+//        assert root1.testBit(0);
+//        assert root2.testBit(0);
 
-        BigInteger s1 = root.subtract(b).multiply(invDenom).mod(n);
-        BigInteger s2 = root.negate().subtract(b).multiply(invDenom).mod(n);
-
-        return new BigInteger[]{ s1, s2 };
+        // NOTE: implicit -1 of the low-bits
+        return new BigInteger[]{ root1.shiftRight(1), root2.shiftRight(1) };
     }
 
-    private static ECFieldElement[] findNonTrivialOrder3FieldElements(ECCurve c)
+    private static ECFieldElement[] findBetaValues(ECCurve c)
     {
         BigInteger q = c.getField().getCharacteristic();
         BigInteger e = q.divide(ECConstants.THREE);
@@ -493,17 +408,6 @@ public class DiscoverEndomorphisms
         ECFieldElement beta = c.fromBigInteger(b);
 
         return new ECFieldElement[]{ beta, beta.square() }; 
-    }
-
-    private static ECFieldElement[] findNonTrivialOrder4FieldElements(ECCurve c)
-    {
-        ECFieldElement i = c.fromBigInteger(ECConstants.ONE).negate().sqrt();
-        if (i == null)
-        {
-            throw new IllegalStateException("Calculation of non-trivial order-4  field elements failed unexpectedly");
-        }
-
-        return new ECFieldElement[]{ i, i.negate() }; 
     }
 
     private static BigInteger isqrt(BigInteger x)

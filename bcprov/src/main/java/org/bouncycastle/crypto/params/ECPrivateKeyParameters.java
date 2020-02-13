@@ -5,15 +5,14 @@ import java.math.BigInteger;
 public class ECPrivateKeyParameters
     extends ECKeyParameters
 {
-    private final BigInteger d;
+    BigInteger d;
 
     public ECPrivateKeyParameters(
         BigInteger          d,
-        ECDomainParameters  parameters)
+        ECDomainParameters  params)
     {
-        super(true, parameters);
-
-        this.d = parameters.validatePrivateScalar(d);
+        super(true, params);
+        this.d = d;
     }
 
     public BigInteger getD()

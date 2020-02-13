@@ -71,7 +71,7 @@ public class DERGeneralString
         }
         else
         {
-            return new DERGeneralString(ASN1OctetString.getInstance(o).getOctets());
+            return new DERGeneralString(((ASN1OctetString)o).getOctets());
         }
     }
 
@@ -125,11 +125,12 @@ public class DERGeneralString
         return 1 + StreamUtil.calculateBodyLength(string.length) + string.length;
     }
 
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(ASN1OutputStream out)
+        throws IOException 
     {
-        out.writeEncoded(withTag, BERTags.GENERAL_STRING, string);
+        out.writeEncoded(BERTags.GENERAL_STRING, string);
     }
-
+    
     public int hashCode() 
     {
         return Arrays.hashCode(string);

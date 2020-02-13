@@ -69,24 +69,13 @@ public class TraceOptimizer
         {
             for (int i = 0; i < m; ++i)
             {
-                if (0 == (i & 1) && 0 != i)
+                BigInteger zi = ONE.shiftLeft(i);
+                ECFieldElement fe = c.fromBigInteger(zi);
+                int tr = calculateTrace(fe);
+                if (tr != 0)
                 {
-                    if (nonZeroTraceBits.contains(Integers.valueOf(i >>> 1)))
-                    {
-                        nonZeroTraceBits.add(Integers.valueOf(i));
-                        System.out.print(" " + i);
-                    }
-                }
-                else
-                {
-                    BigInteger zi = ONE.shiftLeft(i);
-                    ECFieldElement fe = c.fromBigInteger(zi);
-                    int tr = calculateTrace(fe);
-                    if (tr != 0)
-                    {
-                        nonZeroTraceBits.add(Integers.valueOf(i));
-                        System.out.print(" " + i);
-                    }
+                    nonZeroTraceBits.add(Integers.valueOf(i));
+                    System.out.print(" " + i);
                 }
             }
             System.out.println();
@@ -122,37 +111,19 @@ public class TraceOptimizer
 
     private static int calculateTrace(ECFieldElement fe)
     {
-//        int m = fe.getFieldSize();
-//        ECFieldElement tr = fe;
-//        for (int i = 1; i < m; ++i)
-//        {
-//            tr = tr.square().add(fe);
-//        }
-
         int m = fe.getFieldSize();
-        int k = 31 - Integers.numberOfLeadingZeros(m);
-        int mk = 1;
-
         ECFieldElement tr = fe;
-        while (k > 0)
+        for (int i = 1; i < m; ++i)
         {
-            tr = tr.squarePow(mk).add(tr);
-            mk = m >>> --k;
-            if (0 != (mk & 1))
-            {
-                tr = tr.square().add(fe);
-            }
+            fe = fe.square();
+            tr = tr.add(fe);
         }
-
-        if (tr.isZero())
+        BigInteger b = tr.toBigInteger();
+        if (b.bitLength() > 1)
         {
-            return 0;
+            throw new IllegalStateException();
         }
-        if (tr.isOne())
-        {
-            return 1;
-        }
-        throw new IllegalStateException("Internal error in trace calculation");
+        return b.intValue();
     }
 
     private static ArrayList enumToList(Enumeration en)

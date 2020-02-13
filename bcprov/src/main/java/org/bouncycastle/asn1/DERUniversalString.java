@@ -1,5 +1,6 @@
 package org.bouncycastle.asn1;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.bouncycastle.util.Arrays;
@@ -67,7 +68,7 @@ public class DERUniversalString
         }
         else
         {
-            return new DERUniversalString(ASN1OctetString.getInstance(o).getOctets());
+            return new DERUniversalString(((ASN1OctetString)o).getOctets());
         }
     }
 
@@ -84,18 +85,21 @@ public class DERUniversalString
 
     public String getString()
     {
-        StringBuffer buf = new StringBuffer("#");
-
-        byte[] string;
+        StringBuffer    buf = new StringBuffer("#");
+        ByteArrayOutputStream    bOut = new ByteArrayOutputStream();
+        ASN1OutputStream            aOut = new ASN1OutputStream(bOut);
+        
         try
         {
-            string = getEncoded();
+            aOut.writeObject(this);
         }
         catch (IOException e)
         {
            throw new ASN1ParsingException("internal error encoding UniversalString");
         }
-
+        
+        byte[]    string = bOut.toByteArray();
+        
         for (int i = 0; i != string.length; i++)
         {
             buf.append(table[(string[i] >>> 4) & 0xf]);
@@ -125,11 +129,13 @@ public class DERUniversalString
         return 1 + StreamUtil.calculateBodyLength(string.length) + string.length;
     }
 
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(
+        ASN1OutputStream out)
+        throws IOException
     {
-        out.writeEncoded(withTag, BERTags.UNIVERSAL_STRING, string);
+        out.writeEncoded(BERTags.UNIVERSAL_STRING, this.getOctets());
     }
-
+    
     boolean asn1Equals(
         ASN1Primitive o)
     {

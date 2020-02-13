@@ -106,14 +106,14 @@ public abstract class ASN1External
     }
 
     ASN1Primitive toDERObject()
-    {
-        return new DERExternal(directReference, indirectReference, dataValueDescriptor, encoding, externalContent);
-    }
+     {
+         if (this instanceof DERExternal)
+         {
+             return this;
+         }
 
-    ASN1Primitive toDLObject()
-    {
-        return new DLExternal(directReference, indirectReference, dataValueDescriptor, encoding, externalContent);
-    }
+         return new DERExternal(directReference, indirectReference, dataValueDescriptor, encoding, externalContent);
+     }
 
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()

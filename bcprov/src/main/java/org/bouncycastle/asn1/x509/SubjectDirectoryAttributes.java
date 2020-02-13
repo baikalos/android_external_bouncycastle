@@ -122,11 +122,12 @@ public class SubjectDirectoryAttributes
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector vec = new ASN1EncodableVector(attributes.size());
-
+        ASN1EncodableVector vec = new ASN1EncodableVector();
         Enumeration e = attributes.elements();
+
         while (e.hasMoreElements())
         {
+
             vec.add((Attribute)e.nextElement());
         }
 

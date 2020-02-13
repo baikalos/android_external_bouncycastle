@@ -36,7 +36,7 @@ public class X9ECParameters
         ASN1Sequence  seq)
     {
         if (!(seq.getObjectAt(0) instanceof ASN1Integer)
-            || !((ASN1Integer)seq.getObjectAt(0)).hasValue(ONE))
+            || !((ASN1Integer)seq.getObjectAt(0)).getValue().equals(ONE))
         {
             throw new IllegalArgumentException("bad version in X9ECParameters");
         }
@@ -84,7 +84,7 @@ public class X9ECParameters
 
     public X9ECParameters(
         ECCurve     curve,
-        X9ECPoint   g,
+        ECPoint     g,
         BigInteger  n)
     {
         this(curve, g, n, null, null);
@@ -92,11 +92,30 @@ public class X9ECParameters
 
     public X9ECParameters(
         ECCurve     curve,
-        X9ECPoint   g,
+        X9ECPoint     g,
         BigInteger  n,
         BigInteger  h)
     {
         this(curve, g, n, h, null);
+    }
+
+    public X9ECParameters(
+        ECCurve     curve,
+        ECPoint     g,
+        BigInteger  n,
+        BigInteger  h)
+    {
+        this(curve, g, n, h, null);
+    }
+
+    public X9ECParameters(
+        ECCurve     curve,
+        ECPoint     g,
+        BigInteger  n,
+        BigInteger  h,
+        byte[]      seed)
+    {
+        this(curve, new X9ECPoint(g), n, h, seed);
     }
 
     public X9ECParameters(
@@ -164,11 +183,6 @@ public class X9ECParameters
         return Arrays.clone(seed);
     }
 
-    public boolean hasSeed()
-    {
-        return null != seed;
-    }
-
     /**
      * Return the ASN.1 entry representing the Curve.
      *
@@ -214,7 +228,7 @@ public class X9ECParameters
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(6);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(new ASN1Integer(ONE));
         v.add(fieldID);

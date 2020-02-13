@@ -83,7 +83,7 @@ public class AccessDescription
     
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector accessDescription  = new ASN1EncodableVector(2);
+        ASN1EncodableVector accessDescription  = new ASN1EncodableVector();
         
         accessDescription.add(accessMethod);
         accessDescription.add(accessLocation);

@@ -17,7 +17,7 @@ public class ChaCha7539Engine extends Salsa20Engine
 
     public String getAlgorithmName()
     {
-        return "ChaCha7539";
+        return "ChaCha7539-" + rounds;
     }
 
     protected int getNonceSize()

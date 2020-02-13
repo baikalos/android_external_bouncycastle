@@ -124,7 +124,7 @@ public class CertTemplateBuilder
      */
     public CertTemplate build()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(10);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         addOptional(v, 0, false, version);
         addOptional(v, 1, false, serialNumber);

@@ -12,6 +12,7 @@ import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.util.BigIntegers;
 
 /**
  * <a href="https://tools.ietf.org/html/rfc4998">RFC 4998</a>:
@@ -64,11 +65,6 @@ public class EvidenceRecord
         }
 
         return null;
-    }
-
-    public static EvidenceRecord getInstance(ASN1TaggedObject tagged, boolean explicit)
-    {
-        return getInstance(ASN1Sequence.getInstance(tagged, explicit));
     }
 
     private EvidenceRecord(
@@ -139,12 +135,14 @@ public class EvidenceRecord
         }
 
         final ASN1Integer versionNumber = ASN1Integer.getInstance(sequence.getObjectAt(0));
-        if (versionNumber.intValueExact() != 1)
+        if (!versionNumber.getValue().equals(BigIntegers.ONE))
         {
             throw new IllegalArgumentException("incompatible version");
         }
-
-        this.version = versionNumber;
+        else
+        {
+            this.version = versionNumber;
+        }
 
         this.digestAlgorithms = ASN1Sequence.getInstance(sequence.getObjectAt(1));
         for (int i = 2; i != sequence.size() - 1; i++)
@@ -225,7 +223,7 @@ public class EvidenceRecord
 
     public ASN1Primitive toASN1Primitive()
     {
-        final ASN1EncodableVector vector = new ASN1EncodableVector(5);
+        final ASN1EncodableVector vector = new ASN1EncodableVector();
 
         vector.add(version);
         vector.add(digestAlgorithms);

@@ -2,8 +2,6 @@ package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.math.ec.AbstractECLookupTable;
-import org.bouncycastle.math.ec.ECConstants;
 import org.bouncycastle.math.ec.ECCurve;
 import org.bouncycastle.math.ec.ECCurve.AbstractF2m;
 import org.bouncycastle.math.ec.ECFieldElement;
@@ -14,8 +12,7 @@ import org.bouncycastle.util.encoders.Hex;
 
 public class SecT131R1Curve extends AbstractF2m
 {
-    private static final int SECT131R1_DEFAULT_COORDS = COORD_LAMBDA_PROJECTIVE;
-    private static final ECFieldElement[] SECT131R1_AFFINE_ZS = new ECFieldElement[] { new SecT131FieldElement(ECConstants.ONE) }; 
+    private static final int SecT131R1_DEFAULT_COORDS = COORD_LAMBDA_PROJECTIVE;
 
     protected SecT131R1Point infinity;
 
@@ -25,12 +22,12 @@ public class SecT131R1Curve extends AbstractF2m
 
         this.infinity = new SecT131R1Point(this, null, null);
 
-        this.a = fromBigInteger(new BigInteger(1, Hex.decodeStrict("07A11B09A76B562144418FF3FF8C2570B8")));
-        this.b = fromBigInteger(new BigInteger(1, Hex.decodeStrict("0217C05610884B63B9C6C7291678F9D341")));
-        this.order = new BigInteger(1, Hex.decodeStrict("0400000000000000023123953A9464B54D"));
+        this.a = fromBigInteger(new BigInteger(1, Hex.decode("07A11B09A76B562144418FF3FF8C2570B8")));
+        this.b = fromBigInteger(new BigInteger(1, Hex.decode("0217C05610884B63B9C6C7291678F9D341")));
+        this.order = new BigInteger(1, Hex.decode("0400000000000000023123953A9464B54D"));
         this.cofactor = BigInteger.valueOf(2);
 
-        this.coord = SECT131R1_DEFAULT_COORDS;
+        this.coord = SecT131R1_DEFAULT_COORDS;
     }
 
     protected ECCurve cloneCurve()
@@ -59,14 +56,14 @@ public class SecT131R1Curve extends AbstractF2m
         return new SecT131FieldElement(x);
     }
 
-    protected ECPoint createRawPoint(ECFieldElement x, ECFieldElement y)
+    protected ECPoint createRawPoint(ECFieldElement x, ECFieldElement y, boolean withCompression)
     {
-        return new SecT131R1Point(this, x, y);
+        return new SecT131R1Point(this, x, y, withCompression);
     }
 
-    protected ECPoint createRawPoint(ECFieldElement x, ECFieldElement y, ECFieldElement[] zs)
+    protected ECPoint createRawPoint(ECFieldElement x, ECFieldElement y, ECFieldElement[] zs, boolean withCompression)
     {
-        return new SecT131R1Point(this, x, y, zs);
+        return new SecT131R1Point(this, x, y, zs, withCompression);
     }
 
     public ECPoint getInfinity()
@@ -119,7 +116,7 @@ public class SecT131R1Curve extends AbstractF2m
             }
         }
 
-        return new AbstractECLookupTable()
+        return new ECLookupTable()
         {
             public int getSize()
             {
@@ -144,26 +141,7 @@ public class SecT131R1Curve extends AbstractF2m
                     pos += (FE_LONGS * 2);
                 }
 
-                return createPoint(x, y);
-            }
-
-            public ECPoint lookupVar(int index)
-            {
-                long[] x = Nat192.create64(), y = Nat192.create64();
-                int pos = index * FE_LONGS * 2;
-
-                for (int j = 0; j < FE_LONGS; ++j)
-                {
-                    x[j] = table[pos + j];
-                    y[j] = table[pos + FE_LONGS + j];
-                }
-
-                return createPoint(x, y);
-            }
-
-            private ECPoint createPoint(long[] x, long[] y)
-            {
-                return createRawPoint(new SecT131FieldElement(x), new SecT131FieldElement(y), SECT131R1_AFFINE_ZS);
+                return createRawPoint(new SecT131FieldElement(x), new SecT131FieldElement(y), false);
             }
         };
     }

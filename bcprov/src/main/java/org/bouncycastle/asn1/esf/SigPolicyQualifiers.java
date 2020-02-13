@@ -1,5 +1,6 @@
 package org.bouncycastle.asn1.esf;
 
+import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1Object;
 import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.ASN1Sequence;
@@ -34,7 +35,12 @@ public class SigPolicyQualifiers
     public SigPolicyQualifiers(
         SigPolicyQualifierInfo[] qualifierInfos)
     {
-        qualifiers = new DERSequence(qualifierInfos);
+        ASN1EncodableVector v = new ASN1EncodableVector();
+        for (int i=0; i < qualifierInfos.length; i++)
+        {
+            v.add(qualifierInfos[i]);
+        }
+        qualifiers = new DERSequence(v);
     }
 
     /**

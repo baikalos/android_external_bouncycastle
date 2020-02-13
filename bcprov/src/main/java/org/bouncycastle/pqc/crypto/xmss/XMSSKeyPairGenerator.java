@@ -56,7 +56,7 @@ public final class XMSSKeyPairGenerator
      */
     private XMSSPrivateKeyParameters generatePrivateKey(XMSSParameters params, SecureRandom prng)
     {
-        int n = params.getTreeDigestSize();
+        int n = params.getDigestSize();
         byte[] secretKeySeed = new byte[n];
         prng.nextBytes(secretKeySeed);
         byte[] secretKeyPRF = new byte[n];

@@ -75,7 +75,12 @@ public class PKIMessage
         this.protection = protection;
         if (extraCerts != null)
         {
-            this.extraCerts = new DERSequence(extraCerts);
+            ASN1EncodableVector v = new ASN1EncodableVector();
+            for (int i = 0; i < extraCerts.length; i++)
+            {
+                v.add(extraCerts[i]);
+            }
+            this.extraCerts = new DERSequence(v);
         }
     }
 
@@ -140,7 +145,7 @@ public class PKIMessage
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(4);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(header);
         v.add(body);

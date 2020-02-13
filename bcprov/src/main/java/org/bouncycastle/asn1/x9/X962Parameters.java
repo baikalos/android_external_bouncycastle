@@ -1,5 +1,7 @@
 package org.bouncycastle.asn1.x9;
 
+import java.io.IOException;
+
 import org.bouncycastle.asn1.ASN1Choice;
 import org.bouncycastle.asn1.ASN1Null;
 import org.bouncycastle.asn1.ASN1Object;
@@ -69,7 +71,11 @@ public class X962Parameters
         this.params = obj;
     }
 
-    private X962Parameters(ASN1Primitive obj)
+    /**
+     * @deprecated use getInstance()
+     */
+    public X962Parameters(
+        ASN1Primitive           obj)
     {
         this.params = obj;
     }

@@ -368,7 +368,7 @@ public class CMSSignedDataStreamGenerator
         {
             SignerInfo s = SignerInfo.getInstance(((SignerInformation)it.next()).toASN1Structure());
 
-            if (s.getVersion().intValueExact() == 3)
+            if (s.getVersion().getValue().intValue() == 3)
             {
                 return true;
             }

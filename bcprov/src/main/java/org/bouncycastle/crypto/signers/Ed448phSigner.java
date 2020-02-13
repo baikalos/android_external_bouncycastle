@@ -77,10 +77,6 @@ public class Ed448phSigner
         {
             throw new IllegalStateException("Ed448phSigner not initialised for verification");
         }
-        if (Ed448.SIGNATURE_SIZE != signature.length)
-        {
-            return false;
-        }
 
         byte[] pk = publicKey.getEncoded();
         return Ed448.verifyPrehash(signature, 0, pk, 0, context, prehash);

@@ -144,7 +144,7 @@ public class CVCertificateRequest
         }
         else
         {
-            ASN1EncodableVector v = new ASN1EncodableVector(2);
+            ASN1EncodableVector v = new ASN1EncodableVector();
 
             v.add(certificateBody);
 

@@ -211,7 +211,7 @@ public class Holder
     {
         if (version == 1)
         {
-            ASN1EncodableVector v = new ASN1EncodableVector(3);
+            ASN1EncodableVector v = new ASN1EncodableVector();
 
             if (baseCertificateID != null)
             {

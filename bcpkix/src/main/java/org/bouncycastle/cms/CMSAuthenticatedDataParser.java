@@ -160,11 +160,6 @@ public class CMSAuthenticatedDataParser
                             throw new IllegalStateException("can't parse authenticated attributes!");
                         }
                     }
-
-                    public boolean isAead()
-                    {
-                        return false;
-                    }
                 });
             }
             catch (OperatorCreationException e)

@@ -109,10 +109,10 @@ public class XMSS
         privateKey = (XMSSPrivateKeyParameters)kp.getPrivate();
         publicKey = (XMSSPublicKeyParameters)kp.getPublic();
 
-        wotsPlus.importKeys(new byte[params.getTreeDigestSize()], this.privateKey.getPublicSeed());
+        wotsPlus.importKeys(new byte[params.getDigestSize()], this.privateKey.getPublicSeed());
     }
 
-    public void importState(XMSSPrivateKeyParameters privateKey, XMSSPublicKeyParameters publicKey)
+    void importState(XMSSPrivateKeyParameters privateKey, XMSSPublicKeyParameters publicKey)
     {
         if (!Arrays.areEqual(privateKey.getRoot(), publicKey.getRoot()))
         {
@@ -126,7 +126,7 @@ public class XMSS
         this.privateKey = privateKey;
         this.publicKey = publicKey;
 
-        wotsPlus.importKeys(new byte[params.getTreeDigestSize()], this.privateKey.getPublicSeed());
+        wotsPlus.importKeys(new byte[params.getDigestSize()], this.privateKey.getPublicSeed());
     }
 
     /**
@@ -147,7 +147,7 @@ public class XMSS
         }
         /* import keys */
         XMSSPrivateKeyParameters tmpPrivateKey = new XMSSPrivateKeyParameters.Builder(params)
-            .withPrivateKey(privateKey).build();
+            .withPrivateKey(privateKey, this.getParams()).build();
         XMSSPublicKeyParameters tmpPublicKey = new XMSSPublicKeyParameters.Builder(params).withPublicKey(publicKey)
             .build();
         if (!Arrays.areEqual(tmpPrivateKey.getRoot(), tmpPublicKey.getRoot()))
@@ -161,7 +161,7 @@ public class XMSS
 		/* import */
         this.privateKey = tmpPrivateKey;
         this.publicKey = tmpPublicKey;
-        wotsPlus.importKeys(new byte[params.getTreeDigestSize()], this.privateKey.getPublicSeed());
+        wotsPlus.importKeys(new byte[params.getDigestSize()], this.privateKey.getPublicSeed());
     }
 
     /**
@@ -226,9 +226,9 @@ public class XMSS
      *
      * @return XMSS private key.
      */
-    public XMSSPrivateKeyParameters exportPrivateKey()
+    public byte[] exportPrivateKey()
     {
-        return privateKey;
+        return privateKey.toByteArray();
     }
 
     /**
@@ -236,9 +236,9 @@ public class XMSS
      *
      * @return XMSS public key.
      */
-    public XMSSPublicKeyParameters exportPublicKey()
+    public byte[] exportPublicKey()
     {
-        return publicKey;
+        return publicKey.toByteArray();
     }
 
     /**
@@ -251,7 +251,7 @@ public class XMSS
      */
     protected WOTSPlusSignature wotsSign(byte[] messageDigest, OTSHashAddress otsHashAddress)
     {
-        if (messageDigest.length != params.getTreeDigestSize())
+        if (messageDigest.length != params.getDigestSize())
         {
             throw new IllegalArgumentException("size of messageDigest needs to be equal to size of digest");
         }
@@ -340,7 +340,7 @@ public class XMSS
         publicKey = new XMSSPublicKeyParameters.Builder(params).withRoot(getRoot()).withPublicSeed(publicSeed)
             .build();
 
-        wotsPlus.importKeys(new byte[params.getTreeDigestSize()], publicSeed);
+        wotsPlus.importKeys(new byte[params.getDigestSize()], publicSeed);
     }
 
     public XMSSPrivateKeyParameters getPrivateKey()

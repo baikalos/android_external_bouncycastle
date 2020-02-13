@@ -204,7 +204,7 @@ public class NamingAuthority
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector vec = new ASN1EncodableVector(3);
+        ASN1EncodableVector vec = new ASN1EncodableVector();
         if (namingAuthorityId != null)
         {
             vec.add(namingAuthorityId);

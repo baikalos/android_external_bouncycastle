@@ -154,7 +154,7 @@ public class SignerInfo
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(7);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(version);
         v.add(issuerAndSerialNumber);

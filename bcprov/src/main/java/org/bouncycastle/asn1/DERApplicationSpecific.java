@@ -111,14 +111,14 @@ public class DERApplicationSpecific
     /* (non-Javadoc)
      * @see org.bouncycastle.asn1.ASN1Primitive#encode(org.bouncycastle.asn1.DEROutputStream)
      */
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    void encode(ASN1OutputStream out) throws IOException
     {
-        int flags = BERTags.APPLICATION;
+        int classBits = BERTags.APPLICATION;
         if (isConstructed)
         {
-            flags |= BERTags.CONSTRUCTED;
+            classBits |= BERTags.CONSTRUCTED;
         }
 
-        out.writeEncoded(withTag, flags, tag, octets);
+        out.writeEncoded(classBits, tag, octets);
     }
 }

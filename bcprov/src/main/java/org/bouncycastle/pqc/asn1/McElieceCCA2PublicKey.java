@@ -31,9 +31,11 @@ public class McElieceCCA2PublicKey
 
     private McElieceCCA2PublicKey(ASN1Sequence seq)
     {
-        n = ((ASN1Integer)seq.getObjectAt(0)).intValueExact();
+        BigInteger bigN = ((ASN1Integer)seq.getObjectAt(0)).getValue();
+        n = bigN.intValue();
 
-        t = ((ASN1Integer)seq.getObjectAt(1)).intValueExact();
+        BigInteger bigT = ((ASN1Integer)seq.getObjectAt(1)).getValue();
+        t = bigT.intValue();
 
         g = new GF2Matrix(((ASN1OctetString)seq.getObjectAt(2)).getOctets());
 

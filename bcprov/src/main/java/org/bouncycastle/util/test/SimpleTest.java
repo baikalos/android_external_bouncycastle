@@ -1,8 +1,6 @@
 package org.bouncycastle.util.test;
 
 import java.io.PrintStream;
-import java.util.Enumeration;
-import java.util.Vector;
 
 import org.bouncycastle.util.Arrays;
 
@@ -185,65 +183,25 @@ public abstract class SimpleTest
         }
     }
 
-    public abstract void performTest()
-        throws Exception;
-
-    public static void runTest(Test test)
+    protected static void runTest(
+        Test test)
     {
         runTest(test, System.out);
     }
 
-    public static void runTest(Test test, PrintStream out)
+    protected static void runTest(
+        Test test,
+        PrintStream out)
     {
         TestResult result = test.perform();
 
+        out.println(result.toString());
         if (result.getException() != null)
         {
             result.getException().printStackTrace(out);
         }
-
-        out.println(result);
     }
 
-    public static void runTests(Test[] tests)
-    {
-        runTests(tests, System.out);
-    }
-
-    public static void runTests(Test[] tests, PrintStream out)
-    {
-        Vector failures = new Vector();
-        for (int i = 0; i != tests.length; i++)
-        {
-            TestResult result = tests[i].perform();
-            if (!result.isSuccessful())
-            {
-                failures.addElement(result);
-            }
-
-            if (result.getException() != null)
-            {
-                result.getException().printStackTrace(out);
-            }
-
-            out.println(result);
-        }
-
-        out.println("-----");
-        if (failures.isEmpty())
-        {
-            out.println("All tests successful.");
-        }
-        else
-        {
-            out.println("Completed with " + failures.size() + " FAILURES:");
-
-            Enumeration e = failures.elements();
-            while (e.hasMoreElements())
-            {
-                System.out.println("=>  " + (TestResult)e.nextElement());
-            }
-        }
-
-    }
+    public abstract void performTest()
+        throws Exception;
 }

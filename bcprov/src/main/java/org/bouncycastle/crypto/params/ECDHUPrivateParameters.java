@@ -1,8 +1,6 @@
 package org.bouncycastle.crypto.params;
 
 import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.math.ec.ECPoint;
-import org.bouncycastle.math.ec.FixedPointCombMultiplier;
 
 /**
  * Parameters holder for private unified static/ephemeral agreement as described in NIST SP 800-56A.
@@ -43,9 +41,9 @@ public class ECDHUPrivateParameters
 
         if (ephemeralPublicKey == null)
         {
-            ECPoint q = new FixedPointCombMultiplier().multiply(parameters.getG(), ephemeralPrivateKey.getD());
-
-            ephemeralPublicKey = new ECPublicKeyParameters(q, parameters);
+            ephemeralPublicKey = new ECPublicKeyParameters(
+                parameters.getG().multiply(ephemeralPrivateKey.getD()),
+                parameters);
         }
         else if (!parameters.equals(ephemeralPublicKey.getParameters()))
         {

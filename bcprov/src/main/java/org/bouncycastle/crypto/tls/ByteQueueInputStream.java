@@ -2,9 +2,6 @@ package org.bouncycastle.crypto.tls;
 
 import java.io.InputStream;
 
-/**
- * @deprecated Migrate to the (D)TLS API in org.bouncycastle.tls (bctls jar).
- */
 public class ByteQueueInputStream
     extends InputStream
 {
@@ -15,14 +12,9 @@ public class ByteQueueInputStream
         buffer = new ByteQueue();
     }
 
-    public void addBytes(byte[] buf)
+    public void addBytes(byte[] bytes)
     {
-        buffer.addData(buf, 0, buf.length);
-    }
-
-    public void addBytes(byte[] buf, int bufOff, int bufLen)
-    {
-        buffer.addData(buf, bufOff, bufLen);
+        buffer.addData(bytes, 0, bytes.length);
     }
 
     public int peek(byte[] buf)

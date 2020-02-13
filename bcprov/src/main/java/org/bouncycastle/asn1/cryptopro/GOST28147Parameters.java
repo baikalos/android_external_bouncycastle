@@ -75,7 +75,7 @@ public class GOST28147Parameters
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(2);
+        ASN1EncodableVector  v = new ASN1EncodableVector();
 
         v.add(iv);
         v.add(paramSet);

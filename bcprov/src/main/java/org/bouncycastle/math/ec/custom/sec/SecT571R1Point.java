@@ -10,14 +10,34 @@ import org.bouncycastle.math.raw.Nat576;
 
 public class SecT571R1Point extends AbstractF2m
 {
-    SecT571R1Point(ECCurve curve, ECFieldElement x, ECFieldElement y)
+    /**
+     * @deprecated Use ECCurve.createPoint to construct points
+     */
+    public SecT571R1Point(ECCurve curve, ECFieldElement x, ECFieldElement y)
     {
-        super(curve, x, y);
+        this(curve, x, y, false);
     }
 
-    SecT571R1Point(ECCurve curve, ECFieldElement x, ECFieldElement y, ECFieldElement[] zs)
+    /**
+     * @deprecated per-point compression property will be removed, refer {@link #getEncoded(boolean)}
+     */
+    public SecT571R1Point(ECCurve curve, ECFieldElement x, ECFieldElement y, boolean withCompression)
+    {
+        super(curve, x, y);
+
+        if ((x == null) != (y == null))
+        {
+            throw new IllegalArgumentException("Exactly one of the field elements is null");
+        }
+
+        this.withCompression = withCompression;
+    }
+
+    SecT571R1Point(ECCurve curve, ECFieldElement x, ECFieldElement y, ECFieldElement[] zs, boolean withCompression)
     {
         super(curve, x, y, zs);
+
+        this.withCompression = withCompression;
     }
 
     protected ECPoint detach()
@@ -150,7 +170,7 @@ public class SecT571R1Point extends AbstractF2m
             X3 = (SecT571FieldElement)L.square().add(L).add(X1).addOne();
             if (X3.isZero())
             {
-                return new SecT571R1Point(curve, X3, SecT571R1Curve.SecT571R1_B_SQRT);
+                return new SecT571R1Point(curve, X3, SecT571R1Curve.SecT571R1_B_SQRT, this.withCompression);
             }
 
             ECFieldElement Y3 = L.multiply(X1.add(X3)).add(X3).add(Y1);
@@ -174,7 +194,7 @@ public class SecT571R1Point extends AbstractF2m
 
             if (X3.isZero())
             {
-                return new SecT571R1Point(curve, X3, SecT571R1Curve.SecT571R1_B_SQRT);
+                return new SecT571R1Point(curve, X3, SecT571R1Curve.SecT571R1_B_SQRT, this.withCompression);
             }
 
             Z3 = new SecT571FieldElement(t3);
@@ -202,7 +222,7 @@ public class SecT571R1Point extends AbstractF2m
             }
         }
 
-        return new SecT571R1Point(curve, X3, L3, new ECFieldElement[]{ Z3 });
+        return new SecT571R1Point(curve, X3, L3, new ECFieldElement[]{ Z3 }, this.withCompression);
     }
 
     public ECPoint twice()
@@ -245,7 +265,7 @@ public class SecT571R1Point extends AbstractF2m
 
         if (Nat576.isZero64(T))
         {
-            return new SecT571R1Point(curve, new SecT571FieldElement(T), SecT571R1Curve.SecT571R1_B_SQRT);
+            return new SecT571R1Point(curve, new SecT571FieldElement(T), SecT571R1Curve.SecT571R1_B_SQRT, withCompression);
         }
 
         long[] tt = Nat576.createExt64();
@@ -275,7 +295,7 @@ public class SecT571R1Point extends AbstractF2m
         SecT571Field.addBothTo(X3.x, Z3.x, t2);
         SecT571FieldElement L3 = new SecT571FieldElement(t2);
 
-        return new SecT571R1Point(curve, X3, L3, new ECFieldElement[]{ Z3 });
+        return new SecT571R1Point(curve, X3, L3, new ECFieldElement[]{ Z3 }, this.withCompression);
     }
 
     public ECPoint twicePlus(ECPoint b)
@@ -357,7 +377,7 @@ public class SecT571R1Point extends AbstractF2m
 
         if (Nat576.isZero64(A))
         {
-            return new SecT571R1Point(curve, new SecT571FieldElement(A), SecT571R1Curve.SecT571R1_B_SQRT);
+            return new SecT571R1Point(curve, new SecT571FieldElement(A), SecT571R1Curve.SecT571R1_B_SQRT, withCompression);
         }
 
         SecT571FieldElement X3 = new SecT571FieldElement();
@@ -378,7 +398,7 @@ public class SecT571R1Point extends AbstractF2m
         SecT571Field.multiplyAddToExt(t4, Z3.x, tt);
         SecT571Field.reduce(tt, L3.x);
 
-        return new SecT571R1Point(curve, X3, L3, new ECFieldElement[]{ Z3 });
+        return new SecT571R1Point(curve, X3, L3, new ECFieldElement[]{ Z3 }, this.withCompression);
     }
 
     public ECPoint negate()
@@ -396,6 +416,6 @@ public class SecT571R1Point extends AbstractF2m
 
         // L is actually Lambda (X + Y/X) here
         ECFieldElement L = this.y, Z = this.zs[0];
-        return new SecT571R1Point(curve, X, L.add(Z), new ECFieldElement[]{ Z });
+        return new SecT571R1Point(curve, X, L.add(Z), new ECFieldElement[]{ Z }, this.withCompression);
     }
 }

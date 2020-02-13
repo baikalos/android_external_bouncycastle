@@ -191,28 +191,37 @@ public class BEROctetString
         return 2 + length + 2;
     }
 
-    /**
-     * @deprecated
-     */
-    public void encode(ASN1OutputStream out)
+    public void encode(
+        ASN1OutputStream out)
         throws IOException
     {
-        out.writeObject(this);
-    }
+        out.write(BERTags.CONSTRUCTED | BERTags.OCTET_STRING);
 
-    void encode(ASN1OutputStream out, boolean withTag) throws IOException
-    {
-        out.writeEncodedIndef(withTag, BERTags.CONSTRUCTED | BERTags.OCTET_STRING,  getObjects());
+        out.write(0x80);
+
+        //
+        // write out the octet array
+        //
+        for (Enumeration e = getObjects(); e.hasMoreElements();)
+        {
+            out.writeObject((ASN1Encodable)e.nextElement());
+        }
+
+        out.write(0x00);
+        out.write(0x00);
     }
 
     static BEROctetString fromSequence(ASN1Sequence seq)
     {
-        int count = seq.size();
-        ASN1OctetString[] v = new ASN1OctetString[count];
-        for (int i = 0; i < count; ++i)
+        ASN1OctetString[]     v = new ASN1OctetString[seq.size()];
+        Enumeration e = seq.getObjects();
+        int                   index = 0;
+
+        while (e.hasMoreElements())
         {
-            v[i] = ASN1OctetString.getInstance(seq.getObjectAt(i));
+            v[index++] = (ASN1OctetString)e.nextElement();
         }
+
         return new BEROctetString(v);
     }
 }

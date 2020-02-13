@@ -1,5 +1,7 @@
 package org.bouncycastle.asn1.pkcs;
 
+import java.math.BigInteger;
+
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.ASN1Object;
@@ -20,8 +22,8 @@ public class Pfx
     private Pfx(
         ASN1Sequence   seq)
     {
-        ASN1Integer version = ASN1Integer.getInstance(seq.getObjectAt(0));
-        if (version.intValueExact() != 3)
+        BigInteger  version = ASN1Integer.getInstance(seq.getObjectAt(0)).getValue();
+        if (version.intValue() != 3)
         {
             throw new IllegalArgumentException("wrong version for PFX PDU");
         }
@@ -70,7 +72,7 @@ public class Pfx
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(3);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(new ASN1Integer(3));
         v.add(contentInfo);

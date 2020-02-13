@@ -1,5 +1,6 @@
 package org.bouncycastle.pqc.asn1;
 
+import java.math.BigInteger;
 import java.util.Vector;
 
 import org.bouncycastle.asn1.ASN1Encodable;
@@ -1294,8 +1295,15 @@ public class GMSSPrivateKey
 
     private static int checkBigIntegerInIntRange(ASN1Encodable a)
     {
-        return ((ASN1Integer)a).intValueExact();
+        BigInteger b = ((ASN1Integer)a).getValue();
+        if ((b.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0) ||
+            (b.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0))
+        {
+            throw new IllegalArgumentException("BigInteger not in Range: " + b.toString());
+        }
+        return b.intValue();
     }
+
 
     public ASN1Primitive toASN1Primitive()
     {

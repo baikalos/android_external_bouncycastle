@@ -3,7 +3,7 @@ package org.bouncycastle.asn1;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.Vector;
 
 import org.bouncycastle.util.Arrays;
 
@@ -98,8 +98,8 @@ public abstract class ASN1Set
     extends ASN1Primitive
     implements org.bouncycastle.util.Iterable<ASN1Encodable>
 {
-    protected final ASN1Encodable[] elements;
-    protected final boolean isSorted;
+    private Vector set = new Vector();
+    private boolean isSorted = false;
 
     /**
      * return an ASN1Set from the given object.
@@ -153,7 +153,7 @@ public abstract class ASN1Set
      * dealing with implicitly tagged sets you really <b>should</b>
      * be using this method.
      *
-     * @param taggedObject the tagged object.
+     * @param obj the tagged object.
      * @param explicit true if the object is meant to be explicitly tagged
      *          false otherwise.
      * @exception IllegalArgumentException if the tagged object cannot
@@ -161,164 +161,125 @@ public abstract class ASN1Set
      * @return an ASN1Set instance.
      */
     public static ASN1Set getInstance(
-        ASN1TaggedObject    taggedObject,
+        ASN1TaggedObject    obj,
         boolean             explicit)
     {
         if (explicit)
         {
-            if (!taggedObject.isExplicit())
+            if (!obj.isExplicit())
             {
                 throw new IllegalArgumentException("object implicit - explicit expected.");
             }
 
-            return getInstance(taggedObject.getObject());
+            return (ASN1Set)obj.getObject();
         }
-
-        ASN1Primitive o = taggedObject.getObject();
-
-        /*
-         * constructed object which appears to be explicitly tagged and it's really implicit means
-         * we have to add the surrounding set.
-         */
-        if (taggedObject.isExplicit())
+        else
         {
-            if (taggedObject instanceof BERTaggedObject)
-            {
-                return new BERSet(o);
-            }
+            ASN1Primitive o = obj.getObject();
 
-            return new DLSet(o);
+            //
+            // constructed object which appears to be explicitly tagged
+            // and it's really implicit means we have to add the
+            // surrounding set.
+            //
+            if (obj.isExplicit())
+            {
+                if (obj instanceof BERTaggedObject)
+                {
+                    return new BERSet(o);
+                }
+                else
+                {
+                    return new DLSet(o);
+                }
+            }
+            else
+            {
+                if (o instanceof ASN1Set)
+                {
+                    return (ASN1Set)o;
+                }
+
+                //
+                // in this case the parser returns a sequence, convert it
+                // into a set.
+                //
+                if (o instanceof ASN1Sequence)
+                {
+                    ASN1Sequence s = (ASN1Sequence)o;
+
+                    if (obj instanceof BERTaggedObject)
+                    {
+                        return new BERSet(s.toArray());
+                    }
+                    else
+                    {
+                        return new DLSet(s.toArray());
+                    }
+                }
+            }
         }
 
-        if (o instanceof ASN1Set)
-        {
-            ASN1Set s = (ASN1Set)o;
-
-            if (taggedObject instanceof BERTaggedObject)
-            {
-                return s;
-            }
-
-            return (ASN1Set)s.toDLObject();
-        }
-
-        /*
-         * in this case the parser returns a sequence, convert it into a set.
-         */
-        if (o instanceof ASN1Sequence)
-        {
-            ASN1Sequence s = (ASN1Sequence)o;
-
-            // NOTE: Will force() a LazyEncodedSequence
-            ASN1Encodable[] elements = s.toArrayInternal();
-
-            if (taggedObject instanceof BERTaggedObject)
-            {
-                return new BERSet(false, elements);
-            }
-
-            return new DLSet(false, elements);
-        }
-
-        throw new IllegalArgumentException("unknown object in getInstance: " + taggedObject.getClass().getName());
+        throw new IllegalArgumentException("unknown object in getInstance: " + obj.getClass().getName());
     }
 
     protected ASN1Set()
     {
-        this.elements = ASN1EncodableVector.EMPTY_ELEMENTS;
-        this.isSorted = true;
     }
 
     /**
      * Create a SET containing one object
-     * @param element object to be added to the SET.
+     * @param obj object to be added to the SET.
      */
-    protected ASN1Set(ASN1Encodable element)
+    protected ASN1Set(
+        ASN1Encodable obj)
     {
-        if (null == element)
-        {
-            throw new NullPointerException("'element' cannot be null");
-        }
-
-        this.elements = new ASN1Encodable[]{ element };
-        this.isSorted = true;
+        set.addElement(obj);
     }
 
     /**
      * Create a SET containing a vector of objects.
-     * @param elementVector a vector of objects to make up the SET.
+     * @param v a vector of objects to make up the SET.
      * @param doSort true if should be sorted DER style, false otherwise.
      */
-    protected ASN1Set(ASN1EncodableVector elementVector, boolean doSort)
+    protected ASN1Set(
+        ASN1EncodableVector v,
+        boolean                  doSort)
     {
-        if (null == elementVector)
+        for (int i = 0; i != v.size(); i++)
         {
-            throw new NullPointerException("'elementVector' cannot be null");
+            set.addElement(v.get(i));
         }
 
-        ASN1Encodable[] tmp;
-        if (doSort && elementVector.size() >= 2)
+        if (doSort)
         {
-            tmp = elementVector.copyElements();
-            sort(tmp);
+            this.sort();
         }
-        else
-        {
-            tmp = elementVector.takeElements();
-        }
-
-        this.elements = tmp;
-        this.isSorted = doSort || tmp.length < 2;
     }
 
     /**
      * Create a SET containing an array of objects.
-     * @param elements an array of objects to make up the SET.
+     * @param array an array of objects to make up the SET.
      * @param doSort true if should be sorted DER style, false otherwise.
      */
-    protected ASN1Set(ASN1Encodable[] elements, boolean doSort)
+    protected ASN1Set(
+        ASN1Encodable[]   array,
+        boolean doSort)
     {
-        if (Arrays.isNullOrContainsNull(elements))
+        for (int i = 0; i != array.length; i++)
         {
-            throw new NullPointerException("'elements' cannot be null, or contain null");
+            set.addElement(array[i]);
         }
 
-        ASN1Encodable[] tmp = ASN1EncodableVector.cloneElements(elements);
-        if (doSort && tmp.length >= 2)
+        if (doSort)
         {
-            sort(tmp);
+            this.sort();
         }
-
-        this.elements = tmp;
-        this.isSorted = doSort || tmp.length < 2;
-    }
-
-    ASN1Set(boolean isSorted, ASN1Encodable[] elements)
-    {
-        this.elements = elements;
-        this.isSorted = isSorted || elements.length < 2;
     }
 
     public Enumeration getObjects()
     {
-        return new Enumeration()
-        {
-            private int pos = 0;
-
-            public boolean hasMoreElements()
-            {
-                return pos < elements.length;
-            }
-
-            public Object nextElement()
-            {
-                if (pos >= elements.length)
-                {
-                    throw new NoSuchElementException("ASN1Set Enumeration");
-                }
-                return elements[pos++];
-            }
-        };
+        return set.elements();
     }
 
     /**
@@ -327,9 +288,10 @@ public abstract class ASN1Set
      * @param index the set number (starting at zero) of the object
      * @return the object at the set position indicated by index.
      */
-    public ASN1Encodable getObjectAt(int index)
+    public ASN1Encodable getObjectAt(
+        int index)
     {
-        return elements[index];
+        return (ASN1Encodable)set.elementAt(index);
     }
 
     /**
@@ -339,30 +301,39 @@ public abstract class ASN1Set
      */
     public int size()
     {
-        return elements.length;
+        return set.size();
     }
 
     public ASN1Encodable[] toArray()
     {
-        return ASN1EncodableVector.cloneElements(elements);
+        ASN1Encodable[] values = new ASN1Encodable[this.size()];
+
+        for (int i = 0; i != this.size(); i++)
+        {
+            values[i] = this.getObjectAt(i);
+        }
+
+        return values;
     }
 
     public ASN1SetParser parser()
     {
-        final int count = size();
+        final ASN1Set outer = this;
 
         return new ASN1SetParser()
         {
-            private int pos = 0;
+            private final int max = size();
+
+            private int index;
 
             public ASN1Encodable readObject() throws IOException
             {
-                if (count == pos)
+                if (index == max)
                 {
                     return null;
                 }
 
-                ASN1Encodable obj = elements[pos++];
+                ASN1Encodable obj = getObjectAt(index++);
                 if (obj instanceof ASN1Sequence)
                 {
                     return ((ASN1Sequence)obj).parser();
@@ -377,29 +348,30 @@ public abstract class ASN1Set
 
             public ASN1Primitive getLoadedObject()
             {
-                return ASN1Set.this;
+                return outer;
             }
 
             public ASN1Primitive toASN1Primitive()
             {
-                return ASN1Set.this;
+                return outer;
             }
         };
     }
 
     public int hashCode()
     {
-//        return Arrays.hashCode(elements);
-        int i = elements.length;
-        int hc = i + 1;
+        Enumeration             e = this.getObjects();
+        int                     hashCode = size();
 
-        // NOTE: Order-independent contribution of elements to avoid sorting
-        while (--i >= 0)
+        while (e.hasMoreElements())
         {
-            hc += elements[i].toASN1Primitive().hashCode();
+            Object o = getNext(e);
+            hashCode *= 17;
+
+            hashCode ^= o.hashCode();
         }
 
-        return hc;
+        return hashCode;
     }
 
     /**
@@ -408,18 +380,31 @@ public abstract class ASN1Set
      */
     ASN1Primitive toDERObject()
     {
-        ASN1Encodable[] tmp;
         if (isSorted)
         {
-            tmp = elements;
+            ASN1Set derSet = new DERSet();
+
+            derSet.set = this.set;
+
+            return derSet;
         }
         else
         {
-            tmp = (ASN1Encodable[])elements.clone();
-            sort(tmp);
-        }
+            Vector v = new Vector();
 
-        return new DERSet(true, tmp);
+            for (int i = 0; i != set.size(); i++)
+            {
+                v.addElement(set.elementAt(i));
+            }
+
+            ASN1Set derSet = new DERSet();
+
+            derSet.set = v;
+
+            derSet.sort();
+
+            return derSet;
+        }
     }
 
     /**
@@ -428,77 +413,83 @@ public abstract class ASN1Set
      */
     ASN1Primitive toDLObject()
     {
-        return new DLSet(isSorted, elements);
+        ASN1Set derSet = new DLSet();
+
+        derSet.set = this.set;
+
+        return derSet;
     }
 
-    boolean asn1Equals(ASN1Primitive other)
+    boolean asn1Equals(
+        ASN1Primitive o)
     {
-        if (!(other instanceof ASN1Set))
+        if (!(o instanceof ASN1Set))
         {
             return false;
         }
 
-        ASN1Set that = (ASN1Set)other;
+        ASN1Set   other = (ASN1Set)o;
 
-        int count = this.size();
-        if (that.size() != count)
+        if (this.size() != other.size())
         {
             return false;
         }
 
-        DERSet dis = (DERSet)this.toDERObject();
-        DERSet dat = (DERSet)that.toDERObject();
+        Enumeration s1 = this.getObjects();
+        Enumeration s2 = other.getObjects();
 
-        for (int i = 0; i < count; ++i)
+        while (s1.hasMoreElements())
         {
-            ASN1Primitive p1 = dis.elements[i].toASN1Primitive();
-            ASN1Primitive p2 = dat.elements[i].toASN1Primitive();
+            ASN1Encodable obj1 = getNext(s1);
+            ASN1Encodable obj2 = getNext(s2);
 
-            if (p1 != p2 && !p1.asn1Equals(p2))
+            ASN1Primitive o1 = obj1.toASN1Primitive();
+            ASN1Primitive o2 = obj2.toASN1Primitive();
+
+            if (o1 == o2 || o1.equals(o2))
             {
-                return false;
+                continue;
             }
+
+            return false;
         }
 
         return true;
     }
 
-    boolean isConstructed()
+    private ASN1Encodable getNext(Enumeration e)
     {
-        return true;
-    }
+        ASN1Encodable encObj = (ASN1Encodable)e.nextElement();
 
-    abstract void encode(ASN1OutputStream out, boolean withTag) throws IOException;
-
-    public String toString() 
-    {
-        int count = size();
-        if (0 == count)
+        // unfortunately null was allowed as a substitute for DER null
+        if (encObj == null)
         {
-            return "[]";
+            return DERNull.INSTANCE;
         }
 
-        StringBuffer sb = new StringBuffer();
-        sb.append('[');
-        for (int i = 0;;)
+        return encObj;
+    }
+
+    /**
+     * return true if a <= b (arrays are assumed padded with zeros).
+     */
+    private boolean lessThanOrEqual(
+         byte[] a,
+         byte[] b)
+    {
+        int len = Math.min(a.length, b.length);
+        for (int i = 0; i != len; ++i)
         {
-            sb.append(elements[i]);
-            if (++i >= count)
+            if (a[i] != b[i])
             {
-                break;
+                return (a[i] & 0xff) < (b[i] & 0xff);
             }
-            sb.append(", ");
         }
-        sb.append(']');
-        return sb.toString();
+        return len == a.length;
     }
 
-    public Iterator<ASN1Encodable> iterator()
-    {
-        return new Arrays.Iterator<ASN1Encodable>(toArray());
-    }
-
-    private static byte[] getDEREncoded(ASN1Encodable obj)
+    private byte[] getDEREncoded(
+        ASN1Encodable obj)
     {
         try
         {
@@ -510,98 +501,67 @@ public abstract class ASN1Set
         }
     }
 
-    /**
-     * return true if a <= b (arrays are assumed padded with zeros).
-     */
-    private static boolean lessThanOrEqual(byte[] a, byte[] b)
+    protected void sort()
     {
-//        assert a.length >= 2 && b.length >= 2;
-
-        /*
-         * NOTE: Set elements in DER encodings are ordered first according to their tags (class and
-         * number); the CONSTRUCTED bit is not part of the tag.
-         * 
-         * For SET-OF, this is unimportant. All elements have the same tag and DER requires them to
-         * either all be in constructed form or all in primitive form, according to that tag. The
-         * elements are effectively ordered according to their content octets.
-         * 
-         * For SET, the elements will have distinct tags, and each will be in constructed or
-         * primitive form accordingly. Failing to ignore the CONSTRUCTED bit could therefore lead to
-         * ordering inversions.
-         */
-        int a0 = a[0] & ~BERTags.CONSTRUCTED;
-        int b0 = b[0] & ~BERTags.CONSTRUCTED;
-        if (a0 != b0)
+        if (!isSorted)
         {
-            return a0 < b0;
-        }
-
-        int last = Math.min(a.length, b.length) - 1;
-        for (int i = 1; i < last; ++i)
-        {
-            if (a[i] != b[i])
+            isSorted = true;
+            if (set.size() > 1)
             {
-                return (a[i] & 0xFF) < (b[i] & 0xFF);
+                boolean    swapped = true;
+                int        lastSwap = set.size() - 1;
+
+                while (swapped)
+                {
+                    int    index = 0;
+                    int    swapIndex = 0;
+                    byte[] a = getDEREncoded((ASN1Encodable)set.elementAt(0));
+
+                    swapped = false;
+
+                    while (index != lastSwap)
+                    {
+                        byte[] b = getDEREncoded((ASN1Encodable)set.elementAt(index + 1));
+
+                        if (lessThanOrEqual(a, b))
+                        {
+                            a = b;
+                        }
+                        else
+                        {
+                            Object  o = set.elementAt(index);
+
+                            set.setElementAt(set.elementAt(index + 1), index);
+                            set.setElementAt(o, index + 1);
+
+                            swapped = true;
+                            swapIndex = index;
+                        }
+
+                        index++;
+                    }
+
+                    lastSwap = swapIndex;
+                }
             }
         }
-        return (a[last] & 0xFF) <= (b[last] & 0xFF);
     }
 
-    private static void sort(ASN1Encodable[] t)
+    boolean isConstructed()
     {
-        int count = t.length;
-        if (count < 2)
-        {
-            return;
-        }
+        return true;
+    }
 
-        ASN1Encodable eh = t[0], ei = t[1];
-        byte[] bh = getDEREncoded(eh), bi = getDEREncoded(ei);;
+    abstract void encode(ASN1OutputStream out)
+            throws IOException;
 
-        if (lessThanOrEqual(bi, bh))
-        {
-            ASN1Encodable et = ei; ei = eh; eh = et;
-            byte[] bt = bi; bi = bh; bh = bt;
-        }
+    public String toString() 
+    {
+        return set.toString();
+    }
 
-        for (int i = 2; i < count; ++i)
-        {
-            ASN1Encodable e2 = t[i];
-            byte[] b2 = getDEREncoded(e2);
-
-            if (lessThanOrEqual(bi, b2))
-            {
-                t[i - 2] = eh;
-                eh = ei; bh = bi;
-                ei = e2; bi = b2;
-                continue;
-            }
-
-            if (lessThanOrEqual(bh, b2))
-            {
-                t[i - 2] = eh;
-                eh = e2; bh = b2;
-                continue;
-            }
-
-            int j = i - 1;
-            while (--j > 0)
-            {
-                ASN1Encodable e1 = t[j - 1];
-                byte[] b1 = getDEREncoded(e1);
-
-                if (lessThanOrEqual(b1, b2))
-                {
-                    break;
-                }
-
-                t[j] = e1;
-            }
-
-            t[j] = e2;
-        }
-
-        t[count - 2] = eh;
-        t[count - 1] = ei;
+    public Iterator<ASN1Encodable> iterator()
+    {
+        return new Arrays.Iterator<ASN1Encodable>(toArray());
     }
 }

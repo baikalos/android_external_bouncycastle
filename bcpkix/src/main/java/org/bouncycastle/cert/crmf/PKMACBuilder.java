@@ -91,7 +91,7 @@ public class PKMACBuilder
 
     public PKMACBuilder setParameters(PBMParameter parameters)
     {
-        checkIterationCountCeiling(parameters.getIterationCount().intValueExact());
+        checkIterationCountCeiling(parameters.getIterationCount().getValue().intValue());
 
         this.parameters = parameters;
 
@@ -155,7 +155,7 @@ public class PKMACBuilder
 
         calculator.setup(params.getOwf(), params.getMac());
 
-        int iter = params.getIterationCount().intValueExact();
+        int iter = params.getIterationCount().getValue().intValue();
         do
         {
             K = calculator.calculateDigest(K);

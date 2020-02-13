@@ -50,10 +50,22 @@ public class CertRepMessage
 
         if (caPubs != null)
         {
-            this.caPubs = new DERSequence(caPubs);
+            ASN1EncodableVector v = new ASN1EncodableVector();
+            for (int i = 0; i < caPubs.length; i++)
+            {
+                v.add(caPubs[i]);
+            }
+            this.caPubs = new DERSequence(v);
         }
 
-        this.response = new DERSequence(response);
+        {
+            ASN1EncodableVector v = new ASN1EncodableVector();
+            for (int i = 0; i < response.length; i++)
+            {
+                v.add(response[i]);
+            }
+            this.response = new DERSequence(v);
+        }
     }
 
     public CMPCertificate[] getCaPubs()
@@ -97,7 +109,7 @@ public class CertRepMessage
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(2);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         if (caPubs != null)
         {

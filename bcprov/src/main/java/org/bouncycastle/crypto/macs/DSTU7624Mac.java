@@ -25,8 +25,6 @@ public class DSTU7624Mac
 
     private byte[] c, cTemp, kDelta;
 
-    private boolean initCalled = false;
-
     public DSTU7624Mac(int blockBitLength, int q)
     {
         this.engine = new DSTU7624Engine(blockBitLength);
@@ -44,8 +42,7 @@ public class DSTU7624Mac
         if (params instanceof KeyParameter)
         {
             engine.init(true, params);
-            initCalled = true;
-            reset();
+            engine.processBlock(kDelta, 0, kDelta, 0);
         }
         else
         {
@@ -136,8 +133,6 @@ public class DSTU7624Mac
 
         System.arraycopy(c, 0, out, outOff, macSize);
 
-        reset();
-        
         return macSize;
     }
 
@@ -148,12 +143,7 @@ public class DSTU7624Mac
         Arrays.fill(kDelta, (byte)0x00);
         Arrays.fill(buf, (byte)0x00);
         engine.reset();
-        
-        if (initCalled)
-        {
-            engine.processBlock(kDelta, 0, kDelta, 0);
-        }
-
+        engine.processBlock(kDelta, 0, kDelta, 0);
         bufOff = 0;
     }
 

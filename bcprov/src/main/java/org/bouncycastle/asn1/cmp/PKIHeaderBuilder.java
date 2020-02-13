@@ -155,7 +155,12 @@ public class PKIHeaderBuilder
         ASN1Sequence genInfoSeq = null;
         if (generalInfos != null)
         {
-            genInfoSeq = new DERSequence(generalInfos);
+            ASN1EncodableVector v = new ASN1EncodableVector();
+            for (int i = 0; i < generalInfos.length; i++)
+            {
+                v.add(generalInfos[i]);
+            }
+            genInfoSeq = new DERSequence(v);
         }
         return genInfoSeq;
     }
@@ -200,7 +205,7 @@ public class PKIHeaderBuilder
      */
     public PKIHeader build()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(12);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(pvno);
         v.add(sender);

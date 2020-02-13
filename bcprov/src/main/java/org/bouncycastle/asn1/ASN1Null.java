@@ -73,7 +73,8 @@ public abstract class ASN1Null
         return true;
     }
 
-    abstract void encode(ASN1OutputStream out, boolean withTag) throws IOException;
+    abstract void encode(ASN1OutputStream out)
+        throws IOException;
 
     public String toString()
     {

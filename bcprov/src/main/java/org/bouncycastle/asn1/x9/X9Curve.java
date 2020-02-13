@@ -60,8 +60,10 @@ public class X9Curve
         {
             // Characteristic two field
             ASN1Sequence parameters = ASN1Sequence.getInstance(fieldID.getParameters());
-            int m = ((ASN1Integer)parameters.getObjectAt(0)).intValueExact();
-            ASN1ObjectIdentifier representation = (ASN1ObjectIdentifier)parameters.getObjectAt(1);
+            int m = ((ASN1Integer)parameters.getObjectAt(0)).getValue().
+                intValue();
+            ASN1ObjectIdentifier representation
+                = (ASN1ObjectIdentifier)parameters.getObjectAt(1);
 
             int k1 = 0;
             int k2 = 0;
@@ -70,15 +72,15 @@ public class X9Curve
             if (representation.equals(tpBasis))
             {
                 // Trinomial basis representation
-                k1 = ASN1Integer.getInstance(parameters.getObjectAt(2)).intValueExact();
+                k1 = ASN1Integer.getInstance(parameters.getObjectAt(2)).getValue().intValue();
             }   
             else if (representation.equals(ppBasis))
             {
                 // Pentanomial basis representation
                 ASN1Sequence pentanomial = ASN1Sequence.getInstance(parameters.getObjectAt(2));
-                k1 = ASN1Integer.getInstance(pentanomial.getObjectAt(0)).intValueExact();
-                k2 = ASN1Integer.getInstance(pentanomial.getObjectAt(1)).intValueExact();
-                k3 = ASN1Integer.getInstance(pentanomial.getObjectAt(2)).intValueExact();
+                k1 = ASN1Integer.getInstance(pentanomial.getObjectAt(0)).getValue().intValue();
+                k2 = ASN1Integer.getInstance(pentanomial.getObjectAt(1)).getValue().intValue();
+                k3 = ASN1Integer.getInstance(pentanomial.getObjectAt(2)).getValue().intValue();
             }   
             else
             {
@@ -95,7 +97,7 @@ public class X9Curve
 
         if (seq.size() == 3)
         {
-            seed = ((DERBitString)seq.getObjectAt(2)).getBytes();
+            seed = Arrays.clone(((DERBitString)seq.getObjectAt(2)).getBytes());
         }   
     }   
 
@@ -137,7 +139,7 @@ public class X9Curve
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(3);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         if (fieldIdentifier.equals(prime_field)) 
         { 

@@ -103,7 +103,7 @@ public class RainbowPublicKey
      */
     public int getDocLength()
     {
-        return this.docLength.intValueExact();
+        return this.docLength.getValue().intValue();
     }
 
     /**

@@ -137,11 +137,6 @@ public class SecP128R1Field
 
             x = (int)c;
         }
-
-        if ((z[3] >>> 1) >= P3s1 && Nat128.gte(z, P))
-        {
-            addPInvTo(z);
-        }
     }
 
     public static void square(int[] x, int[] z)

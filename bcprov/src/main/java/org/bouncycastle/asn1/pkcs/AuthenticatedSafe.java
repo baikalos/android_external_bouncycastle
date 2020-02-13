@@ -64,13 +64,20 @@ public class AuthenticatedSafe
 
     public ASN1Primitive toASN1Primitive()
     {
+        ASN1EncodableVector v = new ASN1EncodableVector();
+
+        for (int i = 0; i != info.length; i++)
+        {
+            v.add(info[i]);
+        }
+
         if (isBer)
         {
-            return new BERSequence(info);
+            return new BERSequence(v);
         }
         else
         {
-            return new DLSequence(info);
+            return new DLSequence(v);
         }
     }
 }

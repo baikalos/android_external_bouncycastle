@@ -60,7 +60,7 @@ public class GCMParameters
 
         if (seq.size() == 2)
         {
-            this.icvLen = ASN1Integer.getInstance(seq.getObjectAt(1)).intValueExact();
+            this.icvLen = ASN1Integer.getInstance(seq.getObjectAt(1)).getValue().intValue();
         }
         else
         {
@@ -88,7 +88,7 @@ public class GCMParameters
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(2);
+        ASN1EncodableVector    v = new ASN1EncodableVector();
 
         v.add(new DEROctetString(nonce));
 

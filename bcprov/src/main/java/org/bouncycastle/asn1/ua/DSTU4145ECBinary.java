@@ -139,7 +139,8 @@ public class DSTU4145ECBinary
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(6);
+
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         if (0 != version.compareTo(BigInteger.valueOf(0)))
         {
@@ -153,4 +154,5 @@ public class DSTU4145ECBinary
 
         return new DERSequence(v);
     }
+
 }

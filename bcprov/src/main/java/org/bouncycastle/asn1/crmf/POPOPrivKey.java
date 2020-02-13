@@ -33,7 +33,7 @@ public class POPOPrivKey
             this.obj = DERBitString.getInstance(obj, false);
             break;
         case subsequentMessage:
-            this.obj = SubsequentMessage.valueOf(ASN1Integer.getInstance(obj, false).intValueExact());
+            this.obj = SubsequentMessage.valueOf(ASN1Integer.getInstance(obj, false).getValue().intValue());
             break;
         case dhMAC:
             this.obj = DERBitString.getInstance(obj, false);

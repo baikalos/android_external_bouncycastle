@@ -53,9 +53,11 @@ public class McEliecePrivateKey
 
     private McEliecePrivateKey(ASN1Sequence seq)
     {
-        n = ((ASN1Integer)seq.getObjectAt(0)).intValueExact();
+        BigInteger bigN = ((ASN1Integer)seq.getObjectAt(0)).getValue();
+        n = bigN.intValue();
 
-        k = ((ASN1Integer)seq.getObjectAt(1)).intValueExact();
+        BigInteger bigK = ((ASN1Integer)seq.getObjectAt(1)).getValue();
+        k = bigK.intValue();
 
         encField = ((ASN1OctetString)seq.getObjectAt(2)).getOctets();
 

@@ -72,9 +72,9 @@ public class ASN1StreamParser
             switch (tag)
             {
                 case BERTags.SET:
-                    return new DLSetParser(this);
+                    return new DERSetParser(this);
                 case BERTags.SEQUENCE:
-                    return new DLSequenceParser(this);
+                    return new DERSequenceParser(this);
                 case BERTags.OCTET_STRING:
                     return new BEROctetStringParser(this);
             }
@@ -101,7 +101,7 @@ public class ASN1StreamParser
         {
             // Note: !CONSTRUCTED => IMPLICIT
             DefiniteLengthInputStream defIn = (DefiniteLengthInputStream)_in;
-            return new DLTaggedObject(false, tag, new DEROctetString(defIn.toByteArray()));
+            return new DERTaggedObject(false, tag, new DEROctetString(defIn.toByteArray()));
         }
 
         ASN1EncodableVector v = readVector();
@@ -114,8 +114,8 @@ public class ASN1StreamParser
         }
 
         return v.size() == 1
-            ?   new DLTaggedObject(true, tag, v.get(0))
-            :   new DLTaggedObject(false, tag, DLFactory.createSequence(v));
+            ?   new DERTaggedObject(true, tag, v.get(0))
+            :   new DERTaggedObject(false, tag, DERFactory.createSequence(v));
     }
 
     public ASN1Encodable readObject()
@@ -142,8 +142,7 @@ public class ASN1StreamParser
         //
         // calculate length
         //
-        int length = ASN1InputStream.readLength(_in, _limit,
-            tagNo == BERTags.OCTET_STRING || tagNo == BERTags.SEQUENCE || tagNo == BERTags.SET || tagNo == BERTags.EXTERNAL);
+        int length = ASN1InputStream.readLength(_in, _limit);
 
         if (length < 0) // indefinite-length method
         {
@@ -169,7 +168,7 @@ public class ASN1StreamParser
         }
         else
         {
-            DefiniteLengthInputStream defIn = new DefiniteLengthInputStream(_in, length, _limit);
+            DefiniteLengthInputStream defIn = new DefiniteLengthInputStream(_in, length);
 
             if ((tag & BERTags.APPLICATION) != 0)
             {
@@ -192,9 +191,9 @@ public class ASN1StreamParser
                         //
                         return new BEROctetStringParser(new ASN1StreamParser(defIn));
                     case BERTags.SEQUENCE:
-                        return new DLSequenceParser(new ASN1StreamParser(defIn));
+                        return new DERSequenceParser(new ASN1StreamParser(defIn));
                     case BERTags.SET:
-                        return new DLSetParser(new ASN1StreamParser(defIn));
+                        return new DERSetParser(new ASN1StreamParser(defIn));
                     case BERTags.EXTERNAL:
                         return new DERExternalParser(new ASN1StreamParser(defIn));
                     default:
@@ -230,14 +229,10 @@ public class ASN1StreamParser
 
     ASN1EncodableVector readVector() throws IOException
     {
-        ASN1Encodable obj = readObject();
-        if (null == obj)
-        {
-            return new ASN1EncodableVector(0);
-        }
-
         ASN1EncodableVector v = new ASN1EncodableVector();
-        do
+
+        ASN1Encodable obj;
+        while ((obj = readObject()) != null)
         {
             if (obj instanceof InMemoryRepresentable)
             {
@@ -248,7 +243,7 @@ public class ASN1StreamParser
                 v.add(obj.toASN1Primitive());
             }
         }
-        while ((obj = readObject()) != null);
+
         return v;
     }
 }

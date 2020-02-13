@@ -12,6 +12,7 @@ public class XMSSMTSigner
     implements StateAwareMessageSigner
 {
     private XMSSMTPrivateKeyParameters privateKey;
+    private XMSSMTPrivateKeyParameters nextKeyGenerator;
     private XMSSMTPublicKeyParameters publicKey;
     private XMSSMTParameters params;
     private XMSSParameters xmssParams;
@@ -28,6 +29,7 @@ public class XMSSMTSigner
             initSign = true;
             hasGenerated = false;
             privateKey = (XMSSMTPrivateKeyParameters)param;
+            nextKeyGenerator = privateKey;
 
             params = privateKey.getParameters();
             xmssParams = params.getXMSSParameters();
@@ -41,7 +43,7 @@ public class XMSSMTSigner
             xmssParams = params.getXMSSParameters();
         }
         
-        wotsPlus = params.getWOTSPlus();
+        wotsPlus = new WOTSPlus(new WOTSPlusParameters(params.getDigest()));
     }
 
     public byte[] generateSignature(byte[] message)
@@ -50,7 +52,6 @@ public class XMSSMTSigner
         {
             throw new NullPointerException("message == null");
         }
-
         if (initSign)
         {
             if (privateKey == null)
@@ -62,104 +63,98 @@ public class XMSSMTSigner
         {
             throw new IllegalStateException("signer not initialized for signature generation");
         }
-
-        synchronized (privateKey)
+        if (privateKey.getBDSState().isEmpty())
         {
-            if (privateKey.getUsagesRemaining() <= 0)
-            {
-                throw new IllegalStateException("no usages of private key remaining");
-            }
-            if (privateKey.getBDSState().isEmpty())
-            {
-                throw new IllegalStateException("not initialized");
-            }
-
-            try
-            {
-
-                BDSStateMap bdsState = privateKey.getBDSState();
-
-                // privateKey.increaseIndex(this);
-                final long globalIndex = privateKey.getIndex();
-                final int totalHeight = params.getHeight();
-                final int xmssHeight = xmssParams.getHeight();
-                if (privateKey.getUsagesRemaining() <= 0)
-                {
-                    throw new IllegalStateException("index out of bounds");
-                }
-
-                /* compress message */
-                byte[] random = wotsPlus.getKhf().PRF(privateKey.getSecretKeyPRF(), XMSSUtil.toBytesBigEndian(globalIndex, 32));
-                byte[] concatenated = Arrays.concatenate(random, privateKey.getRoot(),
-                    XMSSUtil.toBytesBigEndian(globalIndex, params.getTreeDigestSize()));
-                byte[] messageDigest = wotsPlus.getKhf().HMsg(concatenated, message);
-
-                hasGenerated = true;
-
-                XMSSMTSignature signature = new XMSSMTSignature.Builder(params).withIndex(globalIndex).withRandom(random).build();
-
-
-                /* layer 0 */
-                long indexTree = XMSSUtil.getTreeIndex(globalIndex, xmssHeight);
-                int indexLeaf = XMSSUtil.getLeafIndex(globalIndex, xmssHeight);
-
-                /* reset xmss */
-                wotsPlus.importKeys(new byte[params.getTreeDigestSize()], privateKey.getPublicSeed());
-                /* create signature with XMSS tree on layer 0 */
-
-                /* adjust addresses */
-                OTSHashAddress otsHashAddress = (OTSHashAddress)new OTSHashAddress.Builder().withTreeAddress(indexTree)
-                    .withOTSAddress(indexLeaf).build();
-
-                /* get authentication path from BDS */
-                if (bdsState.get(0) == null || indexLeaf == 0)
-                {
-                    bdsState.put(0, new BDS(xmssParams, privateKey.getPublicSeed(), privateKey.getSecretKeySeed(), otsHashAddress));
-                }
-
-                /* sign message digest */
-                WOTSPlusSignature wotsPlusSignature = wotsSign(messageDigest, otsHashAddress);
-
-                XMSSReducedSignature reducedSignature = new XMSSReducedSignature.Builder(xmssParams)
-                    .withWOTSPlusSignature(wotsPlusSignature).withAuthPath(bdsState.get(0).getAuthenticationPath())
-                    .build();
-
-                signature.getReducedSignatures().add(reducedSignature);
-                /* loop over remaining layers */
-                for (int layer = 1; layer < params.getLayers(); layer++)
-                {
-                    /* get root of layer - 1 */
-                    XMSSNode root = bdsState.get(layer - 1).getRoot();
-
-                    indexLeaf = XMSSUtil.getLeafIndex(indexTree, xmssHeight);
-                    indexTree = XMSSUtil.getTreeIndex(indexTree, xmssHeight);
-
-                    /* adjust addresses */
-                    otsHashAddress = (OTSHashAddress)new OTSHashAddress.Builder().withLayerAddress(layer)
-                        .withTreeAddress(indexTree).withOTSAddress(indexLeaf).build();
-
-                    /* sign root digest of layer - 1 */
-                    wotsPlusSignature = wotsSign(root.getValue(), otsHashAddress);
-                    /* get authentication path from BDS */
-                    if (bdsState.get(layer) == null || XMSSUtil.isNewBDSInitNeeded(globalIndex, xmssHeight, layer))
-                    {
-                        bdsState.put(layer, new BDS(xmssParams, privateKey.getPublicSeed(), privateKey.getSecretKeySeed(), otsHashAddress));
-                    }
-
-                    reducedSignature = new XMSSReducedSignature.Builder(xmssParams)
-                        .withWOTSPlusSignature(wotsPlusSignature)
-                        .withAuthPath(bdsState.get(layer).getAuthenticationPath()).build();
-
-                    signature.getReducedSignatures().add(reducedSignature);
-                }
-             
-                return signature.toByteArray();
-            }
-            finally
-            {
-                privateKey.rollKey();
-            }
+            throw new IllegalStateException("not initialized");
         }
+
+        BDSStateMap bdsState = privateKey.getBDSState();
+
+        // privateKey.increaseIndex(this);
+        final long globalIndex = privateKey.getIndex();
+        final int totalHeight = params.getHeight();
+        final int xmssHeight = xmssParams.getHeight();
+        if (!XMSSUtil.isIndexValid(totalHeight, globalIndex))
+        {
+            throw new IllegalStateException("index out of bounds");
+        }
+
+      		/* compress message */
+        byte[] random = wotsPlus.getKhf().PRF(privateKey.getSecretKeyPRF(), XMSSUtil.toBytesBigEndian(globalIndex, 32));
+        byte[] concatenated = Arrays.concatenate(random, privateKey.getRoot(),
+            XMSSUtil.toBytesBigEndian(globalIndex, params.getDigestSize()));
+        byte[] messageDigest = wotsPlus.getKhf().HMsg(concatenated, message);
+
+        XMSSMTSignature signature = new XMSSMTSignature.Builder(params).withIndex(globalIndex).withRandom(random).build();
+
+
+      		/* layer 0 */
+        long indexTree = XMSSUtil.getTreeIndex(globalIndex, xmssHeight);
+        int indexLeaf = XMSSUtil.getLeafIndex(globalIndex, xmssHeight);
+
+        /* reset xmss */
+        wotsPlus.importKeys(new byte[params.getDigestSize()], privateKey.getPublicSeed());
+        /* create signature with XMSS tree on layer 0 */
+
+        /* adjust addresses */
+        OTSHashAddress otsHashAddress = (OTSHashAddress)new OTSHashAddress.Builder().withTreeAddress(indexTree)
+            .withOTSAddress(indexLeaf).build();
+
+      		/* get authentication path from BDS */
+        if (bdsState.get(0) == null || indexLeaf == 0)
+        {
+            bdsState.put(0, new BDS(xmssParams, privateKey.getPublicSeed(), privateKey.getSecretKeySeed(), otsHashAddress));
+        }
+
+        /* sign message digest */
+        WOTSPlusSignature wotsPlusSignature = wotsSign(messageDigest, otsHashAddress);
+        
+        XMSSReducedSignature reducedSignature = new XMSSReducedSignature.Builder(xmssParams)
+                .withWOTSPlusSignature(wotsPlusSignature).withAuthPath(bdsState.get(0).getAuthenticationPath())
+                .build();
+
+        signature.getReducedSignatures().add(reducedSignature);
+      		/* loop over remaining layers */
+        for (int layer = 1; layer < params.getLayers(); layer++)
+        {
+      			/* get root of layer - 1 */
+            XMSSNode root = bdsState.get(layer - 1).getRoot();
+
+            indexLeaf = XMSSUtil.getLeafIndex(indexTree, xmssHeight);
+            indexTree = XMSSUtil.getTreeIndex(indexTree, xmssHeight);
+
+      			/* adjust addresses */
+            otsHashAddress = (OTSHashAddress)new OTSHashAddress.Builder().withLayerAddress(layer)
+                .withTreeAddress(indexTree).withOTSAddress(indexLeaf).build();
+
+      			/* sign root digest of layer - 1 */
+            wotsPlusSignature = wotsSign(root.getValue(), otsHashAddress);
+      			/* get authentication path from BDS */
+            if (bdsState.get(layer) == null || XMSSUtil.isNewBDSInitNeeded(globalIndex, xmssHeight, layer))
+            {          
+                bdsState.put(layer, new BDS(xmssParams, privateKey.getPublicSeed(), privateKey.getSecretKeySeed(), otsHashAddress));
+            }
+
+            reducedSignature = new XMSSReducedSignature.Builder(xmssParams)
+                    .withWOTSPlusSignature(wotsPlusSignature)
+                    .withAuthPath(bdsState.get(layer).getAuthenticationPath()).build();
+
+            signature.getReducedSignatures().add(reducedSignature);
+        }
+
+        hasGenerated = true;
+
+        if (nextKeyGenerator != null)
+        {
+            privateKey = nextKeyGenerator.getNextKey();
+            nextKeyGenerator = privateKey;
+        }
+        else
+        {
+            privateKey = null;
+        }
+
+        return signature.toByteArray();
     }
 
     public boolean verifySignature(byte[] message, byte[] signature)
@@ -180,7 +175,7 @@ public class XMSSMTSigner
         XMSSMTSignature sig = new XMSSMTSignature.Builder(params).withSignature(signature).build();
 
         byte[] concatenated = Arrays.concatenate(sig.getRandom(), publicKey.getRoot(),
-                                         XMSSUtil.toBytesBigEndian(sig.getIndex(), params.getTreeDigestSize()));
+                                         XMSSUtil.toBytesBigEndian(sig.getIndex(), params.getDigestSize()));
         byte[] messageDigest = wotsPlus.getKhf().HMsg(concatenated, message);
 
         long globalIndex = sig.getIndex();
@@ -189,7 +184,7 @@ public class XMSSMTSigner
         int indexLeaf = XMSSUtil.getLeafIndex(globalIndex, xmssHeight);
 
 		/* adjust xmss */
-        wotsPlus.importKeys(new byte[params.getTreeDigestSize()], publicKey.getPublicSeed());
+        wotsPlus.importKeys(new byte[params.getDigestSize()], publicKey.getPublicSeed());
         
 		/* prepare addresses */
         OTSHashAddress otsHashAddress = (OTSHashAddress)new OTSHashAddress.Builder().withTreeAddress(indexTree)
@@ -218,7 +213,7 @@ public class XMSSMTSigner
 
     private WOTSPlusSignature wotsSign(byte[] messageDigest, OTSHashAddress otsHashAddress)
     {
-        if (messageDigest.length != params.getTreeDigestSize())
+        if (messageDigest.length != params.getDigestSize())
         {
             throw new IllegalArgumentException("size of messageDigest needs to be equal to size of digest");
         }
@@ -246,17 +241,15 @@ public class XMSSMTSigner
             XMSSMTPrivateKeyParameters privKey = privateKey;
 
             privateKey = null;
+            nextKeyGenerator = null;
 
             return privKey;
         }
         else
         {
-            XMSSMTPrivateKeyParameters privKey = privateKey;
+            XMSSMTPrivateKeyParameters privKey = nextKeyGenerator.getNextKey();
 
-            if (privKey != null)
-            {
-                privateKey = privateKey.getNextKey();
-            }
+            nextKeyGenerator = null;
 
             return privKey;
         }

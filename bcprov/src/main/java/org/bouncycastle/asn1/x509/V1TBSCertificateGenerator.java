@@ -118,7 +118,7 @@ public class V1TBSCertificateGenerator
             throw new IllegalStateException("not all mandatory fields set in V1 TBScertificate generator");
         }
 
-        ASN1EncodableVector seq = new ASN1EncodableVector(6);
+        ASN1EncodableVector  seq = new ASN1EncodableVector();
 
         // seq.add(version); - not required as default value.
         seq.add(serialNumber);
@@ -128,13 +128,12 @@ public class V1TBSCertificateGenerator
         //
         // before and after dates
         //
-        {
-            ASN1EncodableVector validity = new ASN1EncodableVector(2);
-            validity.add(startDate);
-            validity.add(endDate);
+        ASN1EncodableVector  validity = new ASN1EncodableVector();
 
-            seq.add(new DERSequence(validity));
-        }
+        validity.add(startDate);
+        validity.add(endDate);
+
+        seq.add(new DERSequence(validity));
 
         seq.add(subject);
 

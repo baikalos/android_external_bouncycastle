@@ -9,14 +9,6 @@ import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.DERSequence;
 
-/**
- * OCSP RFC 2560, RFC 6960
- * <pre>
- * ResponseBytes ::=       SEQUENCE {
- *     responseType   OBJECT IDENTIFIER,
- *     response       OCTET STRING }
- * </pre>
- */
 public class ResponseBytes
     extends ASN1Object
 {
@@ -83,7 +75,7 @@ public class ResponseBytes
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(2);
+        ASN1EncodableVector    v = new ASN1EncodableVector();
 
         v.add(responseType);
         v.add(response);

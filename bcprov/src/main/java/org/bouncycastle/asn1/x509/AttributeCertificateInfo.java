@@ -152,9 +152,9 @@ public class AttributeCertificateInfo
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(9);
+        ASN1EncodableVector  v = new ASN1EncodableVector();
 
-        if (version.intValueExact() != 0)
+        if (version.getValue().intValue() != 0)
         {
             v.add(version);
         }

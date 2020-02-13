@@ -8,14 +8,56 @@ import org.bouncycastle.math.raw.Nat224;
 
 public class SecP224K1Point extends ECPoint.AbstractFp
 {
-    SecP224K1Point(ECCurve curve, ECFieldElement x, ECFieldElement y)
+    /**
+     * Create a point which encodes with point compression.
+     *
+     * @param curve
+     *            the curve to use
+     * @param x
+     *            affine x co-ordinate
+     * @param y
+     *            affine y co-ordinate
+     *
+     * @deprecated Use ECCurve.createPoint to construct points
+     */
+    public SecP224K1Point(ECCurve curve, ECFieldElement x, ECFieldElement y)
     {
-        super(curve, x, y);
+        this(curve, x, y, false);
     }
 
-    SecP224K1Point(ECCurve curve, ECFieldElement x, ECFieldElement y, ECFieldElement[] zs)
+    /**
+     * Create a point that encodes with or without point compresion.
+     *
+     * @param curve
+     *            the curve to use
+     * @param x
+     *            affine x co-ordinate
+     * @param y
+     *            affine y co-ordinate
+     * @param withCompression
+     *            if true encode with point compression
+     *
+     * @deprecated per-point compression property will be removed, refer
+     *             {@link #getEncoded(boolean)}
+     */
+    public SecP224K1Point(ECCurve curve, ECFieldElement x, ECFieldElement y, boolean withCompression)
+    {
+        super(curve, x, y);
+
+        if ((x == null) != (y == null))
+        {
+            throw new IllegalArgumentException("Exactly one of the field elements is null");
+        }
+
+        this.withCompression = withCompression;
+    }
+
+    SecP224K1Point(ECCurve curve, ECFieldElement x, ECFieldElement y, ECFieldElement[] zs,
+        boolean withCompression)
     {
         super(curve, x, y, zs);
+
+        this.withCompression = withCompression;
     }
 
     protected ECPoint detach()
@@ -146,7 +188,7 @@ public class SecP224K1Point extends ECPoint.AbstractFp
 
         ECFieldElement[] zs = new ECFieldElement[] { Z3 };
 
-        return new SecP224K1Point(curve, X3, Y3, zs);
+        return new SecP224K1Point(curve, X3, Y3, zs, this.withCompression);
     }
 
     // B.3 pg 62
@@ -206,7 +248,7 @@ public class SecP224K1Point extends ECPoint.AbstractFp
             SecP224K1Field.multiply(Z3.x, Z1.x, Z3.x);
         }
 
-        return new SecP224K1Point(curve, X3, Y3, new ECFieldElement[] { Z3 });
+        return new SecP224K1Point(curve, X3, Y3, new ECFieldElement[] { Z3 }, this.withCompression);
     }
 
     public ECPoint twicePlus(ECPoint b)
@@ -251,6 +293,6 @@ public class SecP224K1Point extends ECPoint.AbstractFp
             return this;
         }
 
-        return new SecP224K1Point(curve, this.x, this.y.negate(), this.zs);
+        return new SecP224K1Point(curve, this.x, this.y.negate(), this.zs, this.withCompression);
     }
 }

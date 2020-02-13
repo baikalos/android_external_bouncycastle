@@ -55,7 +55,7 @@ public class EncryptedData
     private EncryptedData(
         ASN1Sequence seq)
     {
-        int version = ((ASN1Integer)seq.getObjectAt(0)).intValueExact();
+        int version = ((ASN1Integer)seq.getObjectAt(0)).getValue().intValue();
 
         if (version != 0)
         {
@@ -70,7 +70,7 @@ public class EncryptedData
         AlgorithmIdentifier     encryptionAlgorithm,
         ASN1Encodable content)
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(3);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(contentType);
         v.add(encryptionAlgorithm.toASN1Primitive());
@@ -103,7 +103,7 @@ public class EncryptedData
 
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(2);
+        ASN1EncodableVector v = new ASN1EncodableVector();
 
         v.add(new ASN1Integer(0));
         v.add(data);

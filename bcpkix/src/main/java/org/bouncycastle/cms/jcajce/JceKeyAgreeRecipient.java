@@ -61,7 +61,7 @@ public abstract class JceKeyAgreeRecipient
 
     public JceKeyAgreeRecipient(PrivateKey recipientKey)
     {
-        this.recipientKey = CMSUtils.cleanPrivateKey(recipientKey);
+        this.recipientKey = recipientKey;
     }
 
     /**
@@ -124,8 +124,6 @@ public abstract class JceKeyAgreeRecipient
         PublicKey senderPublicKey, ASN1OctetString userKeyingMaterial, PrivateKey receiverPrivateKey, KeyMaterialGenerator kmGen)
         throws CMSException, GeneralSecurityException, IOException
     {
-        receiverPrivateKey = CMSUtils.cleanPrivateKey(receiverPrivateKey);
-
         if (CMSUtils.isMQV(keyEncAlg.getAlgorithm()))
         {
             MQVuserKeyingMaterial ukm = MQVuserKeyingMaterial.getInstance(userKeyingMaterial.getOctets());
@@ -199,7 +197,7 @@ public abstract class JceKeyAgreeRecipient
         }
     }
 
-    protected Key unwrapSessionKey(ASN1ObjectIdentifier wrapAlg, SecretKey agreedKey, ASN1ObjectIdentifier contentEncryptionAlgorithm, byte[] encryptedContentEncryptionKey)
+    private Key unwrapSessionKey(ASN1ObjectIdentifier wrapAlg, SecretKey agreedKey, ASN1ObjectIdentifier contentEncryptionAlgorithm, byte[] encryptedContentEncryptionKey)
         throws CMSException, InvalidKeyException, NoSuchAlgorithmException
     {
         Cipher keyCipher = helper.createCipher(wrapAlg);

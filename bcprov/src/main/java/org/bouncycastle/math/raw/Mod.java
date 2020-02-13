@@ -2,6 +2,8 @@ package org.bouncycastle.math.raw;
 
 import java.util.Random;
 
+import org.bouncycastle.util.Pack;
+
 public abstract class Mod
 {
     public static int inverse32(int d)

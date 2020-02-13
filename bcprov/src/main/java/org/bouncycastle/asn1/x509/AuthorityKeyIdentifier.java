@@ -202,7 +202,7 @@ public class AuthorityKeyIdentifier
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(3);
+        ASN1EncodableVector  v = new ASN1EncodableVector();
 
         if (keyidentifier != null)
         {
@@ -218,6 +218,7 @@ public class AuthorityKeyIdentifier
         {
             v.add(new DERTaggedObject(false, 2, certserno));
         }
+
 
         return new DERSequence(v);
     }

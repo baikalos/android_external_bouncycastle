@@ -6,9 +6,6 @@ import org.bouncycastle.crypto.params.DSAPublicKeyParameters;
 import org.bouncycastle.crypto.signers.DSASigner;
 import org.bouncycastle.crypto.signers.HMacDSAKCalculator;
 
-/**
- * @deprecated Migrate to the (D)TLS API in org.bouncycastle.tls (bctls jar).
- */
 public class TlsDSSSigner
     extends TlsDSASigner
 {

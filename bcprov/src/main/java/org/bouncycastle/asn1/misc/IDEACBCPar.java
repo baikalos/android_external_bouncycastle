@@ -70,7 +70,7 @@ public class IDEACBCPar
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector v = new ASN1EncodableVector(1);
+        ASN1EncodableVector  v = new ASN1EncodableVector();
 
         if (iv != null)
         {
