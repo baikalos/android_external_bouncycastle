@@ -1,0 +1,23 @@
+<<<<<<< HEAD   (fc2c71 Merge "Match ciphers by exact mode name")
+=======
+package org.bouncycastle.crypto.tls;
+
+/**
+ * @deprecated Migrate to the (D)TLS API in org.bouncycastle.tls (bctls jar).
+ */
+public class MaxFragmentLength
+{
+    /*
+     * RFC 3546 3.2.
+     */
+    public static final short pow2_9 = 1;
+    public static final short pow2_10 = 2;
+    public static final short pow2_11 = 3;
+    public static final short pow2_12 = 4;
+
+    public static boolean isValid(short maxFragmentLength)
+    {
+        return maxFragmentLength >= pow2_9 && maxFragmentLength <= pow2_12;
+    }
+}
+>>>>>>> BRANCH (20d025 Merge "bouncycastle: Android tree with upstream code for ver)

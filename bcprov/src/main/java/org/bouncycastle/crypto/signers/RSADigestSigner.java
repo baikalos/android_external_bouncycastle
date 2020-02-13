@@ -39,11 +39,19 @@ public class RSADigestSigner
      */
     static
     {
+<<<<<<< HEAD   (fc2c71 Merge "Match ciphers by exact mode name")
         // BEGIN Android-removed: Unsupported algorithms
         // oidMap.put("RIPEMD128", TeleTrusTObjectIdentifiers.ripemd128);
         // oidMap.put("RIPEMD160", TeleTrusTObjectIdentifiers.ripemd160);
         // oidMap.put("RIPEMD256", TeleTrusTObjectIdentifiers.ripemd256);
         // END Android-removed: Unsupported algorithms
+=======
+        // Null-digester is intentionally NOT on this mapping.
+        
+        oidMap.put("RIPEMD128", TeleTrusTObjectIdentifiers.ripemd128);
+        oidMap.put("RIPEMD160", TeleTrusTObjectIdentifiers.ripemd160);
+        oidMap.put("RIPEMD256", TeleTrusTObjectIdentifiers.ripemd256);
+>>>>>>> BRANCH (20d025 Merge "bouncycastle: Android tree with upstream code for ver)
 
         oidMap.put("SHA-1", X509ObjectIdentifiers.id_SHA1);
         oidMap.put("SHA-224", NISTObjectIdentifiers.id_sha224);
@@ -78,7 +86,15 @@ public class RSADigestSigner
         ASN1ObjectIdentifier digestOid)
     {
         this.digest = digest;
-        this.algId = new AlgorithmIdentifier(digestOid, DERNull.INSTANCE);
+        if (digestOid != null)
+        {
+            this.algId = new AlgorithmIdentifier(digestOid, DERNull.INSTANCE);
+        }
+        else
+        {
+            // NULL digester, match behaviour with DigestSignatureSpi
+            this.algId = null;
+        }
     }
 
     /**
@@ -90,7 +106,7 @@ public class RSADigestSigner
     }
 
     /**
-     * initialise the signer for signing or verification.
+     * Initialize the signer for signing or verification.
      *
      * @param forSigning
      *            true if for signing, false otherwise
@@ -246,6 +262,20 @@ public class RSADigestSigner
         byte[] hash)
         throws IOException
     {
+        if (algId == null)
+        {
+            try
+            {
+                // check hash is at least right format
+                DigestInfo.getInstance(hash);
+                return hash;
+            }
+            catch (IllegalArgumentException e)
+            {
+                throw new IOException("malformed DigestInfo for NONEwithRSA hash: " + e.getMessage());
+            }
+        }
+
         DigestInfo dInfo = new DigestInfo(algId, hash);
 
         return dInfo.getEncoded(ASN1Encoding.DER);

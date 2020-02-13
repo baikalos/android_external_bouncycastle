@@ -7,10 +7,14 @@ import org.bouncycastle.crypto.PBEParametersGenerator;
 import org.bouncycastle.crypto.macs.HMac;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
+<<<<<<< HEAD   (fc2c71 Merge "Match ciphers by exact mode name")
 // Android-changed: Use Android digests
 // import org.bouncycastle.crypto.util.DigestFactory;
 import org.bouncycastle.crypto.digests.AndroidDigestFactory;
 import org.bouncycastle.util.Arrays;
+=======
+import org.bouncycastle.crypto.util.DigestFactory;
+>>>>>>> BRANCH (20d025 Merge "bouncycastle: Android tree with upstream code for ver)
 
 /**
  * Generator for PBE derived keys and ivs as defined by PKCS 5 V2.0 Scheme 2.
@@ -117,7 +121,7 @@ public class PKCS5S2ParametersGenerator
     {
         keySize = keySize / 8;
 
-        byte[]  dKey = Arrays.copyOfRange(generateDerivedKey(keySize), 0, keySize);
+        byte[] dKey = generateDerivedKey(keySize);
 
         return new KeyParameter(dKey, 0, keySize);
     }
@@ -138,7 +142,7 @@ public class PKCS5S2ParametersGenerator
         keySize = keySize / 8;
         ivSize = ivSize / 8;
 
-        byte[]  dKey = generateDerivedKey(keySize + ivSize);
+        byte[] dKey = generateDerivedKey(keySize + ivSize);
 
         return new ParametersWithIV(new KeyParameter(dKey, 0, keySize), dKey, keySize, ivSize);
     }
