@@ -1,10 +1,10 @@
 package org.bouncycastle.pkcs.jcajce;
 
 import java.io.InputStream;
+import java.security.AlgorithmParameters;
 import java.security.Provider;
 
 import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
@@ -12,8 +12,10 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
 import org.bouncycastle.asn1.ASN1Encodable;
+import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1OctetString;
+import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.cryptopro.GOST28147Parameters;
 import org.bouncycastle.asn1.misc.MiscObjectIdentifiers;
 import org.bouncycastle.asn1.misc.ScryptParams;
@@ -26,6 +28,7 @@ import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.crypto.PasswordConverter;
 import org.bouncycastle.jcajce.PBKDF1Key;
 import org.bouncycastle.jcajce.PKCS12KeyWithParameters;
+import org.bouncycastle.jcajce.io.CipherInputStream;
 import org.bouncycastle.jcajce.spec.GOST28147ParameterSpec;
 import org.bouncycastle.jcajce.spec.PBKDF2KeySpec;
 import org.bouncycastle.jcajce.spec.ScryptKeySpec;
@@ -150,6 +153,18 @@ public class JcePKCSPBEInputDecryptorProviderBuilder
                         {
                             cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(ASN1OctetString.getInstance(encParams).getOctets()));
                         }
+                        else if (encParams instanceof ASN1Sequence && isCCMorGCM(alg.getEncryptionScheme()))
+                        {
+                            AlgorithmParameters params = AlgorithmParameters.getInstance(alg.getEncryptionScheme().getAlgorithm().getId());
+
+                            params.init(((ASN1Sequence)encParams).getEncoded());
+
+                            cipher.init(Cipher.DECRYPT_MODE, key, params);
+                        }
+                        else if (encParams == null) // absent parameters
+                        {
+                            cipher.init(Cipher.DECRYPT_MODE, key);
+                        }
                         else
                         {
                             // TODO: at the moment it's just GOST, but...
@@ -192,5 +207,22 @@ public class JcePKCSPBEInputDecryptorProviderBuilder
                 };
             }
         };
+    }
+
+    private boolean isCCMorGCM(ASN1Encodable encParams)
+    {
+        AlgorithmIdentifier algId = AlgorithmIdentifier.getInstance(encParams);
+        ASN1Encodable params = algId.getParameters();
+
+        if (params instanceof ASN1Sequence)
+        {
+            ASN1Sequence seq = ASN1Sequence.getInstance(params);
+            if (seq.size() == 2)
+            {
+                return seq.getObjectAt(1) instanceof ASN1Integer;
+            }
+        }
+
+        return false;
     }
 }

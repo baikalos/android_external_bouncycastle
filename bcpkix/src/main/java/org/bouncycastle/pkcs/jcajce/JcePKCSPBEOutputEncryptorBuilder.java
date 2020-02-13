@@ -1,11 +1,11 @@
 package org.bouncycastle.pkcs.jcajce;
 
 import java.io.OutputStream;
+import java.security.AlgorithmParameters;
 import java.security.Provider;
 import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
-import javax.crypto.CipherOutputStream;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -26,6 +26,7 @@ import org.bouncycastle.crypto.util.PBKDF2Config;
 import org.bouncycastle.crypto.util.PBKDFConfig;
 import org.bouncycastle.crypto.util.ScryptConfig;
 import org.bouncycastle.jcajce.PKCS12KeyWithParameters;
+import org.bouncycastle.jcajce.io.CipherOutputStream;
 import org.bouncycastle.jcajce.spec.ScryptKeySpec;
 import org.bouncycastle.jcajce.util.DefaultJcaJceHelper;
 import org.bouncycastle.jcajce.util.JcaJceHelper;
@@ -227,9 +228,22 @@ public class JcePKCSPBEOutputEncryptorBuilder
 
                     cipher.init(Cipher.ENCRYPT_MODE, key, random);
 
-                    PBES2Parameters algParams = new PBES2Parameters(
-                        new KeyDerivationFunc(PKCSObjectIdentifiers.id_PBKDF2, new PBKDF2Params(salt, pkdf.getIterationCount(), pkdf.getPRF())),
-                        new EncryptionScheme(keyEncAlgorithm, ASN1Primitive.fromByteArray(cipher.getParameters().getEncoded())));
+                    AlgorithmParameters algP = cipher.getParameters();
+
+                    PBES2Parameters algParams;
+
+                    if (algP != null)
+                    {
+                        algParams = new PBES2Parameters(
+                            new KeyDerivationFunc(PKCSObjectIdentifiers.id_PBKDF2, new PBKDF2Params(salt, pkdf.getIterationCount(), pkdf.getPRF())),
+                            new EncryptionScheme(keyEncAlgorithm, ASN1Primitive.fromByteArray(cipher.getParameters().getEncoded())));
+                    }
+                    else
+                    {
+                        algParams = new PBES2Parameters(
+                            new KeyDerivationFunc(PKCSObjectIdentifiers.id_PBKDF2, new PBKDF2Params(salt, pkdf.getIterationCount(), pkdf.getPRF())),
+                            new EncryptionScheme(keyEncAlgorithm));
+                    }
 
                     encryptionAlg = new AlgorithmIdentifier(algorithm, algParams);
                 }

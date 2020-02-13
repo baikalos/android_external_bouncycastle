@@ -19,6 +19,7 @@ import org.bouncycastle.crypto.BlockCipher;
 import org.bouncycastle.crypto.BufferedBlockCipher;
 import org.bouncycastle.crypto.CipherKeyGenerator;
 import org.bouncycastle.crypto.CipherParameters;
+import org.bouncycastle.crypto.CryptoServicesRegistrar;
 import org.bouncycastle.crypto.DataLengthException;
 import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.bouncycastle.crypto.Mac;
@@ -118,7 +119,7 @@ public final class AES
     {
         public CCM()
         {
-            super(new CCMBlockCipher(new AESEngine()), false, 16);
+            super(new CCMBlockCipher(new AESEngine()), false, 12);
         }
     }
 
@@ -506,7 +507,7 @@ public final class AES
 
             if (random == null)
             {
-                random = new SecureRandom();
+                random = CryptoServicesRegistrar.getSecureRandom();
             }
 
             random.nextBytes(iv);
