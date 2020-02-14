@@ -8,13 +8,15 @@ import com.android.org.bouncycastle.math.raw.Mod;
 import com.android.org.bouncycastle.math.raw.Nat;
 import com.android.org.bouncycastle.math.raw.Nat224;
 import com.android.org.bouncycastle.util.Arrays;
+import com.android.org.bouncycastle.util.encoders.Hex;
 
 /**
  * @hide This class is not part of the Android public SDK API
  */
 public class SecP224R1FieldElement extends ECFieldElement.AbstractFp
 {
-    public static final BigInteger Q = SecP224R1Curve.q;
+    public static final BigInteger Q = new BigInteger(1,
+        Hex.decodeStrict("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000000001"));
 
     protected int[] x;
 

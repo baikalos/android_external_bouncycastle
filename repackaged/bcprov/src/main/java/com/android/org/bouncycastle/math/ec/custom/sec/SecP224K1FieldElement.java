@@ -7,13 +7,15 @@ import com.android.org.bouncycastle.math.ec.ECFieldElement;
 import com.android.org.bouncycastle.math.raw.Mod;
 import com.android.org.bouncycastle.math.raw.Nat224;
 import com.android.org.bouncycastle.util.Arrays;
+import com.android.org.bouncycastle.util.encoders.Hex;
 
 /**
  * @hide This class is not part of the Android public SDK API
  */
 public class SecP224K1FieldElement extends ECFieldElement.AbstractFp
 {
-    public static final BigInteger Q = SecP224K1Curve.q;
+    public static final BigInteger Q = new BigInteger(1,
+        Hex.decodeStrict("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFE56D"));
 
     // Calculated as ECConstants.TWO.modPow(Q.shiftRight(2), Q)
     private static final int[] PRECOMP_POW2 = new int[]{ 0x33bfd202, 0xdcfad133, 0x2287624a, 0xc3811ba8,

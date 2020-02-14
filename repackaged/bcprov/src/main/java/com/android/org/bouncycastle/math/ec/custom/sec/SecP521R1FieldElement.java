@@ -7,13 +7,15 @@ import com.android.org.bouncycastle.math.ec.ECFieldElement;
 import com.android.org.bouncycastle.math.raw.Mod;
 import com.android.org.bouncycastle.math.raw.Nat;
 import com.android.org.bouncycastle.util.Arrays;
+import com.android.org.bouncycastle.util.encoders.Hex;
 
 /**
  * @hide This class is not part of the Android public SDK API
  */
 public class SecP521R1FieldElement extends ECFieldElement.AbstractFp
 {
-    public static final BigInteger Q = SecP521R1Curve.q;
+    public static final BigInteger Q = new BigInteger(1,
+        Hex.decodeStrict("01FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"));
 
     protected int[] x;
 

@@ -16,13 +16,15 @@ class DefiniteLengthInputStream
     private static final byte[] EMPTY_BYTES = new byte[0];
 
     private final int _originalLength;
+
     private int _remaining;
 
     DefiniteLengthInputStream(
         InputStream in,
-        int         length)
+        int         length,
+        int         limit)
     {
-        super(in, length);
+        super(in, limit, length);
 
         if (length < 0)
         {
@@ -96,6 +98,12 @@ class DefiniteLengthInputStream
         if (_remaining == 0)
         {
             return EMPTY_BYTES;
+        }
+
+        // make sure it's safe to do this!
+        if (_remaining >= this.getLimit())
+        {
+            throw new IOException("corrupted stream - out of bounds length found: " + _remaining + " >= " + this.getLimit());
         }
 
         byte[] bytes = new byte[_remaining];

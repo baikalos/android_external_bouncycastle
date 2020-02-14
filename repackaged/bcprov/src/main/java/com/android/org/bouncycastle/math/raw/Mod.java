@@ -3,8 +3,6 @@ package com.android.org.bouncycastle.math.raw;
 
 import java.util.Random;
 
-import com.android.org.bouncycastle.util.Pack;
-
 /**
  * @hide This class is not part of the Android public SDK API
  */

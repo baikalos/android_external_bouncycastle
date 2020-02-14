@@ -35,7 +35,7 @@ public class Properties
     {
         try
         {
-            String p = fetchProperty(propertyName);
+            String p = getPropertyValue(propertyName);
 
             if (p != null)
             {
@@ -106,7 +106,7 @@ public class Properties
 
     public static BigInteger asBigInteger(String propertyName)
     {
-        String p = fetchProperty(propertyName);
+        String p = getPropertyValue(propertyName);
 
         if (p != null)
         {
@@ -120,7 +120,7 @@ public class Properties
     {
         Set<String> set = new HashSet<String>();
 
-        String p = fetchProperty(propertyName);
+        String p = getPropertyValue(propertyName);
 
         if (p != null)
         {
@@ -134,7 +134,7 @@ public class Properties
         return Collections.unmodifiableSet(set);
     }
 
-    private static String fetchProperty(final String propertyName)
+    public static String getPropertyValue(final String propertyName)
     {
         return (String)AccessController.doPrivileged(new PrivilegedAction()
         {

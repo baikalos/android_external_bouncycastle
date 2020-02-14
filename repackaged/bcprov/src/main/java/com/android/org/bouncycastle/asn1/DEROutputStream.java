@@ -6,33 +6,29 @@ import java.io.OutputStream;
 
 /**
  * Stream that outputs encoding based on distinguished encoding rules.
+ * 
+ * @deprecated Will be removed from public API.
  * @hide This class is not part of the Android public SDK API
  */
 public class DEROutputStream
     extends ASN1OutputStream
 {
+    /**
+     * @deprecated Use {@link ASN1OutputStream#create(OutputStream, String)} with
+     *             {@link ASN1Encoding#DER} instead.
+     */
     @android.compat.annotation.UnsupportedAppUsage
-    public DEROutputStream(
-        OutputStream    os)
+    public DEROutputStream(OutputStream os)
     {
         super(os);
     }
 
-    public void writeObject(
-        ASN1Encodable obj)
-        throws IOException
+    void writePrimitive(ASN1Primitive primitive, boolean withTag) throws IOException
     {
-        if (obj != null)
-        {
-            obj.toASN1Primitive().toDERObject().encode(this);
-        }
-        else
-        {
-            throw new IOException("null object detected");
-        }
+        primitive.toDERObject().encode(this, withTag);
     }
 
-    ASN1OutputStream getDERSubStream()
+    DEROutputStream getDERSubStream()
     {
         return this;
     }

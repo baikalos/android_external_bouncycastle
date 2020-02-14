@@ -29,6 +29,7 @@ import com.android.org.bouncycastle.asn1.x509.Extension;
 import com.android.org.bouncycastle.asn1.x509.TBSCertificate;
 import com.android.org.bouncycastle.jcajce.PKIXExtendedBuilderParameters;
 import com.android.org.bouncycastle.jcajce.PKIXExtendedParameters;
+import com.android.org.bouncycastle.jcajce.interfaces.BCX509Certificate;
 import com.android.org.bouncycastle.jcajce.util.BCJcaJceHelper;
 import com.android.org.bouncycastle.jcajce.util.JcaJceHelper;
 import com.android.org.bouncycastle.jce.exception.ExtCertPathValidatorException;
@@ -43,9 +44,16 @@ public class PKIXCertPathValidatorSpi
         extends CertPathValidatorSpi
 {
     private final JcaJceHelper helper = new BCJcaJceHelper();
+    private final boolean isForCRLCheck;
 
     public PKIXCertPathValidatorSpi()
     {
+        this(false);
+    }
+
+    public PKIXCertPathValidatorSpi(boolean isForCRLCheck)
+    {
+        this.isForCRLCheck = isForCRLCheck;
     }
     // BEGIN Android-added: Avoid loading blacklist during class init
     private static class NoPreloadHolder {
@@ -255,7 +263,7 @@ public class PKIXCertPathValidatorSpi
                 workingPublicKey = trust.getCAPublicKey();
             }
         }
-        catch (IllegalArgumentException ex)
+        catch (RuntimeException ex)
         {
             throw new ExtCertPathValidatorException("Subject of trust anchor could not be (re)encoded.", ex, certPath,
                     -1);
@@ -345,10 +353,10 @@ public class PKIXCertPathValidatorSpi
             RFC3280CertPathUtilities.processCertA(certPath, paramsPKIX, index, workingPublicKey,
                 verificationAlreadyPerformed, workingIssuerName, sign, helper);
 
-            RFC3280CertPathUtilities.processCertBC(certPath, index, nameConstraintValidator);
+            RFC3280CertPathUtilities.processCertBC(certPath, index, nameConstraintValidator, isForCRLCheck);
 
             validPolicyTree = RFC3280CertPathUtilities.processCertD(certPath, index, acceptablePolicies,
-                    validPolicyTree, policyNodes, inhibitAnyPolicy);
+                    validPolicyTree, policyNodes, inhibitAnyPolicy, isForCRLCheck);
 
             validPolicyTree = RFC3280CertPathUtilities.processCertE(certPath, index, validPolicyTree);
 
@@ -507,6 +515,24 @@ public class PKIXCertPathValidatorSpi
     static void checkCertificate(X509Certificate cert)
         throws AnnotatedException
     {
+        if (cert instanceof BCX509Certificate)
+        {
+            RuntimeException cause = null;
+            try
+            {
+                if (null != ((BCX509Certificate)cert).getTBSCertificateNative())
+                {
+                    return;
+                }
+            }
+            catch (RuntimeException e)
+            {
+                cause = e;
+            }
+
+            throw new AnnotatedException("unable to process TBSCertificate", cause);
+        }
+
         try
         {
             TBSCertificate.getInstance(cert.getTBSCertificate());

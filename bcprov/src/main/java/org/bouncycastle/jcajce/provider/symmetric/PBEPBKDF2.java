@@ -17,6 +17,7 @@ import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Primitive;
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.asn1.cryptopro.CryptoProObjectIdentifiers;
+// import org.bouncycastle.asn1.gm.GMObjectIdentifiers;
 // import org.bouncycastle.asn1.nist.NISTObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.PBKDF2Params;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
@@ -536,6 +537,14 @@ public class PBEPBKDF2
     }
     // END Android-added: Android implementations of PBKDF2 algorithms.
 
+    public static class PBKDF2withSM3
+        extends BasePBKDF2
+    {
+        public PBKDF2withSM3() {
+            super("PBKDF2", PKCS5S2_UTF8, SM3);
+        }
+    }
+
     public static class Mappings
         extends AlgorithmProvider
     {
@@ -574,6 +583,7 @@ public class PBEPBKDF2
             provider.addAlgorithm("SecretKeyFactory.PBKDF2WITHHMACSHA3-384", PREFIX + "$PBKDF2withSHA3_384");
             provider.addAlgorithm("SecretKeyFactory.PBKDF2WITHHMACSHA3-512", PREFIX + "$PBKDF2withSHA3_512");
             provider.addAlgorithm("SecretKeyFactory.PBKDF2WITHHMACGOST3411", PREFIX + "$PBKDF2withGOST3411");
+            provider.addAlgorithm("SecretKeyFactory.PBKDF2WITHHMACSM3", PREFIX + "$PBKDF2withSM3");
             */
             // END Android-removed: Bouncy Castle versions of algorithms.
             // BEGIN Android-added: Android versions of algorithms.

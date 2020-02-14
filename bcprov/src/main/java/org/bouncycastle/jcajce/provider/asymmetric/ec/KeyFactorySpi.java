@@ -24,6 +24,8 @@ import org.bouncycastle.jcajce.provider.asymmetric.util.BaseKeyFactorySpi;
 import org.bouncycastle.jcajce.provider.asymmetric.util.EC5Util;
 import org.bouncycastle.jcajce.provider.config.ProviderConfiguration;
 import org.bouncycastle.jcajce.provider.util.AsymmetricKeyInfoConverter;
+import org.bouncycastle.jcajce.spec.OpenSSHPrivateKeySpec;
+import org.bouncycastle.jcajce.spec.OpenSSHPublicKeySpec;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECParameterSpec;
 import org.bouncycastle.jce.spec.ECPrivateKeySpec;
@@ -102,13 +104,13 @@ public class KeyFactorySpi
             ECPublicKey k = (ECPublicKey)key;
             if (k.getParams() != null)
             {
-                return new org.bouncycastle.jce.spec.ECPublicKeySpec(EC5Util.convertPoint(k.getParams(), k.getW(), false), EC5Util.convertSpec(k.getParams(), false));
+                return new org.bouncycastle.jce.spec.ECPublicKeySpec(EC5Util.convertPoint(k.getParams(), k.getW()), EC5Util.convertSpec(k.getParams()));
             }
             else
             {
                 ECParameterSpec implicitSpec = BouncyCastleProvider.CONFIGURATION.getEcImplicitlyCa();
 
-                return new org.bouncycastle.jce.spec.ECPublicKeySpec(EC5Util.convertPoint(k.getParams(), k.getW(), false), implicitSpec);
+                return new org.bouncycastle.jce.spec.ECPublicKeySpec(EC5Util.convertPoint(k.getParams(), k.getW()), implicitSpec);
             }
         }
         else if (spec.isAssignableFrom(org.bouncycastle.jce.spec.ECPrivateKeySpec.class) && key instanceof ECPrivateKey)
@@ -117,7 +119,7 @@ public class KeyFactorySpi
 
             if (k.getParams() != null)
             {
-                return new org.bouncycastle.jce.spec.ECPrivateKeySpec(k.getS(), EC5Util.convertSpec(k.getParams(), false));
+                return new org.bouncycastle.jce.spec.ECPrivateKeySpec(k.getS(), EC5Util.convertSpec(k.getParams()));
             }
             else
             {
@@ -168,6 +170,46 @@ public class KeyFactorySpi
                 throw new IllegalArgumentException("invalid key type: " + key.getClass().getName());
             }
 
+        }
+        else if (spec.isAssignableFrom(org.bouncycastle.jce.spec.OpenSSHPublicKeySpec.class) && key instanceof ECPublicKey)
+        {
+            if (key instanceof BCECPublicKey)
+            {
+                BCECPublicKey bcPk = (BCECPublicKey)key;
+                ECParameterSpec sc = bcPk.getParameters();
+                try
+                {
+                    return new org.bouncycastle.jce.spec.OpenSSHPublicKeySpec(
+                        OpenSSHPublicKeyUtil.encodePublicKey(
+                            new ECPublicKeyParameters(bcPk.getQ(), new ECDomainParameters(sc.getCurve(), sc.getG(), sc.getN(), sc.getH(), sc.getSeed()))));
+                }
+                catch (IOException e)
+                {
+                    throw new IllegalArgumentException("unable to produce encoding: " + e.getMessage());
+                }
+            }
+            else
+            {
+                throw new IllegalArgumentException("invalid key type: " + key.getClass().getName());
+            }
+        }
+        else if (spec.isAssignableFrom(org.bouncycastle.jce.spec.OpenSSHPrivateKeySpec.class) && key instanceof ECPrivateKey)
+        {
+            if (key instanceof BCECPrivateKey)
+            {
+                try
+                {
+                    return new org.bouncycastle.jce.spec.OpenSSHPrivateKeySpec(PrivateKeyInfo.getInstance(key.getEncoded()).parsePrivateKey().toASN1Primitive().getEncoded());
+                }
+                catch (IOException e)
+                {
+                    throw new IllegalArgumentException("cannot encoded key: " + e.getMessage());
+                }
+            }
+            else
+            {
+                throw new IllegalArgumentException("invalid key type: " + key.getClass().getName());
+            }
         }
         */
         // END Android-removed: Unsupported algorithms
