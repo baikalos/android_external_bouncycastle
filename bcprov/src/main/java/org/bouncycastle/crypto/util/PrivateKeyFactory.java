@@ -51,6 +51,7 @@ import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.params.X25519PrivateKeyParameters;
 // import org.bouncycastle.crypto.params.X448PrivateKeyParameters;
+import org.bouncycastle.util.Arrays;
 
 /**
  * Factory for creating private key objects from PKCS8 PrivateKeyInfo objects.
@@ -149,7 +150,7 @@ public class PrivateKeyFactory
         }
         else if (algOID.equals(X9ObjectIdentifiers.id_ecPublicKey))
         {
-            X962Parameters params = new X962Parameters((ASN1Primitive)algId.getParameters());
+            X962Parameters params = X962Parameters.getInstance(algId.getParameters());
 
             X9ECParameters x9;
             ECDomainParameters dParams;
@@ -223,18 +224,9 @@ public class PrivateKeyFactory
                 }
                 else
                 {
-                    byte[] encVal = ASN1OctetString.getInstance(privKey).getOctets();
-                    byte[] dVal = new byte[encVal.length];
-
-                    for (int i = 0; i != encVal.length; i++)
-                    {
-                        dVal[i] = encVal[encVal.length - 1 - i];
-                    }
-
+                    byte[] dVal = Arrays.reverse(ASN1OctetString.getInstance(privKey).getOctets());
                     d = new BigInteger(1, dVal);
                 }
-
-
             }
             else
             {

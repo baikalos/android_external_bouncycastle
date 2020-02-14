@@ -353,7 +353,7 @@ class OperatorHelper
 
         try
         {
-            dig = helper.createDigest(MessageDigestUtils.getDigestName(digAlgId.getAlgorithm()));
+            dig = helper.createMessageDigest(MessageDigestUtils.getDigestName(digAlgId.getAlgorithm()));
         }
         catch (NoSuchAlgorithmException e)
         {
@@ -364,7 +364,7 @@ class OperatorHelper
             {
                 String digestAlgorithm = (String)oids.get(digAlgId.getAlgorithm());
 
-                dig = helper.createDigest(digestAlgorithm);
+                dig = helper.createMessageDigest(digestAlgorithm);
             }
             else
             {

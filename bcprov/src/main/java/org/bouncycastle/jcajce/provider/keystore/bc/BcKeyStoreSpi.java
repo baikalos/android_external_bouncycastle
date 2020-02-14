@@ -28,7 +28,10 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import javax.crypto.Cipher;
+// Android-changed: Use javax.crypto.* implementations
+// Was: import org.bouncycastle.jcajce.io.CipherInputStream;
 import javax.crypto.CipherInputStream;
+// Was: import org.bouncycastle.jcajce.io.CipherOutputStream;
 import javax.crypto.CipherOutputStream;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
