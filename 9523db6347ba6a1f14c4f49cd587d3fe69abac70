@@ -39,6 +39,138 @@
       "revId": "9523db6347ba6a1f14c4f49cd587d3fe69abac70",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284f2595_981c39f3",
+        "filename": "bcprov/src/main/java/org/bouncycastle/crypto/engines/Zuc128CoreEngine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-02-21T11:41:59Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to support this in Android (or the related Zuc classes).",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "9523db6347ba6a1f14c4f49cd587d3fe69abac70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec6d6a0_b163777e",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/PBE.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-02-21T11:41:59Z",
+      "side": 1,
+      "message": "Might as well comment this line and the SHA3 constants out too",
+      "revId": "9523db6347ba6a1f14c4f49cd587d3fe69abac70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac502bc_b304a8f6",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/spec/OpenSSHPrivateKeySpec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-02-21T11:41:59Z",
+      "side": 1,
+      "message": "Should be unused?  Commented out in a previous config class.",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 34
+      },
+      "revId": "9523db6347ba6a1f14c4f49cd587d3fe69abac70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93488434_586120d5",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/spec/OpenSSHPublicKeySpec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-02-21T11:41:59Z",
+      "side": 1,
+      "message": "Should be unused?  Commented out in a previous config class.",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "9523db6347ba6a1f14c4f49cd587d3fe69abac70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8632baae_8c076dbd",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/util/AnnotatedPrivateKey.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-02-21T11:41:59Z",
+      "side": 1,
+      "message": "Probably not needed... I\u0027m not 100% sure",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 32
+      },
+      "revId": "9523db6347ba6a1f14c4f49cd587d3fe69abac70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969d8b93_054bd0bc",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/util/PrivateKeyAnnotator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-02-21T11:41:59Z",
+      "side": 1,
+      "message": "Not needed unless AnnotatedPrivateKey is",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "9523db6347ba6a1f14c4f49cd587d3fe69abac70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
