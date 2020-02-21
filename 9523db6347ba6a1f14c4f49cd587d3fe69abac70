@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "835f2a54_2aa594b2",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/cms/DefaultCMSSignatureEncryptionAlgorithmFinder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-02-21T11:07:59Z",
+      "side": 1,
+      "message": "This map is now empty... Might as well lose it too and save a few bytes,",
+      "revId": "9523db6347ba6a1f14c4f49cd587d3fe69abac70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ffa7de_798dcbb4",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/bc/LinkedCertificate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-02-21T11:07:59Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to support this in Android.",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "9523db6347ba6a1f14c4f49cd587d3fe69abac70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
