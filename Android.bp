@@ -64,6 +64,7 @@ java_library {
     // Restrict visibility to only those targets that need to access it.
     visibility: [
         "//art/build/apex",
+        "//art/build/sdk",
         "//external/wycheproof",
         "//libcore",
     ],
@@ -106,6 +107,7 @@ java_library {
 }
 
 unbundled_visibility = [
+    "//art/build/sdk",
     "//build/make/tools/signapk",
     "//build/make/tools/signtos",
     "//cts/hostsidetests/devicepolicy/app/DeviceOwner",
