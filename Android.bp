@@ -64,6 +64,7 @@ java_library {
     // Restrict visibility to only those targets that need to access it.
     visibility: [
         "//art/build/apex",
+        "//art/build/sdk",
         "//external/wycheproof",
         "//libcore",
     ],
@@ -106,6 +107,7 @@ java_library {
 }
 
 unbundled_visibility = [
+    "//art/build/sdk",
     "//build/make/tools/signapk",
     "//build/make/tools/signtos",
     "//cts/hostsidetests/devicepolicy/app/DeviceOwner",
@@ -185,13 +187,19 @@ java_library_host {
     static_libs: ["bouncycastle-unbundled"],
 }
 
-// Bouncycastle filegroup for use by frameworks/opt/net/ike project.
+// Bouncycastle subset for use by frameworks/opt/net/ike project.
+//
+// Avoids including the whole of bouncycastle_unbundled in ike.
 //
 // Specifically, SHA1Digest and MD4Digest (and their dependencies) must be used by IKEv2 to support
 // legacy authentication methods.
-filegroup {
+java_library {
     name: "bouncycastle_ike_digests",
     visibility: ["//frameworks/opt/net/ike"],
+    apex_available: [
+        "com.android.ipsec",
+        "test_com.android.ipsec",
+    ],
     srcs: [
         "bcprov/src/main/java/org/bouncycastle/crypto/Digest.java",
         "bcprov/src/main/java/org/bouncycastle/crypto/ExtendedDigest.java",
@@ -202,4 +210,5 @@ filegroup {
         "bcprov/src/main/java/org/bouncycastle/util/Memoable.java",
         "bcprov/src/main/java/org/bouncycastle/util/Pack.java",
     ],
+    sdk_version: "core_current",
 }
