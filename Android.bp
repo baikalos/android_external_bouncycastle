@@ -83,29 +83,6 @@ java_library {
     system_modules: "art-module-intra-core-api-stubs-system-modules",
 }
 
-// A guaranteed unstripped version of bouncycastle.
-// The build system may or may not strip the bouncycastle jar, but this one will
-// not be stripped. See b/24535627.
-java_library {
-    name: "bouncycastle-testdex",
-    visibility: [
-        "//art:__subpackages__",
-    ],
-    defaults: ["bouncycastle-defaults"],
-    installable: true,
-
-    srcs: [":bouncycastle_java_files"],
-
-    libs: ["unsupportedappusage"],
-
-    sdk_version: "none",
-    system_modules: "art-module-intra-core-api-stubs-system-modules",
-    dex_preopt: {
-        enabled: false,
-    },
-    java_version: "1.7",
-}
-
 unbundled_visibility = [
     "//art/build/sdk",
     "//build/make/tools/signapk",
