@@ -43,7 +43,8 @@ public class RSA
 
         public void configure(ConfigurableProvider provider)
         {
-            provider.addAlgorithm("AlgorithmParameters.OAEP", PREFIX + "AlgorithmParametersSpi$OAEP");
+            // Android-removed: Unsupported algorithms
+            // provider.addAlgorithm("AlgorithmParameters.OAEP", PREFIX + "AlgorithmParametersSpi$OAEP");
             provider.addAlgorithm("AlgorithmParameters.PSS", PREFIX + "AlgorithmParametersSpi$PSS");
 
             // BEGIN Android-removed: Unsupported algorithms
@@ -96,8 +97,6 @@ public class RSA
             provider.addAlgorithm("Alg.Alias.Cipher.RSA//PKCS1PADDING", "RSA/PKCS1");
             provider.addAlgorithm("Alg.Alias.Cipher.RSA//OAEPPADDING", "RSA/OAEP");
             provider.addAlgorithm("Alg.Alias.Cipher.RSA//ISO9796-1PADDING", "RSA/ISO9796-1");
-            */
-            // END Android-removed: Unsupported algorithms
 
             provider.addAlgorithm("KeyFactory.RSA", PREFIX + "KeyFactorySpi");
             provider.addAlgorithm("KeyPairGenerator.RSA", PREFIX + "KeyPairGeneratorSpi");
@@ -107,8 +106,6 @@ public class RSA
             registerOid(provider, PKCSObjectIdentifiers.rsaEncryption, "RSA", keyFact);
             registerOid(provider, X509ObjectIdentifiers.id_ea_rsa, "RSA", keyFact);
             registerOid(provider, PKCSObjectIdentifiers.id_RSAES_OAEP, "RSA", keyFact);
-            // BEGIN Android-removed: Unsupported algorithms
-            /*
             registerOid(provider, PKCSObjectIdentifiers.id_RSASSA_PSS, "RSA", keyFact);
 
             registerOidAlgorithmParameters(provider, PKCSObjectIdentifiers.rsaEncryption, "RSA");
@@ -157,9 +154,12 @@ public class RSA
 
             if (provider.hasAlgorithm("MessageDigest", "MD5"))
             {
+                // BEGIN Android-removed: Unsupported algorithms
+                /*
                 addDigestSignature(provider, "MD5", PREFIX + "DigestSignatureSpi$MD5", PKCSObjectIdentifiers.md5WithRSAEncryption);
-                // Android-removed: Unsupported algorithms
-                // addISO9796Signature(provider, "MD5", PREFIX + "ISOSignatureSpi$MD5WithRSAEncryption");
+                addISO9796Signature(provider, "MD5", PREFIX + "ISOSignatureSpi$MD5WithRSAEncryption");
+                */
+                // END Android-removed: Unsupported algorithms
             }
 
             if (provider.hasAlgorithm("MessageDigest", "SHA1"))
@@ -170,25 +170,23 @@ public class RSA
                 provider.addAlgorithm("Alg.Alias.AlgorithmParameters.SHA1WITHRSAANDMGF1", "PSS");
 
                 addPSSSignature(provider, "SHA1", PREFIX + "PSSSignatureSpi$SHA1withRSA");
-                */
-                // END Android-removed: Unsupported algorithms
                 addDigestSignature(provider, "SHA1", PREFIX + "DigestSignatureSpi$SHA1", PKCSObjectIdentifiers.sha1WithRSAEncryption);
-                // Android-removed: Unsupported algorithms
-                // addISO9796Signature(provider, "SHA1", PREFIX + "ISOSignatureSpi$SHA1WithRSAEncryption");
+                addISO9796Signature(provider, "SHA1", PREFIX + "ISOSignatureSpi$SHA1WithRSAEncryption");
 
                 provider.addAlgorithm("Alg.Alias.Signature." + OIWObjectIdentifiers.sha1WithRSA, "SHA1WITHRSA");
                 provider.addAlgorithm("Alg.Alias.Signature.OID." + OIWObjectIdentifiers.sha1WithRSA, "SHA1WITHRSA");
 
-                // BEGIN Android-removed: Unsupported algorithms
-                // addX931Signature(provider, "SHA1", PREFIX + "X931SignatureSpi$SHA1WithRSAEncryption");
+                addX931Signature(provider, "SHA1", PREFIX + "X931SignatureSpi$SHA1WithRSAEncryption");
+                */
+                // END Android-removed: Unsupported algorithms
             }
 
+            // BEGIN Android-removed: Unsupported algorithms
+            /*
             addDigestSignature(provider, "SHA224", PREFIX + "DigestSignatureSpi$SHA224", PKCSObjectIdentifiers.sha224WithRSAEncryption);
             addDigestSignature(provider, "SHA256", PREFIX + "DigestSignatureSpi$SHA256", PKCSObjectIdentifiers.sha256WithRSAEncryption);
             addDigestSignature(provider, "SHA384", PREFIX + "DigestSignatureSpi$SHA384", PKCSObjectIdentifiers.sha384WithRSAEncryption);
             addDigestSignature(provider, "SHA512", PREFIX + "DigestSignatureSpi$SHA512", PKCSObjectIdentifiers.sha512WithRSAEncryption);
-            // BEGIN Android-removed: Unsupported algorithms
-            /*
             addDigestSignature(provider, "SHA512(224)", PREFIX + "DigestSignatureSpi$SHA512_224", PKCSObjectIdentifiers.sha512_224WithRSAEncryption);
             addDigestSignature(provider, "SHA512(256)", PREFIX + "DigestSignatureSpi$SHA512_256", PKCSObjectIdentifiers.sha512_256WithRSAEncryption);
 
