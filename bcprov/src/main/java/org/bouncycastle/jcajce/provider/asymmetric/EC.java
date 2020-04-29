@@ -39,12 +39,12 @@ public class EC
 
         public void configure(ConfigurableProvider provider)
         {
+            // BEGIN Android-removed: Unsupported algorithms
+            /*
             provider.addAlgorithm("AlgorithmParameters.EC", PREFIX + "AlgorithmParametersSpi");
 
             provider.addAttributes("KeyAgreement.ECDH", generalEcAttributes);
             provider.addAlgorithm("KeyAgreement.ECDH", PREFIX + "KeyAgreementSpi$DH");
-            // BEGIN Android-removed: Unsupported algorithms
-            /*
             provider.addAttributes("KeyAgreement.ECDHC", generalEcAttributes);
             provider.addAlgorithm("KeyAgreement.ECDHC", PREFIX + "KeyAgreementSpi$DHC");
             provider.addAttributes("KeyAgreement.ECCDH", generalEcAttributes);

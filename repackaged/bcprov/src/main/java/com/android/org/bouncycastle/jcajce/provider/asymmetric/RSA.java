@@ -43,7 +43,8 @@ public class RSA
 
         public void configure(ConfigurableProvider provider)
         {
-            provider.addAlgorithm("AlgorithmParameters.OAEP", PREFIX + "AlgorithmParametersSpi$OAEP");
+            // Android-removed: Unsupported algorithms
+            // provider.addAlgorithm("AlgorithmParameters.OAEP", PREFIX + "AlgorithmParametersSpi$OAEP");
             provider.addAlgorithm("AlgorithmParameters.PSS", PREFIX + "AlgorithmParametersSpi$PSS");
 
             // BEGIN Android-removed: Unsupported algorithms

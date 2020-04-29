@@ -398,10 +398,13 @@ public final class DESede
             provider.addAlgorithm("Alg.Alias.Cipher.TDEA", "DESEDE");
             provider.addAlgorithm("Alg.Alias.Cipher.TDEAWRAP", "DESEDEWRAP");
             provider.addAlgorithm("Alg.Alias.KeyGenerator.TDEA", "DESEDE");
+            // BEGIN Android-removed: Unsupported algorithms
+            /*
             provider.addAlgorithm("Alg.Alias.AlgorithmParameters.TDEA", "DESEDE");
-            // Android-removed: Unsupported algorithms
-            // provider.addAlgorithm("Alg.Alias.AlgorithmParameterGenerator.TDEA", "DESEDE");
+            provider.addAlgorithm("Alg.Alias.AlgorithmParameterGenerator.TDEA", "DESEDE");
             provider.addAlgorithm("Alg.Alias.SecretKeyFactory.TDEA", "DESEDE");
+            */
+            // END Android-removed: Unsupported algorithms
 
             if (provider.hasAlgorithm("MessageDigest", "SHA-1"))
             {
@@ -451,11 +454,11 @@ public final class DESede
             provider.addAlgorithm("Alg.Alias.Mac.DESEDE64WITHISO7816-4PADDING", "DESEDEMAC64WITHISO7816-4PADDING");
             provider.addAlgorithm("Alg.Alias.Mac.DESEDEISO9797ALG1MACWITHISO7816-4PADDING", "DESEDEMAC64WITHISO7816-4PADDING");
             provider.addAlgorithm("Alg.Alias.Mac.DESEDEISO9797ALG1WITHISO7816-4PADDING", "DESEDEMAC64WITHISO7816-4PADDING");
-            */
-            // END Android-removed: Unsupported algorithms
 
             provider.addAlgorithm("AlgorithmParameters.DESEDE", PACKAGE + ".util.IvAlgorithmParameters");
             provider.addAlgorithm("Alg.Alias.AlgorithmParameters." + PKCSObjectIdentifiers.des_EDE3_CBC, "DESEDE");
+            */
+            // END Android-removed: Unsupported algorithms
 
             // BEGIN Android-removed: Unsupported algorithms
             // provider.addAlgorithm("AlgorithmParameterGenerator.DESEDE",  PREFIX + "$AlgParamGen");
