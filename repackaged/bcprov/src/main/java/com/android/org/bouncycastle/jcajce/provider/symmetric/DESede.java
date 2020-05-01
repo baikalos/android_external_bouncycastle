@@ -433,7 +433,8 @@ public final class DESede
             // provider.addAlgorithm("Alg.Alias.AlgorithmParameterGenerator.TDEA", "DESEDE");
             provider.addAlgorithm("Alg.Alias.SecretKeyFactory.TDEA", "DESEDE");
 
-            if (provider.hasAlgorithm("MessageDigest", "SHA-1"))
+            // Android-removed Bouncy Castle's SHA-1 implementation is removed but we still need PBEWithSHAAnd3-KeyTripleDES-CBC
+            // if (provider.hasAlgorithm("MessageDigest", "SHA-1"))
             {
                 provider.addAlgorithm("Cipher.PBEWITHSHAAND3-KEYTRIPLEDES-CBC", PREFIX + "$PBEWithSHAAndDES3Key");
                 // BEGIN Android-removed: Unsupported algorithms
