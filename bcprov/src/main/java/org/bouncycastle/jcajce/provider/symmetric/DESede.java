@@ -406,7 +406,8 @@ public final class DESede
             */
             // END Android-removed: Unsupported algorithms
 
-            if (provider.hasAlgorithm("MessageDigest", "SHA-1"))
+            // Android-removed BC's SHA-1 is removed but we still need PBEWithSHAAnd3-KeyTripleDES-CBC
+            // if (provider.hasAlgorithm("MessageDigest", "SHA-1"))
             {
                 provider.addAlgorithm("Cipher.PBEWITHSHAAND3-KEYTRIPLEDES-CBC", PREFIX + "$PBEWithSHAAndDES3Key");
                 // BEGIN Android-removed: Unsupported algorithms
