@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b02a079_86bd5b3b",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-05-04T10:33:53Z",
+      "side": 0,
+      "message": "Shouldn\u0027t these stay as equalsIgnoreCase, e.g. as we did with GCM below?",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 45
+      },
+      "revId": "1e0c4daa706697349526a9b4ebceb8fec8c8a24f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
