@@ -22,6 +22,30 @@
       "revId": "ac9485cc01c0cd7a06e06f6f74960b23e8157f1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9692421a_314260fe",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/BouncyCastleProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2020-05-04T13:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c587e1fe_5101a98b",
+      "range": {
+        "startLine": 352,
+        "startChar": 27,
+        "endLine": 352,
+        "endChar": 40
+      },
+      "revId": "ac9485cc01c0cd7a06e06f6f74960b23e8157f1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
