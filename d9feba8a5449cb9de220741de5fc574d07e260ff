@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53435148_90e81f08",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/DESede.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2020-05-04T11:58:54Z",
+      "side": 1,
+      "message": "Correct, SHA-1 is still provided by Conscrypt, but this condition doesn\u0027t check for that, it only checks if BC provides it.",
+      "parentUuid": "09732789_4f7d58e8",
+      "range": {
+        "startLine": 409,
+        "startChar": 31,
+        "endLine": 409,
+        "endChar": 52
+      },
+      "revId": "d9feba8a5449cb9de220741de5fc574d07e260ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f72caad4_c67c6cb1",
         "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/BouncyCastleProvider.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "d9feba8a5449cb9de220741de5fc574d07e260ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe5fcbb_6132e4d8",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/BouncyCastleProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2020-05-04T11:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f72caad4_c67c6cb1",
+      "range": {
+        "startLine": 352,
+        "startChar": 19,
+        "endLine": 352,
+        "endChar": 23
+      },
+      "revId": "d9feba8a5449cb9de220741de5fc574d07e260ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
