@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c587e1fe_5101a98b",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/BouncyCastleProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-05-04T12:20:02Z",
+      "side": 1,
+      "message": "nit: \"Compatibility\".",
+      "range": {
+        "startLine": 352,
+        "startChar": 27,
+        "endLine": 352,
+        "endChar": 40
+      },
+      "revId": "ac9485cc01c0cd7a06e06f6f74960b23e8157f1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

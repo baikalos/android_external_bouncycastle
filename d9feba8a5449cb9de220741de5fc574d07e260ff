@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6272f207_b81782f8",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/DESede.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-05-04T12:20:02Z",
+      "side": 1,
+      "message": "Got it (see, I misunderstood :)",
+      "parentUuid": "53435148_90e81f08",
+      "range": {
+        "startLine": 409,
+        "startChar": 31,
+        "endLine": 409,
+        "endChar": 52
+      },
+      "revId": "d9feba8a5449cb9de220741de5fc574d07e260ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f72caad4_c67c6cb1",
         "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/BouncyCastleProvider.java",
         "patchSetId": 2
