@@ -34,6 +34,24 @@
       "revId": "2991f881438f4894f5cc2412bb9de83045a3e0cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "519d6d4f_8da92480",
+        "filename": "repackaged/bcprov/src/main/java/com/android/org/bouncycastle/asn1/DERInteger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1203210
+      },
+      "writtenOn": "2020-05-07T13:30:34Z",
+      "side": 0,
+      "message": "I believe it means that the method is greylisted, so it can be called reflexively by apps (with a warning), and removing it would mean that it\u0027s blacklisted, so apps will get an error if they try to do that. Which would create an app compat issue. But Artur can confirm.",
+      "parentUuid": "0a904766_2eef8949",
+      "revId": "2991f881438f4894f5cc2412bb9de83045a3e0cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
