@@ -26,9 +26,6 @@
     "@location": "method:com.android.org.bouncycastle.asn1.DEREncodableVector#DEREncodableVector()"
   },
   {
-    "@location": "method:com.android.org.bouncycastle.asn1.DERInteger#DERInteger(long)"
-  },
-  {
     "@location": "method:com.android.org.bouncycastle.asn1.DERInteger#DERInteger(BigInteger)"
   },
   {
