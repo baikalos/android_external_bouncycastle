@@ -16,6 +16,24 @@
       "revId": "2991f881438f4894f5cc2412bb9de83045a3e0cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a904766_2eef8949",
+        "filename": "repackaged/bcprov/src/main/java/com/android/org/bouncycastle/asn1/DERInteger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2020-05-07T13:10:56Z",
+      "side": 0,
+      "message": "Yeah, I don\u0027t fully understand UnsupportedAppUsage use case, so I\u0027ve added satayev@ to comment.",
+      "parentUuid": "72329f8b_51fd36a0",
+      "revId": "2991f881438f4894f5cc2412bb9de83045a3e0cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
