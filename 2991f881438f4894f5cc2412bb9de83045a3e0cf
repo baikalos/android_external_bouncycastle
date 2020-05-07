@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72329f8b_51fd36a0",
+        "filename": "repackaged/bcprov/src/main/java/com/android/org/bouncycastle/asn1/DERInteger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1203210
+      },
+      "writtenOn": "2020-05-07T13:00:40Z",
+      "side": 0,
+      "message": "Is it safe to remove this? I understand that you\u0027re removing from the core platform API, but removing it from the app greylist seems like a bigger step?",
+      "revId": "2991f881438f4894f5cc2412bb9de83045a3e0cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
