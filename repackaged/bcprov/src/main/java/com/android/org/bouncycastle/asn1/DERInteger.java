@@ -7,7 +7,6 @@ import java.math.BigInteger;
  * @deprecated  Use ASN1Integer instead of this,
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public class DERInteger
     extends ASN1Integer
 {
@@ -27,8 +26,6 @@ public class DERInteger
         super(value);
     }
 
-    @android.compat.annotation.UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public DERInteger(long value)
     {
         super(value);
