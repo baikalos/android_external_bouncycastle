@@ -40,7 +40,6 @@ method:com.android.org.bouncycastle.asn1.ASN1Sequence#size()
 method:com.android.org.bouncycastle.asn1.ASN1TaggedObject#getObject()
 method:com.android.org.bouncycastle.asn1.ASN1TaggedObject#hashCode()
 method:com.android.org.bouncycastle.asn1.DERBitString#DERBitString(byte[])
-method:com.android.org.bouncycastle.asn1.DERInteger#DERInteger(long)
 method:com.android.org.bouncycastle.asn1.DEROctetString#DEROctetString(byte[])
 method:com.android.org.bouncycastle.asn1.DERSequence#DERSequence()
 method:com.android.org.bouncycastle.asn1.DERSequence#DERSequence(ASN1EncodableVector)
@@ -133,7 +132,6 @@ type:com.android.org.bouncycastle.asn1.ASN1Primitive
 type:com.android.org.bouncycastle.asn1.ASN1Sequence
 type:com.android.org.bouncycastle.asn1.ASN1TaggedObject
 type:com.android.org.bouncycastle.asn1.DERBitString
-type:com.android.org.bouncycastle.asn1.DERInteger
 type:com.android.org.bouncycastle.asn1.DERNull
 type:com.android.org.bouncycastle.asn1.DEROctetString
 type:com.android.org.bouncycastle.asn1.DERSequence
