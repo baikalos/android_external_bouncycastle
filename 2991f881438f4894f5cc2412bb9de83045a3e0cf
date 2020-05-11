@@ -70,6 +70,24 @@
       "revId": "2991f881438f4894f5cc2412bb9de83045a3e0cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c5bc41_36f439f5",
+        "filename": "repackaged/bcprov/src/main/java/com/android/org/bouncycastle/asn1/DERInteger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2020-05-11T17:27:57Z",
+      "side": 0,
+      "message": "sounds good, keeping UnsupportedAppUsage annotation",
+      "parentUuid": "b3dfb4b3_98723f9a",
+      "revId": "2991f881438f4894f5cc2412bb9de83045a3e0cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
