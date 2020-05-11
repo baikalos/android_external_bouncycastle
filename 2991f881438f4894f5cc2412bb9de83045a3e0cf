@@ -52,6 +52,24 @@
       "revId": "2991f881438f4894f5cc2412bb9de83045a3e0cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3dfb4b3_98723f9a",
+        "filename": "repackaged/bcprov/src/main/java/com/android/org/bouncycastle/asn1/DERInteger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2020-05-11T14:12:36Z",
+      "side": 0,
+      "message": "See go/UnsupportedAppUsage and go/nonsdk-policy for more info.\n\n+1 to Pete. 3p apps are potentially using this method at runtime. If you are keeping thisd constructor and the annotation is not causing you issues, I\u0027d keep it around for now.",
+      "parentUuid": "519d6d4f_8da92480",
+      "revId": "2991f881438f4894f5cc2412bb9de83045a3e0cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
