@@ -1,13 +1,6 @@
 field:com.android.org.bouncycastle.asn1.DERNull#INSTANCE
 field:com.android.org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers#sha256WithRSAEncryption
 field:com.android.org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers#sha512WithRSAEncryption
-field:com.android.org.bouncycastle.asn1.x500.style.BCStyle#C
-field:com.android.org.bouncycastle.asn1.x500.style.BCStyle#CN
-field:com.android.org.bouncycastle.asn1.x500.style.BCStyle#E
-field:com.android.org.bouncycastle.asn1.x500.style.BCStyle#L
-field:com.android.org.bouncycastle.asn1.x500.style.BCStyle#O
-field:com.android.org.bouncycastle.asn1.x500.style.BCStyle#OU
-field:com.android.org.bouncycastle.asn1.x500.style.BCStyle#ST
 field:com.android.org.bouncycastle.asn1.x509.GeneralName#dNSName
 field:com.android.org.bouncycastle.asn1.x509.GeneralName#iPAddress
 field:com.android.org.bouncycastle.asn1.x509.GeneralName#otherName
@@ -141,7 +134,6 @@ type:com.android.org.bouncycastle.asn1.DERTaggedObject
 type:com.android.org.bouncycastle.asn1.DERUTF8String
 type:com.android.org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers
 type:com.android.org.bouncycastle.asn1.pkcs.PrivateKeyInfo
-type:com.android.org.bouncycastle.asn1.x500.style.BCStyle
 type:com.android.org.bouncycastle.asn1.x509.AlgorithmIdentifier
 type:com.android.org.bouncycastle.asn1.x509.BasicConstraints
 type:com.android.org.bouncycastle.asn1.x509.Certificate
