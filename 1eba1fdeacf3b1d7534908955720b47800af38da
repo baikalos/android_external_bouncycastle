@@ -1,0 +1,11 @@
+Verified+1: Baligh Uddin <baligh@google.com>
+Code-Review+1: Baligh Uddin <baligh@google.com>
+Code-Review+1: Daulet Zhanguzin <dauletz@google.com>
+Code-Review+2: Pete Bentley <prb@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Baligh Uddin <baligh@google.com>
+Submitted-at: Wed, 27 May 2020 21:40:15 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/external/bouncycastle/+/1319114
+Project: platform/external/bouncycastle
+Branch: refs/heads/master
