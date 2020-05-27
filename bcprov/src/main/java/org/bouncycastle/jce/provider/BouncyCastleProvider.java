@@ -2,10 +2,13 @@ package org.bouncycastle.jce.provider;
 
 import java.io.IOException;
 import java.security.AccessController;
+import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.PrivilegedAction;
 import java.security.Provider;
 import java.security.PublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -336,6 +339,22 @@ public final class BouncyCastleProvider extends Provider
     public static PublicKey getPublicKey(SubjectPublicKeyInfo publicKeyInfo)
         throws IOException
     {
+        // Android-added: BC KeyFactories have been removed, so load them the standard way
+        try {
+            return KeyFactory
+                .getInstance(
+                    publicKeyInfo.getAlgorithmId().getAlgorithm().getId())
+                .generatePublic(
+                    new X509EncodedKeySpec(publicKeyInfo.getEncoded()));
+        } catch (java.security.NoSuchAlgorithmException ex) {
+            // Maintaining compatibility with upstream logic: if appropriate algorithm not found
+            // ("converter" in Android-removed section) return null instead of throwing.
+            return null;
+        } catch (java.security.spec.InvalidKeySpecException ex) {
+            throw new IOException(ex);
+        }
+        // Android-removed: see above
+        /*
         AsymmetricKeyInfoConverter converter = getAsymmetricKeyInfoConverter(publicKeyInfo.getAlgorithm().getAlgorithm());
 
         if (converter == null)
@@ -344,11 +363,28 @@ public final class BouncyCastleProvider extends Provider
         }
 
         return converter.generatePublic(publicKeyInfo);
+        */
     }
 
     public static PrivateKey getPrivateKey(PrivateKeyInfo privateKeyInfo)
         throws IOException
     {
+        // Android-added: BC KeyFactories have been removed, so load them the standard way
+        try {
+            return KeyFactory
+                .getInstance(
+                    privateKeyInfo.getPrivateKeyAlgorithm().getAlgorithm().getId())
+                .generatePrivate(
+                    new PKCS8EncodedKeySpec(privateKeyInfo.getEncoded()));
+        } catch (java.security.NoSuchAlgorithmException ex) {
+            // Maintaining compatibility with upstream logic: if appropriate algorithm not found
+            // ("converter" in Android-removed section) return null instead of throwing.
+            return null;
+        } catch (java.security.spec.InvalidKeySpecException ex) {
+            throw new IOException(ex);
+        }
+        // Android-removed: see above
+        /*
         AsymmetricKeyInfoConverter converter = getAsymmetricKeyInfoConverter(privateKeyInfo.getPrivateKeyAlgorithm().getAlgorithm());
 
         if (converter == null)
@@ -357,5 +393,6 @@ public final class BouncyCastleProvider extends Provider
         }
 
         return converter.generatePrivate(privateKeyInfo);
+        */
     }
 }
