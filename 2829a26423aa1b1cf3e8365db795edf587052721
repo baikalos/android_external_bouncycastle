@@ -16,6 +16,24 @@
       "revId": "2829a26423aa1b1cf3e8365db795edf587052721",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb72071_f766b3b7",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertBlocklist.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-07-30T16:37:51Z",
+      "side": 1,
+      "message": "Yeah, the infrastructure that gets those files onto devices needs to stay backwards compatible.  It\u0027s due for a refresh anyway due to deprecations (hence CCing cbrubaker), but any changes to paths need to be carefully managed.  I\u0027ll add a comment.",
+      "parentUuid": "41267adc_73765c94",
+      "revId": "2829a26423aa1b1cf3e8365db795edf587052721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
