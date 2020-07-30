@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41267adc_73765c94",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertBlocklist.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-07-30T16:34:18Z",
+      "side": 1,
+      "message": "I\u0027m guessing that you cannot change this file name at the moment. Ditto below. Might be worth adding an explanation as to why and maybe a TODO with a bug to track it.",
+      "revId": "2829a26423aa1b1cf3e8365db795edf587052721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
