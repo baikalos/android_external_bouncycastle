@@ -34,6 +34,24 @@
       "revId": "2829a26423aa1b1cf3e8365db795edf587052721",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24b403f_bcfb455d",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertBlocklist.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-07-31T14:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb72071_f766b3b7",
+      "revId": "2829a26423aa1b1cf3e8365db795edf587052721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
