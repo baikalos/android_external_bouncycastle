@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ce6ab52_9c060e02",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertBlocklist.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-07-31T14:11:16Z",
+      "side": 1,
+      "message": "Hmm, class needs to be renamed to compile correctly?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "87a728d55bf3fe635c66ee5b391f97b9930a75f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
