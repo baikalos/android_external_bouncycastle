@@ -22,6 +22,30 @@
       "revId": "87a728d55bf3fe635c66ee5b391f97b9930a75f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13be8671_4ec489ff",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertBlocklist.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-08-19T16:51:04Z",
+      "side": 1,
+      "message": "Same as the other CL in the topic... Rename and refactoring in two separate CLs in a chain to prevent Gerrit treating it as delete and re-create and losing the diffs.",
+      "parentUuid": "6ce6ab52_9c060e02",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "87a728d55bf3fe635c66ee5b391f97b9930a75f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
