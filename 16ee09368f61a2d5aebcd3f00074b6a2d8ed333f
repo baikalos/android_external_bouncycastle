@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20d55e48_66b60499",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2020-08-25T00:19:21Z",
+      "side": 1,
+      "message": "This tool relies extensively on the ASN.1 parsing in Bouncycastle and is not shipped on the device, so this seems acceptable.",
+      "revId": "16ee09368f61a2d5aebcd3f00074b6a2d8ed333f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
