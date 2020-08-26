@@ -1,0 +1,9 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+2: Kenny Root <kroot@google.com>
+Autosubmit+1: Max Bires <jbires@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 26 Aug 2020 08:41:53 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/external/bouncycastle/+/1347931
+Project: platform/external/bouncycastle
+Branch: refs/heads/master
