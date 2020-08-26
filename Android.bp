@@ -101,6 +101,8 @@ unbundled_visibility = [
     "//frameworks/opt/net/wifi/tests/wifitests",
     "//libcore",
     "//system/extras/verity",
+    "//tools/security/remote_provisioning/attestation_testing",
+    "//vendor:__subpackages__",
 ]
 
 // A bouncycastle library in the original org.bouncycastle package for use
