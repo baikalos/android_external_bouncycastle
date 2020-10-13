@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c0ee3b5_83a8207f",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-10-13T18:37:24Z",
+      "side": 1,
+      "message": "I don\u0027t understand this.  Looking in your ART blueprint changes it looks like ike-internals is going into art-module-host-exports but surely no host tools need IKE or IPSec?",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 26
+      },
+      "revId": "cbd8309ed1bf5462074db8db22cd6f7da13a735a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
