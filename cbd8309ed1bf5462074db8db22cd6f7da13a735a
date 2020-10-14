@@ -46,6 +46,30 @@
       },
       "revId": "cbd8309ed1bf5462074db8db22cd6f7da13a735a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "861affa6_2c26973c",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-10-14T13:11:04Z",
+      "side": 1,
+      "message": "Got it... As per offline discussion I was confusing SDK modules with APEX modules.",
+      "parentUuid": "aeb726ca_6a01a9b2",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 26
+      },
+      "revId": "cbd8309ed1bf5462074db8db22cd6f7da13a735a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
