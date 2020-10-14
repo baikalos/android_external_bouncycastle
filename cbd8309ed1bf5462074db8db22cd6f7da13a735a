@@ -22,6 +22,30 @@
       },
       "revId": "cbd8309ed1bf5462074db8db22cd6f7da13a735a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aeb726ca_6a01a9b2",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-10-14T12:44:42Z",
+      "side": 1,
+      "message": "Good catch. The name of the art-module-host-exports is out of date. It covers not just host stuff but also static java libraries too. I will try and come up with a better name for it in a follow up change. Whatever it is called would have no effect on this change though.",
+      "parentUuid": "1c0ee3b5_83a8207f",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 26
+      },
+      "revId": "cbd8309ed1bf5462074db8db22cd6f7da13a735a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
