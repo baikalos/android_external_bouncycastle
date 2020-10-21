@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbc85560_8e325a56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2020-10-21T15:47:01Z",
+      "side": 1,
+      "message": "Cherry-pick of http://ag/q/topic:release-apex-rename+author:mast into AOSP.",
+      "revId": "ce58a72aa82a19761ac565c0ffc4ec0e631f7ba8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
