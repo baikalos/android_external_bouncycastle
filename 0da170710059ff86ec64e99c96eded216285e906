@@ -16,6 +16,23 @@
       "message": "Overriding our lint checker since CLs for b/170729553 break policy",
       "revId": "0da170710059ff86ec64e99c96eded216285e906",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c9743ad_9e9d4b59",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-27T10:58:36Z",
+      "side": 1,
+      "message": "+paulduffin: do we have any automation for making large scale changes to the @UnsupportedAppUsage in here? I know we have srcgen/unsupported-app-usage.json but it\u0027s not clear if there\u0027s a tool to make bulk changes to that?",
+      "revId": "0da170710059ff86ec64e99c96eded216285e906",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
