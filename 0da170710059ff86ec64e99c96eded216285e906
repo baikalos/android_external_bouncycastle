@@ -86,6 +86,24 @@
       "parentUuid": "5554558f_6132445e",
       "revId": "0da170710059ff86ec64e99c96eded216285e906",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a15122cd_6df9f269",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-28T15:42:34Z",
+      "side": 1,
+      "message": "I\u0027ve updated our annotation editing script to deal with this case - see google3 cl/339268628. New patchset incoming.",
+      "parentUuid": "b8b2249e_e74757f3",
+      "revId": "0da170710059ff86ec64e99c96eded216285e906",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
