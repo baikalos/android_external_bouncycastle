@@ -16,6 +16,23 @@
       "message": "What do the lint failures mean?",
       "revId": "67f8c5413d6f0297b66c284e58bddb7d29ca6ee6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85ab117d_d0c74f2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-29T09:52:26Z",
+      "side": 1,
+      "message": "Override our own lint checker",
+      "revId": "67f8c5413d6f0297b66c284e58bddb7d29ca6ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
