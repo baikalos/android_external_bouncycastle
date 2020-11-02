@@ -9,11 +9,11 @@ import org.bouncycastle.util.test.SimpleTestResult;
 public class AllTests
     extends TestCase
 {
-    public static void main (String[] args)
+    public static void main(String[] args)
     {
         junit.textui.TestRunner.run(suite());
     }
-    
+
     public static Test suite()
     {
         TestSuite suite = new TestSuite("Lightweight PQ Crypto Tests");
@@ -26,6 +26,7 @@ public class AllTests
         suite.addTestSuite(NTRUSignatureKeyTest.class);
         suite.addTestSuite(NTRUSignerTest.class);
         suite.addTestSuite(NTRUSigningParametersTest.class);
+        suite.addTestSuite(QTESLATest.class);
         suite.addTestSuite(XMSSMTPrivateKeyTest.class);
         suite.addTestSuite(XMSSMTPublicKeyTest.class);
         suite.addTestSuite(XMSSMTSignatureTest.class);
@@ -43,7 +44,7 @@ public class AllTests
     }
 
     public static class SimpleTestTest
-       extends TestCase
+        extends TestCase
     {
         public void testPQC()
         {
@@ -51,7 +52,7 @@ public class AllTests
 
             for (int i = 0; i != tests.length; i++)
             {
-                SimpleTestResult  result = (SimpleTestResult)tests[i].perform();
+                SimpleTestResult result = (SimpleTestResult)tests[i].perform();
 
                 if (!result.isSuccessful())
                 {

@@ -1,15 +1,17 @@
 package org.bouncycastle.crypto.test;
 
 
+import java.util.ArrayList;
+
 import org.bouncycastle.crypto.generators.Argon2BytesGenerator;
 import org.bouncycastle.crypto.params.Argon2Parameters;
+import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.Strings;
 import org.bouncycastle.util.encoders.Hex;
 import org.bouncycastle.util.test.SimpleTest;
 
 /**
  * Tests from https://tools.ietf.org/html/draft-irtf-cfrg-argon2-03
- *
  */
 public class Argon2Test
     extends SimpleTest
@@ -29,9 +31,11 @@ public class Argon2Test
             return;
         }
 
+        testPermutations();
         testVectorsFromInternetDraft();
 
         int version = Argon2Parameters.ARGON2_VERSION_10;
+
 
 
         /* Multiple test cases for various input values */
@@ -98,6 +102,120 @@ public class Argon2Test
     }
 
 
+    public void testPermutations()
+        throws Exception
+    {
+
+        byte[] rootPassword = Strings.toByteArray("aac");
+        byte[] buf = null;
+
+        byte[][] salts = new byte[3][];
+
+        salts[0] = new byte[16];
+        salts[1] = new byte[16];
+        salts[2] = new byte[16];
+        for (int t = 0; t < 16; t++)
+        {
+            salts[1][t] = (byte)t;
+            salts[2][t] = (byte)(16 - t);
+        }
+
+
+        //
+        // Permutation, starting with a shorter array, same length then one longer.
+        //
+        for (int j = rootPassword.length - 1; j < rootPassword.length + 2; j++)
+        {
+            buf = new byte[j];
+
+            for (int a = 0; a < rootPassword.length; a++)
+            {
+                for (int b = 0; b < buf.length; b++)
+                {
+                    buf[b] = rootPassword[(a + b) % rootPassword.length];
+                }
+
+
+                ArrayList<byte[]> permutations = new ArrayList<byte[]>();
+                permute(permutations, buf, 0, buf.length - 1);
+
+                for (int i = 0; i != permutations.size(); i++)
+                {
+                    byte[] candidate = (byte[])permutations.get(i);
+                    for (int k = 0; k != salts.length; k++)
+                    {
+                        byte[] salt = salts[k];
+                        byte[] expected = generate(Argon2Parameters.ARGON2_VERSION_10, 1, 8, 2, rootPassword, salt, 32);
+                        byte[] testValue = generate(Argon2Parameters.ARGON2_VERSION_10, 1, 8, 2, candidate, salt, 32);
+
+                        //
+                        // If the passwords are the same for the same salt we should have the same string.
+                        //
+                        boolean sameAsRoot = Arrays.areEqual(rootPassword, candidate);
+                        isTrue("expected same result", sameAsRoot == Arrays.areEqual(expected, testValue));
+
+                    }
+
+                }
+            }
+        }
+    }
+
+    private void swap(byte[] buf, int i, int j)
+    {
+        byte b = buf[i];
+        buf[i] = buf[j];
+        buf[j] = b;
+    }
+
+    private void permute(ArrayList<byte[]> permutation, byte[] a, int l, int r)
+    {
+        if (l == r)
+        {
+            permutation.add(Arrays.clone(a));
+        }
+        else
+        {
+
+            for (int i = l; i <= r; i++)
+            {
+                // Swapping done
+                swap(a, l, i);
+
+                // Recursion called
+                permute(permutation, a, l + 1, r);
+
+                //backtrack
+                swap(a, l, i);
+            }
+        }
+    }
+
+
+    private byte[] generate(int version, int iterations, int memory, int parallelism,
+                            byte[] password, byte[] salt, int outputLength)
+    {
+        Argon2Parameters.Builder builder = new Argon2Parameters.Builder(Argon2Parameters.ARGON2_i)
+            .withVersion(version)
+            .withIterations(iterations)
+            .withMemoryPowOfTwo(memory)
+            .withParallelism(parallelism)
+            .withSalt(salt);
+
+        //
+        // Set the password.
+        //
+        Argon2BytesGenerator gen = new Argon2BytesGenerator();
+
+        gen.init(builder.build());
+
+        byte[] result = new byte[outputLength];
+
+        gen.generateBytes(password, result, 0, result.length);
+        return result;
+    }
+
+
     private void hashTest(int version, int iterations, int memory, int parallelism,
                           String password, String salt, String passwordRef, int outputLength)
     {
@@ -116,9 +234,14 @@ public class Argon2Test
         gen.init(builder.build());
 
         byte[] result = new byte[outputLength];
+
         gen.generateBytes(password.toCharArray(), result, 0, result.length);
+        isTrue(passwordRef + " Failed", areEqual(result, Hex.decode(passwordRef)));
 
+        Arrays.clear(result);
 
+        // Should be able to re-use generator after successful use
+        gen.generateBytes(password.toCharArray(), result, 0, result.length);
         isTrue(passwordRef + " Failed", areEqual(result, Hex.decode(passwordRef)));
     }
 
@@ -129,7 +252,6 @@ public class Argon2Test
      * @throws Exception
      */
     private void testVectorsFromInternetDraft()
-        throws Exception
     {
         byte[] ad = Hex.decode("040404040404040404040404");
         byte[] secret = Hex.decode("0303030303030303");
@@ -182,7 +304,7 @@ public class Argon2Test
             .withAdditional(ad)
             .withSecret(secret)
             .withSalt(salt);
-        
+
         dig = new Argon2BytesGenerator();
 
         dig.init(builder.build());
@@ -196,30 +318,32 @@ public class Argon2Test
 
     private static int getJvmVersion()
     {
-        String version = System.getProperty("java.version");
-
-        if (version.startsWith("1.7"))
+        String version = System.getProperty("java.specification.version");
+        if (null == version)
         {
-            return 7;
+            return -1;
         }
-        if (version.startsWith("1.8"))
+        String[] parts = version.split("\\.");
+        if (parts == null || parts.length < 1)
         {
-            return 8;
+            return -1;
         }
-        if (version.startsWith("1.9"))
+        try
         {
-            return 9;
+            int major = Integer.parseInt(parts[0]);
+            if (major == 1 && parts.length > 1)
+            {
+                return Integer.parseInt(parts[1]);
+            }
+            return major;
         }
-        if (version.startsWith("1.1"))
+        catch (NumberFormatException e)
         {
-            return 10;
+            return -1;
         }
-
-        return -1;
     }
 
     public static void main(String[] args)
-        throws Exception
     {
         runTest(new Argon2Test());
     }
