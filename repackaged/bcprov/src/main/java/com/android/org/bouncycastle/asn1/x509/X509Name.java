@@ -71,7 +71,7 @@ public class X509Name
      * common name - StringType(SIZE(1..64))
      * @deprecated use a X500NameStyle
      */
-    @android.compat.annotation.UnsupportedAppUsage
+    @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     @libcore.api.CorePlatformApi
     public static final ASN1ObjectIdentifier CN = new ASN1ObjectIdentifier("2.5.4.3");
 
@@ -411,7 +411,7 @@ public class X509Name
      * the principal will be a list of constructed sets, each containing an (OID, String) pair.
      * @deprecated use X500Name.getInstance()
      */
-    @android.compat.annotation.UnsupportedAppUsage
+    @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     public X509Name(
         ASN1Sequence  seq)
     {
@@ -873,7 +873,7 @@ public class X509Name
     /**
      * return a vector of the oids in the name, in the order they were found.
      */
-    @android.compat.annotation.UnsupportedAppUsage
+    @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     @libcore.api.CorePlatformApi
     public Vector getOIDs()
     {
@@ -891,7 +891,7 @@ public class X509Name
      * return a vector of the values found in the name, in the order they
      * were found.
      */
-    @android.compat.annotation.UnsupportedAppUsage
+    @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     @libcore.api.CorePlatformApi
     public Vector getValues()
     {

@@ -50,7 +50,7 @@ public class DigestInfo
         return null;
     }
 
-    @android.compat.annotation.UnsupportedAppUsage
+    @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     public DigestInfo(
         AlgorithmIdentifier  algId,
         byte[]               digest)
