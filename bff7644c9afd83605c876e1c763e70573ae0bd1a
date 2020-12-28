@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "636aae12_ff5d54d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1018026
+      },
+      "writtenOn": "2020-12-28T13:59:44Z",
+      "side": 1,
+      "message": "Colin - would it be possible to treat this as a LSC and get a global +2",
+      "revId": "bff7644c9afd83605c876e1c763e70573ae0bd1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
