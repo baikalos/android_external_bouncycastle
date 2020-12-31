@@ -178,7 +178,7 @@ java_library {
     name: "bouncycastle_ike_digests",
     visibility: [
         "//art/build/sdk",
-        "//packages/modules/IPsec",
+        "//packages/modules/IPsec:__subpackages__",
     ],
     apex_available: [
         "com.android.ipsec",
