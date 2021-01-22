@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17b2a4ec_9dcb20e5",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2021-01-22T20:15:00Z",
+      "side": 1,
+      "message": "does it need to be bootclasspath? otherwise, use java_library_static?",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "29ec36398238f84daa8a2e7bc8dda19510ac9bbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "828a4e8f_53e8be99",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2021-01-22T20:15:00Z",
+      "side": 1,
+      "message": "typo? unbundled? or use \"platform\"?",
+      "range": {
+        "startLine": 88,
+        "startChar": 35,
+        "endLine": 88,
+        "endChar": 44
+      },
+      "revId": "29ec36398238f84daa8a2e7bc8dda19510ac9bbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
