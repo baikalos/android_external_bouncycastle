@@ -33,6 +33,24 @@
       "message": "Added vichang and mingaleev to +2 group.\n\nnit: it would be nice if srcgen/generate_android_src generated both transformations.  Might entail moving the current contents of srcgen to a new directory.\n\nDoesn\u0027t have to be part of this CL.",
       "revId": "8162102f62a102f2a39f901aec1295579769d55c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34e0bbad_bd508254",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2021-01-22T16:24:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "66740c75_b785db29",
+      "revId": "8162102f62a102f2a39f901aec1295579769d55c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
