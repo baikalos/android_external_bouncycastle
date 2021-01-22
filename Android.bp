@@ -84,6 +84,16 @@ java_library {
     system_modules: "art-module-intra-core-api-stubs-system-modules",
 }
 
+java_static_library {
+    name: "bouncycastle-repackaged-unbundled",
+    visibility: [
+        "//external/sl4a/Common"
+    ],
+    defaults: ["bouncycastle-defaults"],
+    installable: true,
+    srcs: ["repackaged_platform/bcprov/src/main/java/**/*.java"],
+}
+
 unbundled_visibility = [
     "//art/build/sdk",
     "//build/make/tools/signapk",
