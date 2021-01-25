@@ -116,6 +116,8 @@ unbundled_visibility = [
     "//external/robolectric-shadows/shadows/httpclient",
     "//frameworks/opt/net/wifi/service",
     "//frameworks/opt/net/wifi/tests/wifitests",
+    "//packages/apps/CertInstaller",
+    "//packages/apps/KeyChain",
     "//packages/modules/Wifi/service",
     "//packages/modules/Wifi/service/tests/wifitests",
     "//libcore",
