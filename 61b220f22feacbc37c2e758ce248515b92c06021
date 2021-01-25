@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cca1a612_67b3bb6e",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-01-25T19:29:21Z",
+      "side": 1,
+      "message": "I am a little confused as to what this module is for, could you add a comment explaining its purpose here and why it is different to the other modules.",
+      "revId": "61b220f22feacbc37c2e758ce248515b92c06021",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

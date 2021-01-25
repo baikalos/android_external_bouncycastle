@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bab4d075_2fd93132",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-01-25T19:29:21Z",
+      "side": 1,
+      "message": "FTR there is no longer any difference between java_library_static and java_library. The former is an obsolete alias for the latter. So you should change this back to what it was.",
+      "parentUuid": "fe7ed2d1_13e4972b",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "29ec36398238f84daa8a2e7bc8dda19510ac9bbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "828a4e8f_53e8be99",
         "filename": "Android.bp",
         "patchSetId": 2
