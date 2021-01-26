@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a21521e_4f3329bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-01-26T11:51:16Z",
+      "side": 1,
+      "message": "A suggestion for an addition to the comment.",
+      "revId": "8c986b059cd877ee921a4252ac5ec194884f124d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ac67e15_49bb84ff",
+        "filename": "Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-01-26T11:51:16Z",
+      "side": 1,
+      "message": "...or the one in the ART module.",
+      "range": {
+        "startLine": 89,
+        "startChar": 40,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "8c986b059cd877ee921a4252ac5ec194884f124d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
