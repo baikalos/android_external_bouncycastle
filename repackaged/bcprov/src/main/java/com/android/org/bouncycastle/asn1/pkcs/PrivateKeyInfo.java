@@ -60,7 +60,6 @@ import com.android.org.bouncycastle.util.BigIntegers;
  *  </pre>
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public class PrivateKeyInfo
     extends ASN1Object
 {
@@ -75,7 +74,6 @@ public class PrivateKeyInfo
         return getInstance(ASN1Sequence.getInstance(obj, explicit));
     }
 
-    @libcore.api.CorePlatformApi
     public static PrivateKeyInfo getInstance(Object obj)
     {
         if (obj instanceof PrivateKeyInfo)
@@ -185,13 +183,11 @@ public class PrivateKeyInfo
         return attributes;
     }
 
-    @libcore.api.CorePlatformApi
     public AlgorithmIdentifier getPrivateKeyAlgorithm()
     {
         return privateKeyAlgorithm;
     }
 
-    @libcore.api.CorePlatformApi
     public ASN1Encodable parsePrivateKey()
         throws IOException
     {
