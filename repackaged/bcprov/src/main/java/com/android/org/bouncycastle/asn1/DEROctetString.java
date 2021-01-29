@@ -16,7 +16,7 @@ public class DEROctetString
      *
      * @param string the octets making up the octet string.
      */
-    @android.compat.annotation.UnsupportedAppUsage
+    @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     @libcore.api.CorePlatformApi
     public DEROctetString(
         byte[]  string)
