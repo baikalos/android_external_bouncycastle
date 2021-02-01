@@ -57,7 +57,7 @@ filegroup {
 }
 
 // A bouncycastle library repackaged in com.android.org.bouncycastle for use
-// in the Android platform where it is important not to conflict with the
+// in the ART module. Repackaging is needed to avoid conflict with the
 // original org.bouncycastle package.
 java_library {
     name: "bouncycastle",
@@ -67,6 +67,7 @@ java_library {
         "//art/build/sdk",
         "//external/wycheproof",
         "//libcore",
+        "//packages/modules/ArtPrebuilt",
     ],
     apex_available: [
         "com.android.art",
@@ -81,6 +82,22 @@ java_library {
 
     sdk_version: "none",
     system_modules: "art-module-intra-core-api-stubs-system-modules",
+}
+
+// A bouncycastle library repackaged in com.android.internal.org.bouncycastle
+// for use in the Android platform where it is important not to conflict with
+// the original org.bouncycastle package or the one in the ART module.
+java_library {
+    name: "bouncycastle-repackaged-unbundled",
+    visibility: [
+        "//external/sl4a/Common",
+        "//frameworks/base",
+        "//frameworks/base/tests/net",
+    ],
+    defaults: ["bouncycastle-defaults"],
+    installable: true,
+    sdk_version: "core_current",
+    srcs: ["repackaged_platform/bcprov/src/main/java/**/*.java"],
 }
 
 unbundled_visibility = [
@@ -99,6 +116,10 @@ unbundled_visibility = [
     "//external/robolectric-shadows/shadows/httpclient",
     "//frameworks/opt/net/wifi/service",
     "//frameworks/opt/net/wifi/tests/wifitests",
+    "//packages/apps/CertInstaller",
+    "//packages/apps/KeyChain",
+    "//packages/modules/Wifi/service",
+    "//packages/modules/Wifi/service/tests/wifitests",
     "//libcore",
     "//system/extras/verity",
     "//tools/security/remote_provisioning/attestation_testing",
@@ -119,6 +140,7 @@ java_library {
     ],
 
     sdk_version: "core_current",
+    min_sdk_version: "30",
     java_version: "1.7",
 }
 
