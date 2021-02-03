@@ -90,7 +90,9 @@ java_library {
 java_library {
     name: "bouncycastle-repackaged-unbundled",
     visibility: [
+    	"//cts/tests/libcore/wycheproof-bc",
         "//external/sl4a/Common",
+        "//external/wycheproof",
         "//frameworks/base",
         "//frameworks/base/tests/net",
     ],
