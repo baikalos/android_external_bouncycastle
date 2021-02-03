@@ -91,6 +91,7 @@ java_library {
     name: "bouncycastle-repackaged-unbundled",
     visibility: [
         "//external/sl4a/Common",
+        "//external/wycheproof",
         "//frameworks/base",
         "//frameworks/base/tests/net",
     ],
