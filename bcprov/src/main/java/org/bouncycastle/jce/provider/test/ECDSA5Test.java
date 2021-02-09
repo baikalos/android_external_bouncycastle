@@ -31,6 +31,7 @@ import java.security.spec.ECPoint;
 import java.security.spec.ECPrivateKeySpec;
 import java.security.spec.ECPublicKeySpec;
 import java.security.spec.EllipticCurve;
+import java.security.spec.KeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
@@ -185,6 +186,45 @@ public class ECDSA5Test
         PublicKey pubKey = kfBc.generatePublic(new ECPublicKeySpec(point, ecParamSpec));
 
         isTrue(Arrays.areEqual(namedPubKey, pubKey.getEncoded()));
+    }
+
+    public void testKeyFactory()
+        throws Exception
+    {
+        KeyFactory kfBc = KeyFactory.getInstance("EC", "BC");
+        KeyPairGenerator kpGen = KeyPairGenerator.getInstance("EC", "BC");
+        
+        kpGen.initialize(256);
+
+        KeyPair kp = kpGen.generateKeyPair();
+
+        isTrue(kfBc.getKeySpec(kp.getPublic(), KeySpec.class) instanceof ECPublicKeySpec);
+        isTrue(kfBc.getKeySpec(kp.getPublic(), ECPublicKeySpec.class) instanceof ECPublicKeySpec);
+        isTrue(kfBc.getKeySpec(kp.getPrivate(), KeySpec.class) instanceof ECPrivateKeySpec);
+        isTrue(kfBc.getKeySpec(kp.getPrivate(), ECPrivateKeySpec.class) instanceof ECPrivateKeySpec);
+    }
+
+    private void pointCompressionTest()
+        throws Exception
+    {
+        String[] ids = new String[]{
+            "P-256",
+            "B-409",
+            "K-283"};
+
+        for (int i = 0; i != ids.length; i++)
+        {
+            KeyPairGenerator kpGen = KeyPairGenerator.getInstance("EC", "BC");
+
+            kpGen.initialize(new ECGenParameterSpec(ids[i]));
+
+            KeyPair kp = kpGen.generateKeyPair();
+
+            byte[] enc1 = kp.getPublic().getEncoded();
+            byte[] enc2 = org.bouncycastle.jcajce.util.ECKeyUtil.createKeyWithCompression((ECPublicKey)kp.getPublic()).getEncoded();
+
+            isTrue(enc1.length >= enc2.length + 32);
+        }
     }
 
     private void decodeTest()
@@ -1227,6 +1267,8 @@ public class ECDSA5Test
         testSM2();
         testNonsense();
         testNamedCurveInKeyFactory();
+        testKeyFactory();
+        pointCompressionTest();
     }
 
     public static void main(

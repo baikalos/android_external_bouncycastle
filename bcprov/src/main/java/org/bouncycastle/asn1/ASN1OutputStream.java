@@ -264,16 +264,6 @@ public class ASN1OutputStream
         }
     }
 
-    /**
-     * @deprecated Will be removed.
-     */
-    protected void writeNull()
-        throws IOException
-    {
-        write(BERTags.NULL);
-        write(0x00);
-    }
-
     public void writeObject(ASN1Encodable obj) throws IOException
     {
         if (null == obj)

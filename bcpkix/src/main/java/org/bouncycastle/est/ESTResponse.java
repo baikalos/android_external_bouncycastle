@@ -129,17 +129,14 @@ public class ESTResponse
             };
         }
 
-        if (contentLength != null)
+        if (contentLength < 0)
         {
-            if (contentLength < 0)
-            {
-                throw new IOException("Server returned negative content length: " + absoluteReadLimit);
-            }
+            throw new IOException("Server returned negative content length: " + absoluteReadLimit);
+        }
 
-            if (absoluteReadLimit != null && contentLength >= absoluteReadLimit)
-            {
-                throw new IOException("Content length longer than absolute read limit: " + absoluteReadLimit + " Content-Length: " + contentLength);
-            }
+        if (absoluteReadLimit != null && contentLength >= absoluteReadLimit)
+        {
+            throw new IOException("Content length longer than absolute read limit: " + absoluteReadLimit + " Content-Length: " + contentLength);
         }
 
 
@@ -298,7 +295,6 @@ public class ESTResponse
             throws IOException
         {
             int i = src.read();
-            System.out.print(String.valueOf((char)i));
             return i;
         }
 

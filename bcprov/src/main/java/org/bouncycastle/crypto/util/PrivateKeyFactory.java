@@ -156,8 +156,7 @@ public class PrivateKeyFactory
                 {
                     x9 = ECNamedCurveTable.getByOID(oid);
                 }
-                dParams = new ECNamedDomainParameters(
-                    oid, x9.getCurve(), x9.getG(), x9.getN(), x9.getH(), x9.getSeed());
+                dParams = new ECNamedDomainParameters(oid, x9);
             }
             else
             {
@@ -199,7 +198,7 @@ public class PrivateKeyFactory
             if (p instanceof ASN1Sequence && (ASN1Sequence.getInstance(p).size() == 2 || ASN1Sequence.getInstance(p).size() == 3))
             {
 
-                ECDomainParameters ecP = ECGOST3410NamedCurves.getByOID(gostParams.getPublicKeyParamSet());
+                X9ECParameters ecP = ECGOST3410NamedCurves.getByOIDX9(gostParams.getPublicKeyParamSet());
 
                 ecSpec = new ECGOST3410Parameters(
                     new ECNamedDomainParameters(
@@ -207,15 +206,24 @@ public class PrivateKeyFactory
                     gostParams.getPublicKeyParamSet(),
                     gostParams.getDigestParamSet(),
                     gostParams.getEncryptionParamSet());
-                ASN1Encodable privKey = keyInfo.parsePrivateKey();
-                if (privKey instanceof ASN1Integer)
+                ASN1OctetString privEnc = keyInfo.getPrivateKey();
+
+                if (privEnc.getOctets().length == 32 || privEnc.getOctets().length == 64)
                 {
-                    d = ASN1Integer.getInstance(privKey).getPositiveValue();
+                    d = new BigInteger(1, Arrays.reverse(privEnc.getOctets()));
                 }
                 else
                 {
-                    byte[] dVal = Arrays.reverse(ASN1OctetString.getInstance(privKey).getOctets());
-                    d = new BigInteger(1, dVal);
+                    ASN1Encodable privKey = keyInfo.parsePrivateKey();
+                    if (privKey instanceof ASN1Integer)
+                    {
+                        d = ASN1Integer.getInstance(privKey).getPositiveValue();
+                    }
+                    else
+                    {
+                        byte[] dVal = Arrays.reverse(ASN1OctetString.getInstance(privKey).getOctets());
+                        d = new BigInteger(1, dVal);
+                    }
                 }
             }
             else
@@ -226,27 +234,10 @@ public class PrivateKeyFactory
                 {
                     ASN1ObjectIdentifier oid = ASN1ObjectIdentifier.getInstance(params.getParameters());
                     X9ECParameters ecP = ECNamedCurveTable.getByOID(oid);
-                    if (ecP == null)
-                    {
-                        ECDomainParameters gParam = ECGOST3410NamedCurves.getByOID(oid);
-                        ecSpec = new ECGOST3410Parameters(new ECNamedDomainParameters(
-                            oid,
-                            gParam.getCurve(),
-                            gParam.getG(),
-                            gParam.getN(),
-                            gParam.getH(),
-                            gParam.getSeed()), gostParams.getPublicKeyParamSet(), gostParams.getDigestParamSet(), gostParams.getEncryptionParamSet());
-                    }
-                    else
-                    {
-                        ecSpec = new ECGOST3410Parameters(new ECNamedDomainParameters(
-                            oid,
-                            ecP.getCurve(),
-                            ecP.getG(),
-                            ecP.getN(),
-                            ecP.getH(),
-                            ecP.getSeed()), gostParams.getPublicKeyParamSet(), gostParams.getDigestParamSet(), gostParams.getEncryptionParamSet());
-                    }
+
+                    ecSpec = new ECGOST3410Parameters(new ECNamedDomainParameters(oid, ecP),
+                        gostParams.getPublicKeyParamSet(), gostParams.getDigestParamSet(),
+                        gostParams.getEncryptionParamSet());
                 }
                 else if (params.isImplicitlyCA())
                 {
@@ -255,13 +246,9 @@ public class PrivateKeyFactory
                 else
                 {
                     X9ECParameters ecP = X9ECParameters.getInstance(params.getParameters());
-                    ecSpec = new ECGOST3410Parameters(new ECNamedDomainParameters(
-                        algOID,
-                        ecP.getCurve(),
-                        ecP.getG(),
-                        ecP.getN(),
-                        ecP.getH(),
-                        ecP.getSeed()), gostParams.getPublicKeyParamSet(), gostParams.getDigestParamSet(), gostParams.getEncryptionParamSet());
+                    ecSpec = new ECGOST3410Parameters(new ECNamedDomainParameters(algOID, ecP),
+                        gostParams.getPublicKeyParamSet(), gostParams.getDigestParamSet(),
+                        gostParams.getEncryptionParamSet());
                 }
 
                 ASN1Encodable privKey = keyInfo.parsePrivateKey();
@@ -273,7 +260,7 @@ public class PrivateKeyFactory
                 }
                 else
                 {
-                    org.bouncycastle.asn1.sec.ECPrivateKey ec = org.bouncycastle.asn1.sec.ECPrivateKey.getInstance(privKey);
+                    ECPrivateKey ec = ECPrivateKey.getInstance(privKey);
 
                     d = ec.getKey();
                 }

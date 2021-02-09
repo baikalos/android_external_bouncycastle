@@ -3,6 +3,9 @@ package org.bouncycastle.util;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
+import org.bouncycastle.math.raw.Mod;
+import org.bouncycastle.math.raw.Nat;
+
 /**
  * BigInteger utilities.
  */
@@ -10,8 +13,8 @@ public final class BigIntegers
 {
     public static final BigInteger ZERO = BigInteger.valueOf(0);
     public static final BigInteger ONE = BigInteger.valueOf(1);
+    public static final BigInteger TWO = BigInteger.valueOf(2);
 
-    private static final BigInteger TWO = BigInteger.valueOf(2);
     private static final BigInteger THREE = BigInteger.valueOf(3);
 
     private static final int MAX_ITERATIONS = 1000;
@@ -19,7 +22,7 @@ public final class BigIntegers
     /**
      * Return the passed in value as an unsigned byte array.
      * 
-     * @param value value to be converted.
+     * @param value the value to be converted.
      * @return a byte array without a leading zero byte if present in the signed encoding.
      */
     public static byte[] asUnsignedByteArray(
@@ -27,7 +30,7 @@ public final class BigIntegers
     {
         byte[] bytes = value.toByteArray();
         
-        if (bytes[0] == 0)
+        if (bytes[0] == 0 && bytes.length != 1)
         {
             byte[] tmp = new byte[bytes.length - 1];
             
@@ -40,10 +43,14 @@ public final class BigIntegers
     }
 
     /**
-     * Return the passed in value as an unsigned byte array.
+     * Return the passed in value as an unsigned byte array of the specified length, padded with
+     * leading zeros as necessary..
      *
-     * @param value value to be converted.
-     * @return a byte array without a leading zero byte if present in the signed encoding.
+     * @param length
+     *            the fixed length of the result
+     * @param value
+     *            the value to be converted.
+     * @return a byte array padded to a fixed length with leading zeros.
      */
     public static byte[] asUnsignedByteArray(int length, BigInteger value)
     {
@@ -53,7 +60,7 @@ public final class BigIntegers
             return bytes;
         }
 
-        int start = bytes[0] == 0 ? 1 : 0;
+        int start = (bytes[0] == 0 && bytes.length != 1) ? 1 : 0;
         int count = bytes.length - start;
 
         if (count > length)
@@ -64,6 +71,41 @@ public final class BigIntegers
         byte[] tmp = new byte[length];
         System.arraycopy(bytes, start, tmp, tmp.length - count, count);
         return tmp;
+    }
+
+    /**
+     * Write the passed in value as unsigned bytes to the specified buffer range, padded with
+     * leading zeros as necessary.
+     *
+     * @param value
+     *            the value to be converted.
+     * @param buf
+     *            the buffer to which the value is written.
+     * @param off
+     *            the start offset in array <code>buf</code> at which the data is written.
+     * @param len
+     *            the fixed length of data written (possibly padded with leading zeros).
+     */
+    public static void asUnsignedByteArray(BigInteger value, byte[] buf, int off, int len)
+    {
+        byte[] bytes = value.toByteArray();
+        if (bytes.length == len)
+        {
+            System.arraycopy(bytes, 0, buf, off, len);
+            return;
+        }
+
+        int start = (bytes[0] == 0 && bytes.length != 1) ? 1 : 0;
+        int count = bytes.length - start;
+
+        if (count > len)
+        {
+            throw new IllegalArgumentException("standard length exceeded for value");
+        }
+
+        int padLen = len - count;
+        Arrays.fill(buf,  off, off + padLen, (byte)0x00);
+        System.arraycopy(bytes, start, buf, off + padLen, count);
     }
 
     /**
@@ -146,8 +188,75 @@ public final class BigIntegers
         return x.longValue(); 
     }
 
+    public static BigInteger modOddInverse(BigInteger M, BigInteger X)
+    {
+        if (!M.testBit(0))
+        {
+            throw new IllegalArgumentException("'M' must be odd");
+        }
+        if (M.signum() != 1)
+        {
+            throw new ArithmeticException("BigInteger: modulus not positive");
+        }
+        if (X.signum() < 0 || X.compareTo(M) >= 0)
+        {
+            X = X.mod(M);
+        }
+
+        int bits = M.bitLength();
+        int[] m = Nat.fromBigInteger(bits, M);
+        int[] x = Nat.fromBigInteger(bits, X);
+        int len = m.length;
+        int[] z = Nat.create(len);
+        if (0 == Mod.modOddInverse(m, x, z))
+        {
+            throw new ArithmeticException("BigInteger not invertible.");
+        }
+        return Nat.toBigInteger(len, z);
+    }
+
+    public static BigInteger modOddInverseVar(BigInteger M, BigInteger X)
+    {
+        if (!M.testBit(0))
+        {
+            throw new IllegalArgumentException("'M' must be odd");
+        }
+        if (M.signum() != 1)
+        {
+            throw new ArithmeticException("BigInteger: modulus not positive");
+        }
+        if (M.equals(ONE))
+        {
+            return ZERO;
+        }
+        if (X.signum() < 0 || X.compareTo(M) >= 0)
+        {
+            X = X.mod(M);
+        }
+        if (X.equals(ONE))
+        {
+            return ONE;
+        }
+
+        int bits = M.bitLength();
+        int[] m = Nat.fromBigInteger(bits, M);
+        int[] x = Nat.fromBigInteger(bits, X);
+        int len = m.length;
+        int[] z = Nat.create(len);
+        if (!Mod.modOddInverseVar(m, x, z))
+        {
+            throw new ArithmeticException("BigInteger not invertible.");
+        }
+        return Nat.toBigInteger(len, z);
+    }
+
     public static int getUnsignedByteLength(BigInteger n)
     {
+        if (n.equals(ZERO))
+        {
+            return 1;
+        }
+
         return (n.bitLength() + 7) / 8;
     }
 

@@ -11,7 +11,7 @@ import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1OutputStream;
 import org.bouncycastle.asn1.ASN1Primitive;
-import org.bouncycastle.asn1.BERConstructedOctetString;
+import org.bouncycastle.asn1.BEROctetString;
 import org.bouncycastle.asn1.BERSequence;
 import org.bouncycastle.asn1.BERSet;
 import org.bouncycastle.asn1.BERTaggedObject;
@@ -49,21 +49,21 @@ public class EqualsAndHashCodeTest
         byte[]    data = { 0, 1, 0, 1, 0, 0, 1 };
         
         ASN1Primitive    values[] = {
-                new BERConstructedOctetString(data),
+                new BEROctetString(data),
                 new BERSequence(new DERPrintableString("hello world")),
                 new BERSet(new DERPrintableString("hello world")),
                 new BERTaggedObject(0, new DERPrintableString("hello world")),
                 new DERApplicationSpecific(0, data),
                 new DERBitString(data),
                 new DERBMPString("hello world"),
-                new ASN1Boolean(true),
-                new ASN1Boolean(false),
+                ASN1Boolean.getInstance(true),
+                ASN1Boolean.getInstance(false),
                 new ASN1Enumerated(100),
                 new DERGeneralizedTime("20070315173729Z"),
                 new DERGeneralString("hello world"),
                 new DERIA5String("hello"),
                 new ASN1Integer(1000),
-                new DERNull(),
+                DERNull.INSTANCE,
                 new DERNumericString("123456"),
                 new ASN1ObjectIdentifier("1.1.1.10000.1"),
                 new DEROctetString(data),
@@ -82,17 +82,17 @@ public class EqualsAndHashCodeTest
         
         try
         {
-            ByteArrayOutputStream   bOut = new ByteArrayOutputStream();
-            ASN1OutputStream        aOut = new ASN1OutputStream(bOut);
-            
+            ByteArrayOutputStream bOut = new ByteArrayOutputStream();
+            ASN1OutputStream aOut = ASN1OutputStream.create(bOut);
+
             for (int i = 0; i != values.length; i++)
             {
                 aOut.writeObject(values[i]);
             }
 
-            ByteArrayInputStream    bIn = new ByteArrayInputStream(bOut.toByteArray());
-            ASN1InputStream         aIn = new ASN1InputStream(bIn);
-            
+            ByteArrayInputStream bIn = new ByteArrayInputStream(bOut.toByteArray());
+            ASN1InputStream aIn = new ASN1InputStream(bIn);
+
             for (int i = 0; i != values.length; i++)
             {
                 ASN1Primitive o = aIn.readObject();
