@@ -1,6 +1,11 @@
 package org.bouncycastle.crypto.test;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
+
 import org.bouncycastle.crypto.generators.OpenBSDBCrypt;
+import org.bouncycastle.util.Arrays;
+import org.bouncycastle.util.Strings;
 import org.bouncycastle.util.test.SimpleTest;
 
 public class OpenBSDBCryptTest
@@ -28,7 +33,7 @@ public class OpenBSDBCryptTest
     };
 
     private final static String[] bcryptTest2b = { // from: http://stackoverflow.com/questions/11654684/verifying-a-bcrypt-hash
-        "$2a$10$.TtQJ4Jr6isd4Hp.mVfZeuh6Gws4rOQ/vdBczhDx.19NFK0Y84Dle", "ππππππππ"
+        "$2a$10$.TtQJ4Jr6isd4Hp.mVfZeuh6Gws4rOQ/vdBczhDx.19NFK0Y84Dle", "\u03c0\u03c0\u03c0\u03c0\u03c0\u03c0\u03c0\u03c0"
     };
 
     private final static String[][] bcryptTest3 = // from: https://bitbucket.org/vadim/bcrypt.net/src/464c41416dc9/BCrypt.Net.Test/TestBCrypt.cs - plain - salt - expected
@@ -91,6 +96,20 @@ public class OpenBSDBCryptTest
         {"ABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXY", "$2b$12$QwAt5kuG68nW7v.87q0QPuwdki3romFc/RU/RV3Qqk4FPw6WdbQzu"}
     };
 
+    private static final String[][] twoVec = new String[][]{
+        {"a", "$2$12$DB3BUbYa/SsEL7kCOVji0OauTkPkB5Y1OeyfxJHM7jvMrbml5sgD2"},
+        {"abc", "$2$12$p.xODEbFcXUlHGbNxWZqAe6AA5FWupqXmN9tZea2ACDhwIx4EA2a6"},
+        {"hello world", "$2$12$wfkxITYXjNLVpEi9nOjz7uXMhCXKSTY7O2y7X4bwY89aGSvRziguq"},
+        {"ABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXY", "$2$12$QwAt5kuG68nW7v.87q0QPuwdki3romFc/RU/RV3Qqk4FPw6WdbQzu"}
+    };
+
+    private static final String[][] twoXVec = new String[][]{
+        {"a", "$2x$12$DB3BUbYa/SsEL7kCOVji0OauTkPkB5Y1OeyfxJHM7jvMrbml5sgD2"},
+        {"abc", "$2x$12$p.xODEbFcXUlHGbNxWZqAe6AA5FWupqXmN9tZea2ACDhwIx4EA2a6"},
+        {"hello world", "$2x$12$wfkxITYXjNLVpEi9nOjz7uXMhCXKSTY7O2y7X4bwY89aGSvRziguq"},
+        {"ABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXY", "$2x$12$QwAt5kuG68nW7v.87q0QPuwdki3romFc/RU/RV3Qqk4FPw6WdbQzu"}
+    };
+
     public static void main(String[] args)
     {
         runTest(new OpenBSDBCryptTest());
@@ -101,9 +120,127 @@ public class OpenBSDBCryptTest
         return "OpenBSDBCrypt";
     }
 
+
+    public void testPermutations()
+        throws Exception
+    {
+
+        byte[] rootPassword = Strings.toByteArray("aabcc");
+        byte[] buf = null;
+
+        byte[][] salts = new byte[3][];
+
+        salts[0] = new byte[16];
+        salts[1] = new byte[16];
+        salts[2] = new byte[16];
+        for (int t = 0; t < 16; t++)
+        {
+            salts[1][t] = (byte)t;
+            salts[2][t] = (byte)(16 - t);
+        }
+
+
+
+        //
+        // Permutation, starting with a shorter array, same length then one longer.
+        //
+        for (int j = rootPassword.length - 1; j < rootPassword.length + 2; j++)
+        {
+            buf = new byte[j];
+
+            for (int a = 0; a < rootPassword.length; a++)
+            {
+                for (int b = 0; b < buf.length; b++)
+                {
+                    buf[b] = rootPassword[(a + b) % rootPassword.length];
+                }
+
+
+                ArrayList<byte[]> permutations = new ArrayList<byte[]>();
+                permute(permutations, buf, 0, buf.length - 1);
+
+                for (int i = 0; i != permutations.size(); i++)
+                {
+                    byte[] candidate = (byte[])permutations.get(i);
+                    for (int k = 0; k != salts.length; k++)
+                    {
+                        byte[] salt = salts[k];
+                        String expected = OpenBSDBCrypt.generate(rootPassword, salt, 4);
+                        String testValue = OpenBSDBCrypt.generate(candidate, salt, 4);
+
+                        //
+                        // If the passwords are the same for the same salt we should have the same string.
+                        //
+                        boolean sameAsRoot = Arrays.areEqual(rootPassword, candidate);
+                        isTrue("expected same result", sameAsRoot == expected.equals(testValue));
+
+                        //
+                        // check that the test password passes against itself.
+                        //
+                        isTrue("candidate valid with self", OpenBSDBCrypt.checkPassword(testValue, candidate));
+
+                        //
+                        // Check against expected, it should always track sameAsRoot.
+                        //
+                        boolean candidateRootValid = OpenBSDBCrypt.checkPassword(expected, candidate);
+                        isTrue("candidate valid with root", sameAsRoot == candidateRootValid);
+                    }
+
+                }
+            }
+        }
+    }
+
+
+    private void swap(byte[] buf, int i, int j)
+    {
+        byte b = buf[i];
+        buf[i] = buf[j];
+        buf[j] = b;
+    }
+
+    private void permute(ArrayList<byte[]> permutation, byte[] a, int l, int r)
+    {
+        if (l == r)
+        {
+            permutation.add(Arrays.clone(a));
+        }
+        else
+        {
+
+            for (int i = l; i <= r; i++)
+            {
+                // Swapping done
+                swap(a, l, i);
+
+                // Recursion called
+                permute(permutation, a, l + 1, r);
+
+                //backtrack
+                swap(a, l, i);
+            }
+        }
+    }
+
+
     public void performTest()
         throws Exception
     {
+
+        testPermutations();
+
+        byte[] salt = new byte[16];
+        for (int i = 0; i < bcryptTest1.length; i++)
+        {
+            String[] testString = bcryptTest1[i];
+            char[] password = testString[1].toCharArray();
+
+            String s1 = OpenBSDBCrypt.generate(password, salt, 4);
+            String s2 = OpenBSDBCrypt.generate(Strings.toByteArray(password), salt, 4);
+
+            isEquals(s1, s2);
+        }
+
         for (int i = 0; i < bcryptTest1.length; i++)
         {
             String[] testString = bcryptTest1[i];
@@ -142,7 +279,6 @@ public class OpenBSDBCryptTest
             }
         }
 
-
         for (int i = 0; i < bcryptTest4.length; i++)
         {
             String[] testString = bcryptTest4[i];
@@ -165,12 +301,47 @@ public class OpenBSDBCryptTest
             }
         }
 
-        for (int i = 0; i < twoBVec.length; i++)
+        oldPrefixTest(twoBVec);
+
+        oldPrefixTest(twoXVec);
+
+        oldPrefixTest(twoVec);
+
+        int costFactor = 4;
+        SecureRandom random = new SecureRandom();
+        salt = new byte[16];
+        for (int i = 0; i < 1000; i++)
         {
-            password = twoBVec[i][0];
-            encoded = twoBVec[i][1];
+            random.nextBytes(salt);
+            final String tokenString = OpenBSDBCrypt
+                .generate("test-token".toCharArray(), salt, costFactor);
+
+            isTrue(OpenBSDBCrypt.checkPassword(tokenString, "test-token".toCharArray()));
+            isTrue(!OpenBSDBCrypt.checkPassword(tokenString, "wrong-token".toCharArray()));
+        }
+    }
+
+    private void oldPrefixTest(String[][] twoXVec)
+    {
+        String password;
+        String encoded;
+        for (int i = 0; i < twoXVec.length; i++)
+        {
+            password = twoXVec[i][0];
+            encoded = twoXVec[i][1];
 
             if (!OpenBSDBCrypt.checkPassword(encoded, password.toCharArray()))
+            {
+                fail("twoBVec mismatch: " + "[" + i + "] " + password);
+            }
+        }
+
+        for (int i = 0; i < twoXVec.length; i++)
+        {
+            password = twoXVec[i][0];
+            encoded = twoXVec[i][1];
+
+            if (!OpenBSDBCrypt.checkPassword(encoded, Strings.toUTF8ByteArray(password)))
             {
                 fail("twoBVec mismatch: " + "[" + i + "] " + password);
             }

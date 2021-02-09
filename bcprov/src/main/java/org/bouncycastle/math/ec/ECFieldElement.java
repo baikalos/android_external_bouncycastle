@@ -3,8 +3,6 @@ package org.bouncycastle.math.ec;
 import java.math.BigInteger;
 import java.util.Random;
 
-import org.bouncycastle.math.raw.Mod;
-import org.bouncycastle.math.raw.Nat;
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.BigIntegers;
 import org.bouncycastle.util.Integers;
@@ -418,13 +416,7 @@ public abstract class ECFieldElement
 
         protected BigInteger modInverse(BigInteger x)
         {
-            int bits = getFieldSize();
-            int len = (bits + 31) >> 5;
-            int[] p = Nat.fromBigInteger(bits, q);
-            int[] n = Nat.fromBigInteger(bits, x);
-            int[] z = Nat.create(len);
-            Mod.invert(p, n, z);
-            return Nat.toBigInteger(len, z);
+            return BigIntegers.modOddInverse(q, x);
         }
 
         protected BigInteger modMult(BigInteger x1, BigInteger x2)
@@ -714,44 +706,6 @@ public abstract class ECFieldElement
         public int getFieldSize()
         {
             return m;
-        }
-
-        /**
-         * Checks, if the ECFieldElements <code>a</code> and <code>b</code>
-         * are elements of the same field <code>F<sub>2<sup>m</sup></sub></code>
-         * (having the same representation).
-         * @param a field element.
-         * @param b field element to be compared.
-         * @throws IllegalArgumentException if <code>a</code> and <code>b</code>
-         * are not elements of the same field
-         * <code>F<sub>2<sup>m</sup></sub></code> (having the same
-         * representation).
-         * 
-         * @deprecated Will be removed
-         */
-        public static void checkFieldElements(
-            ECFieldElement a,
-            ECFieldElement b)
-        {
-            if ((!(a instanceof F2m)) || (!(b instanceof F2m)))
-            {
-                throw new IllegalArgumentException("Field elements are not "
-                        + "both instances of ECFieldElement.F2m");
-            }
-
-            ECFieldElement.F2m aF2m = (ECFieldElement.F2m)a;
-            ECFieldElement.F2m bF2m = (ECFieldElement.F2m)b;
-
-            if (aF2m.representation != bF2m.representation)
-            {
-                // Should never occur
-                throw new IllegalArgumentException("One of the F2m field elements has incorrect representation");
-            }
-
-            if ((aF2m.m != bF2m.m) || !Arrays.areEqual(aF2m.ks, bF2m.ks))
-            {
-                throw new IllegalArgumentException("Field elements are not elements of the same field F2m");
-            }
         }
 
         public ECFieldElement add(final ECFieldElement b)

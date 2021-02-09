@@ -1,5 +1,7 @@
 package org.bouncycastle.math.ec.rfc7748;
 
+import org.bouncycastle.math.raw.Mod;
+
 public abstract class X25519Field
 {
     public static final int SIZE = 10;
@@ -8,6 +10,8 @@ public abstract class X25519Field
     private static final int M25 = 0x01FFFFFF;
     private static final int M26 = 0x03FFFFFF;
 
+    private static final int[] P32 = new int[]{ 0xFFFFFFED, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+        0xFFFFFFFF, 0x7FFFFFFF };
     private static final int[] ROOT_NEG_ONE = new int[]{ 0x020EA0B0, 0x0386C9D2, 0x00478C4E, 0x0035697F, 0x005E8630,
         0x01FBD7A7, 0x0340264F, 0x01F0B2B4, 0x00027E0E, 0x00570649 };
 
@@ -45,6 +49,11 @@ public abstract class X25519Field
     {
         int z0 = z[0], z1 = z[1], z2 = z[2], z3 = z[3], z4 = z[4];
         int z5 = z[5], z6 = z[6], z7 = z[7], z8 = z[8], z9 = z[9];
+
+        z2 += (z1 >> 26); z1 &= M26;
+        z4 += (z3 >> 26); z3 &= M26;
+        z7 += (z6 >> 26); z6 &= M26;
+        z9 += (z8 >> 26); z8 &= M26;
 
         z3 += (z2 >> 25); z2 &= M25;
         z5 += (z4 >> 25); z4 &= M25;
@@ -120,11 +129,29 @@ public abstract class X25519Field
         }
     }
 
+    public static void decode(int[] x, int xOff, int[] z)
+    {
+        decode128(x, xOff, z, 0);
+        decode128(x, xOff + 4, z, 5);
+        z[9] &= M24;
+    }
+
     public static void decode(byte[] x, int xOff, int[] z)
     {
         decode128(x, xOff, z, 0);
         decode128(x, xOff + 16, z, 5);
         z[9] &= M24;
+    }
+
+    private static void decode128(int[] is, int off, int[] z, int zOff)
+    {
+        int t0 = is[off + 0], t1 = is[off + 1], t2 = is[off + 2], t3 = is[off + 3];
+
+        z[zOff + 0] = t0 & M26;
+        z[zOff + 1] = ((t1 <<  6) | (t0 >>> 26)) & M26;
+        z[zOff + 2] = ((t2 << 12) | (t1 >>> 20)) & M25;
+        z[zOff + 3] = ((t3 << 19) | (t2 >>> 13)) & M26;
+        z[zOff + 4] = t3 >>> 7;
     }
 
     private static void decode128(byte[] bs, int off, int[] z, int zOff)
@@ -150,10 +177,26 @@ public abstract class X25519Field
         return n;
     }
 
+    public static void encode(int[] x, int[] z, int zOff)
+    {
+        encode128(x, 0, z, zOff);
+        encode128(x, 5, z, zOff + 4);
+    }
+
     public static void encode(int[] x, byte[] z, int zOff)
     {
         encode128(x, 0, z, zOff);
         encode128(x, 5, z, zOff + 16);
+    }
+
+    private static void encode128(int[] x, int xOff, int[] is, int off)
+    {
+        int x0 = x[xOff + 0], x1 = x[xOff + 1], x2 = x[xOff + 2], x3 = x[xOff + 3], x4 = x[xOff + 4];
+
+        is[off + 0] =  x0         | (x1 << 26);
+        is[off + 1] = (x1 >>>  6) | (x2 << 20);
+        is[off + 2] = (x2 >>> 12) | (x3 << 13);
+        is[off + 3] = (x3 >>> 19) | (x4 <<  7);
     }
 
     private static void encode128(int[] x, int xOff, byte[] bs, int off)
@@ -176,15 +219,36 @@ public abstract class X25519Field
 
     public static void inv(int[] x, int[] z)
     {
-        // z = x^(p-2) = x^7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEB
-        // (250 1s) (1 0s) (1 1s) (1 0s) (2 1s)
-        // Addition chain: [1] [2] 3 5 10 15 25 50 75 125 [250]
+//        int[] x2 = create();
+//        int[] t = create();
+//        powPm5d8(x, x2, t);
+//        sqr(t, 3, t);
+//        mul(t, x2, z);
 
-        int[] x2 = create();
         int[] t = create();
-        powPm5d8(x, x2, t);
-        sqr(t, 3, t);
-        mul(t, x2, z);
+        int[] u = new int[8];
+
+        copy(x, 0, t, 0);
+        normalize(t);
+        encode(t, u, 0);
+
+        Mod.modOddInverse(P32, u, u);
+
+        decode(u, 0, z);
+    }
+
+    public static void invVar(int[] x, int[] z)
+    {
+        int[] t = create();
+        int[] u = new int[8];
+
+        copy(x, 0, t, 0);
+        normalize(t);
+        encode(t, u, 0);
+
+        Mod.modOddInverseVar(P32, u, u);
+
+        decode(u, 0, z);
     }
 
     public static int isZero(int[] x)
@@ -434,22 +498,22 @@ public abstract class X25519Field
         mul(t, x, rz);
     }
 
-    private static void reduce(int[] z, int c)
+    private static void reduce(int[] z, int x)
     {
-        int z9 = z[9], t = z9;
-                   z9   = t & M24; t >>= 24;
-        t += c;
-        t *= 19;
-        t += z[0]; z[0] = t & M26; t >>= 26;
-        t += z[1]; z[1] = t & M26; t >>= 26;
-        t += z[2]; z[2] = t & M25; t >>= 25;
-        t += z[3]; z[3] = t & M26; t >>= 26;
-        t += z[4]; z[4] = t & M25; t >>= 25;
-        t += z[5]; z[5] = t & M26; t >>= 26;
-        t += z[6]; z[6] = t & M26; t >>= 26;
-        t += z[7]; z[7] = t & M25; t >>= 25;
-        t += z[8]; z[8] = t & M26; t >>= 26;
-        t += z9;   z[9] = t;
+        int t = z[9], z9 = t & M24;
+        t = (t >> 24) + x;
+
+        long cc = t * 19;
+        cc += z[0]; z[0] = (int)cc & M26; cc >>= 26;
+        cc += z[1]; z[1] = (int)cc & M26; cc >>= 26;
+        cc += z[2]; z[2] = (int)cc & M25; cc >>= 25;
+        cc += z[3]; z[3] = (int)cc & M26; cc >>= 26;
+        cc += z[4]; z[4] = (int)cc & M25; cc >>= 25;
+        cc += z[5]; z[5] = (int)cc & M26; cc >>= 26;
+        cc += z[6]; z[6] = (int)cc & M26; cc >>= 26;
+        cc += z[7]; z[7] = (int)cc & M25; cc >>= 25;
+        cc += z[8]; z[8] = (int)cc & M26; cc >>= 26;
+        z[9] = z9 + (int)cc;
     }
 
     public static void sqr(int[] x, int[] z)

@@ -374,7 +374,7 @@ public class X509Name
     public static X509Name getInstance(
         Object  obj)
     {
-        if (obj == null || obj instanceof X509Name)
+        if (obj instanceof X509Name)
         {
             return (X509Name)obj;
         }
