@@ -1,11 +1,10 @@
 package org.bouncycastle.asn1.test;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 
+import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1Primitive;
-import org.bouncycastle.asn1.DEROutputStream;
 import org.bouncycastle.asn1.pkcs.EncryptedPrivateKeyInfo;
 import org.bouncycastle.asn1.util.ASN1Dump;
 import org.bouncycastle.util.Strings;
@@ -15,7 +14,7 @@ import org.bouncycastle.util.test.SimpleTest;
 /**
  * Test the reading and writing of EncryptedPrivateKeyInfo objects using
  * the test vectors provided at
- * <a href=http://www.rsasecurity.com/rsalabs/pkcs/pkcs-5/index.html>
+ * <a href=https://www.rsasecurity.com/rsalabs/pkcs/pkcs-5/index.html>
  * RSA's PKCS5 Page</a>.
  * <br>
  * The vectors are Base 64 encoded and encrypted using the password "password"
@@ -80,19 +79,15 @@ public class EncryptedPrivateKeyInfoTest
             fail("test " + id + " failed construction - exception " + e.toString(), e);
         }
 
-        ByteArrayOutputStream   bOut = new ByteArrayOutputStream();
-        DEROutputStream         dOut = new DEROutputStream(bOut);
-
+        byte[] bytes = null;
         try
         {
-            dOut.writeObject(info);
+            bytes = info.getEncoded(ASN1Encoding.DER);
         }
         catch (Exception e)
         {
             fail("test " + id + " failed writing - exception " + e.toString(), e);
         }
-
-        byte[]  bytes = bOut.toByteArray();
 
         if (bytes.length != sample.length)
         {

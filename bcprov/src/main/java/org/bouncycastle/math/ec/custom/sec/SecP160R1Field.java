@@ -1,20 +1,23 @@
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
+import java.security.SecureRandom;
 
+import org.bouncycastle.math.raw.Mod;
 import org.bouncycastle.math.raw.Nat;
 import org.bouncycastle.math.raw.Nat160;
+import org.bouncycastle.util.Pack;
 
 public class SecP160R1Field
 {
     private static final long M = 0xFFFFFFFFL;
 
     // 2^160 - 2^31 - 1
-    static final int[] P = new int[] { 0x7FFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF};
-    static final int[] PExt = new int[] { 0x00000001, 0x40000001, 0x00000000, 0x00000000, 0x00000000,
-        0xFFFFFFFE, 0xFFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
-    private static final int[] PExtInv = new int[]{ 0xFFFFFFFF, 0xBFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF,
-        0xFFFFFFFF, 0x00000001, 0x00000001 };
+    static final int[] P = new int[]{ 0x7FFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+    private static final int[] PExt = new int[]{ 0x00000001, 0x40000001, 0x00000000, 0x00000000, 0x00000000, 0xFFFFFFFE,
+        0xFFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+    private static final int[] PExtInv = new int[]{ 0xFFFFFFFF, 0xBFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+        0x00000001, 0x00000001 };
     private static final int P4 = 0xFFFFFFFF;
     private static final int PExt9 = 0xFFFFFFFF;
     private static final int PInv = 0x80000001;
@@ -72,6 +75,22 @@ public class SecP160R1Field
         }
     }
 
+    public static void inv(int[] x, int[] z)
+    {
+        Mod.checkedModOddInverse(P, x, z);
+    }
+
+    public static int isZero(int[] x)
+    {
+        int d = 0;
+        for (int i = 0; i < 5; ++i)
+        {
+            d |= x[i];
+        }
+        d = (d >>> 1) | (d & 1);
+        return (d - 1) >> 31;
+    }
+
     public static void multiply(int[] x, int[] y, int[] z)
     {
         int[] tt = Nat160.createExt();
@@ -93,14 +112,34 @@ public class SecP160R1Field
 
     public static void negate(int[] x, int[] z)
     {
-        if (Nat160.isZero(x))
+        if (0 != isZero(x))
         {
-            Nat160.zero(z);
+            Nat160.sub(P, P, z);
         }
         else
         {
             Nat160.sub(P, x, z);
         }
+    }
+
+    public static void random(SecureRandom r, int[] z)
+    {
+        byte[] bb = new byte[5 * 4];
+        do
+        {
+            r.nextBytes(bb);
+            Pack.littleEndianToInt(bb, 0, z, 0, 5);
+        }
+        while (0 == Nat.lessThan(5, z, P));
+    }
+
+    public static void randomMult(SecureRandom r, int[] z)
+    {
+        do
+        {
+            random(r, z);
+        }
+        while (0 != isZero(z));
     }
 
     public static void reduce(int[] xx, int[] z)

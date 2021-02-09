@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.security.Security;
 import java.security.cert.CRL;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -70,6 +71,7 @@ import org.bouncycastle.crypto.params.RSAKeyParameters;
 import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
 import org.bouncycastle.crypto.util.PublicKeyFactory;
 import org.bouncycastle.crypto.util.SubjectPublicKeyInfoFactory;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.math.ec.ECCurve;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.ContentVerifierProvider;
@@ -616,9 +618,12 @@ public class BcCertTest
 
         cert = (X509Certificate)certFact.generateCertificate(bIn);
 
-        if (!cert.getKeyUsage()[7])
         {
-            fail("error generating cert - key usage wrong.");
+            boolean[] keyUsage = cert.getKeyUsage();
+            if (keyUsage == null || keyUsage.length <= 7 || !keyUsage[7])
+            {
+                fail("error generating cert - key usage wrong.");
+            }
         }
 
         List l = cert.getExtendedKeyUsage();
@@ -1473,7 +1478,25 @@ public class BcCertTest
 
         cert = new X509CertificateHolder(new DERSequence(v).getEncoded());
 
-        assertTrue(cert.isSignatureValid(new BcRSAContentVerifierProviderBuilder(digAlgFinder).build(pubKey)));
+        try
+        {
+            System.setProperty("org.bouncycastle.x509.allow_absent_equiv_NULL", "true");
+
+            assertTrue(cert.isSignatureValid(new BcRSAContentVerifierProviderBuilder(digAlgFinder).build(pubKey)));
+        }
+        catch (Exception e)
+        {
+            fail(dump + Strings.lineSeparator() + getName() + ": testNullDerNull failed - exception " + e.toString());
+        }
+        finally
+        {
+            System.setProperty("org.bouncycastle.x509.allow_absent_equiv_NULL", "false");
+        }
+    }
+
+    public void setUp()
+    {
+        Security.addProvider(new BouncyCastleProvider());
     }
 
     public void testCertificates()

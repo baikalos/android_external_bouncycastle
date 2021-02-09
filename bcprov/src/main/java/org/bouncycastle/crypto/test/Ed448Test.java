@@ -11,6 +11,7 @@ import org.bouncycastle.crypto.params.Ed448PublicKeyParameters;
 import org.bouncycastle.crypto.signers.Ed448Signer;
 import org.bouncycastle.crypto.signers.Ed448phSigner;
 import org.bouncycastle.math.ec.rfc8032.Ed448;
+import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.encoders.Hex;
 import org.bouncycastle.util.test.SimpleTest;
 
@@ -69,7 +70,7 @@ public class Ed448Test
 
         signer.init(true, privateKey);
 
-        areEqual(sig, signer.generateSignature());
+        isTrue(areEqual(sig, signer.generateSignature()));
 
         signer.init(false, publicKey);
 
@@ -114,24 +115,53 @@ public class Ed448Test
         byte[] signature = signer.generateSignature();
 
         Signer verifier = createSigner(algorithm, context);
-        verifier.init(false, publicKey);
-        verifier.update(msg, 0, msg.length);
-        boolean shouldVerify = verifier.verifySignature(signature);
 
-        if (!shouldVerify)
         {
-            fail("Ed448(" + algorithm + ") signature failed to verify");
+            verifier.init(false, publicKey);
+            verifier.update(msg, 0, msg.length);
+            boolean shouldVerify = verifier.verifySignature(signature);
+
+            if (!shouldVerify)
+            {
+                fail("Ed448(" + algorithm + ") signature failed to verify");
+            }
         }
 
-        signature[(RANDOM.nextInt() >>> 1) % signature.length] ^= 1 << (RANDOM.nextInt() & 7);
-
-        verifier.init(false, publicKey);
-        verifier.update(msg, 0, msg.length);
-        boolean shouldNotVerify = verifier.verifySignature(signature);
-
-        if (shouldNotVerify)
         {
-            fail("Ed448(" + algorithm + ") bad signature incorrectly verified");
+            byte[] wrongLengthSignature = Arrays.append(signature, (byte)0x00);
+
+            verifier.init(false, publicKey);
+            verifier.update(msg, 0, msg.length);
+            boolean shouldNotVerify = verifier.verifySignature(wrongLengthSignature);
+
+            if (shouldNotVerify)
+            {
+                fail("Ed448(" + algorithm + ") wrong length signature incorrectly verified");
+            }
+        }
+
+        if (msg.length > 0)
+        {
+            boolean shouldNotVerify = verifier.verifySignature(signature);
+
+            if (shouldNotVerify)
+            {
+                fail("Ed448(" + algorithm + ") wrong length failure did not reset verifier");
+            }
+        }
+
+        {
+            byte[] badSignature = Arrays.clone(signature);
+            badSignature[(RANDOM.nextInt() >>> 1) % badSignature.length] ^= 1 << (RANDOM.nextInt() & 7);
+
+            verifier.init(false, publicKey);
+            verifier.update(msg, 0, msg.length);
+            boolean shouldNotVerify = verifier.verifySignature(badSignature);
+
+            if (shouldNotVerify)
+            {
+                fail("Ed448(" + algorithm + ") bad signature incorrectly verified");
+            }
         }
     }
 }
