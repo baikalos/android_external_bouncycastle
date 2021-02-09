@@ -1,21 +1,24 @@
 package org.bouncycastle.math.ec.custom.sec;
 
 import java.math.BigInteger;
+import java.security.SecureRandom;
 
+import org.bouncycastle.math.raw.Mod;
 import org.bouncycastle.math.raw.Nat;
 import org.bouncycastle.math.raw.Nat128;
 import org.bouncycastle.math.raw.Nat256;
+import org.bouncycastle.util.Pack;
 
 public class SecP128R1Field
 {
     private static final long M = 0xFFFFFFFFL;
 
     // 2^128 - 2^97 - 1
-    static final int[] P = new int[] { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFD };
-    static final int[] PExt = new int[] { 0x00000001, 0x00000000, 0x00000000, 0x00000004, 0xFFFFFFFE,
-        0xFFFFFFFF, 0x00000003, 0xFFFFFFFC };
-    private static final int[] PExtInv = new int[]{ 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFB,
-        0x00000001, 0x00000000, 0xFFFFFFFC, 0x00000003 };
+    static final int[] P = new int[]{ 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFD };
+    private static final int[] PExt = new int[]{ 0x00000001, 0x00000000, 0x00000000, 0x00000004, 0xFFFFFFFE, 0xFFFFFFFF,
+        0x00000003, 0xFFFFFFFC };
+    private static final int[] PExtInv = new int[]{ 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFB, 0x00000001,
+        0x00000000, 0xFFFFFFFC, 0x00000003 };
     private static final int P3s1 = 0xFFFFFFFD >>> 1;
     private static final int PExt7s1 = 0xFFFFFFFC >>> 1;
 
@@ -69,6 +72,22 @@ public class SecP128R1Field
         }
     }
 
+    public static void inv(int[] x, int[] z)
+    {
+        Mod.checkedModOddInverse(P, x, z);
+    }
+
+    public static int isZero(int[] x)
+    {
+        int d = 0;
+        for (int i = 0; i < 4; ++i)
+        {
+            d |= x[i];
+        }
+        d = (d >>> 1) | (d & 1);
+        return (d - 1) >> 31;
+    }
+
     public static void multiply(int[] x, int[] y, int[] z)
     {
         int[] tt = Nat128.createExt();
@@ -87,14 +106,34 @@ public class SecP128R1Field
 
     public static void negate(int[] x, int[] z)
     {
-        if (Nat128.isZero(x))
+        if (0 != isZero(x))
         {
-            Nat128.zero(z);
+            Nat128.sub(P, P, z);
         }
         else
         {
             Nat128.sub(P, x, z);
         }
+    }
+
+    public static void random(SecureRandom r, int[] z)
+    {
+        byte[] bb = new byte[4 * 4];
+        do
+        {
+            r.nextBytes(bb);
+            Pack.littleEndianToInt(bb, 0, z, 0, 4);
+        }
+        while (0 == Nat.lessThan(4, z, P));
+    }
+
+    public static void randomMult(SecureRandom r, int[] z)
+    {
+        do
+        {
+            random(r, z);
+        }
+        while (0 != isZero(z));
     }
 
     public static void reduce(int[] xx, int[] z)

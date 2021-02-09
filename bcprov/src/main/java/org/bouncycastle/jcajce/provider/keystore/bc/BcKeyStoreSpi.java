@@ -141,7 +141,6 @@ public class BcKeyStoreSpi
 
             byte[] salt = new byte[KEY_SALT_SIZE];
 
-            random.setSeed(System.currentTimeMillis());
             random.nextBytes(salt);
 
             int iterationCount = MIN_ITERATIONS + (random.nextInt() & 0x3ff);
@@ -678,7 +677,7 @@ public class BcKeyStoreSpi
         }
         catch (Exception e)
         {
-            throw new KeyStoreException(e.toString());
+            throw new BCKeyStoreException(e.toString(), e);
         }
     }
 
@@ -1062,6 +1061,23 @@ public class BcKeyStoreSpi
         public Version1()
         {
             super(1);
+        }
+    }
+
+    private static class BCKeyStoreException
+        extends KeyStoreException
+    {
+        private final Exception cause;
+
+        public BCKeyStoreException(String msg, Exception cause)
+        {
+            super(msg);
+            this.cause = cause;
+        }
+
+        public Throwable getCause()
+        {
+            return cause;
         }
     }
 }

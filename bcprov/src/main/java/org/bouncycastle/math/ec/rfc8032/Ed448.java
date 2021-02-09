@@ -8,7 +8,6 @@ import org.bouncycastle.math.ec.rfc7748.X448;
 import org.bouncycastle.math.ec.rfc7748.X448Field;
 import org.bouncycastle.math.raw.Nat;
 import org.bouncycastle.util.Arrays;
-import org.bouncycastle.util.Strings;
 
 public abstract class Ed448
 {
@@ -19,6 +18,8 @@ public abstract class Ed448
         public static final int Ed448 = 0;
         public static final int Ed448ph = 1;
     }
+
+    private static class F extends X448Field {};
 
     private static final long M26L = 0x03FFFFFFL;
     private static final long M28L = 0x0FFFFFFFL;
@@ -33,7 +34,8 @@ public abstract class Ed448
     public static final int SECRET_KEY_SIZE = 57;
     public static final int SIGNATURE_SIZE = POINT_BYTES + SCALAR_BYTES;
 
-    private static final byte[] DOM4_PREFIX = Strings.toByteArray("SigEd448");
+    // "SigEd448"
+    private static final byte[] DOM4_PREFIX = new byte[]{ 0x53, 0x69, 0x67, 0x45, 0x64, 0x34, 0x34, 0x38 };
 
     private static final int[] P = new int[] { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
         0xFFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
@@ -79,15 +81,15 @@ public abstract class Ed448
 
     private static class PointExt
     {
-        int[] x = X448Field.create();
-        int[] y = X448Field.create();
-        int[] z = X448Field.create();
+        int[] x = F.create();
+        int[] y = F.create();
+        int[] z = F.create();
     }
 
     private static class PointPrecomp
     {
-        int[] x = X448Field.create();
-        int[] y = X448Field.create();
+        int[] x = F.create();
+        int[] y = F.create();
     }
 
     private static byte[] calculateS(byte[] r, byte[] k, byte[] s)
@@ -113,42 +115,42 @@ public abstract class Ed448
 
     private static int checkPoint(int[] x, int[] y)
     {
-        int[] t = X448Field.create();
-        int[] u = X448Field.create();
-        int[] v = X448Field.create();
+        int[] t = F.create();
+        int[] u = F.create();
+        int[] v = F.create();
 
-        X448Field.sqr(x, u);
-        X448Field.sqr(y, v);
-        X448Field.mul(u, v, t);
-        X448Field.add(u, v, u);
-        X448Field.mul(t, -C_d, t);
-        X448Field.subOne(t);
-        X448Field.add(t, u, t);
-        X448Field.normalize(t);
+        F.sqr(x, u);
+        F.sqr(y, v);
+        F.mul(u, v, t);
+        F.add(u, v, u);
+        F.mul(t, -C_d, t);
+        F.subOne(t);
+        F.add(t, u, t);
+        F.normalize(t);
 
-        return X448Field.isZero(t);
+        return F.isZero(t);
     }
 
     private static int checkPoint(int[] x, int[] y, int[] z)
     {
-        int[] t = X448Field.create();
-        int[] u = X448Field.create();
-        int[] v = X448Field.create();
-        int[] w = X448Field.create();
+        int[] t = F.create();
+        int[] u = F.create();
+        int[] v = F.create();
+        int[] w = F.create();
 
-        X448Field.sqr(x, u);
-        X448Field.sqr(y, v);
-        X448Field.sqr(z, w);
-        X448Field.mul(u, v, t);
-        X448Field.add(u, v, u);
-        X448Field.mul(u, w, u);
-        X448Field.sqr(w, w);
-        X448Field.mul(t, -C_d, t);
-        X448Field.sub(t, w, t);
-        X448Field.add(t, u, t);
-        X448Field.normalize(t);
+        F.sqr(x, u);
+        F.sqr(y, v);
+        F.sqr(z, w);
+        F.mul(u, v, t);
+        F.add(u, v, u);
+        F.mul(u, w, u);
+        F.sqr(w, w);
+        F.mul(t, -C_d, t);
+        F.sub(t, w, t);
+        F.add(t, u, t);
+        F.normalize(t);
 
-        return X448Field.isZero(t);
+        return F.isZero(t);
     }
 
     private static boolean checkPointVar(byte[] p)
@@ -228,31 +230,31 @@ public abstract class Ed448
         int x_0 = (py[POINT_BYTES - 1] & 0x80) >>> 7;
         py[POINT_BYTES - 1] &= 0x7F;
 
-        X448Field.decode(py, 0, r.y);
+        F.decode(py, 0, r.y);
 
-        int[] u = X448Field.create();
-        int[] v = X448Field.create();
+        int[] u = F.create();
+        int[] v = F.create();
 
-        X448Field.sqr(r.y, u);
-        X448Field.mul(u, -C_d, v);
-        X448Field.negate(u, u);
-        X448Field.addOne(u);
-        X448Field.addOne(v);
+        F.sqr(r.y, u);
+        F.mul(u, -C_d, v);
+        F.negate(u, u);
+        F.addOne(u);
+        F.addOne(v);
 
-        if (!X448Field.sqrtRatioVar(u, v, r.x))
+        if (!F.sqrtRatioVar(u, v, r.x))
         {
             return false;
         }
 
-        X448Field.normalize(r.x);
-        if (x_0 == 1 && X448Field.isZeroVar(r.x))
+        F.normalize(r.x);
+        if (x_0 == 1 && F.isZeroVar(r.x))
         {
             return false;
         }
 
         if (negate ^ (x_0 != (r.x[0] & 1)))
         {
-            X448Field.negate(r.x, r.x);
+            F.negate(r.x, r.x);
         }
 
         pointExtendXY(r);
@@ -266,12 +268,16 @@ public abstract class Ed448
         decode32(k, kOff, n, 0, SCALAR_INTS);
     }
 
-    private static void dom4(Xof d, byte x, byte[] y)
+    private static void dom4(Xof d, byte phflag, byte[] ctx)
     {
-        d.update(DOM4_PREFIX, 0, DOM4_PREFIX.length);
-        d.update(x);
-        d.update((byte)y.length);
-        d.update(y, 0, y.length);
+        int n = DOM4_PREFIX.length;
+        byte[] t = new byte[n + 2 + ctx.length];
+        System.arraycopy(DOM4_PREFIX, 0, t, 0, n);
+        t[n] = phflag;
+        t[n + 1] = (byte)ctx.length;
+        System.arraycopy(ctx, 0, t, n + 2, ctx.length);
+
+        d.update(t, 0, t.length);
     }
 
     private static void encode24(int n, byte[] bs, int off)
@@ -297,18 +303,18 @@ public abstract class Ed448
 
     private static int encodePoint(PointExt p, byte[] r, int rOff)
     {
-        int[] x = X448Field.create();
-        int[] y = X448Field.create();
+        int[] x = F.create();
+        int[] y = F.create();
 
-        X448Field.inv(p.z, y);
-        X448Field.mul(p.x, y, x);
-        X448Field.mul(p.y, y, y);
-        X448Field.normalize(x);
-        X448Field.normalize(y);
+        F.inv(p.z, y);
+        F.mul(p.x, y, x);
+        F.mul(p.y, y, y);
+        F.normalize(x);
+        F.normalize(y);
 
         int result = checkPoint(x, y);
 
-        X448Field.encode(y, r, rOff);
+        F.encode(y, r, rOff);
         r[rOff + POINT_BYTES - 1] = (byte)((x[0] & 1) << 7);
 
         return result;
@@ -339,7 +345,7 @@ public abstract class Ed448
         return (x[w] >>> b) & 15;
     }
 
-    private static byte[] getWNAF(int[] n, int width)
+    private static byte[] getWnafVar(int[] n, int width)
     {
 //        assert n[SCALAR_INTS - 1] >>> 30 == 0;
 
@@ -512,116 +518,116 @@ public abstract class Ed448
 
     private static void pointAdd(PointExt p, PointExt r)
     {
-        int[] A = X448Field.create();
-        int[] B = X448Field.create();
-        int[] C = X448Field.create();
-        int[] D = X448Field.create();
-        int[] E = X448Field.create();
-        int[] F = X448Field.create();
-        int[] G = X448Field.create();
-        int[] H = X448Field.create();
+        int[] a = F.create();
+        int[] b = F.create();
+        int[] c = F.create();
+        int[] d = F.create();
+        int[] e = F.create();
+        int[] f = F.create();
+        int[] g = F.create();
+        int[] h = F.create();
 
-        X448Field.mul(p.z, r.z, A);
-        X448Field.sqr(A, B);
-        X448Field.mul(p.x, r.x, C);
-        X448Field.mul(p.y, r.y, D);
-        X448Field.mul(C, D, E);
-        X448Field.mul(E, -C_d, E);
-//        X448Field.apm(B, E, F, G);
-        X448Field.add(B, E, F);
-        X448Field.sub(B, E, G);
-        X448Field.add(p.x, p.y, B);
-        X448Field.add(r.x, r.y, E);
-        X448Field.mul(B, E, H);
-//        X448Field.apm(D, C, B, E);
-        X448Field.add(D, C, B);
-        X448Field.sub(D, C, E);
-        X448Field.carry(B);
-        X448Field.sub(H, B, H);
-        X448Field.mul(H, A, H);
-        X448Field.mul(E, A, E);
-        X448Field.mul(F, H, r.x);
-        X448Field.mul(E, G, r.y);
-        X448Field.mul(F, G, r.z);
+        F.mul(p.z, r.z, a);
+        F.sqr(a, b);
+        F.mul(p.x, r.x, c);
+        F.mul(p.y, r.y, d);
+        F.mul(c, d, e);
+        F.mul(e, -C_d, e);
+//        F.apm(b, e, f, g);
+        F.add(b, e, f);
+        F.sub(b, e, g);
+        F.add(p.x, p.y, b);
+        F.add(r.x, r.y, e);
+        F.mul(b, e, h);
+//        F.apm(d, c, b, e);
+        F.add(d, c, b);
+        F.sub(d, c, e);
+        F.carry(b);
+        F.sub(h, b, h);
+        F.mul(h, a, h);
+        F.mul(e, a, e);
+        F.mul(f, h, r.x);
+        F.mul(e, g, r.y);
+        F.mul(f, g, r.z);
     }
 
     private static void pointAddVar(boolean negate, PointExt p, PointExt r)
     {
-        int[] A = X448Field.create();
-        int[] B = X448Field.create();
-        int[] C = X448Field.create();
-        int[] D = X448Field.create();
-        int[] E = X448Field.create();
-        int[] F = X448Field.create();
-        int[] G = X448Field.create();
-        int[] H = X448Field.create();
+        int[] a = F.create();
+        int[] b = F.create();
+        int[] c = F.create();
+        int[] d = F.create();
+        int[] e = F.create();
+        int[] f = F.create();
+        int[] g = F.create();
+        int[] h = F.create();
 
-        int[] b, e, f, g;
+        int[] nb, ne, nf, ng;
         if (negate)
         {
-            b = E; e = B; f = G; g = F;
-            X448Field.sub(p.y, p.x, H);
+            nb = e; ne = b; nf = g; ng = f;
+            F.sub(p.y, p.x, h);
         }
         else
         {
-            b = B; e = E; f = F; g = G;
-            X448Field.add(p.y, p.x, H);
+            nb = b; ne = e; nf = f; ng = g;
+            F.add(p.y, p.x, h);
         }
 
-        X448Field.mul(p.z, r.z, A);
-        X448Field.sqr(A, B);
-        X448Field.mul(p.x, r.x, C);
-        X448Field.mul(p.y, r.y, D);
-        X448Field.mul(C, D, E);
-        X448Field.mul(E, -C_d, E);
-//        X448Field.apm(B, E, F, G);
-        X448Field.add(B, E, f);
-        X448Field.sub(B, E, g);
-        X448Field.add(r.x, r.y, E);
-        X448Field.mul(H, E, H);
-//        X448Field.apm(D, C, B, E);
-        X448Field.add(D, C, b);
-        X448Field.sub(D, C, e);
-        X448Field.carry(b);
-        X448Field.sub(H, B, H);
-        X448Field.mul(H, A, H);
-        X448Field.mul(E, A, E);
-        X448Field.mul(F, H, r.x);
-        X448Field.mul(E, G, r.y);
-        X448Field.mul(F, G, r.z);
+        F.mul(p.z, r.z, a);
+        F.sqr(a, b);
+        F.mul(p.x, r.x, c);
+        F.mul(p.y, r.y, d);
+        F.mul(c, d, e);
+        F.mul(e, -C_d, e);
+//        F.apm(b, e, f, g);
+        F.add(b, e, nf);
+        F.sub(b, e, ng);
+        F.add(r.x, r.y, e);
+        F.mul(h, e, h);
+//        F.apm(d, c, b, e);
+        F.add(d, c, nb);
+        F.sub(d, c, ne);
+        F.carry(nb);
+        F.sub(h, b, h);
+        F.mul(h, a, h);
+        F.mul(e, a, e);
+        F.mul(f, h, r.x);
+        F.mul(e, g, r.y);
+        F.mul(f, g, r.z);
     }
 
     private static void pointAddPrecomp(PointPrecomp p, PointExt r)
     {
-        int[] B = X448Field.create();
-        int[] C = X448Field.create();
-        int[] D = X448Field.create();
-        int[] E = X448Field.create();
-        int[] F = X448Field.create();
-        int[] G = X448Field.create();
-        int[] H = X448Field.create();
+        int[] b = F.create();
+        int[] c = F.create();
+        int[] d = F.create();
+        int[] e = F.create();
+        int[] f = F.create();
+        int[] g = F.create();
+        int[] h = F.create();
 
-        X448Field.sqr(r.z, B);
-        X448Field.mul(p.x, r.x, C);
-        X448Field.mul(p.y, r.y, D);
-        X448Field.mul(C, D, E);
-        X448Field.mul(E, -C_d, E);
-//        X448Field.apm(B, E, F, G);
-        X448Field.add(B, E, F);
-        X448Field.sub(B, E, G);
-        X448Field.add(p.x, p.y, B);
-        X448Field.add(r.x, r.y, E);
-        X448Field.mul(B, E, H);
-//        X448Field.apm(D, C, B, E);
-        X448Field.add(D, C, B);
-        X448Field.sub(D, C, E);
-        X448Field.carry(B);
-        X448Field.sub(H, B, H);
-        X448Field.mul(H, r.z, H);
-        X448Field.mul(E, r.z, E);
-        X448Field.mul(F, H, r.x);
-        X448Field.mul(E, G, r.y);
-        X448Field.mul(F, G, r.z);
+        F.sqr(r.z, b);
+        F.mul(p.x, r.x, c);
+        F.mul(p.y, r.y, d);
+        F.mul(c, d, e);
+        F.mul(e, -C_d, e);
+//        F.apm(b, e, f, g);
+        F.add(b, e, f);
+        F.sub(b, e, g);
+        F.add(p.x, p.y, b);
+        F.add(r.x, r.y, e);
+        F.mul(b, e, h);
+//        F.apm(d, c, b, e);
+        F.add(d, c, b);
+        F.sub(d, c, e);
+        F.carry(b);
+        F.sub(h, b, h);
+        F.mul(h, r.z, h);
+        F.mul(e, r.z, e);
+        F.mul(f, h, r.x);
+        F.mul(e, g, r.y);
+        F.mul(f, g, r.z);
     }
 
     private static PointExt pointCopy(PointExt p)
@@ -633,40 +639,40 @@ public abstract class Ed448
 
     private static void pointCopy(PointExt p, PointExt r)
     {
-        X448Field.copy(p.x, 0, r.x, 0);
-        X448Field.copy(p.y, 0, r.y, 0);
-        X448Field.copy(p.z, 0, r.z, 0);
+        F.copy(p.x, 0, r.x, 0);
+        F.copy(p.y, 0, r.y, 0);
+        F.copy(p.z, 0, r.z, 0);
     }
 
     private static void pointDouble(PointExt r)
     {
-        int[] B = X448Field.create();
-        int[] C = X448Field.create();
-        int[] D = X448Field.create();
-        int[] E = X448Field.create();
-        int[] H = X448Field.create();
-        int[] J = X448Field.create();
+        int[] b = F.create();
+        int[] c = F.create();
+        int[] d = F.create();
+        int[] e = F.create();
+        int[] h = F.create();
+        int[] j = F.create();
 
-        X448Field.add(r.x, r.y, B);
-        X448Field.sqr(B, B);
-        X448Field.sqr(r.x, C);
-        X448Field.sqr(r.y, D);
-        X448Field.add(C, D, E);
-        X448Field.carry(E);
-        X448Field.sqr(r.z, H);
-        X448Field.add(H, H, H);
-        X448Field.carry(H);
-        X448Field.sub(E, H, J);
-        X448Field.sub(B, E, B);
-        X448Field.sub(C, D, C);
-        X448Field.mul(B, J, r.x);
-        X448Field.mul(E, C, r.y);
-        X448Field.mul(E, J, r.z);
+        F.add(r.x, r.y, b);
+        F.sqr(b, b);
+        F.sqr(r.x, c);
+        F.sqr(r.y, d);
+        F.add(c, d, e);
+        F.carry(e);
+        F.sqr(r.z, h);
+        F.add(h, h, h);
+        F.carry(h);
+        F.sub(e, h, j);
+        F.sub(b, e, b);
+        F.sub(c, d, c);
+        F.mul(b, j, r.x);
+        F.mul(e, c, r.y);
+        F.mul(e, j, r.z);
     }
 
     private static void pointExtendXY(PointExt p)
     {
-        X448Field.one(p.z);
+        F.one(p.z);
     }
 
     private static void pointLookup(int block, int index, PointPrecomp p)
@@ -674,18 +680,20 @@ public abstract class Ed448
 //        assert 0 <= block && block < PRECOMP_BLOCKS;
 //        assert 0 <= index && index < PRECOMP_POINTS;
 
-        int off = block * PRECOMP_POINTS * 2 * X448Field.SIZE;
+        int off = block * PRECOMP_POINTS * 2 * F.SIZE;
 
         for (int i = 0; i < PRECOMP_POINTS; ++i)
         {
             int cond = ((i ^ index) - 1) >> 31;
-            X448Field.cmov(cond, precompBase, off, p.x, 0);     off += X448Field.SIZE;
-            X448Field.cmov(cond, precompBase, off, p.y, 0);     off += X448Field.SIZE;
+            F.cmov(cond, precompBase, off, p.x, 0);     off += F.SIZE;
+            F.cmov(cond, precompBase, off, p.y, 0);     off += F.SIZE;
         }
     }
 
     private static void pointLookup(int[] x, int n, int[] table, PointExt r)
     {
+        // TODO This method is currently hardcoded to 4-bit windows and 8 precomputed points
+
         int w = getWindow4(x, n);
 
         int sign = (w >>> (4 - 1)) ^ 1;
@@ -697,15 +705,15 @@ public abstract class Ed448
         for (int i = 0, off = 0; i < 8; ++i)
         {
             int cond = ((i ^ abs) - 1) >> 31;
-            X448Field.cmov(cond, table, off, r.x, 0);       off += X448Field.SIZE;
-            X448Field.cmov(cond, table, off, r.y, 0);       off += X448Field.SIZE;
-            X448Field.cmov(cond, table, off, r.z, 0);       off += X448Field.SIZE;
+            F.cmov(cond, table, off, r.x, 0);       off += F.SIZE;
+            F.cmov(cond, table, off, r.y, 0);       off += F.SIZE;
+            F.cmov(cond, table, off, r.z, 0);       off += F.SIZE;
         }
 
-        X448Field.cnegate(sign, r.x);
+        F.cnegate(sign, r.x);
     }
 
-    private static int[] pointPrecomp(PointExt p, int count)
+    private static int[] pointPrecompute(PointExt p, int count)
     {
 //        assert count > 0;
 
@@ -713,15 +721,15 @@ public abstract class Ed448
         PointExt d = pointCopy(q);
         pointDouble(d);
 
-        int[] table = X448Field.createTable(count * 3);
+        int[] table = F.createTable(count * 3);
         int off = 0;
 
         int i = 0;
         for (;;)
         {
-            X448Field.copy(q.x, 0, table, off);     off += X448Field.SIZE;
-            X448Field.copy(q.y, 0, table, off);     off += X448Field.SIZE;
-            X448Field.copy(q.z, 0, table, off);     off += X448Field.SIZE;
+            F.copy(q.x, 0, table, off);     off += F.SIZE;
+            F.copy(q.y, 0, table, off);     off += F.SIZE;
+            F.copy(q.z, 0, table, off);     off += F.SIZE;
 
             if (++i == count)
             {
@@ -734,7 +742,7 @@ public abstract class Ed448
         return table;
     }
 
-    private static PointExt[] pointPrecompVar(PointExt p, int count)
+    private static PointExt[] pointPrecomputeVar(PointExt p, int count)
     {
 //        assert count > 0;
 
@@ -753,9 +761,9 @@ public abstract class Ed448
 
     private static void pointSetNeutral(PointExt p)
     {
-        X448Field.zero(p.x);
-        X448Field.one(p.y);
-        X448Field.one(p.z);
+        F.zero(p.x);
+        F.one(p.y);
+        F.one(p.z);
     }
 
     public static void precompute()
@@ -768,13 +776,13 @@ public abstract class Ed448
             }
 
             PointExt p = new PointExt();
-            X448Field.copy(B_x, 0, p.x, 0);
-            X448Field.copy(B_y, 0, p.y, 0);
+            F.copy(B_x, 0, p.x, 0);
+            F.copy(B_y, 0, p.y, 0);
             pointExtendXY(p);
 
-            precompBaseTable = pointPrecompVar(p, 1 << (WNAF_WIDTH_BASE - 2));
+            precompBaseTable = pointPrecomputeVar(p, 1 << (WNAF_WIDTH_BASE - 2));
 
-            precompBase = X448Field.createTable(PRECOMP_BLOCKS * PRECOMP_POINTS * 2);
+            precompBase = F.createTable(PRECOMP_BLOCKS * PRECOMP_POINTS * 2);
 
             int off = 0;
             for (int b = 0; b < PRECOMP_BLOCKS; ++b)
@@ -816,19 +824,53 @@ public abstract class Ed448
 
 //                assert k == PRECOMP_POINTS;
 
+                int[] cs = F.createTable(PRECOMP_POINTS);
+
+                // TODO[ed448] A single batch inversion across all blocks?
+                {
+                    int[] u = F.create();
+                    F.copy(points[0].z, 0, u, 0);
+                    F.copy(u, 0, cs, 0);
+
+                    int i = 0;
+                    while (++i < PRECOMP_POINTS)
+                    {
+                        F.mul(u, points[i].z, u);
+                        F.copy(u, 0, cs, i * F.SIZE);
+                    }
+
+                    F.invVar(u, u);
+                    --i;
+
+                    int[] t = F.create();
+
+                    while (i > 0)
+                    {
+                        int j = i--;
+                        F.copy(cs, i * F.SIZE, t, 0);
+                        F.mul(t, u, t);
+                        F.copy(t, 0, cs, j * F.SIZE);
+                        F.mul(u, points[j].z, u);
+                    }
+
+                    F.copy(u, 0, cs, 0);
+                }
+
                 for (int i = 0; i < PRECOMP_POINTS; ++i)
                 {
                     PointExt q = points[i];
-                    // TODO[ed448] Batch inversion
-                    X448Field.inv(q.z, q.z);
-                    X448Field.mul(q.x, q.z, q.x);
-                    X448Field.mul(q.y, q.z, q.y);
 
-//                    X448Field.normalize(q.x);
-//                    X448Field.normalize(q.y);
+//                    F.invVar(q.z, q.z);
+                    F.copy(cs, i * F.SIZE, q.z, 0);
 
-                    X448Field.copy(q.x, 0, precompBase, off);   off += X448Field.SIZE;
-                    X448Field.copy(q.y, 0, precompBase, off);   off += X448Field.SIZE;
+                    F.mul(q.x, q.z, q.x);
+                    F.mul(q.y, q.z, q.y);
+
+//                    F.normalize(q.x);
+//                    F.normalize(q.y);
+
+                    F.copy(q.x, 0, precompBase, off);   off += F.SIZE;
+                    F.copy(q.y, 0, precompBase, off);   off += F.SIZE;
                 }
             }
 
@@ -1124,8 +1166,6 @@ public abstract class Ed448
 
     private static void scalarMult(byte[] k, PointExt p, PointExt r)
     {
-        precompute();
-
         int[] n = new int[SCALAR_INTS];
         decodeScalar(k, 0, n);
 
@@ -1136,17 +1176,17 @@ public abstract class Ed448
 
         // Recode the scalar into signed-digit form
         {
-//            int c1 = Nat.cadd(SCALAR_INTS, ~n[0] & 1, n, L, n);     assert c1 == 0;
-            Nat.cadd(SCALAR_INTS, ~n[0] & 1, n, L, n);
-//            int c2 = Nat.shiftDownBit(SCALAR_INTS, n, 1);           assert c2 == (1 << 31);
-            Nat.shiftDownBit(SCALAR_INTS, n, 1);
+            //int c1 =
+            Nat.cadd(SCALAR_INTS, ~n[0] & 1, n, L, n);      //assert c1 == 0;
+            //int c2 =
+            Nat.shiftDownBit(SCALAR_INTS, n, 1);            //assert c2 == (1 << 31);
         }
 
-        int[] table = pointPrecomp(p, 8);
+        int[] table = pointPrecompute(p, 8);
+        PointExt q = new PointExt();
 
         pointLookup(n, 111, table, r);
 
-        PointExt q = new PointExt();
         for (int w = 110; w >= 0; --w)
         {
             for (int i = 0; i < 4; ++i)
@@ -1168,19 +1208,20 @@ public abstract class Ed448
     {
         precompute();
 
-        pointSetNeutral(r);
-
         int[] n = new int[SCALAR_INTS + 1];
         decodeScalar(k, 0, n);
 
         // Recode the scalar into signed-digit form
         {
             n[SCALAR_INTS] = 4 + Nat.cadd(SCALAR_INTS, ~n[0] & 1, n, L, n);
-//            int c = Nat.shiftDownBit(n.length, n, 0);                           assert c == (1 << 31);
+            //int c =
             Nat.shiftDownBit(n.length, n, 0);
+            //assert c == (1 << 31);
         }
 
         PointPrecomp p = new PointPrecomp();
+
+        pointSetNeutral(r);
 
         int cOff = PRECOMP_SPACING - 1;
         for (;;)
@@ -1206,7 +1247,7 @@ public abstract class Ed448
 
                 pointLookup(b, abs, p);
 
-                X448Field.cnegate(sign, p.x);
+                F.cnegate(sign, p.x);
 
                 pointAddPrecomp(p, r);
             }
@@ -1249,8 +1290,8 @@ public abstract class Ed448
         {
             throw new IllegalStateException();
         }
-        X448Field.copy(p.x, 0, x, 0);
-        X448Field.copy(p.y, 0, y, 0);
+        F.copy(p.x, 0, x, 0);
+        F.copy(p.y, 0, y, 0);
     }
 
     private static void scalarMultStrausVar(int[] nb, int[] np, PointExt p, PointExt r)
@@ -1259,10 +1300,10 @@ public abstract class Ed448
 
         final int width = 5;
 
-        byte[] ws_b = getWNAF(nb, WNAF_WIDTH_BASE);
-        byte[] ws_p = getWNAF(np, width);
+        byte[] ws_b = getWnafVar(nb, WNAF_WIDTH_BASE);
+        byte[] ws_p = getWnafVar(np, width);
 
-        PointExt[] tp = pointPrecompVar(p, 1 << (width - 2));
+        PointExt[] tp = pointPrecomputeVar(p, 1 << (width - 2));
 
         pointSetNeutral(r);
 

@@ -81,6 +81,9 @@ public class RSA
             provider.addAlgorithm("KeyFactory.RSA", PREFIX + "KeyFactorySpi");
             provider.addAlgorithm("KeyPairGenerator.RSA", PREFIX + "KeyPairGeneratorSpi");
 
+            provider.addAlgorithm("KeyFactory.RSASSA-PSS", PREFIX + "KeyFactorySpi");
+            provider.addAlgorithm("KeyPairGenerator.RSASSA-PSS", PREFIX + "KeyPairGeneratorSpi$PSS");
+
             AsymmetricKeyInfoConverter keyFact = new KeyFactorySpi();
 
             registerOid(provider, PKCSObjectIdentifiers.rsaEncryption, "RSA", keyFact);
@@ -260,6 +263,9 @@ public class RSA
             provider.addAlgorithm("Alg.Alias.Signature." + digest + "WithRSA/PSS", digest + "WITHRSAANDMGF1");
             provider.addAlgorithm("Alg.Alias.Signature." + digest + "withRSAandMGF1", digest + "WITHRSAANDMGF1");
             provider.addAlgorithm("Alg.Alias.Signature." + digest + "WithRSAAndMGF1", digest + "WITHRSAANDMGF1");
+            provider.addAlgorithm("Alg.Alias.Signature." + digest + "withRSASSA-PSS", digest + "WITHRSAANDMGF1");
+            provider.addAlgorithm("Alg.Alias.Signature." + digest + "WithRSASSA-PSS", digest + "WITHRSAANDMGF1");
+            provider.addAlgorithm("Alg.Alias.Signature." + digest + "WITHRSASSA-PSS", digest + "WITHRSAANDMGF1");
             provider.addAlgorithm("Signature." + digest + "WITHRSAANDMGF1", className);
         }
 

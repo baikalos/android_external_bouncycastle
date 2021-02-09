@@ -22,7 +22,7 @@ public class BouncyCastlePQCProvider
     extends Provider
     implements ConfigurableProvider
 {
-    private static String info = "BouncyCastle Post-Quantum Security Provider v1.64";
+    private static String info = "BouncyCastle Post-Quantum Security Provider v1.67";
 
     public static String PROVIDER_NAME = "BCPQC";
 
@@ -37,7 +37,7 @@ public class BouncyCastlePQCProvider
     private static final String ALGORITHM_PACKAGE = "org.bouncycastle.pqc.jcajce.provider.";
     private static final String[] ALGORITHMS =
         {
-            "Rainbow", "McEliece", "SPHINCS", "NH", "XMSS", "QTESLA"
+            "Rainbow", "McEliece", "SPHINCS", "LMS", "NH", "XMSS", "QTESLA"
         };
 
     /**
@@ -47,7 +47,7 @@ public class BouncyCastlePQCProvider
      */
     public BouncyCastlePQCProvider()
     {
-        super(PROVIDER_NAME, 1.64, info);
+        super(PROVIDER_NAME, 1.67, info);
 
         AccessController.doPrivileged(new PrivilegedAction()
         {
@@ -125,6 +125,11 @@ public class BouncyCastlePQCProvider
         {
             keyInfoConverters.put(oid, keyInfoConverter);
         }
+    }
+
+    public AsymmetricKeyInfoConverter getKeyInfoConverter(ASN1ObjectIdentifier oid)
+    {
+        return (AsymmetricKeyInfoConverter)keyInfoConverters.get(oid);
     }
 
     public void addAttributes(String key, Map<String, String> attributeMap)
