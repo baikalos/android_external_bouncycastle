@@ -16,6 +16,23 @@
       "message": "Verified 1.68 is the latest release version",
       "revId": "e54b9569dbfc16b480d8a0a4e6ee14080416a7d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "521413b7_c02e4010",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-15T12:27:19Z",
+      "side": 1,
+      "message": "Sorry for the delay, only just noticed the target branch.",
+      "revId": "e54b9569dbfc16b480d8a0a4e6ee14080416a7d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
