@@ -27,6 +27,7 @@ import com.android.org.bouncycastle.crypto.BlockCipher;
 import com.android.org.bouncycastle.crypto.BufferedBlockCipher;
 import com.android.org.bouncycastle.crypto.CipherKeyGenerator;
 import com.android.org.bouncycastle.crypto.CipherParameters;
+import com.android.org.bouncycastle.crypto.CryptoServicesRegistrar;
 import com.android.org.bouncycastle.crypto.DataLengthException;
 import com.android.org.bouncycastle.crypto.InvalidCipherTextException;
 import com.android.org.bouncycastle.crypto.Mac;
@@ -56,6 +57,7 @@ import com.android.org.bouncycastle.jcajce.provider.symmetric.util.BaseKeyGenera
 // import org.bouncycastle.jcajce.provider.symmetric.util.BaseSecretKeyFactory;
 import com.android.org.bouncycastle.jcajce.provider.symmetric.util.BaseWrapCipher;
 import com.android.org.bouncycastle.jcajce.provider.symmetric.util.BlockCipherProvider;
+import com.android.org.bouncycastle.jcajce.provider.symmetric.util.GcmSpecUtil;
 import com.android.org.bouncycastle.jcajce.provider.symmetric.util.IvAlgorithmParameters;
 import com.android.org.bouncycastle.jcajce.provider.symmetric.util.PBESecretKeyFactory;
 import com.android.org.bouncycastle.jcajce.spec.AEADParameterSpec;
@@ -159,7 +161,7 @@ public final class AES
     {
         public CCM()
         {
-            super(new CCMBlockCipher(new AESEngine()), false, 16);
+            super(new CCMBlockCipher(new AESEngine()), false, 12);
         }
     }
 
@@ -594,7 +596,7 @@ public final class AES
 
             if (random == null)
             {
-                random = new SecureRandom();
+                random = CryptoServicesRegistrar.getSecureRandom();
             }
 
             random.nextBytes(iv);
