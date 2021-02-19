@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+// import org.bouncycastle.asn1.isara.IsaraObjectIdentifiers;
+// import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.jcajce.provider.config.ConfigurableProvider;
@@ -31,6 +33,7 @@ import org.bouncycastle.jcajce.provider.util.AsymmetricKeyInfoConverter;
 // import org.bouncycastle.pqc.jcajce.provider.sphincs.Sphincs256KeyFactorySpi;
 // import org.bouncycastle.pqc.jcajce.provider.xmss.XMSSKeyFactorySpi;
 // import org.bouncycastle.pqc.jcajce.provider.xmss.XMSSMTKeyFactorySpi;
+// import org.bouncycastle.pqc.jcajce.provider.lms.LMSKeyFactorySpi;
 
 /**
  * To add the provider at runtime use:
@@ -59,13 +62,15 @@ import org.bouncycastle.jcajce.provider.util.AsymmetricKeyInfoConverter;
 public final class BouncyCastleProvider extends Provider
     implements ConfigurableProvider
 {
-    private static String info = "BouncyCastle Security Provider v1.61";
+    private static String info = "BouncyCastle Security Provider v1.68";
 
     public static final String PROVIDER_NAME = "BC";
 
     public static final ProviderConfiguration CONFIGURATION = new BouncyCastleProviderConfiguration();
 
     private static final Map keyInfoConverters = new HashMap();
+
+    private static final Class revChkClass = ClassUtil.loadClass(BouncyCastleProvider.class, "java.security.cert.PKIXRevocationChecker");
 
     /*
      * Configurable symmetric ciphers
@@ -105,7 +110,7 @@ public final class BouncyCastleProvider extends Provider
     private static final String[] ASYMMETRIC_GENERIC =
     {
         // Android-changed: Unsupported algorithms
-        // "X509", "IES"
+        // "X509", "IES", "COMPOSITE"
         "X509"
     };
 
@@ -124,7 +129,8 @@ public final class BouncyCastleProvider extends Provider
     {
         // Android-changed: Unsupported algorithms
         // "GOST3411", "Keccak", "MD2", "MD4", "MD5", "SHA1", "RIPEMD128", "RIPEMD160", "RIPEMD256", "RIPEMD320", "SHA224",
-        // "SHA256", "SHA384", "SHA512", "SHA3", "Skein", "SM3", "Tiger", "Whirlpool", "Blake2b", "Blake2s", "DSTU7564"
+        // "SHA256", "SHA384", "SHA512", "SHA3", "Skein", "SM3", "Tiger", "Whirlpool", "Blake2b", "Blake2s", "DSTU7564",
+        // "Haraka"
         "MD5", "SHA1", "SHA224", "SHA256", "SHA384", "SHA512",
     };
 
@@ -154,7 +160,7 @@ public final class BouncyCastleProvider extends Provider
      */
     public BouncyCastleProvider()
     {
-        super(PROVIDER_NAME, 1.61, info);
+        super(PROVIDER_NAME, 1.68, info);
 
         AccessController.doPrivileged(new PrivilegedAction()
         {
@@ -187,6 +193,7 @@ public final class BouncyCastleProvider extends Provider
         loadAlgorithms(SECURE_RANDOM_PACKAGE, SECURE_RANDOMS);
 
         loadPQCKeys();  // so we can handle certificates containing them.
+
         //
         // X509Store
         //
@@ -199,7 +206,7 @@ public final class BouncyCastleProvider extends Provider
         put("X509Store.CRL/LDAP", "org.bouncycastle.jce.provider.X509StoreLDAPCRLs");
         put("X509Store.ATTRIBUTECERTIFICATE/LDAP", "org.bouncycastle.jce.provider.X509StoreLDAPAttrCerts");
         put("X509Store.CERTIFICATEPAIR/LDAP", "org.bouncycastle.jce.provider.X509StoreLDAPCertPairs");
-        
+
         //
         // X509StreamParser
         //
@@ -223,8 +230,27 @@ public final class BouncyCastleProvider extends Provider
         put("CertPathBuilder.RFC3281", "org.bouncycastle.jce.provider.PKIXAttrCertPathBuilderSpi");
         put("CertPathValidator.RFC3280", "org.bouncycastle.jce.provider.PKIXCertPathValidatorSpi");
         put("CertPathBuilder.RFC3280", "org.bouncycastle.jce.provider.PKIXCertPathBuilderSpi");
+
+        if (revChkClass != null)
+        {
+            put("CertPathBuilder.RFC3281", "org.bouncycastle.jce.provider.PKIXAttrCertPathBuilderSpi");
+            put("CertPathValidator.RFC3280", "org.bouncycastle.jce.provider.PKIXCertPathValidatorSpi_8");
+            put("CertPathBuilder.RFC3280", "org.bouncycastle.jce.provider.PKIXCertPathBuilderSpi_8");
+            put("CertPathValidator.PKIX", "org.bouncycastle.jce.provider.PKIXCertPathValidatorSpi_8");
+            put("CertPathBuilder.PKIX", "org.bouncycastle.jce.provider.PKIXCertPathBuilderSpi_8");
+        }
+        else
+        {
+            put("CertPathValidator.RFC3281", "org.bouncycastle.jce.provider.PKIXAttrCertPathValidatorSpi");
+            put("CertPathBuilder.RFC3281", "org.bouncycastle.jce.provider.PKIXAttrCertPathBuilderSpi");
+            put("CertPathValidator.RFC3280", "org.bouncycastle.jce.provider.PKIXCertPathValidatorSpi");
+            put("CertPathBuilder.RFC3280", "org.bouncycastle.jce.provider.PKIXCertPathBuilderSpi");
+            put("CertPathValidator.PKIX", "org.bouncycastle.jce.provider.PKIXCertPathValidatorSpi");
+            put("CertPathBuilder.PKIX", "org.bouncycastle.jce.provider.PKIXCertPathBuilderSpi");
+        }
         */
         // END Android-removed: Unsupported algorithms
+
         put("CertPathValidator.PKIX", "org.bouncycastle.jce.provider.PKIXCertPathValidatorSpi");
         put("CertPathBuilder.PKIX", "org.bouncycastle.jce.provider.PKIXCertPathBuilderSpi");
         put("CertStore.Collection", "org.bouncycastle.jce.provider.CertStoreCollectionSpi");
@@ -263,15 +289,15 @@ public final class BouncyCastleProvider extends Provider
         addKeyInfoConverter(PQCObjectIdentifiers.sphincs256, new Sphincs256KeyFactorySpi());
         addKeyInfoConverter(PQCObjectIdentifiers.newHope, new NHKeyFactorySpi());
         addKeyInfoConverter(PQCObjectIdentifiers.xmss, new XMSSKeyFactorySpi());
+        addKeyInfoConverter(IsaraObjectIdentifiers.id_alg_xmss, new XMSSKeyFactorySpi());
         addKeyInfoConverter(PQCObjectIdentifiers.xmss_mt, new XMSSMTKeyFactorySpi());
+        addKeyInfoConverter(IsaraObjectIdentifiers.id_alg_xmssmt, new XMSSMTKeyFactorySpi());
         addKeyInfoConverter(PQCObjectIdentifiers.mcEliece, new McElieceKeyFactorySpi());
         addKeyInfoConverter(PQCObjectIdentifiers.mcElieceCca2, new McElieceCCA2KeyFactorySpi());
         addKeyInfoConverter(PQCObjectIdentifiers.rainbow, new RainbowKeyFactorySpi());
-        addKeyInfoConverter(PQCObjectIdentifiers.qTESLA_I, new QTESLAKeyFactorySpi());
-        addKeyInfoConverter(PQCObjectIdentifiers.qTESLA_III_size, new QTESLAKeyFactorySpi());
-        addKeyInfoConverter(PQCObjectIdentifiers.qTESLA_III_speed, new QTESLAKeyFactorySpi());
         addKeyInfoConverter(PQCObjectIdentifiers.qTESLA_p_I, new QTESLAKeyFactorySpi());
         addKeyInfoConverter(PQCObjectIdentifiers.qTESLA_p_III, new QTESLAKeyFactorySpi());
+        addKeyInfoConverter(PKCSObjectIdentifiers.id_alg_hss_lms_hashsig, new LMSKeyFactorySpi());
     }
     */
     // END Android-removed: Unsupported algorithms
@@ -311,6 +337,11 @@ public final class BouncyCastleProvider extends Provider
         {
             keyInfoConverters.put(oid, keyInfoConverter);
         }
+    }
+
+    public AsymmetricKeyInfoConverter getKeyInfoConverter(ASN1ObjectIdentifier oid)
+    {
+        return (AsymmetricKeyInfoConverter)keyInfoConverters.get(oid);
     }
 
     public void addAttributes(String key, Map<String, String> attributeMap)
