@@ -16,6 +16,7 @@ import java.security.cert.PKIXParameters;
 import java.security.cert.TrustAnchor;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +30,8 @@ import com.android.internal.org.bouncycastle.asn1.x509.Extension;
 import com.android.internal.org.bouncycastle.asn1.x509.TBSCertificate;
 import com.android.internal.org.bouncycastle.jcajce.PKIXExtendedBuilderParameters;
 import com.android.internal.org.bouncycastle.jcajce.PKIXExtendedParameters;
+// BEGIN Android-removed:
+// import org.bouncycastle.jcajce.interfaces.BCX509Certificate;
 import com.android.internal.org.bouncycastle.jcajce.util.BCJcaJceHelper;
 import com.android.internal.org.bouncycastle.jcajce.util.JcaJceHelper;
 import com.android.internal.org.bouncycastle.jce.exception.ExtCertPathValidatorException;
@@ -43,9 +46,16 @@ public class PKIXCertPathValidatorSpi
         extends CertPathValidatorSpi
 {
     private final JcaJceHelper helper = new BCJcaJceHelper();
+    private final boolean isForCRLCheck;
 
     public PKIXCertPathValidatorSpi()
     {
+        this(false);
+    }
+
+    public PKIXCertPathValidatorSpi(boolean isForCRLCheck)
+    {
+        this.isForCRLCheck = isForCRLCheck;
     }
     // BEGIN Android-added: Avoid loading blocklist during class init
     private static class NoPreloadHolder {
@@ -127,7 +137,8 @@ public class PKIXCertPathValidatorSpi
         //
         // (b)
         //
-        // Date validDate = CertPathValidatorUtilities.getValidDate(paramsPKIX);
+        final Date currentDate = new Date();
+        final Date validityDate = CertPathValidatorUtilities.getValidityDate(paramsPKIX, currentDate);
 
         //
         // (c)
@@ -255,7 +266,7 @@ public class PKIXCertPathValidatorSpi
                 workingPublicKey = trust.getCAPublicKey();
             }
         }
-        catch (IllegalArgumentException ex)
+        catch (RuntimeException ex)
         {
             throw new ExtCertPathValidatorException("Subject of trust anchor could not be (re)encoded.", ex, certPath,
                     -1);
@@ -300,6 +311,19 @@ public class PKIXCertPathValidatorSpi
             ((PKIXCertPathChecker) certIter.next()).init(false);
         }
 
+        //
+        // initialize RevocationChecker
+        //
+        ProvCrlRevocationChecker revocationChecker;
+        if (paramsPKIX.isRevocationEnabled())
+        {
+            revocationChecker = new ProvCrlRevocationChecker(helper);
+        }
+        else
+        {
+            revocationChecker = null;
+        }
+
         X509Certificate cert = null;
 
         for (index = certs.size() - 1; index >= 0; index--)
@@ -342,13 +366,13 @@ public class PKIXCertPathValidatorSpi
             // 6.1.3
             //
 
-            RFC3280CertPathUtilities.processCertA(certPath, paramsPKIX, index, workingPublicKey,
-                verificationAlreadyPerformed, workingIssuerName, sign, helper);
+            RFC3280CertPathUtilities.processCertA(certPath, paramsPKIX, validityDate, revocationChecker, index,
+                workingPublicKey, verificationAlreadyPerformed, workingIssuerName, sign);
 
-            RFC3280CertPathUtilities.processCertBC(certPath, index, nameConstraintValidator);
+            RFC3280CertPathUtilities.processCertBC(certPath, index, nameConstraintValidator, isForCRLCheck);
 
             validPolicyTree = RFC3280CertPathUtilities.processCertD(certPath, index, acceptablePolicies,
-                    validPolicyTree, policyNodes, inhibitAnyPolicy);
+                    validPolicyTree, policyNodes, inhibitAnyPolicy, isForCRLCheck);
 
             validPolicyTree = RFC3280CertPathUtilities.processCertE(certPath, index, validPolicyTree);
 
@@ -507,6 +531,27 @@ public class PKIXCertPathValidatorSpi
     static void checkCertificate(X509Certificate cert)
         throws AnnotatedException
     {
+        // BEGIN Android-removed:
+        /*
+        if (cert instanceof BCX509Certificate)
+        {
+            RuntimeException cause = null;
+            try
+            {
+                if (null != ((BCX509Certificate)cert).getTBSCertificateNative())
+                {
+                    return;
+                }
+            }
+            catch (RuntimeException e)
+            {
+                cause = e;
+            }
+
+            throw new AnnotatedException("unable to process TBSCertificate", cause);
+        }
+        */
+        // END Android-removed:
         try
         {
             TBSCertificate.getInstance(cert.getTBSCertificate());

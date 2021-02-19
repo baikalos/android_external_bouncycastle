@@ -47,6 +47,7 @@ public class BCStyle
 
     /**
      * device serial number name - StringType(SIZE(1..64))
+     * @deprecated use SERIALNUMBER or SURNAME
      */
     public static final ASN1ObjectIdentifier SN = new ASN1ObjectIdentifier("2.5.4.5").intern();
 
@@ -58,7 +59,7 @@ public class BCStyle
     /**
      * device serial number name - StringType(SIZE(1..64))
      */
-    public static final ASN1ObjectIdentifier SERIALNUMBER = SN;
+    public static final ASN1ObjectIdentifier SERIALNUMBER = new ASN1ObjectIdentifier("2.5.4.5").intern();
 
     /**
      * locality name - StringType(SIZE(1..64))
@@ -78,6 +79,8 @@ public class BCStyle
     public static final ASN1ObjectIdentifier INITIALS = new ASN1ObjectIdentifier("2.5.4.43").intern();
     public static final ASN1ObjectIdentifier GENERATION = new ASN1ObjectIdentifier("2.5.4.44").intern();
     public static final ASN1ObjectIdentifier UNIQUE_IDENTIFIER = new ASN1ObjectIdentifier("2.5.4.45").intern();
+
+    public static final ASN1ObjectIdentifier DESCRIPTION = new ASN1ObjectIdentifier("2.5.4.13").intern();
 
     /**
      * businessCategory - DirectoryString(SIZE(1..128)
@@ -99,6 +102,7 @@ public class BCStyle
      */
     public static final ASN1ObjectIdentifier PSEUDONYM = new ASN1ObjectIdentifier("2.5.4.65").intern();
 
+    public static final ASN1ObjectIdentifier ROLE = new ASN1ObjectIdentifier("2.5.4.72").intern();
 
     /**
      * RFC 3039 DateOfBirth - GeneralizedTime - YYYYMMDD000000Z
@@ -207,7 +211,7 @@ public class BCStyle
         DefaultSymbols.put(CN, "CN");
         DefaultSymbols.put(L, "L");
         DefaultSymbols.put(ST, "ST");
-        DefaultSymbols.put(SN, "SERIALNUMBER");
+        DefaultSymbols.put(SERIALNUMBER, "SERIALNUMBER");
         DefaultSymbols.put(EmailAddress, "E");
         DefaultSymbols.put(DC, "DC");
         DefaultSymbols.put(UID, "UID");
@@ -216,6 +220,8 @@ public class BCStyle
         DefaultSymbols.put(GIVENNAME, "GIVENNAME");
         DefaultSymbols.put(INITIALS, "INITIALS");
         DefaultSymbols.put(GENERATION, "GENERATION");
+        DefaultSymbols.put(DESCRIPTION, "DESCRIPTION");
+        DefaultSymbols.put(ROLE, "ROLE");
         DefaultSymbols.put(UnstructuredAddress, "unstructuredAddress");
         DefaultSymbols.put(UnstructuredName, "unstructuredName");
         DefaultSymbols.put(UNIQUE_IDENTIFIER, "UniqueIdentifier");
@@ -241,8 +247,8 @@ public class BCStyle
         DefaultLookUp.put("cn", CN);
         DefaultLookUp.put("l", L);
         DefaultLookUp.put("st", ST);
-        DefaultLookUp.put("sn", SN);
-        DefaultLookUp.put("serialnumber", SN);
+        DefaultLookUp.put("sn", SURNAME);
+        DefaultLookUp.put("serialnumber", SERIALNUMBER);
         DefaultLookUp.put("street", STREET);
         DefaultLookUp.put("emailaddress", E);
         DefaultLookUp.put("dc", DC);
@@ -252,13 +258,15 @@ public class BCStyle
         DefaultLookUp.put("givenname", GIVENNAME);
         DefaultLookUp.put("initials", INITIALS);
         DefaultLookUp.put("generation", GENERATION);
+        DefaultLookUp.put("description", DESCRIPTION);
+        DefaultLookUp.put("role", ROLE);
         DefaultLookUp.put("unstructuredaddress", UnstructuredAddress);
         DefaultLookUp.put("unstructuredname", UnstructuredName);
         DefaultLookUp.put("uniqueidentifier", UNIQUE_IDENTIFIER);
         DefaultLookUp.put("dn", DN_QUALIFIER);
         DefaultLookUp.put("pseudonym", PSEUDONYM);
         DefaultLookUp.put("postaladdress", POSTAL_ADDRESS);
-        DefaultLookUp.put("nameofbirth", NAME_AT_BIRTH);
+        DefaultLookUp.put("nameatbirth", NAME_AT_BIRTH);
         DefaultLookUp.put("countryofcitizenship", COUNTRY_OF_CITIZENSHIP);
         DefaultLookUp.put("countryofresidence", COUNTRY_OF_RESIDENCE);
         DefaultLookUp.put("gender", GENDER);
@@ -347,6 +355,4 @@ public class BCStyle
 
         return buf.toString();
     }
-
-
 }
