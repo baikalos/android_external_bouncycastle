@@ -16,6 +16,236 @@
       "message": "The only failure in CTS tests was libcore.java.lang.ThreadTest#testLeakingStartedThreads failing with OOM.",
       "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e60a6339_4e9bd848",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/cms/CMSPatchKit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2021-02-23T10:53:50Z",
+      "side": 1,
+      "message": "can we not add this class? Or is it necessary to support existing functionality?",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 24
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7697dedf_8d82aad5",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/cms/DefaultCMSSignatureAlgorithmNameGenerator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2021-02-23T10:53:50Z",
+      "side": 1,
+      "message": "please merge with comment section above, and change style to multiline comment /**/ like below instead of commenting out each line",
+      "range": {
+        "startLine": 106,
+        "startChar": 10,
+        "endLine": 112,
+        "endChar": 73
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02e27658_fbe00845",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/cms/DefaultCMSSignatureEncryptionAlgorithmFinder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2021-02-23T10:53:50Z",
+      "side": 1,
+      "message": "same comment about comment style - that way future changes would not have merge conflicts",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 112
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6568cbd_47a559ea",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/operator/DefaultDigestAlgorithmIdentifierFinder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2021-02-23T10:53:50Z",
+      "side": 1,
+      "message": "don\u0027t need to comment out",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 104
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a13ebfa_c8c29917",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/operator/DefaultSignatureAlgorithmIdentifierFinder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2021-02-23T10:53:50Z",
+      "side": 1,
+      "message": "no need to comment out",
+      "range": {
+        "startLine": 152,
+        "startChar": 1,
+        "endLine": 152,
+        "endChar": 2
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ae7079b_07cad0f9",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/operator/DefaultSignatureAlgorithmIdentifierFinder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2021-02-23T10:53:50Z",
+      "side": 1,
+      "message": "no need to comment out",
+      "range": {
+        "startLine": 394,
+        "startChar": 0,
+        "endLine": 394,
+        "endChar": 3
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a7d4870_cd9e4f24",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/operator/InputAEADDecryptor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2021-02-23T10:53:50Z",
+      "side": 1,
+      "message": "there is a chain of new classes and subtypes that deal with AAD, just want to make sure they are used in existing algorithms, not in new ones",
+      "range": {
+        "startLine": 6,
+        "startChar": 17,
+        "endLine": 6,
+        "endChar": 35
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c67ccd6_6c737e40",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/BERTaggedObject.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2021-02-23T10:53:50Z",
+      "side": 1,
+      "message": "is this commented out upstream? If not let\u0027s document why it is removed, however it doesn\u0027t look to be excluding functionality but rather changing behavior",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 11
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a9e22c4_ca72095b",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/DEROutputStream.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2021-02-23T10:53:50Z",
+      "side": 1,
+      "message": "not clear what exactly is Android-changed - next line? I don\u0027t see a diff",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 95
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1330d5c7_57d3ee1a",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/nist/KMACwithSHAKE128_params.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2021-02-23T10:53:50Z",
+      "side": 1,
+      "message": "what breaks if don\u0027t add this and KMACwithSHAKE256_params?",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 36
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
