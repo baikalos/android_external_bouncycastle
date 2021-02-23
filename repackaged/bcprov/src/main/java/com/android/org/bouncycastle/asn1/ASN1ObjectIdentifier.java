@@ -13,7 +13,6 @@ import com.android.org.bouncycastle.util.Arrays;
  * Class representing the ASN.1 OBJECT IDENTIFIER type.
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public class ASN1ObjectIdentifier
     extends ASN1Primitive
 {
@@ -28,7 +27,6 @@ public class ASN1ObjectIdentifier
      * @return an ASN1ObjectIdentifier instance, or null.
      * @throws IllegalArgumentException if the object cannot be converted.
      */
-    @libcore.api.CorePlatformApi
     public static ASN1ObjectIdentifier getInstance(
         Object obj)
     {
@@ -174,7 +172,6 @@ public class ASN1ObjectIdentifier
      *
      * @param identifier a string representation of an OID.
      */
-    @libcore.api.CorePlatformApi
     public ASN1ObjectIdentifier(
         String identifier)
     {
@@ -212,7 +209,6 @@ public class ASN1ObjectIdentifier
      *
      * @return the string representation of the OID carried by this object.
      */
-    @libcore.api.CorePlatformApi
     public String getId()
     {
         return identifier;
