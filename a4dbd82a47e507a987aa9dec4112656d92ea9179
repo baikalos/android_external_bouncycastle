@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "840329af_8effda4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-23T14:29:11Z",
+      "side": 1,
+      "message": "I think there are a few more things we can remove, e.g. OpenSSH*KeySpec, will do another pass for that later.\n\nAlso the whole new tree of stuff under bcprov/src/main/java/org/bouncycastle/its/asn1 although that might not be possible.",
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e60a6339_4e9bd848",
@@ -89,6 +106,75 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e57966b3_6b4657ed",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/cms/SignerInfoGenerator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-23T14:29:11Z",
+      "side": 1,
+      "message": "This one can be removed too.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c01b1dd_5e8835ae",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/cms/SignerInfoGenerator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-23T14:29:11Z",
+      "side": 1,
+      "message": "nit: trailing whitespace",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 12
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b587957f_94ef70da",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/operator/DefaultDigestAlgorithmIdentifierFinder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-23T14:29:11Z",
+      "side": 1,
+      "message": "Move into the removed section above",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 86
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a6568cbd_47a559ea",
         "filename": "bcpkix/src/main/java/org/bouncycastle/operator/DefaultDigestAlgorithmIdentifierFinder.java",
         "patchSetId": 4
@@ -128,6 +214,29 @@
         "startChar": 1,
         "endLine": 152,
         "endChar": 2
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49d2bcf6_93c2d182",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/operator/DefaultSignatureAlgorithmIdentifierFinder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-23T14:29:11Z",
+      "side": 1,
+      "message": "Needs removing.",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 55
       },
       "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
@@ -181,6 +290,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1279ef95_4416d2bf",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/ASN1Object.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-23T14:29:11Z",
+      "side": 1,
+      "message": "There doesn\u0027t appear to be an Android change here :)",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 150
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c67ccd6_6c737e40",
         "filename": "bcprov/src/main/java/org/bouncycastle/asn1/BERTaggedObject.java",
         "patchSetId": 4
@@ -227,6 +359,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7699fe0e_557fdc3a",
+        "filename": "bcprov/src/main/java/org/bouncycastle/asn1/isara/IsaraObjectIdentifiers.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-23T14:29:11Z",
+      "side": 1,
+      "message": "I don\u0027t think we need these",
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1330d5c7_57d3ee1a",
         "filename": "bcprov/src/main/java/org/bouncycastle/asn1/nist/KMACwithSHAKE128_params.java",
         "patchSetId": 4
@@ -243,6 +392,92 @@
         "startChar": 13,
         "endLine": 21,
         "endChar": 36
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "451e272c_2b81d835",
+        "filename": "bcprov/src/main/java/org/bouncycastle/crypto/agreement/ECDHCStagedAgreement.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-23T14:29:11Z",
+      "side": 1,
+      "message": "Possibly unneeded if we\u0027re not taking the EC 25519 bits, I\u0027m unsure though.",
+      "range": {
+        "startLine": 14,
+        "startChar": 13,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "121294e5_1bb6b45c",
+        "filename": "bcprov/src/main/java/org/bouncycastle/crypto/modes/gcm/GCMUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-23T14:29:11Z",
+      "side": 1,
+      "message": "I assume this is commented out upstream?",
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32151961_3d0027a7",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/RSA.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-23T14:29:11Z",
+      "side": 1,
+      "message": "Missing Android-removed annotation?",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 88
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6118a5f6_a01b77d1",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-23T14:29:11Z",
+      "side": 1,
+      "message": "This tag now obsolete.  Kind of surprised that upstream went with equals() not equalsIgnoreCase(), but I guess seeing as they previously used startsWith() and an upper case prefix there\u0027s no behaviour change here.",
+      "range": {
+        "startLine": 501,
+        "startChar": 0,
+        "endLine": 501,
+        "endChar": 81
       },
       "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
