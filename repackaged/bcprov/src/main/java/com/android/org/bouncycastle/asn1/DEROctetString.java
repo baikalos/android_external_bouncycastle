@@ -7,7 +7,6 @@ import java.io.IOException;
  * Carrier class for a DER encoding OCTET STRING
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public class DEROctetString
     extends ASN1OctetString
 {
@@ -17,7 +16,6 @@ public class DEROctetString
      * @param string the octets making up the octet string.
      */
     @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
-    @libcore.api.CorePlatformApi
     public DEROctetString(
         byte[]  string)
     {

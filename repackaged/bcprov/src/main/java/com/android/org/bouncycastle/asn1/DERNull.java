@@ -9,12 +9,10 @@ import java.io.IOException;
  * Preferably use the constant:  DERNull.INSTANCE.
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public class DERNull
     extends ASN1Null
 {
     @android.compat.annotation.UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public static final DERNull INSTANCE = new DERNull();
 
     private static final byte[]  zeroBytes = new byte[0];

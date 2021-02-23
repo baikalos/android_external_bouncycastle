@@ -17,26 +17,22 @@ import com.android.org.bouncycastle.asn1.x509.X509ObjectIdentifiers;
 /**
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public class BCStyle
     extends AbstractX500NameStyle
 {
     /**
      * country code - StringType(SIZE(2))
      */
-    @libcore.api.CorePlatformApi
     public static final ASN1ObjectIdentifier C = new ASN1ObjectIdentifier("2.5.4.6").intern();
 
     /**
      * organization - StringType(SIZE(1..64))
      */
-    @libcore.api.CorePlatformApi
     public static final ASN1ObjectIdentifier O = new ASN1ObjectIdentifier("2.5.4.10").intern();
 
     /**
      * organizational unit name - StringType(SIZE(1..64))
      */
-    @libcore.api.CorePlatformApi
     public static final ASN1ObjectIdentifier OU = new ASN1ObjectIdentifier("2.5.4.11").intern();
 
     /**
@@ -47,7 +43,6 @@ public class BCStyle
     /**
      * common name - StringType(SIZE(1..64))
      */
-    @libcore.api.CorePlatformApi
     public static final ASN1ObjectIdentifier CN = new ASN1ObjectIdentifier("2.5.4.3").intern();
 
     /**
@@ -68,13 +63,11 @@ public class BCStyle
     /**
      * locality name - StringType(SIZE(1..64))
      */
-    @libcore.api.CorePlatformApi
     public static final ASN1ObjectIdentifier L = new ASN1ObjectIdentifier("2.5.4.7").intern();
 
     /**
      * state, or province name - StringType(SIZE(1..64))
      */
-    @libcore.api.CorePlatformApi
     public static final ASN1ObjectIdentifier ST = new ASN1ObjectIdentifier("2.5.4.8").intern();
 
     /**
@@ -182,7 +175,6 @@ public class BCStyle
     /**
      * email address in Verisign certificates
      */
-    @libcore.api.CorePlatformApi
     public static final ASN1ObjectIdentifier E = EmailAddress;
 
     /*
