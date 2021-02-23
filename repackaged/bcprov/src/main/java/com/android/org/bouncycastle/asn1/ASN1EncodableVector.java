@@ -8,7 +8,6 @@ import java.util.Vector;
  * Mutable class for building ASN.1 constructed objects such as SETs or SEQUENCEs.
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public class ASN1EncodableVector
 {
     private final Vector v = new Vector();
@@ -17,7 +16,6 @@ public class ASN1EncodableVector
      * Base constructor.
      */
     @android.compat.annotation.UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public ASN1EncodableVector()
     {
     }
@@ -28,7 +26,6 @@ public class ASN1EncodableVector
      * @param obj the encodable to add.
      */
     @android.compat.annotation.UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public void add(ASN1Encodable obj)
     {
         v.addElement(obj);

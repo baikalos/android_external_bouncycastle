@@ -9,7 +9,6 @@ import com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier;
  * @hide This class is not part of the Android public SDK API
  *
  */
-@libcore.api.CorePlatformApi
 public interface PKCSObjectIdentifiers
 {
     /** PKCS#1: 1.2.840.113549.1.1 */
@@ -40,12 +39,10 @@ public interface PKCSObjectIdentifiers
     ASN1ObjectIdentifier    id_RSASSA_PSS             = pkcs_1.branch("10");
     /** PKCS#1: 1.2.840.113549.1.1.11 */
     @android.compat.annotation.UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     ASN1ObjectIdentifier    sha256WithRSAEncryption   = pkcs_1.branch("11");
     /** PKCS#1: 1.2.840.113549.1.1.12 */
     ASN1ObjectIdentifier    sha384WithRSAEncryption   = pkcs_1.branch("12");
     /** PKCS#1: 1.2.840.113549.1.1.13 */
-    @libcore.api.CorePlatformApi
     ASN1ObjectIdentifier    sha512WithRSAEncryption   = pkcs_1.branch("13");
     /** PKCS#1: 1.2.840.113549.1.1.14 */
     ASN1ObjectIdentifier    sha224WithRSAEncryption   = pkcs_1.branch("14");

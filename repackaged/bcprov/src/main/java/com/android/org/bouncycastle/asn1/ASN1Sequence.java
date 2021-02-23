@@ -58,7 +58,6 @@ import com.android.org.bouncycastle.util.Arrays;
  * </p>
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public abstract class ASN1Sequence
     extends ASN1Primitive
     implements com.android.org.bouncycastle.util.Iterable<ASN1Encodable>
@@ -277,7 +276,6 @@ public abstract class ASN1Sequence
      * @param index the sequence number (starting at zero) of the object
      * @return the object at the sequence position indicated by index.
      */
-    @libcore.api.CorePlatformApi
     public ASN1Encodable getObjectAt(
         int index)
     {
@@ -289,13 +287,11 @@ public abstract class ASN1Sequence
      *
      * @return the number of objects in this sequence.
      */
-    @libcore.api.CorePlatformApi
     public int size()
     {
         return seq.size();
     }
 
-    @libcore.api.CorePlatformApi
     public int hashCode()
     {
         Enumeration             e = this.getObjects();
