@@ -11,7 +11,6 @@ import java.util.Enumeration;
  * For X.690 syntax rules, see {@link ASN1Sequence}.
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public class DERSequence
     extends ASN1Sequence
 {
@@ -21,7 +20,6 @@ public class DERSequence
      * Create an empty sequence
      */
     @android.compat.annotation.UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public DERSequence()
     {
     }
@@ -41,7 +39,6 @@ public class DERSequence
      * @param v the vector of objects to make up the sequence.
      */
     @android.compat.annotation.UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public DERSequence(
         ASN1EncodableVector v)
     {

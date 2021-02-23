@@ -13,7 +13,6 @@ import com.android.org.bouncycastle.util.io.Streams;
  * Base class for BIT STRING objects
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public abstract class ASN1BitString
     extends ASN1Primitive
     implements ASN1String
@@ -214,7 +213,6 @@ public abstract class ASN1BitString
         return getString();
     }
 
-    @libcore.api.CorePlatformApi
     public int hashCode()
     {
         return padBits ^ Arrays.hashCode(this.getBytes());

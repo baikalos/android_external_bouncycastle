@@ -20,7 +20,6 @@ import com.android.org.bouncycastle.asn1.DERSequence;
  * encoded one of these.
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public class SubjectPublicKeyInfo
     extends ASN1Object
 {
@@ -35,7 +34,6 @@ public class SubjectPublicKeyInfo
     }
 
     @android.compat.annotation.UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public static SubjectPublicKeyInfo getInstance(
         Object  obj)
     {

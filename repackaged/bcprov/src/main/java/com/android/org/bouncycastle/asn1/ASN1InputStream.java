@@ -16,7 +16,6 @@ import com.android.org.bouncycastle.util.io.Streams;
  * returned.
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public class ASN1InputStream
     extends FilterInputStream
     implements BERTags
@@ -27,7 +26,6 @@ public class ASN1InputStream
     private final byte[][] tmpBuffers;
 
     @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
-    @libcore.api.CorePlatformApi
     public ASN1InputStream(
         InputStream is)
     {
@@ -41,7 +39,6 @@ public class ASN1InputStream
      * @param input array containing ASN.1 encoded data.
      */
     @android.compat.annotation.UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public ASN1InputStream(
         byte[] input)
     {
@@ -218,7 +215,6 @@ public class ASN1InputStream
     }
 
     @android.compat.annotation.UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public ASN1Primitive readObject()
         throws IOException
     {

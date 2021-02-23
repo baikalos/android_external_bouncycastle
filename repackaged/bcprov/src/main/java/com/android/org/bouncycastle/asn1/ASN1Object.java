@@ -10,11 +10,9 @@ import com.android.org.bouncycastle.util.Encodable;
  * Base class for defining an ASN.1 object.
  * @hide This class is not part of the Android public SDK API
  */
-@libcore.api.CorePlatformApi
 public abstract class ASN1Object
     implements ASN1Encodable, Encodable
 {
-    @libcore.api.CorePlatformApi
     public ASN1Object() {
     }
 
@@ -24,7 +22,6 @@ public abstract class ASN1Object
      * @return BER/DER byte encoded object.
      * @throws java.io.IOException on encoding error.
      */
-    @libcore.api.CorePlatformApi
     public byte[] getEncoded()
         throws IOException
     {
@@ -43,7 +40,6 @@ public abstract class ASN1Object
      * @return byte encoded object.
      * @throws IOException on encoding error.
      */
-    @libcore.api.CorePlatformApi
     public byte[] getEncoded(
         String encoding)
         throws IOException
