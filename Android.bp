@@ -148,6 +148,7 @@ unbundled_visibility = [
     "//frameworks/opt/net/wifi/tests/wifitests",
     "//packages/apps/CertInstaller",
     "//packages/apps/KeyChain",
+    "//packages/modules/Connectivity/tests/cts/net",
     "//packages/modules/Wifi/service",
     "//packages/modules/Wifi/service/tests/wifitests",
     "//libcore",
