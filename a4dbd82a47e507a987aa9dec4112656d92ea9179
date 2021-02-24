@@ -106,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e08719ea_687adc21",
+        "filename": "bcpkix/src/main/java/org/bouncycastle/cms/CMSPatchKit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2021-02-24T12:54:55Z",
+      "side": 1,
+      "message": "Sorry, my previous comment is wrong - I was probably confused by cms/test.",
+      "parentUuid": "351494ba_d77932e9",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 24
+      },
+      "revId": "a4dbd82a47e507a987aa9dec4112656d92ea9179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7697dedf_8d82aad5",
