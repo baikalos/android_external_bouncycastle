@@ -848,6 +848,8 @@ public class PKCS12KeyStoreSpi
                 throw new IOException("error constructing MAC: " + e.toString());
             }
         }
+        // BEGIN Android-removed: keep v1.61 behaviour to keep backwards-compatibility
+        /*
         else if (password != null)
         {
             if (!Properties.isOverrideSet("org.bouncycastle.pkcs12.ignore_useless_passwd"))
@@ -855,6 +857,8 @@ public class PKCS12KeyStoreSpi
                 throw new IOException("password supplied for keystore that does not require one");
             }
         }
+        */
+        // END Android-removed: keep v1.61 behaviour to keep backwards-compatibility
 
         keys = new IgnoresCaseHashtable();
         localIds = new Hashtable();
