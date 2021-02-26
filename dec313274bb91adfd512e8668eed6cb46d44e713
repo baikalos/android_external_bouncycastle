@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2778151d_bf4a7efe",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/keystore/pkcs12/PKCS12KeyStoreSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-02-26T12:15:05Z",
+      "side": 1,
+      "message": "nit: s/old/v1.61/ ... \"old\" gets ambiguous over time 😊",
+      "range": {
+        "startLine": 851,
+        "startChar": 39,
+        "endLine": 851,
+        "endChar": 42
+      },
+      "revId": "dec313274bb91adfd512e8668eed6cb46d44e713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
