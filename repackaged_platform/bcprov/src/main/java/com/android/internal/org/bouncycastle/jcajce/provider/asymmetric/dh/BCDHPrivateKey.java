@@ -28,6 +28,7 @@ import com.android.internal.org.bouncycastle.crypto.params.DHPrivateKeyParameter
 import com.android.internal.org.bouncycastle.crypto.params.DHValidationParameters;
 import com.android.internal.org.bouncycastle.jcajce.provider.asymmetric.util.PKCS12BagAttributeCarrierImpl;
 import com.android.internal.org.bouncycastle.jcajce.spec.DHDomainParameterSpec;
+import com.android.internal.org.bouncycastle.jcajce.spec.DHExtendedPrivateKeySpec;
 import com.android.internal.org.bouncycastle.jce.interfaces.PKCS12BagAttributeCarrier;
 
 
@@ -62,7 +63,14 @@ public class BCDHPrivateKey
         DHPrivateKeySpec spec)
     {
         this.x = spec.getX();
-        this.dhSpec = new DHParameterSpec(spec.getP(), spec.getG());
+        if (spec instanceof DHExtendedPrivateKeySpec)
+        {
+            this.dhSpec = ((DHExtendedPrivateKeySpec)spec).getParams();
+        }
+        else
+        {
+            this.dhSpec = new DHParameterSpec(spec.getP(), spec.getG());
+        }
     }
 
     public BCDHPrivateKey(
