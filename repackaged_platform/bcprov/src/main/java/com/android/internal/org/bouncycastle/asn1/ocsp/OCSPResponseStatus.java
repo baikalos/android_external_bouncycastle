@@ -7,7 +7,22 @@ import com.android.internal.org.bouncycastle.asn1.ASN1Enumerated;
 import com.android.internal.org.bouncycastle.asn1.ASN1Object;
 import com.android.internal.org.bouncycastle.asn1.ASN1Primitive;
 
+
 /**
+ * OCSP RFC 2560, RFC 6960
+ * <p>
+ * The OCSPResponseStatus enumeration.
+ * <pre>
+ * OCSPResponseStatus ::= ENUMERATED {
+ *     successful            (0),  --Response has valid confirmations
+ *     malformedRequest      (1),  --Illegal confirmation request
+ *     internalError         (2),  --Internal error in issuer
+ *     tryLater              (3),  --Try again later
+ *                                 --(4) is not used
+ *     sigRequired           (5),  --Must sign the request
+ *     unauthorized          (6)   --Request unauthorized
+ * }
+ * </pre>
  * @hide This class is not part of the Android public SDK API
  */
 public class OCSPResponseStatus
@@ -23,6 +38,8 @@ public class OCSPResponseStatus
     private ASN1Enumerated value;
 
     /**
+     * RFC 2560, RFC 6960
+     * <p>
      * The OCSPResponseStatus enumeration.
      * <pre>
      * OCSPResponseStatus ::= ENUMERATED {
@@ -61,6 +78,11 @@ public class OCSPResponseStatus
         }
 
         return null;
+    }
+
+    public int getIntValue()
+    {
+        return value.intValueExact();
     }
 
     public BigInteger getValue()
