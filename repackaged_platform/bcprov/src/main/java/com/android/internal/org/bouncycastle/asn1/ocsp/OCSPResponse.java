@@ -10,8 +10,17 @@ import com.android.internal.org.bouncycastle.asn1.DERSequence;
 import com.android.internal.org.bouncycastle.asn1.DERTaggedObject;
 
 /**
+ * OCSP RFC 2560, RFC 6960
+ * <pre>
+ * OCSPResponse ::= SEQUENCE {
+ *     responseStatus         OCSPResponseStatus,
+ *     responseBytes          [0] EXPLICIT ResponseBytes OPTIONAL }
+ * </pre>
+ * @see OCSPResponseStatus
+ * @see ResponseBytes
  * @hide This class is not part of the Android public SDK API
  */
+
 public class OCSPResponse
     extends ASN1Object
 {
@@ -80,7 +89,7 @@ public class OCSPResponse
      */
     public ASN1Primitive toASN1Primitive()
     {
-        ASN1EncodableVector    v = new ASN1EncodableVector();
+        ASN1EncodableVector v = new ASN1EncodableVector(2);
 
         v.add(responseStatus);
 
