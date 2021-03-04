@@ -101,6 +101,7 @@ java_library {
         "com.android.art",
         "com.android.art.debug",
     ],
+    min_sdk_version: "31",
     defaults: ["bouncycastle-defaults"],
     installable: true,
 
