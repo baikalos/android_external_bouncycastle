@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e67a3fa_b4112c15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-03-09T19:27:24Z",
+      "side": 1,
+      "message": "Thanks, and apologies for the extra confusion I created on this!",
+      "revId": "0b1af43bc5f1c2c1ae7704e918f8ad8080adaf14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "447fcacc_7f0c41ad",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/keystore/pkcs12/PKCS12KeyStoreSpi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-03-09T19:27:24Z",
+      "side": 1,
+      "message": "nit: trailing whitespace",
+      "range": {
+        "startLine": 1318,
+        "startChar": 0,
+        "endLine": 1318,
+        "endChar": 8
+      },
+      "revId": "0b1af43bc5f1c2c1ae7704e918f8ad8080adaf14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3696a3a9_3be43e97",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/keystore/pkcs12/PKCS12KeyStoreSpi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-03-09T19:27:24Z",
+      "side": 1,
+      "message": "I think it would be clearer to just have a single Android-changed block. i.e. change line 1309 to Android-changed and then delete the END and BEGIN blocks immediately above this comment.",
+      "range": {
+        "startLine": 1319,
+        "startChar": 17,
+        "endLine": 1319,
+        "endChar": 24
+      },
+      "revId": "0b1af43bc5f1c2c1ae7704e918f8ad8080adaf14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
