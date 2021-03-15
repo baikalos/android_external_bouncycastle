@@ -101,6 +101,7 @@ java_library {
         "com.android.art",
         "com.android.art.debug",
     ],
+    min_sdk_version: "31",
     defaults: ["bouncycastle-defaults"],
     installable: true,
 
@@ -148,6 +149,7 @@ unbundled_visibility = [
     "//frameworks/opt/net/wifi/tests/wifitests",
     "//packages/apps/CertInstaller",
     "//packages/apps/KeyChain",
+    "//packages/apps/RemoteProvisioner/tests/unittests",
     "//packages/modules/Connectivity/tests/cts/net",
     "//packages/modules/Wifi/service",
     "//packages/modules/Wifi/service/tests/wifitests",
