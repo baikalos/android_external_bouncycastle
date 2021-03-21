@@ -1310,6 +1310,14 @@ public class PKCS12KeyStoreSpi
     private void doStore(OutputStream stream, char[] password, boolean useDEREncoding)
         throws IOException
     {
+        // BEGIN Android-changed: Upstream allows null passwords, but we maintain historical Android
+        // behaviour.
+        // See CtsKeystoreTestCases:android.keystore.cts.KeyStoreTest
+        if (password == null)
+        {
+            throw new NullPointerException("No password supplied for PKCS#12 KeyStore.");
+        }
+        /*
         if (keys.size() == 0)
         {
             if (password == null)
@@ -1362,6 +1370,9 @@ public class PKCS12KeyStoreSpi
                 throw new NullPointerException("no password supplied for PKCS#12 KeyStore");
             }
         }
+        */
+        // END Android-changed: Upstream allows null passwords, but we maintain historical Android
+        // behaviour.
 
         //
         // handle the key
