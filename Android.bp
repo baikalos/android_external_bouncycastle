@@ -119,11 +119,13 @@ java_library {
 java_library {
     name: "bouncycastle-repackaged-unbundled",
     visibility: [
-    	"//cts/tests/libcore/wycheproof-bc",
+        "//cts/tests/libcore/wycheproof-bc",
         "//external/sl4a/Common",
         "//external/wycheproof",
         "//frameworks/base",
+        "//frameworks/base/packages/Connectivity/tests/unit",
         "//frameworks/base/tests/net",
+        "//packages/modules/Connectivity/tests/unit",
     ],
     defaults: ["bouncycastle-defaults"],
     installable: true,
