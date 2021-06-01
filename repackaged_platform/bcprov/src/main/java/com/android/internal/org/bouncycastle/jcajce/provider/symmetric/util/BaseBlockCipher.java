@@ -40,6 +40,7 @@ import com.android.internal.org.bouncycastle.crypto.InvalidCipherTextException;
 import com.android.internal.org.bouncycastle.crypto.OutputLengthException;
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.engines.DSTU7624Engine;
+import com.android.internal.org.bouncycastle.crypto.engines.AESEngine;
 import com.android.internal.org.bouncycastle.crypto.modes.AEADBlockCipher;
 import com.android.internal.org.bouncycastle.crypto.modes.AEADCipher;
 import com.android.internal.org.bouncycastle.crypto.modes.CBCBlockCipher;
@@ -74,7 +75,7 @@ import com.android.internal.org.bouncycastle.crypto.params.ParametersWithIV;
 import com.android.internal.org.bouncycastle.crypto.params.ParametersWithRandom;
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.params.ParametersWithSBox;
-import com.android.internal.org.bouncycastle.crypto.params.RC2Parameters;
+// import org.bouncycastle.crypto.params.RC2Parameters;
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.params.RC5Parameters;
 // import org.bouncycastle.jcajce.PBKDF1Key;
@@ -504,6 +505,14 @@ public class BaseBlockCipher
         // END Android-removed: Unsupported modes
         else if (modeName.equals("GCM"))
         {
+            // BEGIN Android-added: Unsupported modes
+            // AES/GCM unsupported.  Note that AES/ECB and AES/CBC are rejected from
+            // engineSetPadding() as some mode/padding combinations are permitted.
+            if (baseEngine instanceof AESEngine) {
+                throw new NoSuchAlgorithmException("AES/GCM not supported");
+            }
+            // END Android-added: Unsupported modes
+
             ivLength = baseEngine.getBlockSize();
             // BEGIN Android-removed: Unsupported algorithms
             /*
@@ -535,6 +544,9 @@ public class BaseBlockCipher
         }
 
         String paddingName = Strings.toUpperCase(padding);
+
+        // Android-added: reject unsupported modes and padding
+        rejectAesPaddings(padding);
 
         if (paddingName.equals("NOPADDING"))
         {
@@ -585,6 +597,19 @@ public class BaseBlockCipher
             }
         }
     }
+
+    // BEGIN Android-added: reject unsupported modes and padding
+    // AES/ECB|CBC/NOPADDING|PKCS5Padding|PKCS7Padding not supported, however
+    // PKCS5PADDING is needed for some PBE ciphers so we can't reject it.
+    private void rejectAesPaddings(String padding) throws NoSuchPaddingException {
+        if (baseEngine instanceof AESEngine
+            && (modeName.equals("ECB") || modeName.equals("CBC"))
+            && (padding.equals("NOPADDING") || padding.equals("PKCS7Padding"))) {
+            throw new NoSuchPaddingException(
+                "mode AES/" + modeName + "/" + padding +  " not supported");
+        }
+    }
+    // END Android-added: reject unsupported modes and padding
 
     // BEGIN Android-added: Handling missing IVs
     private boolean isBCPBEKeyWithoutIV(Key key) {
