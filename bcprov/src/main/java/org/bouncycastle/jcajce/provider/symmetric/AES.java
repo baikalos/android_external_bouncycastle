@@ -20,7 +20,7 @@ import javax.crypto.NoSuchPaddingException;
 import org.bouncycastle.asn1.bc.BCObjectIdentifiers;
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.asn1.cms.CCMParameters;
-import org.bouncycastle.asn1.cms.GCMParameters;
+// import org.bouncycastle.asn1.cms.GCMParameters;
 import org.bouncycastle.asn1.nist.NISTObjectIdentifiers;
 import org.bouncycastle.crypto.BlockCipher;
 import org.bouncycastle.crypto.BufferedBlockCipher;
@@ -74,7 +74,10 @@ public final class AES
     private AES()
     {
     }
-    
+    // Android note: AES/ECB is no longer provided by BC on Android, but this class
+    // is used as the base cipher for finding modes not explicitly advertised
+    // and so needs to be kept. AES/ECB modes will be rejected in
+    // BaseBlockCipher.engineSetMode() and engineSetPadding().
     public static class ECB
         extends BaseBlockCipher
     {
@@ -90,6 +93,8 @@ public final class AES
         }
     }
 
+    // BEGIN Android-removed: Unsupported algorithms
+    /*
     public static class CBC
        extends BaseBlockCipher
     {
@@ -98,6 +103,9 @@ public final class AES
             super(new CBCBlockCipher(new AESEngine()), 128);
         }
     }
+    */
+    // END Android-removed: Unsupported algorithms
+
 
     static public class CFB
         extends BaseBlockCipher
@@ -117,6 +125,8 @@ public final class AES
         }
     }
 
+    // BEGIN Android-removed: Unsupported algorithms
+    /*
     static public class GCM
         extends BaseBlockCipher
     {
@@ -135,8 +145,6 @@ public final class AES
         }
     }
 
-    // BEGIN Android-removed: Unsupported algorithms
-    /*
     static public class CCM
         extends BaseBlockCipher
     {
@@ -370,6 +378,8 @@ public final class AES
         }
     }
 
+    // BEGIN Android-removed: Unsupported algorithms
+    /*
     public static class KeyGen
         extends BaseKeyGenerator
     {
@@ -389,8 +399,6 @@ public final class AES
         }
     }
 
-    // BEGIN Android-removed: Unsupported algorithms
-    /*
     public static class KeyGen128
         extends KeyGen
     {
@@ -657,6 +665,8 @@ public final class AES
         }
     }
 
+    // BEGIN Android-removed: Unsupported algorithms
+    /*
     public static class AlgParamsGCM
         extends BaseAlgorithmParameters
     {
@@ -742,8 +752,6 @@ public final class AES
         }
     }
 
-    // BEGIN Android-removed: Unsupported algorithms
-    /*
     public static class AlgParamsCCM
         extends BaseAlgorithmParameters
     {
