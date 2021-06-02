@@ -22,6 +22,30 @@
       },
       "revId": "ef93acfdd81c23866c972c0f7c664eb88ac0ddfa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ddb3815_3262fa55",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2021-06-02T12:11:19Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "72eac06d_4db55921",
+      "range": {
+        "startLine": 604,
+        "startChar": 45,
+        "endLine": 604,
+        "endChar": 84
+      },
+      "revId": "ef93acfdd81c23866c972c0f7c664eb88ac0ddfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
