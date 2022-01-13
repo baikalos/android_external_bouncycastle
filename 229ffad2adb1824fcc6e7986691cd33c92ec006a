@@ -22,6 +22,30 @@
       },
       "revId": "229ffad2adb1824fcc6e7986691cd33c92ec006a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c5b3711_2d7aa4b6",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1809097
+      },
+      "writtenOn": "2022-01-13T15:01:32Z",
+      "side": 1,
+      "message": "I tried this initially. Unfortunately this does not build. asn1/ has files with deps on several files in bouncycastle/crypto, bouncycastle/jcajce, bouncycastle/jce, bouncycastle/math, bouncycastle/util, and so on. As I tried to carve out the bare minimum, it became sorta unwieldy. The only non dep top level folder was bouncycastle/iana.",
+      "parentUuid": "b50d5329_2dc74f07",
+      "range": {
+        "startLine": 270,
+        "startChar": 34,
+        "endLine": 270,
+        "endChar": 46
+      },
+      "revId": "229ffad2adb1824fcc6e7986691cd33c92ec006a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
