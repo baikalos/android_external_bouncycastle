@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b50d5329_2dc74f07",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2022-01-13T08:34:48Z",
+      "side": 1,
+      "message": "Looking at your internal topic, I think this can be \"bcprov/src/main/java/org/bouncycastle/asn1/**/*.java\", no?\n\nDoesn\u0027t have to be this CL but let\u0027s try and limit it a bit more than \"all of bouncycastle\".",
+      "range": {
+        "startLine": 270,
+        "startChar": 34,
+        "endLine": 270,
+        "endChar": 46
+      },
+      "revId": "229ffad2adb1824fcc6e7986691cd33c92ec006a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
