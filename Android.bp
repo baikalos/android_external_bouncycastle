@@ -252,3 +252,26 @@ java_library {
     ],
     sdk_version: "core_current",
 }
+
+// Bouncycastle for use by packages/modules/ExtServices project.
+//
+// Excludes directories not needed for ASN1*.java and X509* sources.
+//
+java_library {
+    name: "bouncycastle-extservices-asn",
+    visibility: [
+        "//packages/modules/ExtServices",
+    ],
+    apex_available: [
+        "com.android.extservices",
+        "test_com.android.extservices",
+    ],
+    srcs: [
+        "bcprov/src/main/java/org/bouncycastle/**/*.java",
+    ],
+    exclude_srcs: [
+        "bcprov/src/main/java/org/bouncycastle/asn1/ocsp/**/*.java",
+        "bcprov/src/main/java/org/bouncycastle/iana/**/*.java",
+    ],
+    sdk_version: "core_current",
+}
