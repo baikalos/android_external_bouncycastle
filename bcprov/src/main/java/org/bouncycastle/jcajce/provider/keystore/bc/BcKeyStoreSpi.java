@@ -932,6 +932,31 @@ public class BcKeyStoreSpi
     }
 
     /**
+     * Probe the first few bytes of the keystore data stream for a valid
+     * keystore encoding. Only the primary keystore implementation is probed.
+     */
+    public boolean engineProbe(InputStream stream) throws IOException {
+        if (stream == null) {
+            throw new NullPointerException("input stream must not be null");
+        }
+
+        DataInputStream     dIn = new DataInputStream(stream);
+        int                 version = dIn.readInt();
+
+        if (version != STORE_VERSION) {
+            if (version != 0 && version != 1) {
+                return false;
+            }
+        }
+        byte[]      salt = new byte[dIn.readInt()];
+
+        if (salt.length != STORE_SALT_SIZE) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * the BouncyCastle store. This wont work with the key tool as the
      * store is stored encrypted on disk, so the password is mandatory,
      * however if you hard drive is in a bad part of town and you absolutely,
@@ -1049,6 +1074,27 @@ public class BcKeyStoreSpi
             cOut.write(dig);
     
             cOut.close();
+        }
+
+        @Override
+        public boolean engineProbe(InputStream stream) throws IOException {
+            if (stream == null) {
+                throw new NullPointerException("input stream must not be null");
+            }
+            DataInputStream     dIn = new DataInputStream(stream);
+            int                 version = dIn.readInt();
+
+            if (version != STORE_VERSION) {
+                if (version != 0 && version != 1) {
+                    return false;
+                }
+            }
+            byte[]      salt = new byte[dIn.readInt()];
+
+            if (salt.length != STORE_SALT_SIZE) {
+                return false;
+            }
+            return true;
         }
     }
 
