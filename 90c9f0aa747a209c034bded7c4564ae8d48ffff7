@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d610e41c_a99f03aa",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/keystore/bc/BcKeyStoreSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-02-25T16:49:51Z",
+      "side": 1,
+      "message": "Well, is there an upstream version of this? I was looking at https://github.com/openjdk/jdk11/blob/37115c8ea4aff13a8148ee2b8832b20888a5d880/src/java.base/share/classes/com/sun/crypto/provider/JceKeyStore.java, https://github.com/openjdk/jdk11/blob/37115c8ea4aff13a8148ee2b8832b20888a5d880/src/java.base/share/classes/sun/security/provider/JavaKeyStore.java, and https://github.com/openjdk/jdk11/blob/37115c8ea4aff13a8148ee2b8832b20888a5d880/src/java.base/share/classes/sun/security/pkcs12/PKCS12KeyStore.java, all of which have their own version of checking the stream, with that also being reflected in their versions of engineLoad(). Let me know if there is a better source.",
+      "parentUuid": "a174e03b_89e0c996",
+      "revId": "90c9f0aa747a209c034bded7c4564ae8d48ffff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0e3ef2f8_2c3c7a0b",
         "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/keystore/bc/BcKeyStoreSpi.java",
         "patchSetId": 1
@@ -31,6 +49,30 @@
       "writtenOn": "2022-02-25T16:19:03Z",
       "side": 1,
       "message": "I think we can just inherit the superclass implementation, no?\n\n(I don\u0027t know why there is an identical-looking re-implementation of engineLoad() in the subclasses)",
+      "range": {
+        "startLine": 1079,
+        "startChar": 9,
+        "endLine": 1079,
+        "endChar": 17
+      },
+      "revId": "90c9f0aa747a209c034bded7c4564ae8d48ffff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a1a21c2_95e92798",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/keystore/bc/BcKeyStoreSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-02-25T16:49:51Z",
+      "side": 1,
+      "message": "I have yet to find out why, so I\u0027ve assumed it is some keystore/bc compilation magic, but when I erase this version of engineProbe() and leave the one in the superclass, the call within KeyStore seems to go to the version within KeyStoreSpi, and the one within BcKeyStoreSpi is left unused/unrecognized. I noticed that there were two engineLoads to I tried following that pattern, but also found it strange that \u0027@Override\u0027s are not used anywhere even though the methods clearly override those within KeyStoreSpi",
+      "parentUuid": "0e3ef2f8_2c3c7a0b",
       "range": {
         "startLine": 1079,
         "startChar": 9,
