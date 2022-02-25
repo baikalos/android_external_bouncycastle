@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a174e03b_89e0c996",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/keystore/bc/BcKeyStoreSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2022-02-25T16:19:03Z",
+      "side": 1,
+      "message": "Add Android-added change marked please, so we know what\u0027s going on next time we update this file from upstream.\n\nLooking at it, it looks like this is adapted from engineLoad() rather than coming from a newer upstream version (they don\u0027t seem to have this yet)?",
+      "revId": "90c9f0aa747a209c034bded7c4564ae8d48ffff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e3ef2f8_2c3c7a0b",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/keystore/bc/BcKeyStoreSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2022-02-25T16:19:03Z",
+      "side": 1,
+      "message": "I think we can just inherit the superclass implementation, no?\n\n(I don\u0027t know why there is an identical-looking re-implementation of engineLoad() in the subclasses)",
+      "range": {
+        "startLine": 1079,
+        "startChar": 9,
+        "endLine": 1079,
+        "endChar": 17
+      },
+      "revId": "90c9f0aa747a209c034bded7c4564ae8d48ffff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
