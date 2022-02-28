@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c11b925a_6eedea3b",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/keystore/bc/BcKeyStoreSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-02-28T10:57:46Z",
+      "side": 1,
+      "message": "Done, and modified the test in libcore/ to ensure that invalid files actually fail when trying to use this.",
+      "parentUuid": "c4242da8_c31e62c0",
+      "revId": "90c9f0aa747a209c034bded7c4564ae8d48ffff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e3ef2f8_2c3c7a0b",
