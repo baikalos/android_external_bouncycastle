@@ -887,7 +887,7 @@ public final class AES
             provider.addAlgorithm("Alg.Alias.Cipher." + wrongAES192, "AES");
             provider.addAlgorithm("Alg.Alias.Cipher." + wrongAES256, "AES");
             // BEGIN Android-removed: Unsupported algorithms
-            /*
+            // XXX DO NOT SUBMIT - These OIDs should be provided by Conscrypt
             provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes128_ECB, PREFIX + "$ECB");
             provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes192_ECB, PREFIX + "$ECB");
             provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes256_ECB, PREFIX + "$ECB");
@@ -900,7 +900,7 @@ public final class AES
             provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes128_CFB, PREFIX + "$CFB");
             provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes192_CFB, PREFIX + "$CFB");
             provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes256_CFB, PREFIX + "$CFB");
-            */
+            // XXX
             // END Android-removed: Unsupported algorithms
 
             provider.addAttributes("Cipher.AESWRAP", generalAesAttributes);
