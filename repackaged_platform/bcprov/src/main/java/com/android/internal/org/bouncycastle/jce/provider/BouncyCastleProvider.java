@@ -160,9 +160,15 @@ public final class BouncyCastleProvider extends Provider
      * using runtime registration of the provider using the
      * <code>Security.addProvider()</code> mechanism.
      */
-    public BouncyCastleProvider()
+    // BEGIN Android-changed: Allow provider name override to allow unbundled provider to co-exist
+    // with the platform one.
+    // public BouncyCastleProvider()
+    // {
+    //     super(PROVIDER_NAME, 1.68, info);
+    public BouncyCastleProvider(String name)
     {
-        super(PROVIDER_NAME, 1.68, info);
+        super(name, 1.68, info);
+    // END Android-changed: Allow provider name override to allow unbundled provider to co-exist
 
         AccessController.doPrivileged(new PrivilegedAction()
         {
@@ -172,6 +178,11 @@ public final class BouncyCastleProvider extends Provider
                 return null;
             }
         });
+    }
+
+    // Android-added: Default constructor with previous behaviour.
+    public BouncyCastleProvider() {
+        this(PROVIDER_NAME);
     }
 
     private void setup()
