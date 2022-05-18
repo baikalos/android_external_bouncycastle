@@ -120,9 +120,10 @@ public class PKCS12KeyStoreSpi
 {
     static final String PKCS12_MAX_IT_COUNT_PROPERTY = "com.android.org.bouncycastle.pkcs12.max_it_count";
 
-    // Android-changed: Use default provider for JCA algorithms instead of BC
+    // Android-changed: Use default provider for most JCA algorithms instead of BC
     // Was: private final JcaJceHelper helper = new BCJcaJceHelper();
     private final JcaJceHelper helper = new DefaultJcaJceHelper();
+    private final JcaJceHelper selfHelper = new BCJcaJceHelper();
 
     private static final int SALT_SIZE = 20;
     private static final int MIN_ITERATIONS = 50 * 1024;
@@ -731,7 +732,9 @@ public class PKCS12KeyStoreSpi
         PBKDF2Params func = PBKDF2Params.getInstance(alg.getKeyDerivationFunc().getParameters());
         AlgorithmIdentifier encScheme = AlgorithmIdentifier.getInstance(alg.getEncryptionScheme());
 
-        SecretKeyFactory keyFact = helper.createSecretKeyFactory(alg.getKeyDerivationFunc().getAlgorithm().getId());
+        // Android-Changed: SecretKeyFactory must be from *this* provider due to instanceof logic.
+        // SecretKeyFactory keyFact = helper.createSecretKeyFactory(alg.getKeyDerivationFunc().getAlgorithm().getId());
+        SecretKeyFactory keyFact = selfHelper.createSecretKeyFactory(alg.getKeyDerivationFunc().getAlgorithm().getId());
         SecretKey key;
 
         if (func.isDefaultPrf())

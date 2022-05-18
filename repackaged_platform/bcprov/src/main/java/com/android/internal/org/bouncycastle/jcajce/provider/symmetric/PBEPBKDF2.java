@@ -44,11 +44,10 @@ public class PBEPBKDF2
 
     static
     {
-        // BEGIN Android-removed: Unsupported algorithm
-        /*
-        prfCodes.put(CryptoProObjectIdentifiers.gostR3411Hmac, Integers.valueOf(PBE.GOST3411));
         prfCodes.put(PKCSObjectIdentifiers.id_hmacWithSHA1, Integers.valueOf(PBE.SHA1));
         prfCodes.put(PKCSObjectIdentifiers.id_hmacWithSHA256, Integers.valueOf(PBE.SHA256));
+        // BEGIN Android-removed: Unsupported algorithms
+        /*
         prfCodes.put(PKCSObjectIdentifiers.id_hmacWithSHA224, Integers.valueOf(PBE.SHA224));
         prfCodes.put(PKCSObjectIdentifiers.id_hmacWithSHA384, Integers.valueOf(PBE.SHA384));
         prfCodes.put(PKCSObjectIdentifiers.id_hmacWithSHA512, Integers.valueOf(PBE.SHA512));
@@ -66,8 +65,9 @@ public class PBEPBKDF2
 
     }
 
-    // BEGIN Android-removed: Unsupported algorithms
-    /*
+    /**
+     * @hide This class is not part of the Android public SDK API
+     */
     public static class AlgParams
         extends BaseAlgorithmParameters
     {
@@ -150,8 +150,6 @@ public class PBEPBKDF2
             return "PBKDF2 Parameters";
         }
     }
-    */
-    // END Android-removed: Unsupported algorithms
 
     /**
      * @hide This class is not part of the Android public SDK API
@@ -236,10 +234,12 @@ public class PBEPBKDF2
                         + pbeSpec.getKeyLength());
                 }
 
-                if (pbeSpec.getPassword().length == 0)
-                {
-                    throw new IllegalArgumentException("password empty");
-                }
+                // BEGIN Android-changed: Allow empty passphrases for PBKDF2 key stores.
+                // if (pbeSpec.getPassword().length == 0)
+                // {
+                //     throw new IllegalArgumentException("password empty");
+                // }
+                // END Android-changed: Allow empty passphrases for PBKDF2 key stores.
 
                 if (pbeSpec instanceof PBKDF2KeySpec)
                 {
@@ -280,8 +280,9 @@ public class PBEPBKDF2
         }
     }
 
-    // BEGIN Android-removed: Unsupported algorithms
-    /*
+    /**
+     * @hide This class is not part of the Android public SDK API
+     */
     public static class PBKDF2withUTF8
         extends BasePBKDF2
     {
@@ -291,6 +292,8 @@ public class PBEPBKDF2
         }
     }
 
+    // BEGIN Android-removed: Unsupported algorithms
+    /*
     public static class PBKDF2withSHA224
         extends BasePBKDF2
     {
@@ -667,6 +670,10 @@ public class PBEPBKDF2
             */
             // END Android-removed: Bouncy Castle versions of algorithms.
             // BEGIN Android-added: Android versions of algorithms.
+            provider.addAlgorithm("AlgorithmParameters.PBKDF2", PREFIX + "$AlgParams");
+            provider.addAlgorithm("SecretKeyFactory.PBKDF2", PREFIX + "$PBKDF2withUTF8");
+            provider.addAlgorithm("Alg.Alias.SecretKeyFactory.1.2.840.113549.1.5.12", "PBKDF2");
+
             provider.addAlgorithm("Alg.Alias.SecretKeyFactory.PBKDF2WithHmacSHA1AndUTF8", "PBKDF2WithHmacSHA1");
             provider.addAlgorithm("Alg.Alias.SecretKeyFactory.PBKDF2with8BIT", "PBKDF2WithHmacSHA1And8BIT");
             provider.addAlgorithm("Alg.Alias.SecretKeyFactory.PBKDF2withASCII", "PBKDF2WithHmacSHA1And8BIT");

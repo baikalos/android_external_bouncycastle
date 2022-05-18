@@ -886,6 +886,8 @@ public final class AES
             provider.addAlgorithm("Alg.Alias.Cipher." + wrongAES128, "AES");
             provider.addAlgorithm("Alg.Alias.Cipher." + wrongAES192, "AES");
             provider.addAlgorithm("Alg.Alias.Cipher." + wrongAES256, "AES");
+            // TODO(b/230750823): Provide these via Conscrypt
+            provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes256_CBC, PREFIX + "$CBC");
             // BEGIN Android-removed: Unsupported algorithms
             /*
             provider.addAlgorithm("Cipher", NISTObjectIdentifiers.id_aes128_ECB, PREFIX + "$ECB");
