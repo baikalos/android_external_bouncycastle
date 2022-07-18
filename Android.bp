@@ -72,6 +72,10 @@ java_defaults {
             },
         },
     },
+
+    lint: {
+        warning_checks: ["SuspiciousIndentation"],
+    },
 }
 
 // The src files for bouncycastle, used to generate core platform / intra-core
@@ -275,4 +279,7 @@ java_library {
         "bcprov/src/main/java/org/bouncycastle/iana/**/*.java",
     ],
     sdk_version: "core_current",
+    lint: {
+        warning_checks: ["SuspiciousIndentation"],
+    },
 }
