@@ -47,120 +47,54 @@ ifneq ($(TARGET_BUILD_PDK),true)
 
     # non-jarjar version to build okhttp-tests
     include $(CLEAR_VARS)
-    LOCAL_MODULE := bouncycastle-nojarjar
+    $(info *my flag* bouncycastle 1)
+    LOCAL_MODULE := bouncycastle
     LOCAL_MODULE_TAGS := optional
     LOCAL_SRC_FILES := $(android_bcprov_src_files)
-    LOCAL_JAVA_LIBRARIES := core-oj core-libart conscrypt
     LOCAL_NO_STANDARD_LIBRARIES := true
     LOCAL_JAVA_LANGUAGE_VERSION := 1.7
     include $(BUILD_STATIC_JAVA_LIBRARY)
 
-    include $(CLEAR_VARS)
-    LOCAL_MODULE := bouncycastle
-    LOCAL_MODULE_TAGS := optional
-    LOCAL_STATIC_JAVA_LIBRARIES := bouncycastle-nojarjar
-    LOCAL_JAVA_LIBRARIES := core-oj core-libart conscrypt
-    LOCAL_NO_STANDARD_LIBRARIES := true
-    LOCAL_JARJAR_RULES := $(LOCAL_PATH)/jarjar-rules.txt
-    LOCAL_JAVA_LANGUAGE_VERSION := 1.7
-    include $(BUILD_JAVA_LIBRARY)
-
-    # A guaranteed unstripped version of bouncycastle.
-    # The build system may or may not strip the bouncycastle jar, but this one will
-    # not be stripped. See b/24535627.
-    include $(CLEAR_VARS)
-    LOCAL_MODULE := bouncycastle-testdex
-    LOCAL_MODULE_TAGS := optional
-    LOCAL_STATIC_JAVA_LIBRARIES := bouncycastle-nojarjar
-    LOCAL_JAVA_LIBRARIES := core-oj core-libart conscrypt
-    LOCAL_NO_STANDARD_LIBRARIES := true
-    LOCAL_JARJAR_RULES := $(LOCAL_PATH)/jarjar-rules.txt
-    LOCAL_JAVA_LANGUAGE_VERSION := 1.7
-    include $(BUILD_JAVA_LIBRARY)
-
     # unbundled bouncycastle jar
     include $(CLEAR_VARS)
+    $(info *my flag* bouncycastle 4)
     LOCAL_MODULE := bouncycastle-unbundled
     LOCAL_MODULE_TAGS := optional
-    LOCAL_SDK_VERSION := 9
-    LOCAL_SRC_FILES := $(ri_bcprov_src_files)
+    LOCAL_SRC_FILES := $(filter-out \
+        $(call all-java-files-under,bcprov/src/main/java/org/bouncycastle/asn1/ocsp), \
+        $(call all-java-files-under,bcprov/src/main/java))
+    LOCAL_JAVA_LANGUAGE_VERSION := 1.7
     include $(BUILD_STATIC_JAVA_LIBRARY)
 
     # PKIX classes used for testing
     include $(CLEAR_VARS)
+    $(info *my flag* bouncycastle 5)
     LOCAL_MODULE := bouncycastle-bcpkix-nojarjar
     LOCAL_MODULE_TAGS := optional
     LOCAL_SRC_FILES := $(all_bcpkix_src_files)
     LOCAL_NO_STANDARD_LIBRARIES := true
-    LOCAL_JAVA_LIBRARIES := bouncycastle-nojarjar core-oj core-libart conscrypt
-    include $(BUILD_STATIC_JAVA_LIBRARY)
-
-    include $(CLEAR_VARS)
-    LOCAL_MODULE := bouncycastle-bcpkix
-    LOCAL_MODULE_TAGS := optional
-    LOCAL_STATIC_JAVA_LIBRARIES := bouncycastle-bcpkix-nojarjar
-    LOCAL_JAVA_LIBRARIES := core-oj core-libart conscrypt
-    LOCAL_NO_STANDARD_LIBRARIES := true
-    LOCAL_JARJAR_RULES := $(LOCAL_PATH)/jarjar-rules.txt
+    LOCAL_JAVA_LIBRARIES := bouncycastle
     include $(BUILD_STATIC_JAVA_LIBRARY)
 
     # OCSP classes used for testing
     include $(CLEAR_VARS)
+    $(info *my flag* bouncycastle 7)
     LOCAL_MODULE := bouncycastle-ocsp
     LOCAL_MODULE_TAGS := optional
     LOCAL_SRC_FILES := $(all_bc_ocsp_files)
-    LOCAL_JAVA_LIBRARIES := bouncycastle-nojarjar bouncycastle-bcpkix-nojarjar core-oj core-libart conscrypt
+    LOCAL_JAVA_LIBRARIES := bouncycastle bouncycastle-bcpkix-nojarjar
     LOCAL_JARJAR_RULES := $(LOCAL_PATH)/jarjar-rules.txt
     LOCAL_JAVA_LANGUAGE_VERSION := 1.7
     LOCAL_NO_STANDARD_LIBRARIES := true
     include $(BUILD_STATIC_JAVA_LIBRARY)
 endif # TARGET_BUILD_PDK != true
 
-# This is used to generate a list of what is unused so it can be removed when bouncycastle is updated.
-# Based on "Finding dead code" example in ProGuard manual at http://proguard.sourceforge.net/
-.PHONY: bouncycastle-proguard-deadcode
-bouncycastle-proguard-deadcode: $(full_classes_compiled_jar) $(full_java_libs)
-	$(PROGUARD) \
-		-injars $(full_classes_compiled_jar) \
-		-libraryjars "$(call normalize-path-list,$(addsuffix (!org/bouncycastle/**.class,!com/android/org/conscrypt/OpenSSLMessageDigest.class),$(full_java_libs)))" \
-		-dontoptimize \
-		-dontobfuscate \
-		-dontpreverify \
-		-ignorewarnings \
-		-printusage \
-		-keep class org.bouncycastle.jce.provider.BouncyCastleProvider "{ public protected *; }" \
-		-keep class org.bouncycastle.jce.provider.symmetric.AESMappings "{ public protected *; }" \
-		-keep class org.bouncycastle.asn1.ASN1TaggedObject "{ public protected *; }" \
-		-keep class org.bouncycastle.asn1.x509.CertificateList "{ public protected *; }" \
-		-keep class org.bouncycastle.crypto.AsymmetricBlockCipher "{ public protected *; }" \
-		-keep class org.bouncycastle.x509.ExtendedPKIXBuilderParameters "{ public protected *; }" \
-		`(find $(LOCAL_PATH) -name '*.java' | xargs grep '"org.bouncycastle' | egrep '  (put|add)' | sed -e 's/");//' -e 's/.*"//'; \
-		  find $(LOCAL_PATH) -name '*.java' | xargs grep '  addHMACAlgorithm' | sed 's/"org.bouncycastle/\norg.bouncycastle/g' | grep ^org.bouncycastle | sed 's/".*//'; \
-                  find . -name '*.java' | xargs grep 'import org.bouncycastle' | grep -v /bouncycastle/ | sed -e 's/.*:import //' -e 's/;//') \
-		  | sed -e 's/^/-keep class /' -e 's/$$/ { public protected \*; } /' | sort | uniq` \
-		-keepclassmembers "class * { \
-		    static final %                *; \
-		    static final java.lang.String *; \
-		}" \
-		-keepclassmembers "class * implements java.io.Serializable { \
-		    private static final java.io.ObjectStreamField[] serialPersistentFields; \
-		    private void writeObject(java.io.ObjectOutputStream); \
-		    private void readObject(java.io.ObjectInputStream); \
-		    java.lang.Object writeReplace(); \
-		    java.lang.Object readResolve(); \
-		}" \
-		-keepclassmembers "interface org.bouncycastle.crypto.paddings.BlockCipherPadding { \
-		    abstract public java.lang.String getPaddingName(); \
-		}" \
-		-keepclassmembers "class * implements org.bouncycastle.crypto.paddings.BlockCipherPadding { \
-		    public java.lang.String getPaddingName(); \
-		}"
-
 # Conscrypt isn't built in the PDK or on non-linux OSes, so this cannot be built
 # because it has a dependency on conscrypt-hostdex.
 ifneq ($(TARGET_BUILD_PDK),true)
   ifeq ($(HOST_OS),linux)
     include $(CLEAR_VARS)
+    $(info *my flag* bouncycastle 8)
     LOCAL_MODULE := bouncycastle-hostdex-nojarjar
     LOCAL_MODULE_TAGS := optional
     LOCAL_SRC_FILES := $(all_bcprov_src_files)
@@ -168,6 +102,7 @@ ifneq ($(TARGET_BUILD_PDK),true)
     include $(BUILD_HOST_DALVIK_STATIC_JAVA_LIBRARY)
 
     include $(CLEAR_VARS)
+    $(info *my flag* bouncycastle 9)
     LOCAL_MODULE := bouncycastle-hostdex
     LOCAL_MODULE_TAGS := optional
     LOCAL_STATIC_JAVA_LIBRARIES := bouncycastle-hostdex-nojarjar
@@ -177,6 +112,7 @@ ifneq ($(TARGET_BUILD_PDK),true)
     include $(BUILD_HOST_DALVIK_JAVA_LIBRARY)
 
     include $(CLEAR_VARS)
+    $(info *my flag* bouncycastle 10)
     LOCAL_MODULE := bouncycastle-bcpkix-hostdex-nojarjar
     LOCAL_MODULE_TAGS := optional
     LOCAL_SRC_FILES := $(all_bcpkix_src_files)
@@ -184,6 +120,7 @@ ifneq ($(TARGET_BUILD_PDK),true)
     include $(BUILD_HOST_DALVIK_STATIC_JAVA_LIBRARY)
 
     include $(CLEAR_VARS)
+    $(info *my flag* bouncycastle 11)
     LOCAL_MODULE := bouncycastle-bcpkix-hostdex
     LOCAL_MODULE_TAGS := optional
     LOCAL_STATIC_JAVA_LIBRARIES := bouncycastle-bcpkix-hostdex-nojarjar
@@ -193,6 +130,7 @@ ifneq ($(TARGET_BUILD_PDK),true)
 
     # OCSP classes used for testing
     include $(CLEAR_VARS)
+    $(info *my flag* bouncycastle 12)
     LOCAL_MODULE := bouncycastle-ocsp-hostdex
     LOCAL_MODULE_TAGS := optional
     LOCAL_SRC_FILES := $(all_bc_ocsp_files)
@@ -203,13 +141,20 @@ ifneq ($(TARGET_BUILD_PDK),true)
 endif
 
 include $(CLEAR_VARS)
+$(info *my flag* bouncycastle 13)
+# LOCAL_SDK_VERSION := 9
 LOCAL_MODULE := bouncycastle-host
 LOCAL_MODULE_TAGS := optional
-LOCAL_SRC_FILES := $(ri_bcprov_src_files)
+LOCAL_SRC_FILES := $(filter-out \
+    $(call all-java-files-under,bcprov/src/main/java/org/bouncycastle/asn1/ocsp), \
+    $(call all-java-files-under,bcprov/src/main/java))
+LOCAL_JAVA_LANGUAGE_VERSION := 1.7
 LOCAL_JAVA_LANGUAGE_VERSION := 1.7
 include $(BUILD_HOST_JAVA_LIBRARY)
 
 include $(CLEAR_VARS)
+$(info *my flag* bouncycastle 14)
+# LOCAL_SDK_VERSION := 9
 LOCAL_MODULE := bouncycastle-bcpkix-host
 LOCAL_MODULE_TAGS := optional
 LOCAL_SRC_FILES := $(all_bcpkix_src_files)
@@ -219,6 +164,8 @@ include $(BUILD_HOST_JAVA_LIBRARY)
 
 # OCSP classes used for testing
 include $(CLEAR_VARS)
+$(info *my flag* bouncycastle 15)
+# LOCAL_SDK_VERSION := 9
 LOCAL_MODULE := bouncycastle-ocsp-host
 LOCAL_MODULE_TAGS := optional
 LOCAL_SRC_FILES := $(all_bc_ocsp_files)
