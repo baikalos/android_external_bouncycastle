@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ad78e1a_2cf52d12",
+        "filename": "Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2022-08-15T15:25:21Z",
+      "side": 1,
+      "message": "duplicate line",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 34
+      },
+      "revId": "169ad388e1f8aae6b82f1701593dc199097079c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
