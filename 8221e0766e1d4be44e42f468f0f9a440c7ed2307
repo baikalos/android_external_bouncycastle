@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2868ed8_11e0f454",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2022-08-15T05:41:04Z",
+      "side": 0,
+      "message": "This bug was \"ART: Gtests need non-stripped libcore for testing\". Have we confirmed that is obsolete?",
+      "range": {
+        "startLine": 70,
+        "startChar": 27,
+        "endLine": 70,
+        "endChar": 37
+      },
+      "revId": "8221e0766e1d4be44e42f468f0f9a440c7ed2307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

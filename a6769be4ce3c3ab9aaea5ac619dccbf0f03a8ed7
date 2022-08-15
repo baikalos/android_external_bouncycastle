@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21976284_e02e0f1b",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2022-08-15T05:41:04Z",
+      "side": 1,
+      "message": "so is this unused now? if so can it be removed?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "a6769be4ce3c3ab9aaea5ac619dccbf0f03a8ed7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b1efb99_0b84641d",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2022-08-15T05:41:04Z",
+      "side": 1,
+      "message": "also remove if removing above",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 22
+      },
+      "revId": "a6769be4ce3c3ab9aaea5ac619dccbf0f03a8ed7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
