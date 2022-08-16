@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0704240d_e1ec6efb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-08-16T09:57:08Z",
+      "side": 1,
+      "message": "-1, let\u0027s not not take a dependency on .mk files in 2022.\n",
+      "revId": "560a06876b85cc057702296e308fb97e381a7d92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
