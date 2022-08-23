@@ -967,19 +967,15 @@ public class BaseBlockCipher
                 if (!isBCPBEKeyWithoutIV(key)) {
                     ivRandom.nextBytes(iv);
                 } else {
-                    // TODO(b/70275132): Change to rejecting these keys
                     System.err.println(" ******** DEPRECATED FUNCTIONALITY ********");
                     System.err.println(" * You have initialized a cipher with a PBE key with no IV and");
                     System.err.println(" * have not provided an IV in the AlgorithmParameterSpec.  This");
                     System.err.println(" * configuration is deprecated.  The cipher will be initialized");
                     System.err.println(" * with an all-zero IV, but in a future release this call will");
                     System.err.println(" * throw an exception.");
-                    new InvalidAlgorithmParameterException("No IV set when using PBE key")
-                            .printStackTrace(System.err);
+                    throw new InvalidAlgorithmParameterException("No IV set when using PBE key");
                 }
-                // END Android-changed: For PBE keys with no IV, log and use IV of 0
-                param = new ParametersWithIV(param, iv);
-                ivParam = (ParametersWithIV)param;
+                // END Android-changed: For PBE keys with no IV, reject
             }
             else if (cipher.getUnderlyingCipher().getAlgorithmName().indexOf("PGPCFB") < 0)
             {
@@ -993,20 +989,15 @@ public class BaseBlockCipher
                 if (!isBCPBEKeyWithoutIV(key)) {
                     throw new InvalidAlgorithmParameterException("no IV set when one expected");
                 } else {
-                    // TODO(b/70275132): Change to rejecting these keys
                     System.err.println(" ******** DEPRECATED FUNCTIONALITY ********");
                     System.err.println(" * You have initialized a cipher with a PBE key with no IV and");
                     System.err.println(" * have not provided an IV in the AlgorithmParameterSpec.  This");
                     System.err.println(" * configuration is deprecated.  The cipher will be initialized");
                     System.err.println(" * with an all-zero IV, but in a future release this call will");
                     System.err.println(" * throw an exception.");
-                    new InvalidAlgorithmParameterException("No IV set when using PBE key")
-                            .printStackTrace(System.err);
-                    // Mimic behaviour in 1.52 by using an IV of 0's
-                    param = new ParametersWithIV(param, new byte[ivLength]);
-                    ivParam = (ParametersWithIV)param;
+                    throw new InvalidAlgorithmParameterException("No IV set when using PBE key");
                 }
-                // END Android-changed: For PBE keys with no IV, log and use IV of 0
+                // END Android-changed: For PBE keys with no IV, reject
             }
         }
 
