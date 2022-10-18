@@ -16,6 +16,24 @@
       "message": "-1 only in order to hold for discussion.\n\nI think it\u0027s fine to include parts of BC in the platform but I\u0027m not sure this is the right way.\n\nThe effect of this change will be to include the bcpkix classes that you\u0027ve added to frameworks/base, which probably isn\u0027t too bad although it\u0027s still 11,000 lines of code.\n\nThis will also add those classes *and* all of bcprov to system_server, which may have a noticeable size impact if system_server is not using r8 (or similar), so maybe it\u0027s better to introduce a new library, although it seems like the number of BC variants is getting out of hand.",
       "revId": "9893a6d93de1971e69a2cc4ffd3e1848fdf99f0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0ace330_4e17050d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2022-10-18T11:51:31Z",
+      "side": 1,
+      "message": "Not a subject expert, but looks like \"bouncycastle-repackaged-unbundled\" is a part of \"framework-minus-apex\", which is in the boot class path. And system server just re-uses this copy of bouncycastle in the boot class path when  it forks from Zygote(?). For system health perspective, isn\u0027t it better than creating an extra BouncyCastle variant?",
+      "parentUuid": "9f826d70_849f141e",
+      "revId": "9893a6d93de1971e69a2cc4ffd3e1848fdf99f0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
