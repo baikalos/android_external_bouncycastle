@@ -52,6 +52,24 @@
       "parentUuid": "d0ace330_4e17050d",
       "revId": "9893a6d93de1971e69a2cc4ffd3e1848fdf99f0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fa701a6_88549ba5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2022-10-18T22:19:32Z",
+      "side": 1,
+      "message": "That\u0027s what I thought, too, since I didn\u0027t need to touch Android.bp in the other change :)",
+      "parentUuid": "4fd2f6f8_16d74f5d",
+      "revId": "9893a6d93de1971e69a2cc4ffd3e1848fdf99f0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
