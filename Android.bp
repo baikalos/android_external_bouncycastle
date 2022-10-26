@@ -98,7 +98,7 @@ java_library {
         "//art/build/apex",
         "//art/build/sdk",
         "//external/wycheproof",
-        "//libcore:__subpackages__",
+        "//libcore",
         "//packages/modules/ArtPrebuilt",
     ],
     apex_available: [
