@@ -76,6 +76,13 @@ java_defaults {
     lint: {
         warning_checks: ["SuspiciousIndentation"],
     },
+    errorprone: {
+        javacflags: [
+            "-Xep:BoxedPrimitiveEquality:WARN",
+            "-Xep:DoubleBraceInitialization:WARN",
+            "-Xep:HashtableContains:WARN",
+        ],
+    },
 }
 
 // The src files for bouncycastle, used to generate core platform / intra-core
