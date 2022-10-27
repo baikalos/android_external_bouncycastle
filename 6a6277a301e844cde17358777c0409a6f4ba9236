@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5384b4b_5facdfeb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2022-10-27T11:46:01Z",
+      "side": 1,
+      "message": "Thanks! There are probably a few others in external that could use simplifying this way so long as they still need OWNERS and OWNERS points to platform/libcore, e.g. boringssl, conscrypt, wycheproof.",
+      "revId": "6a6277a301e844cde17358777c0409a6f4ba9236",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
