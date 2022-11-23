@@ -172,6 +172,7 @@ unbundled_visibility = [
     "//packages/apps/KeyChain",
     "//packages/apps/RemoteProvisioner/tests/unittests",
     "//packages/modules/Connectivity/tests/cts/net",
+    "//packages/modules/RemoteKeyProvisioning/app/tests/unit",
     "//packages/modules/Wifi/service",
     "//packages/modules/Wifi/service/tests/wifitests",
     "//libcore",
