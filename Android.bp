@@ -298,3 +298,28 @@ java_library {
         warning_checks: ["SuspiciousIndentation"],
     },
 }
+
+// Bouncycastle for use by packages/modules/Uwb project.
+//
+//Excludes directories not needed.
+java_library {
+    name: "bouncycastle-uwb",
+    visibility: [
+        "//packages/modules/Uwb/service",
+    ],
+    apex_available: [
+        "com.android.uwb",
+    ],
+    srcs: [
+        "bcprov/src/main/java/org/bouncycastle/**/*.java",
+        "bcpkix/src/main/java/org/bouncycastle/cert/**/*.java",
+        "bcpkix/src/main/java/org/bouncycastle/cms/**/*.java",
+        "bcpkix/src/main/java/org/bouncycastle/operator/**/*.java",
+    ],
+
+    exclude_srcs: [
+        "bcprov/src/main/java/org/bouncycastle/iana/**/*.java",
+        "bcprov/src/main/java/org/bouncycastle/its/**/*.java",
+    ],
+    sdk_version: "core_current",
+}
