@@ -34,6 +34,24 @@
       "parentUuid": "78e44a5d_8101e71a",
       "revId": "d5f5eeb432618575f92d6319b87691792dde6660",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcbf05df_15b8bfa5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2022-12-16T14:33:15Z",
+      "side": 1,
+      "message": "Sorry, I missed that the wrong indentation was in BC. I\u0027ll approve this.",
+      "parentUuid": "21028ba1_1a357509",
+      "revId": "d5f5eeb432618575f92d6319b87691792dde6660",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
