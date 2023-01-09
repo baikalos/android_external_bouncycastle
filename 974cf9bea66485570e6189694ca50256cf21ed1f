@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93a3aa58_d3eaf28a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2023-01-09T15:44:17Z",
+      "side": 1,
+      "message": "Re-implemented in a way that avoids accidentally exposing BC internals in the systems\u0027s security Providers.",
+      "revId": "974cf9bea66485570e6189694ca50256cf21ed1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
