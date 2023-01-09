@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e3bda80_1eb1c088",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2023-01-09T18:05:04Z",
+      "side": 1,
+      "message": "One presubmit failure looks like an existing bug, the others were real - I tried to be smart and allow empty passwords for existing keystores but that broke a prior CTS so I\u0027ve restored the old behaviour in the latest patchset,",
+      "revId": "4fae1c6cb82e4b3e7d51e38ce0e3d7a4f22a0939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
