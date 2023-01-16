@@ -48,21 +48,13 @@ public class BCJcaJceHelper
     //
     // If code is using a BCJcajceHelper to ensure it gets its implementation from BC, then
     // also search in the privately provided algorithms if not found in the main set.
-    //
-    // If any error occurs while searching the private Provider, typically a
-    // NoSuchAlgorithmException being thrown, then the original NoSuchAlgorithmException
-    // from the BC Provider is thrown for consistency.
     @Override
     public Cipher createCipher(String algorithm)
         throws NoSuchAlgorithmException, NoSuchPaddingException {
         try {
             return super.createCipher(algorithm);
-        } catch (NoSuchAlgorithmException originalException) {
-            try {
-                return Cipher.getInstance(algorithm, getPrivateProvider());
-            } catch (Throwable throwable) {
-                throw originalException;
-            }
+        } catch (NoSuchAlgorithmException e) {
+            return Cipher.getInstance(algorithm, getPrivateProvider());
         }
     }
 
@@ -71,12 +63,8 @@ public class BCJcaJceHelper
         throws NoSuchAlgorithmException {
         try {
             return super.createSecretKeyFactory(algorithm);
-        } catch (NoSuchAlgorithmException originalException) {
-            try {
-                return SecretKeyFactory.getInstance(algorithm, getPrivateProvider());
-            } catch (Throwable throwable) {
-                throw originalException;
-            }
+        } catch (NoSuchAlgorithmException e) {
+            return SecretKeyFactory.getInstance(algorithm, getPrivateProvider());
         }
     }
 
@@ -84,12 +72,8 @@ public class BCJcaJceHelper
     public Mac createMac(String algorithm) throws NoSuchAlgorithmException {
         try {
             return super.createMac(algorithm);
-        } catch (NoSuchAlgorithmException originalException) {
-            try {
-                return Mac.getInstance(algorithm, getPrivateProvider());
-            } catch (Throwable throwable) {
-                throw originalException;
-            }
+        } catch (NoSuchAlgorithmException e) {
+            return Mac.getInstance(algorithm, getPrivateProvider());
         }
     }
 
@@ -97,7 +81,7 @@ public class BCJcaJceHelper
         if (provider instanceof BouncyCastleProvider) {
             return ((BouncyCastleProvider) provider).getPrivateProvider();
         }
-        throw new IllegalStateException("Internal error in BCJcaJceHelper");
+        throw new IllegalStateException(); // XXX
     }
     // END Android-added: Look up algorithms in private provider if not found in main Provider.
 }
