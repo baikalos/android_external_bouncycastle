@@ -181,6 +181,7 @@ unbundled_visibility = [
     "//system/security/identity/util",
     "//tools/security/remote_provisioning/attestation_testing",
     "//vendor:__subpackages__",
+    "//cts/common/device-side/device-info",
 ]
 
 // A bouncycastle library in the original org.bouncycastle package for use
@@ -214,8 +215,6 @@ java_library {
     libs: ["bouncycastle-unbundled"],
 
     sdk_version: "core_current",
-    // b/267608166: Allow to be used by components targeting Java 11.
-    java_version: "11",
 }
 
 // Bouncycastle OCSP classes in the original org.bouncycastle package for use
