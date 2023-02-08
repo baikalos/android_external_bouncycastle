@@ -151,6 +151,7 @@ unbundled_visibility = [
     "//art/build/sdk",
     "//build/make/tools/signapk",
     "//build/make/tools/signtos",
+    "//cts/common/device-side/device-info",
     "//cts/hostsidetests/devicepolicy/app/DeviceOwner",
     "//cts/tests/libcore/okhttp",
     "//cts/tests/security",
