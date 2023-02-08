@@ -181,6 +181,7 @@ unbundled_visibility = [
     "//system/security/identity/util",
     "//tools/security/remote_provisioning/attestation_testing",
     "//vendor:__subpackages__",
+    "//cts/common/device-side/device-info",
 ]
 
 // A bouncycastle library in the original org.bouncycastle package for use
