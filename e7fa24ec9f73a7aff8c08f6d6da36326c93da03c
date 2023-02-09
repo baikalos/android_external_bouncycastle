@@ -70,6 +70,24 @@
       "parentUuid": "48861fab_b5abf647",
       "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa17c165_60531d33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2023-02-09T15:36:01Z",
+      "side": 1,
+      "message": "I\u0027ve applied aosp/2411668 locally (w/o this CL), removed bouncycastle from deps, added visibility in `android-key-attestation` and replaced BC\u0027s Base64 with java.util.Base64.\n\nWith such setup `mmma cts/tools/cts-device-info/` finished fine. Or it is not what you want to achieve?",
+      "parentUuid": "dc89c532_8d172d2d",
+      "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
