@@ -16,6 +16,24 @@
       "message": "The only BC class referenced in aosp/2411668 is Base64. Do you use anything else from it?",
       "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cf2188c_6847578d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1857230
+      },
+      "writtenOn": "2023-02-09T14:52:00Z",
+      "side": 1,
+      "message": "Yes, the class referenced relies on ParsedAttestationRecord and we need to have BC present in deviceinfo for the code to run. PAR uses many BC classes.\n\nhttps://source.corp.google.com/android-internal/external/android-key-attestation/server/src/main/java/com/google/android/attestation/ParsedAttestationRecord.java;l\u003d99?q\u003dcreateparsed\u0026sq\u003dpackage:%5Eandroid-internal$",
+      "parentUuid": "442b4c26_365f130b",
+      "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
