@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "442b4c26_365f130b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2023-02-09T10:13:30Z",
+      "side": 1,
+      "message": "The only BC class referenced in aosp/2411668 is Base64. Do you use anything else from it?",
+      "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
