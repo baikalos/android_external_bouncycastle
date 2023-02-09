@@ -52,6 +52,24 @@
       "parentUuid": "9cf2188c_6847578d",
       "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc89c532_8d172d2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1857230
+      },
+      "writtenOn": "2023-02-09T15:04:16Z",
+      "side": 1,
+      "message": "I would have thought so too but it didn\u0027t bring it in. If I don\u0027t explicitely pull it in the class will fail at runtime saying it cannot resolve the BC classes.",
+      "parentUuid": "48861fab_b5abf647",
+      "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
