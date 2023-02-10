@@ -88,6 +88,24 @@
       "parentUuid": "dc89c532_8d172d2d",
       "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d082049_7ad5ea12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1857230
+      },
+      "writtenOn": "2023-02-10T14:57:49Z",
+      "side": 1,
+      "message": "Runtime. The code will build fine but when actually running it will fail and throw an error in `adb shell am instrument -w com.android.compatibility.common.deviceinfo/androidx.test.runner.AndroidJUnitRunner`. Please attempt this.\n\nThe specific error that is gotten is shown here https://paste.googleplex.com/5232652352225280",
+      "parentUuid": "fa17c165_60531d33",
+      "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
