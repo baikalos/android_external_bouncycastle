@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "381e6418_81a53181",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1857230
+      },
+      "writtenOn": "2023-02-13T14:43:15Z",
+      "side": 1,
+      "message": "I went into the build and found an issue in the android-key-attestation library and fixed the build so that we dont need this.",
+      "parentUuid": "0d082049_7ad5ea12",
+      "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c281831_932838f9",
         "filename": "Android.bp",
         "patchSetId": 2
