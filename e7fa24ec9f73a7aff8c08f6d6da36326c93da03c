@@ -123,6 +123,24 @@
       "message": "Please move it to line 154 to keep entries sorted.",
       "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4d518b2_9aeafa00",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1857230
+      },
+      "writtenOn": "2023-02-13T13:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c281831_932838f9",
+      "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
