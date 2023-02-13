@@ -106,6 +106,23 @@
       "parentUuid": "fa17c165_60531d33",
       "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c281831_932838f9",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2023-02-13T08:31:38Z",
+      "side": 1,
+      "message": "Please move it to line 154 to keep entries sorted.",
+      "revId": "e7fa24ec9f73a7aff8c08f6d6da36326c93da03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
