@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f713fe5_9228e919",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2023-03-08T18:37:14Z",
+      "side": 1,
+      "message": "Nice! But ideally keep the bug reference for future archaeologists.",
+      "revId": "be7d40d1b9753345e1348ea614f1db91c351e8c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
