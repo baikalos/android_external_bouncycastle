@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d8f69b8_2beebaa2",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2023-03-08T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6014936_ac57a731",
+      "range": {
+        "startLine": 964,
+        "startChar": 43,
+        "endLine": 965,
+        "endChar": 67
+      },
+      "revId": "48fab238ffeef5428f7bfee5bf5cb7bdba151d22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ed1cde4_198904c6",
@@ -71,6 +95,30 @@
       "writtenOn": "2023-03-08T11:53:31Z",
       "side": 1,
       "message": "Drop all this text as (a) no longer necessary and (b) is contradicted by the fact we throw an exception.",
+      "range": {
+        "startLine": 970,
+        "startChar": 31,
+        "endLine": 970,
+        "endChar": 38
+      },
+      "revId": "48fab238ffeef5428f7bfee5bf5cb7bdba151d22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3a5fcc5_f14743dc",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2023-03-08T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed1cde4_198904c6",
       "range": {
         "startLine": 970,
         "startChar": 31,
@@ -104,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "815a2912_ce9ee2f2",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2023-03-08T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dc5715c_2475f115",
+      "range": {
+        "startLine": 978,
+        "startChar": 65,
+        "endLine": 978,
+        "endChar": 71
+      },
+      "revId": "48fab238ffeef5428f7bfee5bf5cb7bdba151d22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "581d9431_246d2adb",
@@ -127,6 +199,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "21b38b50_ade7d68b",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2023-03-08T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "581d9431_246d2adb",
+      "range": {
+        "startLine": 986,
+        "startChar": 67,
+        "endLine": 986,
+        "endChar": 95
+      },
+      "revId": "48fab238ffeef5428f7bfee5bf5cb7bdba151d22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a849e24f_bfe3c33b",
@@ -140,6 +236,30 @@
       "writtenOn": "2023-03-08T11:53:31Z",
       "side": 1,
       "message": "Drop... Which makes both branches of the previous `if` the same, so that can go too.",
+      "range": {
+        "startLine": 992,
+        "startChar": 31,
+        "endLine": 992,
+        "endChar": 38
+      },
+      "revId": "48fab238ffeef5428f7bfee5bf5cb7bdba151d22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2df55bd_92b3b24d",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2023-03-08T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a849e24f_bfe3c33b",
       "range": {
         "startLine": 992,
         "startChar": 31,
