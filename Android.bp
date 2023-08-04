@@ -55,23 +55,12 @@ java_defaults {
     },
 }
 
-// These cannot build in the PDK, because the PDK requires all libraries
-// compile against SDK versions.
 java_defaults {
     name: "bouncycastle-defaults",
     defaults: [
         "bouncycastle-errorprone-defaults",
     ],
     hostdex: true,
-    target: {
-        android: {
-            product_variables: {
-                pdk: {
-                    enabled: false,
-                },
-            },
-        },
-    },
 
     lint: {
         warning_checks: ["SuspiciousIndentation"],
