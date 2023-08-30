@@ -69,6 +69,24 @@
       "parentUuid": "3c441043_d486479f",
       "revId": "a6122ecb996527a67c99b474f417892b1d31a2d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f502a44a_275a5d8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2023-08-30T12:31:02Z",
+      "side": 1,
+      "message": "I\u0027m unsure... With Conscrypt we test against the repackaged version that ships in the platform (equivalent to BC\u0027s repackaged_platform). But that way you can only really test public APIs, so your coverage will suffer so maybe don\u0027t worry.",
+      "parentUuid": "6aafd372_02bfc3ad",
+      "revId": "a6122ecb996527a67c99b474f417892b1d31a2d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
