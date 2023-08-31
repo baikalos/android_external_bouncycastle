@@ -1,6 +1,9 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.math.ec.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -15,20 +18,49 @@ import com.android.org.bouncycastle.crypto.ec.CustomNamedCurves;
 import com.android.org.bouncycastle.math.ec.ECAlgorithms;
 import com.android.org.bouncycastle.math.ec.ECCurve;
 import com.android.org.bouncycastle.math.ec.ECPoint;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import android.platform.test.annotations.LargeTest;
-
+// Android-changed: parameterized the test.
 /**
  * @hide This class is not part of the Android public SDK API
  */
-public class ECAlgorithmsTest extends TestCase
+@RunWith(Parameterized.class)
+public class ECAlgorithmsTest
 {
     private static final int SCALE = 4;
     private static final SecureRandom RND = new SecureRandom();
+
+
+    // BEGIN Android-added: parameterized the test.
+    @Parameterized.Parameters(name = "{0}")
+    public static String[] getAllX9ECParameters() {
+        Set<String> names = new HashSet<>(AllTests.enumToList(ECNamedCurveTable.getNames()));
+        names.addAll(AllTests.enumToList(CustomNamedCurves.getNames()));
+        return names.toArray(new String[0]);
+    }
+
+    @Parameterized.Parameter(0)
+    public String name;
+
+    private ArrayList getX9s(String name) {
+        ArrayList<X9ECParameters> x9s = new ArrayList<>();
+
+        X9ECParameters x9 = ECNamedCurveTable.getByName(name);
+        if (x9 != null)
+        {
+            addTestCurves(x9s, x9);
+        }
+
+        x9 = CustomNamedCurves.getByName(name);
+        if (x9 != null)
+        {
+            addTestCurves(x9s, x9);
+        }
+        return x9s;
+    }
+    // END Android-added: parameterized the test.
 
     public void testSumOfMultiplies()
     {
@@ -38,10 +70,12 @@ public class ECAlgorithmsTest extends TestCase
     }
 
     // TODO Ideally, mark this test not to run by default
-    @LargeTest
+    @Test
     public void testSumOfMultipliesComplete()
     {
-        ArrayList x9s = getTestCurves();
+        // Android-changed: parameterized the test.
+        // ArrayList x9s = getTestCurves();
+        ArrayList<X9ECParameters> x9s = getX9s(name);
         Iterator it = x9s.iterator();
         while (it.hasNext())
         {
@@ -58,10 +92,12 @@ public class ECAlgorithmsTest extends TestCase
     }
 
     // TODO Ideally, mark this test not to run by default
-    @LargeTest
+    @Test
     public void testSumOfTwoMultipliesComplete()
     {
-        ArrayList x9s = getTestCurves();
+        // Android-changed: parameterized the test.
+        // ArrayList x9s = getTestCurves();
+        ArrayList<X9ECParameters> x9s = getX9s(name);
         Iterator it = x9s.iterator();
         while (it.hasNext())
         {
@@ -194,9 +230,11 @@ public class ECAlgorithmsTest extends TestCase
         }
     }
 
+    // Android-changed: Use JUnit4.
+    /*
     public static Test suite()
     {
         return new TestSuite(ECAlgorithmsTest.class);
     }
-
+     */
 }
