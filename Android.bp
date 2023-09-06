@@ -116,13 +116,13 @@ java_library {
 java_library_static {
     name: "bouncycastle-test-lib",
     visibility: [
-        "//libcore",
         "//packages/modules/ArtPrebuilt",
+        "//external/bouncycastle/mts",
     ],
     srcs: [
         "repackaged/bcprov/src/test/java/**/*.java",
     ],
-    libs: [
+    static_libs: [
         "bouncycastle",
         "junit",
         "platform-test-annotations",
@@ -262,11 +262,6 @@ java_test_host {
     test_options: {
         unit_test: true,
     },
-    static_libs: [
-        "bouncycastle-unbundled",
-        "junit",
-        "platform-test-annotations",
-    ],
     test_suites: ["general-tests"],
 }
 
