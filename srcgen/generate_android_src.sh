@@ -31,6 +31,7 @@ DEFAULT_CONSTRUCTORS_FILE=${BOUNCY_CASTLE_DIR}/srcgen/default-constructors.txt
 
 SOURCE_DIRS="\
     src/main/java \
+    src/test/java \
 "
 
 # Repackage the project's source.

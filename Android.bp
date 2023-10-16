@@ -113,6 +113,24 @@ java_library {
     system_modules: "art-module-intra-core-api-stubs-system-modules",
 }
 
+java_library_static {
+    name: "bouncycastle-test-lib",
+    visibility: [
+        "//packages/modules/ArtPrebuilt",
+        "//external/bouncycastle/mts",
+    ],
+    srcs: [
+        "repackaged/bcprov/src/test/java/**/*.java",
+    ],
+    libs: ["bouncycastle"],
+    static_libs: [
+        "junit",
+        "platform-test-annotations",
+    ],
+    sdk_version: "none",
+    system_modules: "art-module-intra-core-api-stubs-system-modules",
+}
+
 // A bouncycastle library repackaged in com.android.internal.org.bouncycastle
 // for use in the Android platform where it is important not to conflict with
 // the original org.bouncycastle package or the one in the ART module.
@@ -234,6 +252,22 @@ java_library_static {
 java_library_host {
     name: "bouncycastle-host",
     static_libs: ["bouncycastle-unbundled"],
+}
+
+java_test_host {
+    name: "bouncycastle-host-tests",
+    srcs: [
+        "bcprov/src/test/java/**/*.java",
+    ],
+    static_libs: [
+        "bouncycastle-unbundled",
+        "junit",
+        "platform-test-annotations",
+    ],
+    test_options: {
+        unit_test: true,
+    },
+    test_suites: ["general-tests"],
 }
 
 // Bouncycastle subset for use by frameworks/opt/net/ike project.
