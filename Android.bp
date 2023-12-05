@@ -93,7 +93,6 @@ java_library {
     visibility: [
         "//art/build/apex",
         "//art/build/sdk",
-        "//external/wycheproof",
         "//libcore:__subpackages__",
         "//packages/modules/ArtPrebuilt",
     ],
@@ -102,12 +101,24 @@ java_library {
         "com.android.art.debug",
     ],
     min_sdk_version: "31",
-    defaults: ["bouncycastle-defaults"],
+    defaults: [
+        "bouncycastle-defaults",
+    ],
     installable: true,
 
     srcs: [":bouncycastle_java_files"],
 
     libs: ["unsupportedappusage"],
+
+    optimize: {
+        enabled: true,
+        shrink: true,
+        optimize: true,
+        obfuscate: false,
+        proguard_compatibility: false,
+        ignore_warnings: false,
+        proguard_flags_files: ["proguard.flags"],
+    },
 
     sdk_version: "none",
     system_modules: "art-module-intra-core-api-stubs-system-modules",
