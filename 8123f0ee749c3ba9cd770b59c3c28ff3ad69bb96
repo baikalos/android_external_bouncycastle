@@ -22,6 +22,30 @@
       },
       "revId": "8123f0ee749c3ba9cd770b59c3c28ff3ad69bb96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be3584d6_f806bc94",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1878380
+      },
+      "writtenOn": "2024-01-08T18:01:15Z",
+      "side": 1,
+      "message": "My understanding is that `service-wifi` statically links `bouncycastle-unbundled`, and uses [this jarjar rule](https://source.corp.google.com/h/googleplex-android/platform/packages/modules/Wifi/+/cd640da7fa9e74acffa3aa633efad27db1433d6d:framework/jarjar-rules.txt;l\u003d91-92;drc\u003de6bcb3cc44ea2f32b2193da618852c54d777d3df;bpv\u003d0;bpt\u003d0) to prevent package collisions\n\nThe dependency chain is\n```\nservice-wifi\n    | (static_libs)\n    v\nwifi-service-pre-jarjar\n    | (static libs)\n    v\nbouncycastle-unbundled    \n```",
+      "parentUuid": "aab221b6_cbec551f",
+      "range": {
+        "startLine": 203,
+        "startChar": 30,
+        "endLine": 203,
+        "endChar": 46
+      },
+      "revId": "8123f0ee749c3ba9cd770b59c3c28ff3ad69bb96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
