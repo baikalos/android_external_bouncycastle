@@ -1,5 +1,29 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aab221b6_cbec551f",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-01-08T10:58:53Z",
+      "side": 1,
+      "message": "Um. I think the `org.bouncycastle` package name is mainly used by  apps. Are you going to put it into the bootclasspath? Does this package name collide with the bouncycastle in apps?",
+      "range": {
+        "startLine": 203,
+        "startChar": 30,
+        "endLine": 203,
+        "endChar": 46
+      },
+      "revId": "8123f0ee749c3ba9cd770b59c3c28ff3ad69bb96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
