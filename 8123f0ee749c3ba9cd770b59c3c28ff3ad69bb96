@@ -70,6 +70,30 @@
       },
       "revId": "8123f0ee749c3ba9cd770b59c3c28ff3ad69bb96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccb41265_18d3b245",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-01-09T12:09:35Z",
+      "side": 1,
+      "message": "That\u0027s my understanding too...\n\nHope they\u0027re using something like r8 too as this target includes most of BC but they only seem to be using half a dozen DER/ASN.1 methods. 😊",
+      "parentUuid": "f8608994_ecb992d6",
+      "range": {
+        "startLine": 203,
+        "startChar": 30,
+        "endLine": 203,
+        "endChar": 46
+      },
+      "revId": "8123f0ee749c3ba9cd770b59c3c28ff3ad69bb96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
