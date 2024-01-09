@@ -46,6 +46,30 @@
       },
       "revId": "8123f0ee749c3ba9cd770b59c3c28ff3ad69bb96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8608994_ecb992d6",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-01-09T12:08:02Z",
+      "side": 1,
+      "message": "Ah, Thanks! It\u0027s apex_available change, but it\u0027s already visible to the Wifi module.",
+      "parentUuid": "be3584d6_f806bc94",
+      "range": {
+        "startLine": 203,
+        "startChar": 30,
+        "endLine": 203,
+        "endChar": 46
+      },
+      "revId": "8123f0ee749c3ba9cd770b59c3c28ff3ad69bb96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
