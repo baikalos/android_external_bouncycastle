@@ -187,6 +187,7 @@ unbundled_visibility = [
     "//system/extras/verity",
     "//system/security/identity/util",
     "//tools/security/remote_provisioning/attestation_testing",
+    "//tools/apksig",
     "//vendor:__subpackages__",
 ]
 
