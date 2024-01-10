@@ -206,6 +206,7 @@ java_library {
     sdk_version: "core_current",
     min_sdk_version: "30",
     java_version: "1.7",
+    apex_available: ["com.android.wifi"],
 }
 
 // Bouncycastle PKIX classes in the original org.bouncycastle package for use
