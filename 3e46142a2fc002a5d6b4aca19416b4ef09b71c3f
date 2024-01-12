@@ -16,6 +16,23 @@
       "message": "Thanks for adding this as this provider is required for some of the deterministic DSA test cases (at least when support is available).",
       "revId": "3e46142a2fc002a5d6b4aca19416b4ef09b71c3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c615dc9f_0dbd2d25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-01-12T10:50:47Z",
+      "side": 1,
+      "message": "+2 as `apksig` is a host tool",
+      "revId": "3e46142a2fc002a5d6b4aca19416b4ef09b71c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
