@@ -38,6 +38,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "12e41e8a_53e2c3dd",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-01-25T16:35:29Z",
+      "side": 1,
+      "message": "Does it mean that classes and methods are not renamed?",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 25
+      },
+      "revId": "9bc6e8676aab704801b8fb28eba611c6a3b8bb4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "67bab8d9_f5765868",
         "filename": "proguard.flags",
         "patchSetId": 3
@@ -73,6 +96,30 @@
       "side": 1,
       "message": "@vichang@google.com probably has more insight into the tests, but if the class is only being included because we have a test for it, then we can probably just delete the test.\n\nOn the other hand I\u0027m a bit surprised that the `math.ec` and `util` stuff isn\u0027t used.",
       "parentUuid": "67bab8d9_f5765868",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 69
+      },
+      "revId": "9bc6e8676aab704801b8fb28eba611c6a3b8bb4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b34f3783_4dd9ca21",
+        "filename": "proguard.flags",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-01-25T16:35:29Z",
+      "side": 1,
+      "message": "In principle, I agree that we shouldn\u0027t include the dead code that only exists for tests. But mainline EngProd asks us to raise the code coverage by running tests as MTS. If we remove the tests from MTS, does it lower the code coverage?\n\nbtw, do you know if these bouncycastle classes are dead code? Or these rules only stop R8 from renaming the classes / methods / fields?",
+      "parentUuid": "1dd9e5d0_b6a4ed12",
       "range": {
         "startLine": 142,
         "startChar": 0,
