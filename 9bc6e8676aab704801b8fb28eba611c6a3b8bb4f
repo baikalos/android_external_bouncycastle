@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67bab8d9_f5765868",
+        "filename": "proguard.flags",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-01-25T01:04:30Z",
+      "side": 1,
+      "message": "@prb@google.com Can we do something to avoid this? Could these tests (or perhaps just some of them) be better off as unit tests rather than in MTS?",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 69
+      },
+      "revId": "9bc6e8676aab704801b8fb28eba611c6a3b8bb4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
