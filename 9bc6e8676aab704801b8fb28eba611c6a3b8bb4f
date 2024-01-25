@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2030c47_bf23b3ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-01-25T09:48:13Z",
+      "side": 1,
+      "message": "This is fantastic, thanks for looking into it!\n\nHowever, I\u0027m not sure your test is sufficient because:\n\n1. There\u0027s a \"hidden\" (because.... reasons) sub-provider that\u0027s needed for some KeyStore functionality.  See https://r.android.com/2096606 so please check `KeyStorePkcs7FormatTest` passes before submitting.\n2. There are funky ways to configure Ciphers that may access classes which aren\u0027t advertised (e.g. you can get a \"raw\" AES instance and then configure its mode and padding later) I don\u0027t _think_ that involves reflection but to be on the safe side you probably want to run all the `javax.crypto` tests (libcore, Harmony and Conscrypt - at the very least, the Conscrypt `CipherTest`)\n3. Just because the class is advertised, doesn\u0027t mean it can be instantiated, and I don\u0027t fully trust our test coverage (e.g. (1) above didn\u0027t get noticed for years), so maybe add a small test along the lines of:\n```\nProvider provider \u003d Security.getProvider(\"BC\");\nfor (Service service : provider.getServices() {\n  service.getInstance(null);  // Might need to be `this` for some services, e.g. Signatures\n}\n```",
+      "revId": "9bc6e8676aab704801b8fb28eba611c6a3b8bb4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67bab8d9_f5765868",
@@ -14,6 +31,30 @@
       "writtenOn": "2024-01-25T01:04:30Z",
       "side": 1,
       "message": "@prb@google.com Can we do something to avoid this? Could these tests (or perhaps just some of them) be better off as unit tests rather than in MTS?",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 69
+      },
+      "revId": "9bc6e8676aab704801b8fb28eba611c6a3b8bb4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dd9e5d0_b6a4ed12",
+        "filename": "proguard.flags",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-01-25T09:48:13Z",
+      "side": 1,
+      "message": "@vichang@google.com probably has more insight into the tests, but if the class is only being included because we have a test for it, then we can probably just delete the test.\n\nOn the other hand I\u0027m a bit surprised that the `math.ec` and `util` stuff isn\u0027t used.",
+      "parentUuid": "67bab8d9_f5765868",
       "range": {
         "startLine": 142,
         "startChar": 0,
