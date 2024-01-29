@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ccd785d9_80687a8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-01-29T18:26:10Z",
+      "side": 1,
+      "message": "Thanks for the tips! I\u0027d like to run as many tests as possible that exercise these algorithms, so let me know if you can think of more.\n\n\u003e so please check KeyStorePkcs7FormatTest passes before submitting.\n\nDone. Added all algorithms mentioned in `addPrivateAlgorithm` calls.\n\n\u003e you probably want to run all the javax.crypto tests (libcore, Harmony and Conscrypt - at the very least, the Conscrypt CipherTest)\n\nDone, but not without errors. They\u0027re not regressions by this CL though (see also heavy presubmits).\n\nAren\u0027t the Conscrypt tests going through [`bouncycastle*unbundled`](https://cs.android.com/android/platform/superproject/main/+/main:external/conscrypt/Android.bp;l\u003d669-671;drc\u003d57c7bbf8b28ad965736b75f19257b209802fef1e)? Doesn\u0027t that mean they\u0027ll use a different bouncycastle than the shrunk one in the BCP?\n\n\u003e maybe add a small test along the lines of: /.../\n\nSure. I reckon it should go into CTS and MTS, but where should I put it?",
+      "parentUuid": "d637cafe_de2c84c7",
+      "revId": "9bc6e8676aab704801b8fb28eba611c6a3b8bb4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "12e41e8a_53e2c3dd",
         "filename": "Android.bp",
         "patchSetId": 3
@@ -49,6 +67,30 @@
       "writtenOn": "2024-01-25T16:35:29Z",
       "side": 1,
       "message": "Does it mean that classes and methods are not renamed?",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 25
+      },
+      "revId": "9bc6e8676aab704801b8fb28eba611c6a3b8bb4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93db66b1_2330a3fd",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-01-29T18:26:10Z",
+      "side": 1,
+      "message": "Yes, according to the docs. However, enabling it doesn\u0027t have any effect - the classes.dex file doesn\u0027t change at all (and I see classes in there that don\u0027t match `keep` patterns). I don\u0027t know why (`-whyareyoukeeping` doesn\u0027t say).\n\nEven if it had effect, I\u0027ll keep it disabled for now, since we\u0027ll need to make the mapping file available to not obfuscate stack traces.",
+      "parentUuid": "12e41e8a_53e2c3dd",
       "range": {
         "startLine": 115,
         "startChar": 8,
@@ -120,6 +162,30 @@
       "side": 1,
       "message": "In principle, I agree that we shouldn\u0027t include the dead code that only exists for tests. But mainline EngProd asks us to raise the code coverage by running tests as MTS. If we remove the tests from MTS, does it lower the code coverage?\n\nbtw, do you know if these bouncycastle classes are dead code? Or these rules only stop R8 from renaming the classes / methods / fields?",
       "parentUuid": "1dd9e5d0_b6a4ed12",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 69
+      },
+      "revId": "9bc6e8676aab704801b8fb28eba611c6a3b8bb4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63b32153_5fc09e26",
+        "filename": "proguard.flags",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-01-29T18:26:10Z",
+      "side": 1,
+      "message": "I think the tests could be in MTS if we link the lib statically. However, then it needs to be jarjar\u0027ed as well to avoid conflict with the BCP, right? Then that wouldn\u0027t work for coverage (at least not without special shenanigans I\u0027m not familiar with).\n\nIn any case, if we regress there it\u0027s a deficiency in the coverage testing infra, isn\u0027t it?\n\n\u003e btw, do you know if these bouncycastle classes are dead code? Or these rules only stop R8 from renaming the classes / methods / fields?\n\nThey appear to be dead. All of them I got from test failure messages from `MtsLibcoreBouncyCastleTestCases`, and since R8 does dead code removal but not renaming here they shouldn\u0027t be used by any of the `-keep` rule algorithms (unless there\u0027s more reflection I\u0027ve missed).\n\nNB, I haven\u0027t checked this again after adding the internal algorithms Pete mentioned, so some of these things may be referenced now.",
+      "parentUuid": "b34f3783_4dd9ca21",
       "range": {
         "startLine": 142,
         "startChar": 0,

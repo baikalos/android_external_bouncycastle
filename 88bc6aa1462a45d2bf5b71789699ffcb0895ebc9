@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f126a11_65252977",
+        "filename": "proguard.flags",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-01-29T18:26:10Z",
+      "side": 1,
+      "message": "@prb@google.com, do you think it\u0027s worthwhile to add a note in BouncyCastleProvider.java that algorithms need to be added here too? I\u0027m thinking if someone adds an algorithm there and gets confused if nothing happens.",
+      "revId": "88bc6aa1462a45d2bf5b71789699ffcb0895ebc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
