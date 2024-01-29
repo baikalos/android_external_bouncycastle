@@ -16,6 +16,24 @@
       "message": "@prb@google.com, do you think it\u0027s worthwhile to add a note in BouncyCastleProvider.java that algorithms need to be added here too? I\u0027m thinking if someone adds an algorithm there and gets confused if nothing happens.",
       "revId": "88bc6aa1462a45d2bf5b71789699ffcb0895ebc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d46070d4_513d9ad3",
+        "filename": "proguard.flags",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-01-29T18:57:15Z",
+      "side": 1,
+      "message": "Good thinking.... I would say `README.android` is the place the next updater is most likely to see it.",
+      "parentUuid": "0f126a11_65252977",
+      "revId": "88bc6aa1462a45d2bf5b71789699ffcb0895ebc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

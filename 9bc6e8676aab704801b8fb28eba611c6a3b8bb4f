@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ede1810_a6badaf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-01-29T18:57:15Z",
+      "side": 1,
+      "message": "\u003e Done, but not without errors. They\u0027re not regressions by this CL though (see also heavy presubmits).\n\nSounds fine.  Some of our test certificates exploded over the weekend which probably didn\u0027t help. :/\n\n\n\u003e Aren\u0027t the Conscrypt tests going through [`bouncycastle*unbundled`](https://cs.android.com/android/platform/superproject/main/+/main:external/conscrypt/Android.bp;l\u003d669-671;drc\u003d57c7bbf8b28ad965736b75f19257b209802fef1e)? Doesn\u0027t that mean they\u0027ll use a different bouncycastle than the shrunk one in the BCP?\n\nNope 😊\n\nConscrypt tests do indeed link against that, but only for test support use.\n\nThe code being tested comes via the public JCA APIs (e.g. `Cipher.getInstance()`), and so it\u0027s testing whatever is on the boot classpath.\n\nIt\u0027s used in things like CipherTest where all installed Providers of each algorithm get tested to ensure they give the same results.\n\n\n\u003e Sure. I reckon it should go into CTS and MTS, but where should I put it?\n\n`libcore.java.security.ProviderTest`?  It actually makes sense to do this for all providers and it\u0027s possible that test does it already, I didn\u0027t check too closely.",
+      "parentUuid": "ccd785d9_80687a8e",
+      "revId": "9bc6e8676aab704801b8fb28eba611c6a3b8bb4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "12e41e8a_53e2c3dd",
         "filename": "Android.bp",
         "patchSetId": 3
