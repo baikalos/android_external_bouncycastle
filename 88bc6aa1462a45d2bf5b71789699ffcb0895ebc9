@@ -34,6 +34,24 @@
       "parentUuid": "0f126a11_65252977",
       "revId": "88bc6aa1462a45d2bf5b71789699ffcb0895ebc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fe39885_1541a05d",
+        "filename": "proguard.flags",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-01-30T15:29:16Z",
+      "side": 1,
+      "message": "Done. I need a new CR vote.",
+      "parentUuid": "d46070d4_513d9ad3",
+      "revId": "88bc6aa1462a45d2bf5b71789699ffcb0895ebc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
