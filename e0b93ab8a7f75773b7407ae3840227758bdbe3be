@@ -22,6 +22,53 @@
       },
       "revId": "e0b93ab8a7f75773b7407ae3840227758bdbe3be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b757105_8fc598a6",
+        "filename": "proguard.flags",
+        "patchSetId": 10
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-01-31T11:53:48Z",
+      "side": 1,
+      "message": "That test does explicitly use what\u0027s on the boot classpath, which is probably what was needed when it was written: https://cs.android.com/android/platform/superproject/main/+/main:libcore/luni/src/test/java/tests/com/android/org/bouncycastle/jce/provider/CertBlocklistTest.java;l\u003d21-23\n\nHowever as BC\u0027s `CertificateFactory.X909` was removed in https://r.android.com/1304156 we can probably remove the test and the class itself.",
+      "parentUuid": "26e48517_dca90013",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 75
+      },
+      "revId": "e0b93ab8a7f75773b7407ae3840227758bdbe3be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f99006f_b1e98603",
+        "filename": "proguard.flags",
+        "patchSetId": 10
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-01-31T11:53:48Z",
+      "side": 1,
+      "message": "I think this `DigestTest` might also be obsolete... The Conscrypt `MessageDigestTest` looks like it covers the same functionality, for all providers, in a less hacky way.",
+      "range": {
+        "startLine": 185,
+        "startChar": 16,
+        "endLine": 185,
+        "endChar": 23
+      },
+      "revId": "e0b93ab8a7f75773b7407ae3840227758bdbe3be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
