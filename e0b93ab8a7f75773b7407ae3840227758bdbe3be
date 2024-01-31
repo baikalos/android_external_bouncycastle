@@ -1,5 +1,29 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26e48517_dca90013",
+        "filename": "proguard.flags",
+        "patchSetId": 10
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-01-31T10:56:47Z",
+      "side": 1,
+      "message": "Weird, I don\u0027t get [these errors](http://android-build/test_investigate/?blocking\u003dblocking\u0026invocationId\u003dI70000010241837986\u0026status\u003dnone\u0026testResultId\u003dTR34229156073185371) locally:\n\n```\njava.lang.NoSuchMethodError: No static method decode([B)[B in class Lcom/android/org/bouncycastle/util/encoders/Base64; or its super classes (declaration of \u0027com.android.org.bouncycastle.util.encoders.Base64\u0027 appears in /apex/com.android.art/javalib/bouncycastle.jar)\n\tat tests.com.android.org.bouncycastle.jce.provider.CertBlocklistTest.createPublicKey(CertBlocklistTest.java:218)\n\tat tests.com.android.org.bouncycastle.jce.provider.CertBlocklistTest.testANSSIIntermediatePubkeyBlocklist(CertBlocklistTest.java:424)\n```",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 75
+      },
+      "revId": "e0b93ab8a7f75773b7407ae3840227758bdbe3be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {

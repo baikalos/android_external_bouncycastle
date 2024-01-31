@@ -230,6 +230,30 @@
       },
       "revId": "9bc6e8676aab704801b8fb28eba611c6a3b8bb4f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e9a13e7_e0029b15",
+        "filename": "proguard.flags",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-01-31T10:56:47Z",
+      "side": 1,
+      "message": "Had to add a few more keeps for tests of `CertBlocklist` and some digest hash algorithms in `CtsLibcoreTestCases` - see the bottom of the file. They\u0027re not official APIs, but are there still reasons to keep them? Can they be in a hiddenapi greylist?\n\nI\u0027ll submit as-is, but I\u0027ll probably come back to this since there\u0027s ~80 KB to gain here.",
+      "parentUuid": "63b32153_5fc09e26",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 69
+      },
+      "revId": "9bc6e8676aab704801b8fb28eba611c6a3b8bb4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
