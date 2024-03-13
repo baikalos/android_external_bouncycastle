@@ -362,4 +362,7 @@ java_library {
     lint: {
         warning_checks: ["SuspiciousIndentation"],
     },
+    errorprone: {
+        javacflags: ["-Xep:HashtableContains:WARN"],
+    },
 }
