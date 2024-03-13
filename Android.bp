@@ -51,6 +51,9 @@ java_defaults {
     errorprone: {
         javacflags: [
             "-Xep:MissingOverride:OFF", // Ignore missing @Override.
+            "-Xep:BoxedPrimitiveEquality:WARN",
+            "-Xep:DoubleBraceInitialization:WARN",
+            "-Xep:HashtableContains:WARN",
         ],
     },
 }
@@ -64,13 +67,6 @@ java_defaults {
 
     lint: {
         warning_checks: ["SuspiciousIndentation"],
-    },
-    errorprone: {
-        javacflags: [
-            "-Xep:BoxedPrimitiveEquality:WARN",
-            "-Xep:DoubleBraceInitialization:WARN",
-            "-Xep:HashtableContains:WARN",
-        ],
     },
 }
 
@@ -341,6 +337,7 @@ java_library {
 //Excludes directories not needed.
 java_library {
     name: "bouncycastle-uwb",
+    defaults: ["bouncycastle-errorprone-defaults"],
     visibility: [
         "//packages/modules/Uwb/service",
     ],
