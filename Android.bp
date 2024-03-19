@@ -186,6 +186,7 @@ unbundled_visibility = [
     "//packages/apps/RemoteProvisioner/tests/unittests",
     "//packages/modules/Connectivity/tests/cts/net",
     "//packages/modules/RemoteKeyProvisioning/app/tests/unit",
+    "//packages/modules/Virtualization/service_vm/test_apk",
     "//packages/modules/Wifi/service",
     "//packages/modules/Wifi/service/tests/wifitests",
     "//libcore",
