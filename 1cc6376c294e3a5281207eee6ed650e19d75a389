@@ -52,6 +52,24 @@
       "parentUuid": "4572d6cf_d8c85fb8",
       "revId": "1cc6376c294e3a5281207eee6ed650e19d75a389",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67542396_b2173dd9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-04-12T10:43:24Z",
+      "side": 1,
+      "message": "Not the end of the world as we mostly rely on libcore and Conscrypt tests for BC anyway.  If we can add them then great, but don\u0027t spend ages on it.",
+      "parentUuid": "4572d6cf_d8c85fb8",
+      "revId": "1cc6376c294e3a5281207eee6ed650e19d75a389",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
