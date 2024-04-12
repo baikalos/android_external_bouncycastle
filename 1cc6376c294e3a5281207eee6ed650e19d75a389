@@ -34,6 +34,24 @@
       "parentUuid": "9f2e57c4_05058af7",
       "revId": "1cc6376c294e3a5281207eee6ed650e19d75a389",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83b00254_ac584292",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2024-04-12T10:42:24Z",
+      "side": 1,
+      "message": "FWIW, there is a github repo that contains some tests (https://github.com/bcgit/bc-java/tree/main/core/src/test/java/org/bouncycastle/crypto/test), and another with test data (https://github.com/bcgit/bc-test-data/tree/main), but the breadth of testing is not what it used to be.",
+      "parentUuid": "4572d6cf_d8c85fb8",
+      "revId": "1cc6376c294e3a5281207eee6ed650e19d75a389",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
