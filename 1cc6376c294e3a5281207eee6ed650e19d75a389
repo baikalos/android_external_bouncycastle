@@ -16,6 +16,24 @@
       "message": "Feels like it\u0027s deleting a lot of tests... Have they maybe moved to a different tar which we need to download?",
       "revId": "1cc6376c294e3a5281207eee6ed650e19d75a389",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4572d6cf_d8c85fb8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2024-04-12T09:27:01Z",
+      "side": 1,
+      "message": "Yeah, seems like BC does not include tests anymore and only releases them within .jar files (https://www.bouncycastle.org/documentation.html), which is a bit annoying. I\u0027m trying to see if there\u0027s another path to get them.",
+      "parentUuid": "9f2e57c4_05058af7",
+      "revId": "1cc6376c294e3a5281207eee6ed650e19d75a389",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
