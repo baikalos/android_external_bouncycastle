@@ -434,7 +434,7 @@ public class JCEECPrivateKey
 
     }
 
-    private DERBitString getPublicKeyDetails(JCEECPublicKey   pub)
+    private ASN1BitString getPublicKeyDetails(BCDSTU4145PublicKey pub)
     {
         try
         {
