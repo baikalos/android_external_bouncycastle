@@ -254,7 +254,7 @@ public class CTSBlockCipher
             {
                 if (cipher instanceof CBCBlockCipher)
                 {
-                    BlockCipher c = ((CBCBlockCipher)cipher).getUnderlyingCipher();
+                    BlockCipher c = ((CBCModeCipher)cipher).getUnderlyingCipher();
 
                     c.processBlock(buf, 0, block, 0);
                 }
