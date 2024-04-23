@@ -28,6 +28,10 @@ import java.util.Set;
 
 import javax.security.auth.x500.X500Principal;
 
+<<<<<<< HEAD
+=======
+import org.bouncycastle.asn1.ASN1BitString;
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.ASN1InputStream;
@@ -36,7 +40,10 @@ import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1OctetString;
 import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.ASN1Sequence;
+<<<<<<< HEAD
 import org.bouncycastle.asn1.DERBitString;
+=======
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.asn1.util.ASN1Dump;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
@@ -158,6 +165,7 @@ abstract class X509CRLImpl
         return null;
     }
 
+<<<<<<< HEAD
     public byte[] getEncoded()
         throws CRLException
     {
@@ -171,6 +179,8 @@ abstract class X509CRLImpl
         }
     }
 
+=======
+>>>>>>> aosp/upstream-master
     public void verify(PublicKey key)
         throws CRLException, NoSuchAlgorithmException,
         InvalidKeyException, NoSuchProviderException, SignatureException
@@ -255,7 +265,11 @@ abstract class X509CRLImpl
         {
             List<PublicKey> pubKeys = ((CompositePublicKey)key).getPublicKeys();
             ASN1Sequence keySeq = ASN1Sequence.getInstance(c.getSignatureAlgorithm().getParameters());
+<<<<<<< HEAD
             ASN1Sequence sigSeq = ASN1Sequence.getInstance(DERBitString.getInstance(c.getSignature()).getBytes());
+=======
+            ASN1Sequence sigSeq = ASN1Sequence.getInstance(ASN1BitString.getInstance(c.getSignature()).getBytes());
+>>>>>>> aosp/upstream-master
 
             boolean success = false;
             for (int i = 0; i != pubKeys.size(); i++)
@@ -277,7 +291,11 @@ abstract class X509CRLImpl
                     checkSignature(
                         (PublicKey)pubKeys.get(i), signature,
                         sigAlg.getParameters(),
+<<<<<<< HEAD
                         DERBitString.getInstance(sigSeq.getObjectAt(i)).getBytes());
+=======
+                        ASN1BitString.getInstance(sigSeq.getObjectAt(i)).getBytes());
+>>>>>>> aosp/upstream-master
                     success = true;
                 }
                 catch (SignatureException e)
@@ -299,7 +317,11 @@ abstract class X509CRLImpl
         else if (X509SignatureUtil.isCompositeAlgorithm(c.getSignatureAlgorithm()))
         {
             ASN1Sequence keySeq = ASN1Sequence.getInstance(c.getSignatureAlgorithm().getParameters());
+<<<<<<< HEAD
             ASN1Sequence sigSeq = ASN1Sequence.getInstance(DERBitString.getInstance(c.getSignature()).getBytes());
+=======
+            ASN1Sequence sigSeq = ASN1Sequence.getInstance(ASN1BitString.getInstance(c.getSignature()).getBytes());
+>>>>>>> aosp/upstream-master
 
             boolean success = false;
             for (int i = 0; i != sigSeq.size(); i++)
@@ -316,7 +338,11 @@ abstract class X509CRLImpl
                     checkSignature(
                         key, signature,
                         sigAlg.getParameters(),
+<<<<<<< HEAD
                         DERBitString.getInstance(sigSeq.getObjectAt(i)).getBytes());
+=======
+                        ASN1BitString.getInstance(sigSeq.getObjectAt(i)).getBytes());
+>>>>>>> aosp/upstream-master
 
                     success = true;
                 }

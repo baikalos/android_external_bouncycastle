@@ -8,7 +8,11 @@ import javax.security.auth.x500.X500Principal;
 
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameStyle;
+<<<<<<< HEAD
 // import org.bouncycastle.jcajce.interfaces.BCX509Certificate;
+=======
+import org.bouncycastle.jcajce.interfaces.BCX509Certificate;
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.x509.X509AttributeCertificate;
 
 class PrincipalUtils
@@ -38,14 +42,20 @@ class PrincipalUtils
 
     static X500Name getIssuerPrincipal(X509Certificate certificate)
     {
+<<<<<<< HEAD
         // BEGIN Android-removed: unsupported
         /*
+=======
+>>>>>>> aosp/upstream-master
         if (certificate instanceof BCX509Certificate)
         {
             return notNull(((BCX509Certificate)certificate).getIssuerX500Name());
         }
+<<<<<<< HEAD
         */
         // END Android-removed: unsupported
+=======
+>>>>>>> aosp/upstream-master
         return getX500Name(notNull(certificate).getIssuerX500Principal());
     }
 
@@ -56,14 +66,20 @@ class PrincipalUtils
 
     static X500Name getSubjectPrincipal(X509Certificate certificate)
     {
+<<<<<<< HEAD
         // BEGIN Android-removed: unsupported
         /*
+=======
+>>>>>>> aosp/upstream-master
         if (certificate instanceof BCX509Certificate)
         {
             return notNull(((BCX509Certificate)certificate).getSubjectX500Name());
         }
+<<<<<<< HEAD
         */
         // END Android-removed: unsupported
+=======
+>>>>>>> aosp/upstream-master
         return getX500Name(notNull(certificate).getSubjectX500Principal());
     }
 

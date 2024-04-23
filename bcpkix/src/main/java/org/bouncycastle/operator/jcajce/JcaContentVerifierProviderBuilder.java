@@ -11,8 +11,13 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.List;
 
+<<<<<<< HEAD
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.DERBitString;
+=======
+import org.bouncycastle.asn1.ASN1BitString;
+import org.bouncycastle.asn1.ASN1Sequence;
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.asn1.misc.MiscObjectIdentifiers;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
@@ -278,7 +283,7 @@ public class JcaContentVerifierProviderBuilder
         return rawSig;
     }
 
-    private class SigVerifier
+    private static class SigVerifier
         implements ContentVerifier
     {
         private final AlgorithmIdentifier algorithm;
@@ -321,7 +326,7 @@ public class JcaContentVerifierProviderBuilder
         }
     }
 
-    private class RawSigVerifier
+    private static class RawSigVerifier
         extends SigVerifier
         implements RawContentVerifier
     {
@@ -382,7 +387,11 @@ public class JcaContentVerifierProviderBuilder
         }
     }
 
+<<<<<<< HEAD
     private class CompositeVerifier
+=======
+    private static class CompositeVerifier
+>>>>>>> aosp/upstream-master
         implements ContentVerifier
     {
         private Signature[] sigs;
@@ -433,7 +442,11 @@ public class JcaContentVerifierProviderBuilder
                 {
                     if (sigs[i] != null)
                     {
+<<<<<<< HEAD
                         if (!sigs[i].verify(DERBitString.getInstance(sigSeq.getObjectAt(i)).getBytes()))
+=======
+                        if (!sigs[i].verify(ASN1BitString.getInstance(sigSeq.getObjectAt(i)).getBytes()))
+>>>>>>> aosp/upstream-master
                         {
                             failed = true;
                         }

@@ -8,9 +8,12 @@ import java.nio.channels.FileChannel;
 
 class StreamUtil
 {
+<<<<<<< HEAD
     // Android-removed: Check max memory at runtime
     // private static final long  MAX_MEMORY = Runtime.getRuntime().maxMemory();
 
+=======
+>>>>>>> aosp/upstream-master
     /**
      * Find out possible longest length, capped by available memory.
      *
@@ -49,13 +52,17 @@ class StreamUtil
             }
         }
 
+<<<<<<< HEAD
         // BEGIN Android-changed: Check max memory at runtime
+=======
+>>>>>>> aosp/upstream-master
         long maxMemory = Runtime.getRuntime().maxMemory();
         if (maxMemory > Integer.MAX_VALUE)
         {
             return Integer.MAX_VALUE;
         }
 
+<<<<<<< HEAD
         return (int) maxMemory;
         // END Android-changed: Check max memory at runtime
     }
@@ -114,5 +121,8 @@ class StreamUtil
         }
 
         return length;
+=======
+        return (int)maxMemory;
+>>>>>>> aosp/upstream-master
     }
 }

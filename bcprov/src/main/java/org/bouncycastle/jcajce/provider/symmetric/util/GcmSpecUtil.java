@@ -10,13 +10,20 @@ import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.InvalidParameterSpecException;
 
 import org.bouncycastle.asn1.ASN1Primitive;
+<<<<<<< HEAD
 import org.bouncycastle.asn1.cms.GCMParameters;
 import org.bouncycastle.crypto.params.AEADParameters;
 import org.bouncycastle.crypto.params.KeyParameter;
+=======
+import org.bouncycastle.crypto.params.AEADParameters;
+import org.bouncycastle.crypto.params.KeyParameter;
+import org.bouncycastle.internal.asn1.cms.GCMParameters;
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.util.Integers;
 
 public class GcmSpecUtil
 {
+<<<<<<< HEAD
     static final Class gcmSpecClass = ClassUtil.loadClass(GcmSpecUtil.class, "javax.crypto.spec.GCMParameterSpec");
 
     static final Method tLen;
@@ -26,16 +33,56 @@ public class GcmSpecUtil
     {
         if (gcmSpecClass != null)
         {
+=======
+    static final Class gcmSpecClass;
+    private static final Constructor constructor;
+    private static final Method tLen;
+    private static final Method iv;
+
+    static
+    {
+        gcmSpecClass = ClassUtil.loadClass(GcmSpecUtil.class, "javax.crypto.spec.GCMParameterSpec");
+
+        if (gcmSpecClass != null)
+        {
+            constructor = extractConstructor();
+>>>>>>> aosp/upstream-master
             tLen = extractMethod("getTLen");
             iv = extractMethod("getIV");
         }
         else
         {
+<<<<<<< HEAD
+=======
+            constructor = null;
+>>>>>>> aosp/upstream-master
             tLen = null;
             iv = null;
         }
     }
 
+<<<<<<< HEAD
+=======
+    private static Constructor extractConstructor()
+    {
+        try
+        {
+            return (Constructor)AccessController.doPrivileged(new PrivilegedExceptionAction()
+            {
+                public Object run()
+                    throws Exception
+                {
+                    return gcmSpecClass.getConstructor(new Class[]{ Integer.TYPE, byte[].class });
+                }
+            });
+        }
+        catch (PrivilegedActionException e)
+        {
+            return null;
+        }
+    }
+
+>>>>>>> aosp/upstream-master
     private static Method extractMethod(final String name)
     {
         try
@@ -60,6 +107,14 @@ public class GcmSpecUtil
         return gcmSpecClass != null;
     }
 
+<<<<<<< HEAD
+=======
+    public static boolean gcmSpecExtractable()
+    {
+        return constructor != null;
+    }
+
+>>>>>>> aosp/upstream-master
     public static boolean isGcmSpec(AlgorithmParameterSpec paramSpec)
     {
         return gcmSpecClass != null && gcmSpecClass.isInstance(paramSpec);
@@ -76,6 +131,7 @@ public class GcmSpecUtil
         try
         {
             GCMParameters gcmParams = GCMParameters.getInstance(spec);
+<<<<<<< HEAD
             Constructor constructor = gcmSpecClass.getConstructor(new Class[]{Integer.TYPE, byte[].class});
 
             return (AlgorithmParameterSpec)constructor.newInstance(new Object[] { Integers.valueOf(gcmParams.getIcvLen() * 8), gcmParams.getNonce() });
@@ -84,6 +140,11 @@ public class GcmSpecUtil
         {
             throw new InvalidParameterSpecException("No constructor found!");   // should never happen
         }
+=======
+
+            return (AlgorithmParameterSpec)constructor.newInstance(new Object[] { Integers.valueOf(gcmParams.getIcvLen() * 8), gcmParams.getNonce() });
+        }
+>>>>>>> aosp/upstream-master
         catch (Exception e)
         {
             throw new InvalidParameterSpecException("Construction failed: " + e.getMessage());   // should never happen

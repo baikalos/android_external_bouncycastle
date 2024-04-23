@@ -62,6 +62,19 @@ public class HexEncoder
         return outPos - outOff;
     }
 
+<<<<<<< HEAD
+=======
+    public int getEncodedLength(int inputLength)
+    {
+        return inputLength * 2;
+    }
+
+    public int getMaxDecodedLength(int inputLength)
+    {
+        return inputLength / 2;
+    }
+
+>>>>>>> aosp/upstream-master
     /**
      * encode the input data producing a Hex output stream.
      *
@@ -70,6 +83,7 @@ public class HexEncoder
     public int encode(byte[] buf, int off, int len, OutputStream out) 
         throws IOException
     {
+<<<<<<< HEAD
         byte[] tmp = new byte[72];
         while (len > 0)
         {
@@ -79,6 +93,23 @@ public class HexEncoder
             off += inLen;
             len -= inLen;
         }
+=======
+        if (len < 0)
+        {
+            return 0;
+        }
+
+        byte[] tmp = new byte[72];
+        int remaining = len;
+        while (remaining > 0)
+        {
+            int inLen = Math.min(36, remaining);
+            int outLen = encode(buf, off, inLen, tmp, 0);
+            out.write(tmp, 0, outLen);
+            off += inLen;
+            remaining -= inLen;
+        }
+>>>>>>> aosp/upstream-master
         return len * 2;
     }
 

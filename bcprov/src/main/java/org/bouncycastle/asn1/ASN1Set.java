@@ -98,8 +98,18 @@ public abstract class ASN1Set
     extends ASN1Primitive
     implements org.bouncycastle.util.Iterable<ASN1Encodable>
 {
+<<<<<<< HEAD
     protected final ASN1Encodable[] elements;
     protected final boolean isSorted;
+=======
+    static final ASN1UniversalType TYPE = new ASN1UniversalType(ASN1Set.class, BERTags.SET)
+    {
+        ASN1Primitive fromImplicitConstructed(ASN1Sequence sequence)
+        {
+            return sequence.toASN1Set();
+        }
+    };
+>>>>>>> aosp/upstream-master
 
     /**
      * return an ASN1Set from the given object.
@@ -108,35 +118,30 @@ public abstract class ASN1Set
      * @exception IllegalArgumentException if the object cannot be converted.
      * @return an ASN1Set instance, or null.
      */
-    public static ASN1Set getInstance(
-        Object  obj)
+    public static ASN1Set getInstance(Object obj)
     {
         if (obj == null || obj instanceof ASN1Set)
         {
             return (ASN1Set)obj;
         }
-        else if (obj instanceof ASN1SetParser)
+//      else if (obj instanceof ASN1SetParser)
+        else if (obj instanceof ASN1Encodable)
         {
-            return ASN1Set.getInstance(((ASN1SetParser)obj).toASN1Primitive());
+            ASN1Primitive primitive = ((ASN1Encodable)obj).toASN1Primitive();
+            if (primitive instanceof ASN1Set)
+            {
+                return (ASN1Set)primitive;
+            }
         }
         else if (obj instanceof byte[])
         {
             try
             {
-                return ASN1Set.getInstance(ASN1Primitive.fromByteArray((byte[])obj));
+                return (ASN1Set)TYPE.fromByteArray((byte[])obj);
             }
             catch (IOException e)
             {
                 throw new IllegalArgumentException("failed to construct set from byte[]: " + e.getMessage());
-            }
-        }
-        else if (obj instanceof ASN1Encodable)
-        {
-            ASN1Primitive primitive = ((ASN1Encodable)obj).toASN1Primitive();
-
-            if (primitive instanceof ASN1Set)
-            {
-                return (ASN1Set)primitive;
             }
         }
 
@@ -160,6 +165,7 @@ public abstract class ASN1Set
      *          be converted.
      * @return an ASN1Set instance.
      */
+<<<<<<< HEAD
     public static ASN1Set getInstance(
         ASN1TaggedObject    taggedObject,
         boolean             explicit)
@@ -221,12 +227,25 @@ public abstract class ASN1Set
         }
 
         throw new IllegalArgumentException("unknown object in getInstance: " + taggedObject.getClass().getName());
+=======
+    public static ASN1Set getInstance(ASN1TaggedObject taggedObject, boolean explicit)
+    {
+        return (ASN1Set)TYPE.getContextInstance(taggedObject, explicit);
+>>>>>>> aosp/upstream-master
     }
+
+    protected final ASN1Encodable[] elements;
+
+    protected ASN1Encodable[] sortedElements;
 
     protected ASN1Set()
     {
         this.elements = ASN1EncodableVector.EMPTY_ELEMENTS;
+<<<<<<< HEAD
         this.isSorted = true;
+=======
+        this.sortedElements = elements;
+>>>>>>> aosp/upstream-master
     }
 
     /**
@@ -241,7 +260,11 @@ public abstract class ASN1Set
         }
 
         this.elements = new ASN1Encodable[]{ element };
+<<<<<<< HEAD
         this.isSorted = true;
+=======
+        this.sortedElements = elements;
+>>>>>>> aosp/upstream-master
     }
 
     /**
@@ -268,7 +291,11 @@ public abstract class ASN1Set
         }
 
         this.elements = tmp;
+<<<<<<< HEAD
         this.isSorted = doSort || tmp.length < 2;
+=======
+        this.sortedElements = (doSort || tmp.length < 2) ? elements : null;
+>>>>>>> aosp/upstream-master
     }
 
     /**
@@ -290,13 +317,27 @@ public abstract class ASN1Set
         }
 
         this.elements = tmp;
+<<<<<<< HEAD
         this.isSorted = doSort || tmp.length < 2;
+=======
+        this.sortedElements = (doSort || tmp.length < 2) ? elements : null;
+>>>>>>> aosp/upstream-master
     }
 
     ASN1Set(boolean isSorted, ASN1Encodable[] elements)
     {
         this.elements = elements;
+<<<<<<< HEAD
         this.isSorted = isSorted || elements.length < 2;
+=======
+        this.sortedElements = (isSorted || elements.length < 2) ? elements : null;
+    }
+
+    ASN1Set(ASN1Encodable[] elements, ASN1Encodable[] sortedElements)
+    {
+        this.elements = elements;
+        this.sortedElements = sortedElements;
+>>>>>>> aosp/upstream-master
     }
 
     public Enumeration getObjects()
@@ -408,6 +449,7 @@ public abstract class ASN1Set
      */
     ASN1Primitive toDERObject()
     {
+<<<<<<< HEAD
         ASN1Encodable[] tmp;
         if (isSorted)
         {
@@ -420,6 +462,15 @@ public abstract class ASN1Set
         }
 
         return new DERSet(true, tmp);
+=======
+        if (sortedElements == null)
+        {
+            sortedElements = (ASN1Encodable[])elements.clone();
+            sort(sortedElements);
+        }
+
+        return new DERSet(true, sortedElements);
+>>>>>>> aosp/upstream-master
     }
 
     /**
@@ -428,7 +479,11 @@ public abstract class ASN1Set
      */
     ASN1Primitive toDLObject()
     {
+<<<<<<< HEAD
         return new DLSet(isSorted, elements);
+=======
+        return new DLSet(elements, sortedElements);
+>>>>>>> aosp/upstream-master
     }
 
     boolean asn1Equals(ASN1Primitive other)
@@ -463,13 +518,20 @@ public abstract class ASN1Set
         return true;
     }
 
+<<<<<<< HEAD
     boolean isConstructed()
+=======
+    boolean encodeConstructed()
+>>>>>>> aosp/upstream-master
     {
         return true;
     }
 
+<<<<<<< HEAD
     abstract void encode(ASN1OutputStream out, boolean withTag) throws IOException;
 
+=======
+>>>>>>> aosp/upstream-master
     public String toString() 
     {
         int count = size();
@@ -529,8 +591,13 @@ public abstract class ASN1Set
          * primitive form accordingly. Failing to ignore the CONSTRUCTED bit could therefore lead to
          * ordering inversions.
          */
+<<<<<<< HEAD
         int a0 = a[0] & ~BERTags.CONSTRUCTED;
         int b0 = b[0] & ~BERTags.CONSTRUCTED;
+=======
+        int a0 = a[0] & (~BERTags.CONSTRUCTED & 0xff);
+        int b0 = b[0] & (~BERTags.CONSTRUCTED & 0xff);
+>>>>>>> aosp/upstream-master
         if (a0 != b0)
         {
             return a0 < b0;

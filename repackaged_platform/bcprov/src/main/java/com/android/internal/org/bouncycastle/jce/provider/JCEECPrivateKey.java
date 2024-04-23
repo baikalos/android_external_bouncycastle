@@ -12,6 +12,7 @@ import java.security.spec.ECPrivateKeySpec;
 import java.security.spec.EllipticCurve;
 import java.util.Enumeration;
 
+<<<<<<< HEAD:repackaged_platform/bcprov/src/main/java/com/android/internal/org/bouncycastle/jce/provider/JCEECPrivateKey.java
 import com.android.internal.org.bouncycastle.asn1.ASN1Encodable;
 import com.android.internal.org.bouncycastle.asn1.ASN1Encoding;
 import com.android.internal.org.bouncycastle.asn1.ASN1Integer;
@@ -41,6 +42,40 @@ import com.android.internal.org.bouncycastle.jce.interfaces.PKCS12BagAttributeCa
 import com.android.internal.org.bouncycastle.jce.spec.ECNamedCurveSpec;
 import com.android.internal.org.bouncycastle.math.ec.ECCurve;
 import com.android.internal.org.bouncycastle.util.Strings;
+=======
+import org.bouncycastle.asn1.ASN1BitString;
+import org.bouncycastle.asn1.ASN1Encodable;
+import org.bouncycastle.asn1.ASN1Encoding;
+import org.bouncycastle.asn1.ASN1Integer;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.ASN1Primitive;
+import org.bouncycastle.asn1.ASN1Sequence;
+import org.bouncycastle.asn1.DERNull;
+import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
+import org.bouncycastle.asn1.ua.DSTU4145BinaryField;
+import org.bouncycastle.asn1.ua.DSTU4145ECBinary;
+import org.bouncycastle.asn1.ua.DSTU4145NamedCurves;
+import org.bouncycastle.asn1.ua.DSTU4145Params;
+import org.bouncycastle.asn1.ua.DSTU4145PointEncoder;
+import org.bouncycastle.asn1.ua.UAObjectIdentifiers;
+import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
+import org.bouncycastle.asn1.x9.X962Parameters;
+import org.bouncycastle.asn1.x9.X9ECParameters;
+import org.bouncycastle.asn1.x9.X9ECPoint;
+import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
+import org.bouncycastle.crypto.params.ECDomainParameters;
+import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
+import org.bouncycastle.jcajce.provider.asymmetric.util.EC5Util;
+import org.bouncycastle.jcajce.provider.asymmetric.util.ECUtil;
+import org.bouncycastle.jcajce.provider.asymmetric.util.PKCS12BagAttributeCarrierImpl;
+import org.bouncycastle.jce.interfaces.ECPointEncoder;
+import org.bouncycastle.jce.interfaces.PKCS12BagAttributeCarrier;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
+import org.bouncycastle.jce.spec.ECNamedCurveSpec;
+import org.bouncycastle.math.ec.ECCurve;
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/dstu/BCDSTU4145PrivateKey.java
 
 /**
  * @hide This class is not part of the Android public SDK API
@@ -55,7 +90,14 @@ public class JCEECPrivateKey
 
     private DERBitString publicKey;
 
+<<<<<<< HEAD:repackaged_platform/bcprov/src/main/java/com/android/internal/org/bouncycastle/jce/provider/JCEECPrivateKey.java
     private PKCS12BagAttributeCarrierImpl attrCarrier = new PKCS12BagAttributeCarrierImpl();
+=======
+    private transient BigInteger d;
+    private transient ECParameterSpec ecSpec;
+    private transient ASN1BitString publicKey;
+    private transient PKCS12BagAttributeCarrierImpl attrCarrier = new PKCS12BagAttributeCarrierImpl();
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/dstu/BCDSTU4145PrivateKey.java
 
     protected JCEECPrivateKey()
     {
@@ -238,11 +280,62 @@ public class JCEECPrivateKey
             X9ECParameters      ecP = X9ECParameters.getInstance(params.getParameters());
             EllipticCurve       ellipticCurve = EC5Util.convertCurve(ecP.getCurve(), ecP.getSeed());
 
+<<<<<<< HEAD:repackaged_platform/bcprov/src/main/java/com/android/internal/org/bouncycastle/jce/provider/JCEECPrivateKey.java
             this.ecSpec = new ECParameterSpec(
                 ellipticCurve,
                 EC5Util.convertPoint(ecP.getG()),
                 ecP.getN(),
                 ecP.getH().intValue());
+=======
+            if (seq.getObjectAt(0) instanceof ASN1Integer)
+            {
+                X9ECParameters ecP = X9ECParameters.getInstance(params.getParameters());
+                EllipticCurve ellipticCurve = EC5Util.convertCurve(ecP.getCurve(), ecP.getSeed());
+
+                this.ecSpec = new ECParameterSpec(
+                    ellipticCurve,
+                    EC5Util.convertPoint(ecP.getG()),
+                    ecP.getN(),
+                    ecP.getH().intValue());
+            }
+            else
+            {
+                DSTU4145Params dstuParams = DSTU4145Params.getInstance(seq);
+                org.bouncycastle.jce.spec.ECParameterSpec spec;
+                if (dstuParams.isNamedCurve())
+                {
+                    ASN1ObjectIdentifier curveOid = dstuParams.getNamedCurve();
+                    ECDomainParameters ecP = DSTU4145NamedCurves.getByOID(curveOid);
+
+                    spec = new ECNamedCurveParameterSpec(curveOid.getId(), ecP.getCurve(), ecP.getG(), ecP.getN(), ecP.getH(), ecP.getSeed());
+                }
+                else
+                {
+                    DSTU4145ECBinary binary = dstuParams.getECBinary();
+                    byte[] b_bytes = binary.getB();
+                    if (info.getPrivateKeyAlgorithm().getAlgorithm().equals(UAObjectIdentifiers.dstu4145le))
+                    {
+                        reverseBytes(b_bytes);
+                    }
+                    DSTU4145BinaryField field = binary.getField();
+                    ECCurve curve = new ECCurve.F2m(field.getM(), field.getK1(), field.getK2(), field.getK3(), binary.getA(), new BigInteger(1, b_bytes), null, null);
+                    byte[] g_bytes = binary.getG();
+                    if (info.getPrivateKeyAlgorithm().getAlgorithm().equals(UAObjectIdentifiers.dstu4145le))
+                    {
+                        reverseBytes(g_bytes);
+                    }
+                    spec = new org.bouncycastle.jce.spec.ECParameterSpec(curve, DSTU4145PointEncoder.decodePoint(curve, g_bytes), binary.getN());
+                }
+
+                EllipticCurve ellipticCurve = EC5Util.convertCurve(spec.getCurve(), spec.getSeed());
+
+                this.ecSpec = new ECParameterSpec(
+                    ellipticCurve,
+                    EC5Util.convertPoint(spec.getG()),
+                    spec.getN(),
+                    spec.getH().intValue());
+            }
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/dstu/BCDSTU4145PrivateKey.java
         }
 
         ASN1Encodable privKey = info.parsePrivateKey();
@@ -358,7 +451,11 @@ public class JCEECPrivateKey
         {
             return null;
         }
+<<<<<<< HEAD:repackaged_platform/bcprov/src/main/java/com/android/internal/org/bouncycastle/jce/provider/JCEECPrivateKey.java
         
+=======
+
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/dstu/BCDSTU4145PrivateKey.java
         return EC5Util.convertSpec(ecSpec);
     }
 
@@ -434,7 +531,11 @@ public class JCEECPrivateKey
 
     }
 
+<<<<<<< HEAD:repackaged_platform/bcprov/src/main/java/com/android/internal/org/bouncycastle/jce/provider/JCEECPrivateKey.java
     private DERBitString getPublicKeyDetails(JCEECPublicKey   pub)
+=======
+    private ASN1BitString getPublicKeyDetails(BCDSTU4145PublicKey pub)
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/dstu/BCDSTU4145PrivateKey.java
     {
         try
         {

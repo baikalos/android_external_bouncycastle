@@ -94,7 +94,16 @@ public class CBCBlockCipherMac
             throw new IllegalArgumentException("MAC size must be multiple of 8");
         }
 
+<<<<<<< HEAD:repackaged_platform/bcprov/src/main/java/com/android/internal/org/bouncycastle/crypto/macs/CBCBlockCipherMac.java
         this.cipher = new CBCBlockCipher(cipher);
+=======
+        if (!(cipher instanceof DESEngine))
+        {
+            throw new IllegalArgumentException("cipher must be instance of DESEngine");
+        }
+
+        this.cipher = CBCBlockCipher.newInstance(cipher);
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/crypto/macs/ISO9797Alg3Mac.java
         this.padding = padding;
         this.macSize = macSizeInBits / 8;
 

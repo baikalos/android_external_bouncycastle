@@ -60,8 +60,18 @@ public abstract class ASN1Sequence
     extends ASN1Primitive
     implements org.bouncycastle.util.Iterable<ASN1Encodable>
 {
+<<<<<<< HEAD
     // NOTE: Only non-final to support LazyEncodedSequence
     ASN1Encodable[] elements;
+=======
+    static final ASN1UniversalType TYPE = new ASN1UniversalType(ASN1Sequence.class, BERTags.SEQUENCE)
+    {
+        ASN1Primitive fromImplicitConstructed(ASN1Sequence sequence)
+        {
+            return sequence;
+        }
+    };
+>>>>>>> aosp/upstream-master
 
     /**
      * Return an ASN1Sequence from the given object.
@@ -70,35 +80,30 @@ public abstract class ASN1Sequence
      * @exception IllegalArgumentException if the object cannot be converted.
      * @return an ASN1Sequence instance, or null.
      */
-    public static ASN1Sequence getInstance(
-        Object  obj)
+    public static ASN1Sequence getInstance(Object obj)
     {
         if (obj == null || obj instanceof ASN1Sequence)
         {
             return (ASN1Sequence)obj;
         }
-        else if (obj instanceof ASN1SequenceParser)
+//      else if (obj instanceof ASN1SequenceParser)
+        else if (obj instanceof ASN1Encodable)
         {
-            return ASN1Sequence.getInstance(((ASN1SequenceParser)obj).toASN1Primitive());
+            ASN1Primitive primitive = ((ASN1Encodable)obj).toASN1Primitive();
+            if (primitive instanceof ASN1Sequence)
+            {
+                return (ASN1Sequence)primitive;
+            }
         }
         else if (obj instanceof byte[])
         {
             try
             {
-                return ASN1Sequence.getInstance(fromByteArray((byte[])obj));
+                return (ASN1Sequence)TYPE.fromByteArray((byte[])obj);
             }
             catch (IOException e)
             {
                 throw new IllegalArgumentException("failed to construct sequence from byte[]: " + e.getMessage());
-            }
-        }
-        else if (obj instanceof ASN1Encodable)
-        {
-            ASN1Primitive primitive = ((ASN1Encodable)obj).toASN1Primitive();
-
-            if (primitive instanceof ASN1Sequence)
-            {
-                return (ASN1Sequence)primitive;
             }
         }
 
@@ -122,6 +127,7 @@ public abstract class ASN1Sequence
      *          be converted.
      * @return an ASN1Sequence instance.
      */
+<<<<<<< HEAD
     public static ASN1Sequence getInstance(
         ASN1TaggedObject    taggedObject,
         boolean             explicit)
@@ -165,7 +171,15 @@ public abstract class ASN1Sequence
         }
 
         throw new IllegalArgumentException("unknown object in getInstance: " + taggedObject.getClass().getName());
+=======
+    public static ASN1Sequence getInstance(ASN1TaggedObject taggedObject, boolean explicit)
+    {
+        return (ASN1Sequence)TYPE.getContextInstance(taggedObject, explicit);
+>>>>>>> aosp/upstream-master
     }
+
+    // NOTE: Only non-final to support LazyEncodedSequence
+    ASN1Encodable[] elements;
 
     /**
      * Create an empty SEQUENCE
@@ -340,6 +354,10 @@ public abstract class ASN1Sequence
 
         ASN1Sequence that = (ASN1Sequence)other;
 
+<<<<<<< HEAD
+=======
+        // NOTE: Call size() here (on both) to 'force' a LazyEncodedSequence
+>>>>>>> aosp/upstream-master
         int count = this.size();
         if (that.size() != count)
         {
@@ -378,13 +396,24 @@ public abstract class ASN1Sequence
         return new DLSequence(elements, false);
     }
 
-    boolean isConstructed()
+    abstract ASN1BitString toASN1BitString();
+
+    abstract ASN1External toASN1External();
+
+    abstract ASN1OctetString toASN1OctetString();
+
+    abstract ASN1Set toASN1Set();
+
+    boolean encodeConstructed()
     {
         return true;
     }
 
+<<<<<<< HEAD
     abstract void encode(ASN1OutputStream out, boolean withTag) throws IOException;
 
+=======
+>>>>>>> aosp/upstream-master
     public String toString() 
     {
         // NOTE: Call size() here to 'force' a LazyEncodedSequence
@@ -412,5 +441,32 @@ public abstract class ASN1Sequence
     public Iterator<ASN1Encodable> iterator()
     {
         return new Arrays.Iterator<ASN1Encodable>(elements);
+<<<<<<< HEAD
+=======
+    }
+
+    ASN1BitString[] getConstructedBitStrings()
+    {
+        // NOTE: Call size() here to 'force' a LazyEncodedSequence
+        int count = size();
+        ASN1BitString[] bitStrings = new ASN1BitString[count];
+        for (int i = 0; i < count; ++i)
+        {
+            bitStrings[i] = ASN1BitString.getInstance(elements[i]);
+        }
+        return bitStrings;
+    }
+
+    ASN1OctetString[] getConstructedOctetStrings()
+    {
+        // NOTE: Call size() here to 'force' a LazyEncodedSequence
+        int count = size();
+        ASN1OctetString[] octetStrings = new ASN1OctetString[count];
+        for (int i = 0; i < count; ++i)
+        {
+            octetStrings[i] = ASN1OctetString.getInstance(elements[i]);
+        }
+        return octetStrings;
+>>>>>>> aosp/upstream-master
     }
 }

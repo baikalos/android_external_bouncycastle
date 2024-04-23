@@ -39,11 +39,19 @@ public class RSADigestSigner
      */
     static
     {
+<<<<<<< HEAD
         // BEGIN Android-removed: Unsupported algorithms
         // oidMap.put("RIPEMD128", TeleTrusTObjectIdentifiers.ripemd128);
         // oidMap.put("RIPEMD160", TeleTrusTObjectIdentifiers.ripemd160);
         // oidMap.put("RIPEMD256", TeleTrusTObjectIdentifiers.ripemd256);
         // END Android-removed: Unsupported algorithms
+=======
+        // Null-digester is intentionally NOT on this mapping.
+        
+        oidMap.put("RIPEMD128", TeleTrusTObjectIdentifiers.ripemd128);
+        oidMap.put("RIPEMD160", TeleTrusTObjectIdentifiers.ripemd160);
+        oidMap.put("RIPEMD256", TeleTrusTObjectIdentifiers.ripemd256);
+>>>>>>> aosp/upstream-master
 
         oidMap.put("SHA-1", X509ObjectIdentifiers.id_SHA1);
         oidMap.put("SHA-224", NISTObjectIdentifiers.id_sha224);

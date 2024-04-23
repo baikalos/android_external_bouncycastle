@@ -3,7 +3,11 @@ package org.bouncycastle.cms;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+<<<<<<< HEAD
 // import org.bouncycastle.operator.InputAEADDecryptor;
+=======
+import org.bouncycastle.operator.InputAEADDecryptor;
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.operator.InputDecryptor;
 import org.bouncycastle.operator.MacCalculator;
 import org.bouncycastle.util.io.TeeInputStream;
@@ -34,8 +38,11 @@ public class RecipientOperator
         }
     }
 
+<<<<<<< HEAD
     // BEGIN Android-removed
     /*
+=======
+>>>>>>> aosp/upstream-master
     public boolean isAEADBased()
     {
         return operator instanceof InputAEADDecryptor;
@@ -45,8 +52,11 @@ public class RecipientOperator
     {
         return ((InputAEADDecryptor)operator).getAADStream();
     }
+<<<<<<< HEAD
     */
     // END Android-removed
+=======
+>>>>>>> aosp/upstream-master
 
     public boolean isMacBased()
     {

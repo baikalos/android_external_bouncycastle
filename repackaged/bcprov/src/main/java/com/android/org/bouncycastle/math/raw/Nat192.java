@@ -240,7 +240,11 @@ public abstract class Nat192
         int[] z = create();
 
         // NOTE: Use a fixed number of loop iterations
+<<<<<<< HEAD:repackaged/bcprov/src/main/java/com/android/org/bouncycastle/math/raw/Nat192.java
         for (int i = 0; i < 6; ++i)
+=======
+        for (int i = 0; i < 5; ++i)
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/math/raw/Nat160.java
         {
             z[i] = x.intValue();
             x = x.shiftRight(32);
@@ -508,12 +512,18 @@ public abstract class Nat192
             c += x_i * y_4 + (zz[i + 4] & M);
             zz[i + 4] = (int)c;
             c >>>= 32;
+<<<<<<< HEAD:repackaged/bcprov/src/main/java/com/android/org/bouncycastle/math/raw/Nat192.java
             c += x_i * y_5 + (zz[i + 5] & M);
             zz[i + 5] = (int)c;
             c >>>= 32;
 
             zc += c + (zz[i + 6] & M);
             zz[i + 6] = (int)zc;
+=======
+
+            zc += c + (zz[i + 5] & M);
+            zz[i + 5] = (int)zc;
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/math/raw/Nat160.java
             zc >>>= 32;
         }
         return (int)zc;
@@ -547,12 +557,18 @@ public abstract class Nat192
             c += x_i * y_4 + (zz[zzOff + 4] & M);
             zz[zzOff + 4] = (int)c;
             c >>>= 32;
+<<<<<<< HEAD:repackaged/bcprov/src/main/java/com/android/org/bouncycastle/math/raw/Nat192.java
             c += x_i * y_5 + (zz[zzOff + 5] & M);
             zz[zzOff + 5] = (int)c;
             c >>>= 32;
 
             zc += c + (zz[zzOff + 6] & M);
             zz[zzOff + 6] = (int)zc;
+=======
+
+            zc += c + (zz[zzOff + 5] & M);
+            zz[zzOff + 5] = (int)zc;
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/math/raw/Nat160.java
             zc >>>= 32;
             ++zzOff;
         }

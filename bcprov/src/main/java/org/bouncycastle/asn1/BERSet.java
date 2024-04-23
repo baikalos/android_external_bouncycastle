@@ -59,6 +59,7 @@ public class BERSet
         super(isSorted, elements);
     }
 
+<<<<<<< HEAD
     int encodedLength() throws IOException
     {
         int count = elements.length;
@@ -71,10 +72,27 @@ public class BERSet
         }
 
         return 2 + totalLength + 2;
+=======
+    int encodedLength(boolean withTag) throws IOException
+    {
+        int totalLength = withTag ? 4 : 3;
+
+        for (int i = 0, count = elements.length; i < count; ++i)
+        {
+            ASN1Primitive p = elements[i].toASN1Primitive();
+            totalLength += p.encodedLength(true);
+        }
+
+        return totalLength;
+>>>>>>> aosp/upstream-master
     }
 
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
     {
+<<<<<<< HEAD
         out.writeEncodedIndef(withTag, BERTags.SET | BERTags.CONSTRUCTED, elements);
+=======
+        out.writeEncodingIL(withTag, BERTags.CONSTRUCTED | BERTags.SET, elements);
+>>>>>>> aosp/upstream-master
     }
 }

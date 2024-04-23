@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.crypto.Cipher;
 import javax.crypto.KeyAgreement;
 
+<<<<<<< HEAD
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
@@ -34,22 +35,32 @@ import org.bouncycastle.asn1.DERNull;
 // import org.bouncycastle.asn1.eac.EACObjectIdentifiers;
 // import org.bouncycastle.asn1.edec.EdECObjectIdentifiers;
 // import org.bouncycastle.asn1.isara.IsaraObjectIdentifiers;
+=======
+import org.bouncycastle.asn1.ASN1Integer;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.ASN1Sequence;
+import org.bouncycastle.asn1.cryptopro.CryptoProObjectIdentifiers;
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.asn1.kisa.KISAObjectIdentifiers;
 import org.bouncycastle.asn1.nist.NISTObjectIdentifiers;
 import org.bouncycastle.asn1.ntt.NTTObjectIdentifiers;
 import org.bouncycastle.asn1.oiw.OIWObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.RSASSAPSSparams;
+<<<<<<< HEAD
 // import org.bouncycastle.asn1.rosstandart.RosstandartObjectIdentifiers;
 // import org.bouncycastle.asn1.teletrust.TeleTrusTObjectIdentifiers;
+=======
+import org.bouncycastle.asn1.teletrust.TeleTrusTObjectIdentifiers;
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
-import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.jcajce.util.AlgorithmParametersUtils;
 import org.bouncycastle.jcajce.util.JcaJceHelper;
 import org.bouncycastle.jcajce.util.MessageDigestUtils;
+import org.bouncycastle.operator.DefaultSignatureNameFinder;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.util.Integers;
 
@@ -61,8 +72,11 @@ class OperatorHelper
     private static final Map symmetricKeyAlgNames = new HashMap();
     private static final Map symmetricWrapperKeySizes = new HashMap();
 
+    private static DefaultSignatureNameFinder sigFinder = new DefaultSignatureNameFinder();
+
     static
     {
+<<<<<<< HEAD
         //
         // reverse mappings
         //
@@ -110,6 +124,8 @@ class OperatorHelper
         oids.put(NISTObjectIdentifiers.dsa_with_sha224, "SHA224WITHDSA");
         oids.put(NISTObjectIdentifiers.dsa_with_sha256, "SHA256WITHDSA");
 
+=======
+>>>>>>> aosp/upstream-master
         oids.put(OIWObjectIdentifiers.idSHA1, "SHA1");
         oids.put(NISTObjectIdentifiers.id_sha224, "SHA224");
         oids.put(NISTObjectIdentifiers.id_sha256, "SHA256");
@@ -124,6 +140,8 @@ class OperatorHelper
         // END Android-removed: Unsupported algorithms
 
         asymmetricWrapperAlgNames.put(PKCSObjectIdentifiers.rsaEncryption, "RSA/ECB/PKCS1Padding");
+        asymmetricWrapperAlgNames.put(OIWObjectIdentifiers.elGamalAlgorithm, "Elgamal/ECB/PKCS1Padding");
+        asymmetricWrapperAlgNames.put(PKCSObjectIdentifiers.id_RSAES_OAEP, "RSA/ECB/OAEPPadding");
 
         // Android-removed: Unsupported algorithms
         // asymmetricWrapperAlgNames.put(CryptoProObjectIdentifiers.gostR3410_2001, "ECGOST3410");
@@ -321,24 +339,43 @@ class OperatorHelper
     AlgorithmParameters createAlgorithmParameters(AlgorithmIdentifier cipherAlgId)
         throws OperatorCreationException
     {
-        AlgorithmParameters parameters;
+        AlgorithmParameters parameters = null;
 
         if (cipherAlgId.getAlgorithm().equals(PKCSObjectIdentifiers.rsaEncryption))
         {
             return null;
         }
 
-        try
+        if (cipherAlgId.getAlgorithm().equals(PKCSObjectIdentifiers.id_RSAES_OAEP))
         {
-            parameters = helper.createAlgorithmParameters(cipherAlgId.getAlgorithm().getId());
+            try
+            {
+                parameters = helper.createAlgorithmParameters("OAEP");
+            }
+            catch (NoSuchAlgorithmException e)
+            {
+                // try below
+            }
+            catch (NoSuchProviderException e)
+            {
+                throw new OperatorCreationException("cannot create algorithm parameters: " + e.getMessage(), e);
+            }
         }
-        catch (NoSuchAlgorithmException e)
+
+        if (parameters == null)
         {
-            return null;   // There's a good chance there aren't any!
-        }
-        catch (NoSuchProviderException e)
-        {
-            throw new OperatorCreationException("cannot create algorithm parameters: " + e.getMessage(), e);
+            try
+            {
+                parameters = helper.createAlgorithmParameters(cipherAlgId.getAlgorithm().getId());
+            }
+            catch (NoSuchAlgorithmException e)
+            {
+                return null;   // There's a good chance there aren't any!
+            }
+            catch (NoSuchProviderException e)
+            {
+                throw new OperatorCreationException("cannot create algorithm parameters: " + e.getMessage(), e);
+            }
         }
 
         try
@@ -364,6 +401,13 @@ class OperatorHelper
             {
                 dig = helper.createMessageDigest("SHAKE256-" + ASN1Integer.getInstance(digAlgId.getParameters()).getValue());
             }
+<<<<<<< HEAD
+=======
+            else if (digAlgId.getAlgorithm().equals(NISTObjectIdentifiers.id_shake128_len))
+            {
+                dig = helper.createMessageDigest("SHAKE128-" + ASN1Integer.getInstance(digAlgId.getParameters()).getValue());
+            }
+>>>>>>> aosp/upstream-master
             else
             {
                 dig = helper.createMessageDigest(MessageDigestUtils.getDigestName(digAlgId.getAlgorithm()));
@@ -405,6 +449,7 @@ class OperatorHelper
             // try an alternate
             //
             if (sigName.endsWith("WITHRSAANDMGF1"))
+<<<<<<< HEAD
             {
                 String signatureAlgorithm =
                     sigName.substring(0, sigName.indexOf('W')) + "WITHRSASSA-PSS";
@@ -412,8 +457,11 @@ class OperatorHelper
                 sig = helper.createSignature(signatureAlgorithm);
             }
             else if (oids.get(sigAlgId.getAlgorithm()) != null)
+=======
+>>>>>>> aosp/upstream-master
             {
-                String signatureAlgorithm = (String)oids.get(sigAlgId.getAlgorithm());
+                String signatureAlgorithm =
+                    sigName.substring(0, sigName.indexOf('W')) + "WITHRSASSA-PSS";
 
                 sig = helper.createSignature(signatureAlgorithm);
             }
@@ -447,7 +495,7 @@ class OperatorHelper
         return sig;
     }
 
-    public Signature createRawSignature(AlgorithmIdentifier algorithm)
+    Signature createRawSignature(AlgorithmIdentifier algorithm)
     {
         Signature sig;
 
@@ -483,27 +531,11 @@ class OperatorHelper
     private static String getSignatureName(
         AlgorithmIdentifier sigAlgId)
     {
-        ASN1Encodable params = sigAlgId.getParameters();
-
-        if (params != null && !DERNull.INSTANCE.equals(params))
-        {
-            if (sigAlgId.getAlgorithm().equals(PKCSObjectIdentifiers.id_RSASSA_PSS))
-            {
-                RSASSAPSSparams rsaParams = RSASSAPSSparams.getInstance(params);
-                return getDigestName(rsaParams.getHashAlgorithm().getAlgorithm()) + "WITHRSAANDMGF1";
-            }
-        }
-
-        if (oids.containsKey(sigAlgId.getAlgorithm()))
-        {
-            return (String)oids.get(sigAlgId.getAlgorithm());
-        }
-
-        return sigAlgId.getAlgorithm().getId();
+        return sigFinder.getAlgorithmName(sigAlgId);
     }
 
     // we need to remove the - to create a correct signature name
-    private static String getDigestName(ASN1ObjectIdentifier oid)
+    static String getDigestName(ASN1ObjectIdentifier oid)
     {
         String name = MessageDigestUtils.getDigestName(oid);
 

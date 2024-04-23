@@ -1,20 +1,33 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.crypto.modes;
 
+<<<<<<< HEAD:repackaged/bcprov/src/main/java/com/android/org/bouncycastle/crypto/modes/CTSBlockCipher.java
 import com.android.org.bouncycastle.crypto.BlockCipher;
 import com.android.org.bouncycastle.crypto.BufferedBlockCipher;
 import com.android.org.bouncycastle.crypto.DataLengthException;
 import com.android.org.bouncycastle.crypto.InvalidCipherTextException;
 import com.android.org.bouncycastle.crypto.OutputLengthException;
 import com.android.org.bouncycastle.crypto.StreamBlockCipher;
+=======
+import org.bouncycastle.crypto.BlockCipher;
+import org.bouncycastle.crypto.DataLengthException;
+import org.bouncycastle.crypto.DefaultBufferedBlockCipher;
+import org.bouncycastle.crypto.InvalidCipherTextException;
+import org.bouncycastle.crypto.OutputLengthException;
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/crypto/modes/OldCTSBlockCipher.java
 
 /**
  * A Cipher Text Stealing (CTS) mode cipher. CTS allows block ciphers to
  * be used to produce cipher text which is the same length as the plain text.
  * @hide This class is not part of the Android public SDK API
  */
+<<<<<<< HEAD:repackaged/bcprov/src/main/java/com/android/org/bouncycastle/crypto/modes/CTSBlockCipher.java
 public class CTSBlockCipher
     extends BufferedBlockCipher
+=======
+public class OldCTSBlockCipher
+    extends DefaultBufferedBlockCipher
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/crypto/modes/OldCTSBlockCipher.java
 {
     private int     blockSize;
 

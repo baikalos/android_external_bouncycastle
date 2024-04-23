@@ -69,8 +69,13 @@ public class SSHNamedCurves
             while (e.hasMoreElements())
             {
                 String name = (String)e.nextElement();
+<<<<<<< HEAD
                 X9ECParameters parameters = CustomNamedCurves.getByName(name);
                 put(parameters.getCurve(), name);
+=======
+                ECCurve curve = CustomNamedCurves.getByNameLazy(name).getCurve();
+                put(curve, name);
+>>>>>>> aosp/upstream-master
             }
 
         }

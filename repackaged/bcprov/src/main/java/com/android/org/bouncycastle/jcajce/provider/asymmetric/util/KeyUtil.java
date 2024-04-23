@@ -1,11 +1,23 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.jcajce.provider.asymmetric.util;
 
+<<<<<<< HEAD:repackaged/bcprov/src/main/java/com/android/org/bouncycastle/jcajce/provider/asymmetric/util/KeyUtil.java
 import com.android.org.bouncycastle.asn1.ASN1Encodable;
 import com.android.org.bouncycastle.asn1.ASN1Encoding;
 import com.android.org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import com.android.org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import com.android.org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
+=======
+import org.bouncycastle.asn1.ASN1Encodable;
+import org.bouncycastle.asn1.ASN1Encoding;
+import org.bouncycastle.asn1.ASN1Set;
+import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
+import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
+import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
+import org.bouncycastle.pqc.crypto.util.PrivateKeyInfoFactory;
+import org.bouncycastle.pqc.crypto.util.SubjectPublicKeyInfoFactory;
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/pqc/jcajce/provider/util/KeyUtil.java
 
 /**
  * @hide This class is not part of the Android public SDK API
@@ -48,6 +60,23 @@ public class KeyUtil
          }
     }
 
+    public static byte[] getEncodedSubjectPublicKeyInfo(AsymmetricKeyParameter publicKey)
+    {
+        if (publicKey.isPrivate())
+        {
+            throw new IllegalArgumentException("private key found");
+        }
+
+        try
+        {
+            return getEncodedSubjectPublicKeyInfo(SubjectPublicKeyInfoFactory.createSubjectPublicKeyInfo(publicKey));
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
     public static byte[] getEncodedPrivateKeyInfo(AlgorithmIdentifier algId, ASN1Encodable privKey)
     {
          try
@@ -72,5 +101,22 @@ public class KeyUtil
          {
              return null;
          }
+    }
+
+    public static byte[] getEncodedPrivateKeyInfo(AsymmetricKeyParameter privateKey, ASN1Set attributes)
+    {
+        if (!privateKey.isPrivate())
+        {
+            throw new IllegalArgumentException("public key found");
+        }
+
+        try
+        {
+            return getEncodedPrivateKeyInfo(PrivateKeyInfoFactory.createPrivateKeyInfo(privateKey, attributes));
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 }

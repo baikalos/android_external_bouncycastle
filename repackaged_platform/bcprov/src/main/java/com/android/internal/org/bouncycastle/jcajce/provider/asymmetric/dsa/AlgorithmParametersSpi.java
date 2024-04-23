@@ -101,7 +101,12 @@ public class AlgorithmParametersSpi
         {
             DSAParameter dsaP = DSAParameter.getInstance(ASN1Primitive.fromByteArray(params));
 
+<<<<<<< HEAD:repackaged_platform/bcprov/src/main/java/com/android/internal/org/bouncycastle/jcajce/provider/asymmetric/dsa/AlgorithmParametersSpi.java
             currentSpec = new DSAParameterSpec(dsaP.getP(), dsaP.getQ(), dsaP.getG());
+=======
+            this.currentSpec = GOST3410ParameterSpec.fromPublicKeyAlg(
+                GOST3410PublicKeyAlgParameters.getInstance(seq));
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/jcajce/provider/asymmetric/gost/AlgorithmParametersSpi.java
         }
         catch (ClassCastException e)
         {

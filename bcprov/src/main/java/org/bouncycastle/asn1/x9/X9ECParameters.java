@@ -36,7 +36,11 @@ public class X9ECParameters
         ASN1Sequence  seq)
     {
         if (!(seq.getObjectAt(0) instanceof ASN1Integer)
+<<<<<<< HEAD
             || !((ASN1Integer)seq.getObjectAt(0)).hasValue(ONE))
+=======
+            || !((ASN1Integer)seq.getObjectAt(0)).hasValue(1))
+>>>>>>> aosp/upstream-master
         {
             throw new IllegalArgumentException("bad version in X9ECParameters");
         }

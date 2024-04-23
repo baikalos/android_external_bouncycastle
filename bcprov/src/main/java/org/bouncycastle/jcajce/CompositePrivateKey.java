@@ -73,7 +73,11 @@ public class CompositePrivateKey
         try
         {
             return new PrivateKeyInfo(
+<<<<<<< HEAD
                 new AlgorithmIdentifier(MiscObjectIdentifiers.id_alg_composite), new DERSequence(v)).getEncoded(ASN1Encoding.DER);
+=======
+                new AlgorithmIdentifier(MiscObjectIdentifiers.id_composite_key), new DERSequence(v)).getEncoded(ASN1Encoding.DER);
+>>>>>>> aosp/upstream-master
         }
         catch (IOException e)
         {

@@ -30,9 +30,12 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECParameterSpec;
 import org.bouncycastle.jce.spec.ECPrivateKeySpec;
 import org.bouncycastle.jce.spec.ECPublicKeySpec;
+<<<<<<< HEAD
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.jce.spec.OpenSSHPrivateKeySpec;
 // import org.bouncycastle.jce.spec.OpenSSHPublicKeySpec;
+=======
+>>>>>>> aosp/upstream-master
 
 public class KeyFactorySpi
     extends BaseKeyFactorySpi
@@ -237,7 +240,11 @@ public class KeyFactorySpi
 
             try
             {
-                return new BCECPrivateKey(algorithm, new PrivateKeyInfo(new AlgorithmIdentifier(X9ObjectIdentifiers.id_ecPublicKey, ecKey.getParameters()), ecKey), configuration);
+                return new BCECPrivateKey(algorithm,
+                    new PrivateKeyInfo(
+                        new AlgorithmIdentifier(X9ObjectIdentifiers.id_ecPublicKey, ecKey.getParametersObject()),
+                        ecKey),
+                    configuration);
             }
             catch (IOException e)
             {

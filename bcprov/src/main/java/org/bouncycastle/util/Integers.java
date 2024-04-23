@@ -1,10 +1,31 @@
 package org.bouncycastle.util;
 
 /**
- * Utility methods for ints.
+ * Utility methods and constants for ints.
  */
 public class Integers
 {
+<<<<<<< HEAD
+=======
+    public static final int BYTES = 4;
+    public static final int SIZE = Integer.SIZE;
+
+    public static int bitCount(int i)
+    {
+        return Integer.bitCount(i);
+    }
+
+    public static int highestOneBit(int i)
+    {
+        return Integer.highestOneBit(i);
+    }
+
+    public static int lowestOneBit(int i)
+    {
+        return Integer.lowestOneBit(i);
+    }
+
+>>>>>>> aosp/upstream-master
     public static int numberOfLeadingZeros(int i)
     {
         return Integer.numberOfLeadingZeros(i);

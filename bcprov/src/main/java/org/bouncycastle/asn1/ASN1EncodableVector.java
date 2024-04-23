@@ -46,6 +46,19 @@ public class ASN1EncodableVector
 
         this.elements[elementCount] = element;
         this.elementCount = minCapacity;
+<<<<<<< HEAD
+=======
+    }
+
+    public void addAll(ASN1Encodable[] others)
+    {
+        if (null == others)
+        {
+            throw new NullPointerException("'others' cannot be null");
+        }
+
+        doAddAll(others, "'others' elements cannot be null");
+>>>>>>> aosp/upstream-master
     }
 
     public void addAll(ASN1EncodableVector other)
@@ -55,7 +68,16 @@ public class ASN1EncodableVector
             throw new NullPointerException("'other' cannot be null");
         }
 
+<<<<<<< HEAD
         int otherElementCount = other.size();
+=======
+        doAddAll(other.elements, "'other' elements cannot be null");
+    }
+
+    private void doAddAll(ASN1Encodable[] others, String nullMsg)
+    {
+        int otherElementCount = others.length;
+>>>>>>> aosp/upstream-master
         if (otherElementCount < 1)
         {
             return;
@@ -71,10 +93,17 @@ public class ASN1EncodableVector
         int i = 0;
         do
         {
+<<<<<<< HEAD
             ASN1Encodable otherElement = other.get(i);
             if (null == otherElement)
             {
                 throw new NullPointerException("'other' elements cannot be null");
+=======
+            ASN1Encodable otherElement = others[i];
+            if (null == otherElement)
+            {
+                throw new NullPointerException(nullMsg);
+>>>>>>> aosp/upstream-master
             }
 
             this.elements[elementCount + i] = otherElement;

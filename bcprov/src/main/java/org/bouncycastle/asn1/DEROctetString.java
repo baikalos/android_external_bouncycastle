@@ -31,19 +31,23 @@ public class DEROctetString
         super(obj.toASN1Primitive().getEncoded(ASN1Encoding.DER));
     }
 
-    boolean isConstructed()
+    boolean encodeConstructed()
     {
         return false;
     }
 
-    int encodedLength()
+    int encodedLength(boolean withTag)
     {
-        return 1 + StreamUtil.calculateBodyLength(string.length) + string.length;
+        return ASN1OutputStream.getLengthOfEncodingDL(withTag, string.length);
     }
 
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
     {
+<<<<<<< HEAD
         out.writeEncoded(withTag, BERTags.OCTET_STRING, string);
+=======
+        out.writeEncodingDL(withTag, BERTags.OCTET_STRING, string);
+>>>>>>> aosp/upstream-master
     }
 
     ASN1Primitive toDERObject()
@@ -56,8 +60,19 @@ public class DEROctetString
         return this;
     }
 
+<<<<<<< HEAD
     static void encode(ASN1OutputStream derOut, boolean withTag, byte[] buf, int off, int len) throws IOException
     {
         derOut.writeEncoded(withTag, BERTags.OCTET_STRING, buf, off, len);
+=======
+    static void encode(ASN1OutputStream out, boolean withTag, byte[] buf, int off, int len) throws IOException
+    {
+        out.writeEncodingDL(withTag, BERTags.OCTET_STRING, buf, off, len);
+    }
+
+    static int encodedLength(boolean withTag, int contentsLength)
+    {
+        return ASN1OutputStream.getLengthOfEncodingDL(withTag, contentsLength);
+>>>>>>> aosp/upstream-master
     }
 }

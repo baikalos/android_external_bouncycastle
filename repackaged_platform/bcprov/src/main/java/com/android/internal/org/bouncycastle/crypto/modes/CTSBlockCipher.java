@@ -1,20 +1,33 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.internal.org.bouncycastle.crypto.modes;
 
+<<<<<<< HEAD:repackaged_platform/bcprov/src/main/java/com/android/internal/org/bouncycastle/crypto/modes/CTSBlockCipher.java
 import com.android.internal.org.bouncycastle.crypto.BlockCipher;
 import com.android.internal.org.bouncycastle.crypto.BufferedBlockCipher;
 import com.android.internal.org.bouncycastle.crypto.DataLengthException;
 import com.android.internal.org.bouncycastle.crypto.InvalidCipherTextException;
 import com.android.internal.org.bouncycastle.crypto.OutputLengthException;
 import com.android.internal.org.bouncycastle.crypto.StreamBlockCipher;
+=======
+import org.bouncycastle.crypto.BlockCipher;
+import org.bouncycastle.crypto.DataLengthException;
+import org.bouncycastle.crypto.DefaultBufferedBlockCipher;
+import org.bouncycastle.crypto.InvalidCipherTextException;
+import org.bouncycastle.crypto.OutputLengthException;
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/crypto/modes/NISTCTSBlockCipher.java
 
 /**
  * A Cipher Text Stealing (CTS) mode cipher. CTS allows block ciphers to
  * be used to produce cipher text which is the same length as the plain text.
  * @hide This class is not part of the Android public SDK API
  */
+<<<<<<< HEAD:repackaged_platform/bcprov/src/main/java/com/android/internal/org/bouncycastle/crypto/modes/CTSBlockCipher.java
 public class CTSBlockCipher
     extends BufferedBlockCipher
+=======
+public class NISTCTSBlockCipher
+    extends DefaultBufferedBlockCipher
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/crypto/modes/NISTCTSBlockCipher.java
 {
     private int     blockSize;
 
@@ -26,12 +39,17 @@ public class CTSBlockCipher
     public CTSBlockCipher(
         BlockCipher     cipher)
     {
+<<<<<<< HEAD:repackaged_platform/bcprov/src/main/java/com/android/internal/org/bouncycastle/crypto/modes/CTSBlockCipher.java
         if (cipher instanceof StreamBlockCipher)
         {
             throw new IllegalArgumentException("CTSBlockCipher can only accept ECB, or CBC ciphers");
         }
 
         this.cipher = cipher;
+=======
+        this.type = type;
+        this.cipher = CBCBlockCipher.newInstance(cipher);
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/crypto/modes/NISTCTSBlockCipher.java
 
         blockSize = cipher.getBlockSize();
 
@@ -252,9 +270,36 @@ public class CTSBlockCipher
 
             if (bufOff > blockSize)
             {
+<<<<<<< HEAD:repackaged_platform/bcprov/src/main/java/com/android/internal/org/bouncycastle/crypto/modes/CTSBlockCipher.java
                 if (cipher instanceof CBCBlockCipher)
+=======
+                if (this.type == CS3 || (this.type == CS2 && ((buf.length - bufOff) % blockSize) != 0))
                 {
-                    BlockCipher c = ((CBCBlockCipher)cipher).getUnderlyingCipher();
+                    if (cipher instanceof CBCModeCipher)
+                    {
+                        BlockCipher c = ((CBCModeCipher)cipher).getUnderlyingCipher();
+
+                        c.processBlock(buf, 0, block, 0);
+                    }
+                    else
+                    {
+                        cipher.processBlock(buf, 0, block, 0);
+                    }
+
+                    for (int i = blockSize; i != bufOff; i++)
+                    {
+                        lastBlock[i - blockSize] = (byte)(block[i - blockSize] ^ buf[i]);
+                    }
+
+                    System.arraycopy(buf, blockSize, block, 0, len);
+
+                    cipher.processBlock(block, 0, out, outOff);
+                    System.arraycopy(lastBlock, 0, out, outOff + blockSize, len);
+                }
+                else
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/crypto/modes/NISTCTSBlockCipher.java
+                {
+                    BlockCipher c = ((CBCModeCipher)cipher).getUnderlyingCipher();
 
                     c.processBlock(buf, 0, block, 0);
                 }

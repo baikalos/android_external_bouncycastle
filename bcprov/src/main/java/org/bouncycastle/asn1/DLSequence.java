@@ -8,7 +8,7 @@ import java.io.IOException;
 public class DLSequence
     extends ASN1Sequence
 {
-    private int bodyLength = -1;
+    private int contentsLength = -1;
 
     /**
      * Create an empty sequence
@@ -45,13 +45,21 @@ public class DLSequence
     }
 
     DLSequence(ASN1Encodable[] elements, boolean clone)
+<<<<<<< HEAD
     {
         super(elements, clone);
     }
 
     private int getBodyLength() throws IOException
+=======
+>>>>>>> aosp/upstream-master
     {
-        if (bodyLength < 0)
+        super(elements, clone);
+    }
+
+    private int getContentsLength() throws IOException
+    {
+        if (contentsLength < 0)
         {
             int count = elements.length;
             int totalLength = 0;
@@ -59,20 +67,29 @@ public class DLSequence
             for (int i = 0; i < count; ++i)
             {
                 ASN1Primitive dlObject = elements[i].toASN1Primitive().toDLObject();
+<<<<<<< HEAD
                 totalLength += dlObject.encodedLength();
             }
 
             this.bodyLength = totalLength;
+=======
+                totalLength += dlObject.encodedLength(true);
+            }
+
+            this.contentsLength = totalLength;
+>>>>>>> aosp/upstream-master
         }
 
-        return bodyLength;
+        return contentsLength;
     }
 
+<<<<<<< HEAD
     int encodedLength() throws IOException
+=======
+    int encodedLength(boolean withTag) throws IOException
+>>>>>>> aosp/upstream-master
     {
-        int length = getBodyLength();
-
-        return 1 + StreamUtil.calculateBodyLength(length) + length;
+        return ASN1OutputStream.getLengthOfEncodingDL(withTag, getContentsLength());
     }
 
     /**
@@ -85,6 +102,7 @@ public class DLSequence
      */
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
     {
+<<<<<<< HEAD
         if (withTag)
         {
             out.write(BERTags.SEQUENCE | BERTags.CONSTRUCTED);
@@ -97,6 +115,17 @@ public class DLSequence
         {
             out.writeLength(getBodyLength());
 
+=======
+        out.writeIdentifier(withTag, BERTags.CONSTRUCTED | BERTags.SEQUENCE);
+
+        ASN1OutputStream dlOut = out.getDLSubStream();
+
+        int count = elements.length;
+        if (contentsLength >= 0 || count > 16)
+        {
+            out.writeDL(getContentsLength());
+
+>>>>>>> aosp/upstream-master
             for (int i = 0; i < count; ++i)
             {
                 dlOut.writePrimitive(elements[i].toASN1Primitive(), true);
@@ -111,11 +140,19 @@ public class DLSequence
             {
                 ASN1Primitive dlObject = elements[i].toASN1Primitive().toDLObject();
                 dlObjects[i] = dlObject;
+<<<<<<< HEAD
                 totalLength += dlObject.encodedLength();
             }
 
             this.bodyLength = totalLength;
             out.writeLength(totalLength);
+=======
+                totalLength += dlObject.encodedLength(true);
+            }
+
+            this.contentsLength = totalLength;
+            out.writeDL(totalLength);
+>>>>>>> aosp/upstream-master
 
             for (int i = 0; i < count; ++i)
             {
@@ -124,8 +161,36 @@ public class DLSequence
         }
     }
 
+<<<<<<< HEAD
+=======
+    ASN1BitString toASN1BitString()
+    {
+        return new DLBitString(BERBitString.flattenBitStrings(getConstructedBitStrings()), false);
+    }
+
+    ASN1External toASN1External()
+    {
+        return new DLExternal(this);
+    }
+
+    ASN1OctetString toASN1OctetString()
+    {
+        // NOTE: There is no DLOctetString
+        return new DEROctetString(BEROctetString.flattenOctetStrings(getConstructedOctetStrings()));
+    }
+
+    ASN1Set toASN1Set()
+    {
+        return new DLSet(false, toArrayInternal());
+    }
+
+>>>>>>> aosp/upstream-master
     ASN1Primitive toDLObject()
     {
         return this;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> aosp/upstream-master

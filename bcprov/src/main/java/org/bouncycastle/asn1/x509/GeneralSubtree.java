@@ -203,7 +203,11 @@ public class GeneralSubtree
 
         v.add(base);
 
+<<<<<<< HEAD
         if (minimum != null && !minimum.hasValue(ZERO))
+=======
+        if (minimum != null && !minimum.hasValue(0))
+>>>>>>> aosp/upstream-master
         {
             v.add(new DERTaggedObject(false, 0, minimum));
         }

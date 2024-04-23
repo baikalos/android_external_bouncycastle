@@ -13,7 +13,11 @@ class PEMUtil
      * current PEM object.
      *
      */
+<<<<<<< HEAD
     private class Boundaries
+=======
+    private static class Boundaries
+>>>>>>> aosp/upstream-master
     {
         private final String _header;
         private final String _footer;
@@ -112,7 +116,8 @@ class PEMUtil
     }
 
     ASN1Sequence readPEMObject(
-        InputStream in)
+        InputStream in,
+        boolean     isFirst)
         throws IOException
     {
         String line;
@@ -131,6 +136,14 @@ class PEMUtil
 
         if (header == null)
         {
+<<<<<<< HEAD
+=======
+            if (!isFirst)
+            {
+                // just ignore the data
+                return null;
+            }
+>>>>>>> aosp/upstream-master
             throw new IOException("malformed PEM data: no header found");
         }
 

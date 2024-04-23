@@ -4,7 +4,11 @@ import java.io.IOException;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Primitive;
+<<<<<<< HEAD
 import org.bouncycastle.asn1.DERPrintableString;
+=======
+import org.bouncycastle.asn1.ASN1PrintableString;
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.util.encoders.Hex;
 
 /**
@@ -71,7 +75,7 @@ public abstract class X509NameEntryConverter
     protected boolean canBePrintable(
         String  str)
     {
-        return DERPrintableString.isPrintableString(str);
+        return ASN1PrintableString.isPrintableString(str);
     }
     
     /**

@@ -8,6 +8,7 @@ import java.io.IOException;
 public class DLBitString
     extends ASN1BitString
 {
+<<<<<<< HEAD
     /**
      * return a Bit String that can be definite-length encoded from the passed in object.
      *
@@ -85,34 +86,52 @@ public class DLBitString
 
     public DLBitString(
         byte[]  data)
+=======
+    public DLBitString(byte[] data)
+>>>>>>> aosp/upstream-master
     {
         this(data, 0);
     }
 
-    public DLBitString(
-        int value)
+    public DLBitString(byte data, int padBits)
     {
+        super(data, padBits);
+    }
+
+    public DLBitString(byte[] data, int padBits)
+    {
+        super(data, padBits);
+    }
+
+    public DLBitString(int value)
+    {
+        // TODO[asn1] Unify in single allocation of 'contents'
         super(getBytes(value), getPadBits(value));
     }
 
-    public DLBitString(
-        ASN1Encodable obj)
-        throws IOException
+    public DLBitString(ASN1Encodable obj) throws IOException
     {
+        // TODO[asn1] Unify in single allocation of 'contents'
         super(obj.toASN1Primitive().getEncoded(ASN1Encoding.DER), 0);
     }
 
-    boolean isConstructed()
+    DLBitString(byte[] contents, boolean check)
+    {
+        super(contents, check);
+    }
+
+    boolean encodeConstructed()
     {
         return false;
     }
 
-    int encodedLength()
+    int encodedLength(boolean withTag)
     {
-        return 1 + StreamUtil.calculateBodyLength(data.length + 1) + data.length + 1;
+        return ASN1OutputStream.getLengthOfEncodingDL(withTag, contents.length);
     }
 
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
+<<<<<<< HEAD
     {
         out.writeEncoded(withTag, BERTags.BIT_STRING, (byte)padBits, data);
     }
@@ -138,5 +157,30 @@ public class DLBitString
         }
 
         return new DLBitString(data, padBits);
+=======
+    {
+        out.writeEncodingDL(withTag, BERTags.BIT_STRING, contents);
+    }
+
+    ASN1Primitive toDLObject()
+    {
+        return this;
+    }
+
+    static int encodedLength(boolean withTag, int contentsLength)
+    {
+        return ASN1OutputStream.getLengthOfEncodingDL(withTag, contentsLength);
+    }
+
+    static void encode(ASN1OutputStream out, boolean withTag, byte[] buf, int off, int len) throws IOException
+    {
+        out.writeEncodingDL(withTag, BERTags.BIT_STRING, buf, off, len);
+    }
+
+    static void encode(ASN1OutputStream out, boolean withTag, byte pad, byte[] buf, int off, int len)
+        throws IOException
+    {
+        out.writeEncodingDL(withTag, BERTags.BIT_STRING, pad, buf, off, len);
+>>>>>>> aosp/upstream-master
     }
 }

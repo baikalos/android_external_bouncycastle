@@ -31,8 +31,13 @@ public class DigestFactory
     private static Set sha3_256 = new HashSet();
     private static Set sha3_384 = new HashSet();
     private static Set sha3_512 = new HashSet();
+<<<<<<< HEAD
     */
     // END Android-removed: Unsupported algorithms
+=======
+    private static Set shake128 = new HashSet();
+    private static Set shake256 = new HashSet();
+>>>>>>> aosp/upstream-master
 
     private static Map oids = new HashMap();
     
@@ -86,6 +91,12 @@ public class DigestFactory
         // END Android-removed: Unsupported algorithms
 
 
+        shake128.add("SHAKE128");
+        shake128.add(NISTObjectIdentifiers.id_shake128.getId());
+
+        shake256.add("SHAKE256");
+        shake256.add(NISTObjectIdentifiers.id_shake256.getId());
+
         oids.put("MD5", PKCSObjectIdentifiers.md5);
         oids.put(PKCSObjectIdentifiers.md5.getId(), PKCSObjectIdentifiers.md5);
         
@@ -128,6 +139,12 @@ public class DigestFactory
 
         oids.put("SHA3-512", NISTObjectIdentifiers.id_sha3_512);
         oids.put(NISTObjectIdentifiers.id_sha3_512.getId(), NISTObjectIdentifiers.id_sha3_512);
+
+        oids.put("SHAKE128", NISTObjectIdentifiers.id_shake128);
+        oids.put(NISTObjectIdentifiers.id_shake128.getId(), NISTObjectIdentifiers.id_shake128);
+
+        oids.put("SHAKE256", NISTObjectIdentifiers.id_shake256);
+        oids.put(NISTObjectIdentifiers.id_shake256.getId(), NISTObjectIdentifiers.id_shake256);
     }
     
     public static Digest getDigest(
@@ -198,8 +215,19 @@ public class DigestFactory
         {
             return org.bouncycastle.crypto.util.DigestFactory.createSHA3_512();
         }
+<<<<<<< HEAD
         */
         // END Android-removed: Unsupported algorithms
+=======
+        if (shake128.contains(digestName))
+        {
+            return org.bouncycastle.crypto.util.DigestFactory.createSHAKE128();
+        }
+        if (shake256.contains(digestName))
+        {
+            return org.bouncycastle.crypto.util.DigestFactory.createSHAKE256();
+        }
+>>>>>>> aosp/upstream-master
 
         return null;
     }

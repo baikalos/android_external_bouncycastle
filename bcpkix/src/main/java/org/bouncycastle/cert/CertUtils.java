@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.bouncycastle.asn1.ASN1BitString;
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1Encoding;
@@ -19,9 +20,12 @@ import org.bouncycastle.asn1.ASN1GeneralizedTime;
 import org.bouncycastle.asn1.ASN1Object;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Primitive;
+import org.bouncycastle.asn1.ASN1Sequence;
+import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.DERBitString;
 import org.bouncycastle.asn1.DERNull;
 import org.bouncycastle.asn1.DERSequence;
+import org.bouncycastle.asn1.DERTaggedObject;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.AttributeCertificate;
 import org.bouncycastle.asn1.x509.AttributeCertificateInfo;
@@ -77,6 +81,7 @@ class CertUtils
         }
     }
 
+<<<<<<< HEAD
     static X509CRLHolder generateFullCRL(ContentSigner signer, TBSCertList tbsCertList)
     {
         try
@@ -99,6 +104,8 @@ class CertUtils
         return signer.getSignature();
     }
 
+=======
+>>>>>>> aosp/upstream-master
     private static Certificate generateStructure(TBSCertificate tbsCert, AlgorithmIdentifier sigAlgId, byte[] signature)
     {
         ASN1EncodableVector v = new ASN1EncodableVector();
@@ -197,12 +204,12 @@ class CertUtils
         }
     }
 
-    static boolean[] bitStringToBoolean(DERBitString bitString)
+    static boolean[] bitStringToBoolean(ASN1BitString bitString)
     {
         if (bitString != null)
         {
-            byte[]          bytes = bitString.getBytes();
-            boolean[]       boolId = new boolean[bytes.length * 8 - bitString.getPadBits()];
+            byte[] bytes = bitString.getBytes();
+            boolean[] boolId = new boolean[bytes.length * 8 - bitString.getPadBits()];
 
             for (int i = 0; i != boolId.length; i++)
             {
@@ -234,6 +241,7 @@ class CertUtils
              return false;
          }
 
+<<<<<<< HEAD
          if (Properties.isOverrideSet("org.bouncycastle.x509.allow_absent_equiv_NULL"))
          {
              if (id1.getParameters() == null)
@@ -291,6 +299,65 @@ class CertUtils
             }
         }
 
+=======
+        if (Properties.isOverrideSet("org.bouncycastle.x509.allow_absent_equiv_NULL"))
+        {
+            if (id1.getParameters() == null)
+            {
+                if (id2.getParameters() != null && !id2.getParameters().equals(DERNull.INSTANCE))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            if (id2.getParameters() == null)
+            {
+                if (id1.getParameters() != null && !id1.getParameters().equals(DERNull.INSTANCE))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        if (id1.getParameters() != null)
+        {
+            return id1.getParameters().equals(id2.getParameters());
+        }
+
+        if (id2.getParameters() != null)
+        {
+            return id2.getParameters().equals(id1.getParameters());
+        }
+
+        return true;
+    }
+
+    static ExtensionsGenerator doReplaceExtension(ExtensionsGenerator extGenerator, Extension ext)
+    {
+        boolean isReplaced = false;
+        Extensions exts = extGenerator.generate();
+        extGenerator = new ExtensionsGenerator();
+
+        for (Enumeration en = exts.oids(); en.hasMoreElements(); )
+        {
+            ASN1ObjectIdentifier extOid = (ASN1ObjectIdentifier)en.nextElement();
+
+            if (extOid.equals(ext.getExtnId()))
+            {
+                isReplaced = true;
+                extGenerator.addExtension(ext);
+            }
+            else
+            {
+                extGenerator.addExtension(exts.getExtension(extOid));
+            }
+        }
+
+>>>>>>> aosp/upstream-master
         if (!isReplaced)
         {
             throw new IllegalArgumentException("replace - original extension (OID = " + ext.getExtnId() + ") not found");
@@ -299,13 +366,21 @@ class CertUtils
         return extGenerator;
     }
 
+<<<<<<< HEAD
     static ExtensionsGenerator doRemoveExtension(ExtensionsGenerator extGenerator, ASN1ObjectIdentifier  oid)
+=======
+    static ExtensionsGenerator doRemoveExtension(ExtensionsGenerator extGenerator, ASN1ObjectIdentifier oid)
+>>>>>>> aosp/upstream-master
     {
         boolean isRemoved = false;
         Extensions exts = extGenerator.generate();
         extGenerator = new ExtensionsGenerator();
 
+<<<<<<< HEAD
         for (Enumeration en = exts.oids(); en.hasMoreElements();)
+=======
+        for (Enumeration en = exts.oids(); en.hasMoreElements(); )
+>>>>>>> aosp/upstream-master
         {
             ASN1ObjectIdentifier extOid = (ASN1ObjectIdentifier)en.nextElement();
 
@@ -325,5 +400,35 @@ class CertUtils
         }
 
         return extGenerator;
+<<<<<<< HEAD
+=======
+    }
+
+    private static byte[] generateSig(ContentSigner signer, ASN1Object tbsObj)
+        throws IOException
+    {
+        OutputStream sOut = signer.getOutputStream();
+        tbsObj.encodeTo(sOut, ASN1Encoding.DER);
+        sOut.close();
+
+        return signer.getSignature();
+    }
+
+    static ASN1TaggedObject trimExtensions(int tagNo, Extensions exts)
+    {
+        ASN1Sequence extSeq = ASN1Sequence.getInstance(exts.toASN1Primitive());
+        ASN1EncodableVector extV = new ASN1EncodableVector();
+        for (int i = 0; i != extSeq.size(); i++)
+        {
+            ASN1Sequence ext = ASN1Sequence.getInstance(extSeq.getObjectAt(i));
+
+            if (!Extension.altSignatureValue.equals(ext.getObjectAt(0)))
+            {
+                extV.add(ext);
+            }
+        }
+
+        return new DERTaggedObject(true, tagNo, new DERSequence(extV));
+>>>>>>> aosp/upstream-master
     }
 }

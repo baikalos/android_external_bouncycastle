@@ -26,9 +26,14 @@ import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
 // import org.bouncycastle.crypto.util.OpenSSHPublicKeyUtil;
 import org.bouncycastle.jcajce.provider.asymmetric.util.BaseKeyFactorySpi;
 import org.bouncycastle.jcajce.provider.asymmetric.util.ExtendedInvalidKeySpecException;
+<<<<<<< HEAD
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.jce.spec.OpenSSHPrivateKeySpec;
 // import org.bouncycastle.jce.spec.OpenSSHPublicKeySpec;
+=======
+import org.bouncycastle.jcajce.spec.OpenSSHPrivateKeySpec;
+import org.bouncycastle.jcajce.spec.OpenSSHPublicKeySpec;
+>>>>>>> aosp/upstream-master
 
 public class KeyFactorySpi
     extends BaseKeyFactorySpi
@@ -65,8 +70,11 @@ public class KeyFactorySpi
 
             return new RSAPrivateKeySpec(k.getModulus(), k.getPrivateExponent());
         }
+<<<<<<< HEAD
         // BEGIN Android-removed: Unsupported algorithms
         /*
+=======
+>>>>>>> aosp/upstream-master
         else if (spec.isAssignableFrom(OpenSSHPublicKeySpec.class) && key instanceof RSAPublicKey)
         {
             try

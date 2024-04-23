@@ -23,9 +23,14 @@ import org.bouncycastle.crypto.params.DSAPublicKeyParameters;
 // import org.bouncycastle.crypto.util.OpenSSHPrivateKeyUtil;
 // import org.bouncycastle.crypto.util.OpenSSHPublicKeyUtil;
 import org.bouncycastle.jcajce.provider.asymmetric.util.BaseKeyFactorySpi;
+<<<<<<< HEAD
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.jce.spec.OpenSSHPrivateKeySpec;
 // import org.bouncycastle.jce.spec.OpenSSHPublicKeySpec;
+=======
+import org.bouncycastle.jcajce.spec.OpenSSHPrivateKeySpec;
+import org.bouncycastle.jcajce.spec.OpenSSHPublicKeySpec;
+>>>>>>> aosp/upstream-master
 
 public class KeyFactorySpi
     extends BaseKeyFactorySpi

@@ -16,6 +16,7 @@ import org.bouncycastle.asn1.ASN1TaggedObject;
 import org.bouncycastle.asn1.ASN1UTCTime;
 import org.bouncycastle.asn1.DERGeneralizedTime;
 import org.bouncycastle.asn1.DERUTCTime;
+import org.bouncycastle.asn1.LocaleUtil;
 
 public class Time
     extends ASN1Object
@@ -27,7 +28,12 @@ public class Time
         ASN1TaggedObject obj,
         boolean          explicit)
     {
-        return getInstance(obj.getObject()); // must be explicitly tagged
+        if (!explicit)
+        {
+            throw new IllegalArgumentException("choice item must be explicitly tagged");
+        }
+
+        return getInstance(obj.getExplicitBaseObject());
     }
 
     public Time(
@@ -53,9 +59,13 @@ public class Time
         Date    time)
     {
         SimpleTimeZone      tz = new SimpleTimeZone(0, "Z");
+<<<<<<< HEAD
         // Android-changed: Use localized version
         // SimpleDateFormat    dateF = new SimpleDateFormat("yyyyMMddHHmmss");
         SimpleDateFormat    dateF = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
+=======
+        SimpleDateFormat    dateF = new SimpleDateFormat("yyyyMMddHHmmss", LocaleUtil.EN_Locale);
+>>>>>>> aosp/upstream-master
 
         dateF.setTimeZone(tz);
 

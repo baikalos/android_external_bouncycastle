@@ -28,17 +28,28 @@ import javax.crypto.spec.PBEParameterSpec;
 // import javax.crypto.spec.RC5ParameterSpec;
 
 import org.bouncycastle.asn1.DEROctetString;
+<<<<<<< HEAD
 import org.bouncycastle.asn1.cms.GCMParameters;
+=======
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.crypto.BlockCipher;
 import org.bouncycastle.crypto.BufferedBlockCipher;
 import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.CryptoServicesRegistrar;
 import org.bouncycastle.crypto.DataLengthException;
+import org.bouncycastle.crypto.DefaultBufferedBlockCipher;
 import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.bouncycastle.crypto.OutputLengthException;
+<<<<<<< HEAD
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.engines.DSTU7624Engine;
+=======
+import org.bouncycastle.crypto.engines.DSTU7624Engine;
+import org.bouncycastle.crypto.fpe.FPEEngine;
+import org.bouncycastle.crypto.fpe.FPEFF1Engine;
+import org.bouncycastle.crypto.fpe.FPEFF3_1Engine;
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.crypto.modes.AEADBlockCipher;
 import org.bouncycastle.crypto.modes.AEADCipher;
 import org.bouncycastle.crypto.modes.CBCBlockCipher;
@@ -49,12 +60,21 @@ import org.bouncycastle.crypto.modes.CTSBlockCipher;
 // import org.bouncycastle.crypto.modes.EAXBlockCipher;
 // import org.bouncycastle.crypto.modes.GCFBBlockCipher;
 import org.bouncycastle.crypto.modes.GCMBlockCipher;
+<<<<<<< HEAD
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.modes.GOFBBlockCipher;
 // import org.bouncycastle.crypto.modes.KCCMBlockCipher;
 // import org.bouncycastle.crypto.modes.KCTRBlockCipher;
 // import org.bouncycastle.crypto.modes.KGCMBlockCipher;
 // import org.bouncycastle.crypto.modes.OCBBlockCipher;
+=======
+import org.bouncycastle.crypto.modes.GCMSIVBlockCipher;
+import org.bouncycastle.crypto.modes.GOFBBlockCipher;
+import org.bouncycastle.crypto.modes.KCCMBlockCipher;
+import org.bouncycastle.crypto.modes.KCTRBlockCipher;
+import org.bouncycastle.crypto.modes.KGCMBlockCipher;
+import org.bouncycastle.crypto.modes.OCBBlockCipher;
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.crypto.modes.OFBBlockCipher;
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.modes.OpenPGPCFBBlockCipher;
@@ -63,17 +83,20 @@ import org.bouncycastle.crypto.modes.SICBlockCipher;
 import org.bouncycastle.crypto.paddings.BlockCipherPadding;
 import org.bouncycastle.crypto.paddings.ISO10126d2Padding;
 import org.bouncycastle.crypto.paddings.ISO7816d4Padding;
+import org.bouncycastle.crypto.paddings.PKCS7Padding;
 import org.bouncycastle.crypto.paddings.PaddedBufferedBlockCipher;
 import org.bouncycastle.crypto.paddings.TBCPadding;
 import org.bouncycastle.crypto.paddings.X923Padding;
 import org.bouncycastle.crypto.paddings.ZeroBytePadding;
 import org.bouncycastle.crypto.params.AEADParameters;
+import org.bouncycastle.crypto.params.FPEParameters;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
 import org.bouncycastle.crypto.params.ParametersWithRandom;
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.params.ParametersWithSBox;
 import org.bouncycastle.crypto.params.RC2Parameters;
+<<<<<<< HEAD
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.params.RC5Parameters;
 // import org.bouncycastle.jcajce.PBKDF1Key;
@@ -84,6 +107,18 @@ import org.bouncycastle.jcajce.spec.AEADParameterSpec;
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.jcajce.spec.GOST28147ParameterSpec;
 // import org.bouncycastle.jcajce.spec.RepeatedSecretKeySpec;
+=======
+import org.bouncycastle.crypto.params.RC5Parameters;
+import org.bouncycastle.internal.asn1.cms.GCMParameters;
+import org.bouncycastle.jcajce.PBKDF1Key;
+import org.bouncycastle.jcajce.PBKDF1KeyWithParameters;
+import org.bouncycastle.jcajce.PKCS12Key;
+import org.bouncycastle.jcajce.PKCS12KeyWithParameters;
+import org.bouncycastle.jcajce.spec.AEADParameterSpec;
+import org.bouncycastle.jcajce.spec.FPEParameterSpec;
+import org.bouncycastle.jcajce.spec.GOST28147ParameterSpec;
+import org.bouncycastle.jcajce.spec.RepeatedSecretKeySpec;
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.Strings;
 
@@ -92,11 +127,15 @@ public class BaseBlockCipher
     implements PBE
 {
     private static final int BUF_SIZE = 512;
+<<<<<<< HEAD
     private static final Class gcmSpecClass = ClassUtil.loadClass(BaseBlockCipher.class, "javax.crypto.spec.GCMParameterSpec");
+=======
+>>>>>>> aosp/upstream-master
 
     //
     // specs we can handle.
     //
+<<<<<<< HEAD
     private Class[] availableSpecs =
         {
             // Android-removed: Unsupported alhorithms
@@ -105,6 +144,14 @@ public class BaseBlockCipher
             gcmSpecClass,
             // Android-removed: unsupported algorithms
             // GOST28147ParameterSpec.class,
+=======
+    private static final Class[] availableSpecs =
+        {
+            RC2ParameterSpec.class,
+            RC5ParameterSpec.class,
+            GcmSpecUtil.gcmSpecClass,
+            GOST28147ParameterSpec.class,
+>>>>>>> aosp/upstream-master
             IvParameterSpec.class,
             PBEParameterSpec.class
         };
@@ -166,7 +213,25 @@ public class BaseBlockCipher
         AEADBlockCipher engine)
     {
         this.baseEngine = engine.getUnderlyingCipher();
-        this.ivLength = baseEngine.getBlockSize();
+        if (engine.getAlgorithmName().indexOf("GCM") >= 0)
+        {
+            this.ivLength = 12;
+        }
+        else
+        {
+            this.ivLength = baseEngine.getBlockSize();
+        }
+        this.cipher = new AEADGenericBlockCipher(engine);
+    }
+
+    protected BaseBlockCipher(
+        AEADCipher engine,
+        boolean fixedIv,
+        int ivLength)
+    {
+        this.baseEngine = null;
+        this.fixedIv = fixedIv;
+        this.ivLength = ivLength;
         this.cipher = new AEADGenericBlockCipher(engine);
     }
 
@@ -348,7 +413,11 @@ public class BaseBlockCipher
         {
             ivLength = baseEngine.getBlockSize();
             cipher = new BufferedGenericBlockCipher(
+<<<<<<< HEAD
                 new CBCBlockCipher(baseEngine));
+=======
+                CBCBlockCipher.newInstance(baseEngine));
+>>>>>>> aosp/upstream-master
         }
         else if (modeName.startsWith("OFB"))
         {
@@ -374,16 +443,26 @@ public class BaseBlockCipher
                 int wordSize = Integer.parseInt(modeName.substring(3));
 
                 cipher = new BufferedGenericBlockCipher(
+<<<<<<< HEAD
                     new CFBBlockCipher(baseEngine, wordSize));
+=======
+                    CFBBlockCipher.newInstance(baseEngine, wordSize));
+>>>>>>> aosp/upstream-master
             }
             else
             {
                 cipher = new BufferedGenericBlockCipher(
+<<<<<<< HEAD
                     new CFBBlockCipher(baseEngine, 8 * baseEngine.getBlockSize()));
             }
         }
         // BEGIN Android-removed: Unsupported modes
         /*
+=======
+                    CFBBlockCipher.newInstance(baseEngine, 8 * baseEngine.getBlockSize()));
+            }
+        }
+>>>>>>> aosp/upstream-master
         else if (modeName.startsWith("PGPCFB"))
         {
             boolean inlineIV = modeName.equals("PGPCFBWITHIV");
@@ -403,6 +482,21 @@ public class BaseBlockCipher
             cipher = new BufferedGenericBlockCipher(
                 new OpenPGPCFBBlockCipher(baseEngine));
         }
+<<<<<<< HEAD
+=======
+        else if (modeName.equals("FF1"))
+        {
+            ivLength = 0;
+            cipher = new BufferedFPEBlockCipher(
+                new FPEFF1Engine(baseEngine));
+        }
+        else if (modeName.equals("FF3-1"))
+        {
+            ivLength = 0;
+            cipher = new BufferedFPEBlockCipher(
+                new FPEFF3_1Engine(baseEngine));
+        }
+>>>>>>> aosp/upstream-master
         else if (modeName.equals("SIC"))
         {
             ivLength = baseEngine.getBlockSize();
@@ -411,11 +505,17 @@ public class BaseBlockCipher
                 throw new IllegalArgumentException("Warning: SIC-Mode can become a twotime-pad if the blocksize of the cipher is too small. Use a cipher with a block size of at least 128 bits (e.g. AES)");
             }
             fixedIv = false;
+<<<<<<< HEAD
             cipher = new BufferedGenericBlockCipher(new BufferedBlockCipher(
                 new SICBlockCipher(baseEngine)));
         }
         */
         // END Android-removed: Unsupported modes
+=======
+            cipher = new BufferedGenericBlockCipher(new DefaultBufferedBlockCipher(
+                SICBlockCipher.newInstance(baseEngine)));
+        }
+>>>>>>> aosp/upstream-master
         else if (modeName.equals("CTR"))
         {
             ivLength = baseEngine.getBlockSize();
@@ -424,38 +524,60 @@ public class BaseBlockCipher
             /*
             if (baseEngine instanceof DSTU7624Engine)
             {
+<<<<<<< HEAD
                 cipher = new BufferedGenericBlockCipher(new BufferedBlockCipher(
+=======
+                cipher = new BufferedGenericBlockCipher(new DefaultBufferedBlockCipher(
+>>>>>>> aosp/upstream-master
                     new KCTRBlockCipher(baseEngine)));
             }
             else
             {
+<<<<<<< HEAD
             */
                 cipher = new BufferedGenericBlockCipher(new BufferedBlockCipher(
                     new SICBlockCipher(baseEngine)));
             /*
+=======
+                cipher = new BufferedGenericBlockCipher(new DefaultBufferedBlockCipher(
+                    SICBlockCipher.newInstance(baseEngine)));
+>>>>>>> aosp/upstream-master
             }
             */
         }
+<<<<<<< HEAD
         // BEGIN Android-removed: Unsupported modes
         /*
         else if (modeName.equals("GOFB"))
         {
             ivLength = baseEngine.getBlockSize();
             cipher = new BufferedGenericBlockCipher(new BufferedBlockCipher(
+=======
+        else if (modeName.equals("GOFB"))
+        {
+            ivLength = baseEngine.getBlockSize();
+            cipher = new BufferedGenericBlockCipher(new DefaultBufferedBlockCipher(
+>>>>>>> aosp/upstream-master
                 new GOFBBlockCipher(baseEngine)));
         }
         else if (modeName.equals("GCFB"))
         {
             ivLength = baseEngine.getBlockSize();
+<<<<<<< HEAD
             cipher = new BufferedGenericBlockCipher(new BufferedBlockCipher(
                 new GCFBBlockCipher(baseEngine)));
         }
         */
         // END Android-removed: Unsupported modes
+=======
+            cipher = new BufferedGenericBlockCipher(new DefaultBufferedBlockCipher(
+                new GCFBBlockCipher(baseEngine)));
+        }
+>>>>>>> aosp/upstream-master
         else if (modeName.equals("CTS"))
         {
             ivLength = baseEngine.getBlockSize();
-            cipher = new BufferedGenericBlockCipher(new CTSBlockCipher(new CBCBlockCipher(baseEngine)));
+            cipher = new BufferedGenericBlockCipher(new CTSBlockCipher(CBCBlockCipher.newInstance(baseEngine)));
         }
         else if (modeName.equals("CCM"))
         {
@@ -468,14 +590,21 @@ public class BaseBlockCipher
             }
             else
             {
+<<<<<<< HEAD
             */
                 cipher = new AEADGenericBlockCipher(new CCMBlockCipher(baseEngine));
             /*
+=======
+                cipher = new AEADGenericBlockCipher(CCMBlockCipher.newInstance(baseEngine));
+>>>>>>> aosp/upstream-master
             }
             */
         }
+<<<<<<< HEAD
         // BEGIN Android-removed: Unsupported modes
         /*
+=======
+>>>>>>> aosp/upstream-master
         else if (modeName.equals("OCB"))
         {
             if (engineProvider != null)
@@ -496,6 +625,7 @@ public class BaseBlockCipher
             ivLength = baseEngine.getBlockSize();
             cipher = new AEADGenericBlockCipher(new EAXBlockCipher(baseEngine));
         }
+<<<<<<< HEAD
         */
         // END Android-removed: Unsupported modes
         else if (modeName.equals("GCM"))
@@ -503,15 +633,30 @@ public class BaseBlockCipher
             ivLength = baseEngine.getBlockSize();
             // BEGIN Android-removed: Unsupported algorithms
             /*
+=======
+        else if (modeName.equals("GCM-SIV"))
+        {
+            ivLength = 12;
+            cipher = new AEADGenericBlockCipher(new GCMSIVBlockCipher(baseEngine));
+        }
+        else if (modeName.equals("GCM"))
+        {
+>>>>>>> aosp/upstream-master
             if (baseEngine instanceof DSTU7624Engine)
             {
+                ivLength = baseEngine.getBlockSize();
                 cipher = new AEADGenericBlockCipher(new KGCMBlockCipher(baseEngine));
             }
             else
             {
+<<<<<<< HEAD
             */
                 cipher = new AEADGenericBlockCipher(new GCMBlockCipher(baseEngine));
             /*
+=======
+                ivLength = 12;
+                cipher = new AEADGenericBlockCipher(GCMBlockCipher.newInstance(baseEngine));
+>>>>>>> aosp/upstream-master
             }
             */
         }
@@ -536,7 +681,7 @@ public class BaseBlockCipher
         {
             if (cipher.wrapOnNoPadding())
             {
-                cipher = new BufferedGenericBlockCipher(new BufferedBlockCipher(cipher.getUnderlyingCipher()));
+                cipher = new BufferedGenericBlockCipher(new DefaultBufferedBlockCipher(cipher.getUnderlyingCipher()));
             }
         }
         else if (paddingName.equals("WITHCTS") || paddingName.equals("CTSPADDING") || paddingName.equals("CS3PADDING"))
@@ -845,7 +990,11 @@ public class BaseBlockCipher
             GOST28147ParameterSpec gost28147Param = (GOST28147ParameterSpec)params;
 
             param = new ParametersWithSBox(
+<<<<<<< HEAD
                 new KeyParameter(key.getEncoded()), ((GOST28147ParameterSpec)params).getSbox());
+=======
+                new KeyParameter(key.getEncoded()), ((GOST28147ParameterSpec)params).getSBox());
+>>>>>>> aosp/upstream-master
 
             if (gost28147Param.getIV() != null && ivLength != 0)
             {
@@ -918,9 +1067,19 @@ public class BaseBlockCipher
                 ivParam = (ParametersWithIV)param;
             }
         }
+<<<<<<< HEAD
         */
         // END Android-removed: Unsupported algorithms
         else if (gcmSpecClass != null && gcmSpecClass.isInstance(params))
+=======
+        else if (params instanceof FPEParameterSpec)
+        {
+            FPEParameterSpec spec = (FPEParameterSpec)params;
+
+            param = new FPEParameters((KeyParameter)param, spec.getRadixConverter(), spec.getTweak(), spec.isUsingInverseFunction());
+        }
+        else if (GcmSpecUtil.isGcmSpec(params))
+>>>>>>> aosp/upstream-master
         {
             if (!isAEADModeName(modeName) && !(cipher instanceof AEADGenericBlockCipher))
             {
@@ -1009,14 +1168,20 @@ public class BaseBlockCipher
                 aeadParams = new AEADParameters((KeyParameter)ivParam.getParameters(), aeadCipher.getMac().length * 8, ivParam.getIV());
             }
         }
+<<<<<<< HEAD
         // BEGIN Android-removed: keeping pre 1.68 behaviour
         /*
+=======
+>>>>>>> aosp/upstream-master
         catch (IllegalArgumentException e)
         {
             throw new InvalidAlgorithmParameterException(e.getMessage(), e);
         }
+<<<<<<< HEAD
         */
         // END Android-removed: keeping pre 1.68 behaviour
+=======
+>>>>>>> aosp/upstream-master
         catch (Exception e)
         {
             throw new InvalidKeyOrParametersException(e.getMessage(), e);
@@ -1044,7 +1209,7 @@ public class BaseBlockCipher
                 // need to pick up IV and SBox.
                 GOST28147ParameterSpec gost28147Param = (GOST28147ParameterSpec)params;
 
-                param = new ParametersWithSBox(param, gost28147Param.getSbox());
+                param = new ParametersWithSBox(param, gost28147Param.getSBox());
 
                 if (gost28147Param.getIV() != null && ivLength != 0)
                 {
@@ -1071,7 +1236,7 @@ public class BaseBlockCipher
                 // need to pick up IV and SBox.
                 GOST28147ParameterSpec gost28147Param = (GOST28147ParameterSpec)params;
 
-                param = new ParametersWithSBox(param, gost28147Param.getSbox());
+                param = new ParametersWithSBox(param, gost28147Param.getSBox());
 
                 if (gost28147Param.getIV() != null && ivLength != 0)
                 {
@@ -1298,9 +1463,13 @@ public class BaseBlockCipher
     private boolean isAEADModeName(
         String modeName)
     {
+<<<<<<< HEAD
         // Android-changed: Unsupported modes
         // return "CCM".equals(modeName) || "EAX".equals(modeName) || "GCM".equals(modeName) || "OCB".equals(modeName);
         return "CCM".equals(modeName) || "GCM".equals(modeName);
+=======
+        return "CCM".equals(modeName) || "EAX".equals(modeName) || "GCM".equals(modeName) || "GCM-SIV".equals(modeName) || "OCB".equals(modeName);
+>>>>>>> aosp/upstream-master
     }
 
     /*
@@ -1347,7 +1516,7 @@ public class BaseBlockCipher
 
         BufferedGenericBlockCipher(org.bouncycastle.crypto.BlockCipher cipher)
         {
-            this.cipher = new PaddedBufferedBlockCipher(cipher);
+            this(cipher, new PKCS7Padding());
         }
 
         BufferedGenericBlockCipher(org.bouncycastle.crypto.BlockCipher cipher, BlockCipherPadding padding)
@@ -1413,6 +1582,83 @@ public class BaseBlockCipher
             catch (InvalidCipherTextException e)
             {
                 throw new BadPaddingException(e.getMessage());
+            }
+        }
+    }
+
+    private static class BufferedFPEBlockCipher
+        implements GenericBlockCipher
+    {
+        private FPEEngine cipher;
+        private ErasableOutputStream eOut = new ErasableOutputStream();
+
+        BufferedFPEBlockCipher(FPEEngine cipher)
+        {
+            this.cipher = cipher;
+        }
+
+        public void init(boolean forEncryption, CipherParameters params)
+            throws IllegalArgumentException
+        {
+            cipher.init(forEncryption, params);
+        }
+
+        public boolean wrapOnNoPadding()
+        {
+            return false;
+        }
+
+        public String getAlgorithmName()
+        {
+            return cipher.getAlgorithmName();
+        }
+
+        public org.bouncycastle.crypto.BlockCipher getUnderlyingCipher()
+        {
+            throw new IllegalStateException("not applicable for FPE");
+        }
+
+        public int getOutputSize(int len)
+        {
+            return eOut.size() + len;
+        }
+
+        public int getUpdateOutputSize(int len)
+        {
+            return 0;
+        }
+
+        public void updateAAD(byte[] input, int offset, int length)
+        {
+            throw new UnsupportedOperationException("AAD is not supported in the current mode.");
+        }
+
+        public int processByte(byte in, byte[] out, int outOff)
+            throws DataLengthException
+        {
+            eOut.write(in);
+
+            return 0;
+        }
+
+        public int processBytes(byte[] in, int inOff, int len, byte[] out, int outOff)
+            throws DataLengthException
+        {
+            eOut.write(in, inOff, len);
+
+            return 0;
+        }
+
+        public int doFinal(byte[] out, int outOff)
+            throws IllegalStateException, BadPaddingException
+        {
+            try
+            {
+                return cipher.processBlock(eOut.getBuf(), 0, eOut.size(), out, outOff);
+            }
+            finally
+            {
+                eOut.erase();
             }
         }
     }

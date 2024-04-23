@@ -3,9 +3,19 @@ package org.bouncycastle.asn1;
 import java.io.IOException;
 
 /**
+<<<<<<< HEAD
  * Parser class for DL SETs.
  *
  * TODO The class is only publicly visible to support 'instanceof' checks; provide an alternative
+=======
+<<<<<<<< HEAD:bcprov/src/main/java/org/bouncycastle/asn1/DERSetParser.java
+ * @deprecated Use DLSetParser instead
+========
+ * Parser class for DL SETs.
+ * 
+ * @deprecated Check for 'ASN1SetParser' instead 
+>>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/asn1/DLSetParser.java
+>>>>>>> aosp/upstream-master
  */
 public class DLSetParser
     implements ASN1SetParser
@@ -38,7 +48,15 @@ public class DLSetParser
     public ASN1Primitive getLoadedObject()
         throws IOException
     {
+<<<<<<< HEAD
         return new DLSet(_parser.readVector());
+=======
+<<<<<<<< HEAD:bcprov/src/main/java/org/bouncycastle/asn1/DERSetParser.java
+        return new DLSet(_parser.readVector());
+========
+        return DLFactory.createSet(_parser.readVector());
+>>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/asn1/DLSetParser.java
+>>>>>>> aosp/upstream-master
     }
 
     /**

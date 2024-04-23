@@ -1,6 +1,5 @@
 package org.bouncycastle.jce.provider;
 
-import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.PublicKey;
 import java.security.cert.CertPath;
@@ -29,8 +28,12 @@ import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.TBSCertificate;
 import org.bouncycastle.jcajce.PKIXExtendedBuilderParameters;
 import org.bouncycastle.jcajce.PKIXExtendedParameters;
+<<<<<<< HEAD
 // BEGIN Android-removed:
 // import org.bouncycastle.jcajce.interfaces.BCX509Certificate;
+=======
+import org.bouncycastle.jcajce.interfaces.BCX509Certificate;
+>>>>>>> aosp/upstream-master
 import org.bouncycastle.jcajce.util.BCJcaJceHelper;
 import org.bouncycastle.jcajce.util.JcaJceHelper;
 import org.bouncycastle.jce.exception.ExtCertPathValidatorException;
@@ -49,6 +52,14 @@ public class PKIXCertPathValidatorSpi
     public PKIXCertPathValidatorSpi()
     {
         this(false);
+<<<<<<< HEAD
+=======
+    }
+
+    public PKIXCertPathValidatorSpi(boolean isForCRLCheck)
+    {
+        this.isForCRLCheck = isForCRLCheck;
+>>>>>>> aosp/upstream-master
     }
 
     public PKIXCertPathValidatorSpi(boolean isForCRLCheck)
@@ -529,8 +540,11 @@ public class PKIXCertPathValidatorSpi
     static void checkCertificate(X509Certificate cert)
         throws AnnotatedException
     {
+<<<<<<< HEAD
         // BEGIN Android-removed:
         /*
+=======
+>>>>>>> aosp/upstream-master
         if (cert instanceof BCX509Certificate)
         {
             RuntimeException cause = null;
@@ -548,8 +562,12 @@ public class PKIXCertPathValidatorSpi
 
             throw new AnnotatedException("unable to process TBSCertificate", cause);
         }
+<<<<<<< HEAD
         */
         // END Android-removed:
+=======
+
+>>>>>>> aosp/upstream-master
         try
         {
             TBSCertificate.getInstance(cert.getTBSCertificate());

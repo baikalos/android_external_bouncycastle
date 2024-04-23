@@ -3,9 +3,19 @@ package org.bouncycastle.asn1;
 import java.io.IOException;
 
 /**
+<<<<<<< HEAD
  * Parser class for DL SEQUENCEs.
  *
  * TODO The class is only publicly visible to support 'instanceof' checks; provide an alternative
+=======
+<<<<<<<< HEAD:bcprov/src/main/java/org/bouncycastle/asn1/DERSequenceParser.java
+ * @deprecated Use DLSequenceParser instead
+========
+ * Parser class for DL SEQUENCEs.
+ * 
+ * @deprecated Check for 'ASN1SequenceParser' instead 
+>>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/asn1/DLSequenceParser.java
+>>>>>>> aosp/upstream-master
  */
 public class DLSequenceParser
     implements ASN1SequenceParser
@@ -38,7 +48,15 @@ public class DLSequenceParser
     public ASN1Primitive getLoadedObject()
         throws IOException
     {
+<<<<<<< HEAD
          return new DLSequence(_parser.readVector());
+=======
+<<<<<<<< HEAD:bcprov/src/main/java/org/bouncycastle/asn1/DERSequenceParser.java
+         return new DLSequence(_parser.readVector());
+========
+         return DLFactory.createSequence(_parser.readVector());
+>>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/asn1/DLSequenceParser.java
+>>>>>>> aosp/upstream-master
     }
 
     /**

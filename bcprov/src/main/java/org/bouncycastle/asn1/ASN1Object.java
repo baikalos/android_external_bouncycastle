@@ -14,12 +14,20 @@ public abstract class ASN1Object
 {
     public void encodeTo(OutputStream output) throws IOException
     {
+<<<<<<< HEAD
         ASN1OutputStream.create(output).writeObject(this);
+=======
+        toASN1Primitive().encodeTo(output);
+>>>>>>> aosp/upstream-master
     }
 
     public void encodeTo(OutputStream output, String encoding) throws IOException
     {
+<<<<<<< HEAD
         ASN1OutputStream.create(output, encoding).writeObject(this);
+=======
+        toASN1Primitive().encodeTo(output, encoding);
+>>>>>>> aosp/upstream-master
     }
 
     /**
@@ -31,7 +39,11 @@ public abstract class ASN1Object
     public byte[] getEncoded() throws IOException
     {
         ByteArrayOutputStream bOut = new ByteArrayOutputStream();
+<<<<<<< HEAD
         encodeTo(bOut);
+=======
+        toASN1Primitive().encodeTo(bOut);
+>>>>>>> aosp/upstream-master
         return bOut.toByteArray();
     }
 
@@ -45,7 +57,11 @@ public abstract class ASN1Object
     public byte[] getEncoded(String encoding) throws IOException
     {
         ByteArrayOutputStream bOut = new ByteArrayOutputStream();
+<<<<<<< HEAD
         encodeTo(bOut, encoding);
+=======
+        toASN1Primitive().encodeTo(bOut, encoding);
+>>>>>>> aosp/upstream-master
         return bOut.toByteArray();
     }
 
@@ -75,6 +91,7 @@ public abstract class ASN1Object
     // BEGIN Android-changed: Was removed in upstream.
     // Used by https://source.corp.google.com/android/cts/tests/tests/keystore/src/android/keystore/cts/KeyAttestationTest.java
     /**
+<<<<<<< HEAD
      * @deprecated use toASN1Primitive()
      * @return the underlying primitive type.
      */
@@ -85,6 +102,8 @@ public abstract class ASN1Object
     // END Android-changed
 
     /**
+=======
+>>>>>>> aosp/upstream-master
      * Return true if obj is a byte array and represents an object with the given tag value.
      *
      * @param obj object of interest.

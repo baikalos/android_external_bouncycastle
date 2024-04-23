@@ -1,6 +1,7 @@
 /* GENERATED SOURCE. DO NOT MODIFY. */
 package com.android.org.bouncycastle.crypto.paddings;
 
+<<<<<<< HEAD:repackaged/bcprov/src/main/java/com/android/org/bouncycastle/crypto/paddings/PaddedBufferedBlockCipher.java
 import com.android.org.bouncycastle.crypto.BlockCipher;
 import com.android.org.bouncycastle.crypto.BufferedBlockCipher;
 import com.android.org.bouncycastle.crypto.CipherParameters;
@@ -8,6 +9,13 @@ import com.android.org.bouncycastle.crypto.DataLengthException;
 import com.android.org.bouncycastle.crypto.InvalidCipherTextException;
 import com.android.org.bouncycastle.crypto.OutputLengthException;
 import com.android.org.bouncycastle.crypto.params.ParametersWithRandom;
+=======
+import org.bouncycastle.crypto.BlockCipher;
+import org.bouncycastle.crypto.DataLengthException;
+import org.bouncycastle.crypto.DefaultBufferedBlockCipher;
+import org.bouncycastle.crypto.InvalidCipherTextException;
+import org.bouncycastle.crypto.OutputLengthException;
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/crypto/modes/PaddedBlockCipher.java
 
 /**
  * A wrapper class that allows block ciphers to be used to process data in
@@ -17,8 +25,13 @@ import com.android.org.bouncycastle.crypto.params.ParametersWithRandom;
  * The default padding mechanism used is the one outlined in PKCS5/PKCS7.
  * @hide This class is not part of the Android public SDK API
  */
+<<<<<<< HEAD:repackaged/bcprov/src/main/java/com/android/org/bouncycastle/crypto/paddings/PaddedBufferedBlockCipher.java
 public class PaddedBufferedBlockCipher
     extends BufferedBlockCipher
+=======
+public class PaddedBlockCipher
+    extends DefaultBufferedBlockCipher
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/crypto/modes/PaddedBlockCipher.java
 {
     BlockCipherPadding  padding;
 

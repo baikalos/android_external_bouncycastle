@@ -40,8 +40,9 @@ abstract class PKIXCRLUtil
         for (Iterator it = initialSet.iterator(); it.hasNext();)
         {
             X509CRL crl = (X509CRL)it.next();
-
-            if (crl.getNextUpdate().after(validityDate))
+            
+            Date nextUpdate = crl.getNextUpdate();
+            if (nextUpdate == null || nextUpdate.after(validityDate))
             {
                 X509Certificate cert = crlselect.getCertificateChecking();
 
@@ -76,9 +77,12 @@ abstract class PKIXCRLUtil
         while (iter.hasNext())
         {
             Object obj = iter.next();
+<<<<<<< HEAD
 
             // BEGIN Android-removed: Unknown reason
             /*
+=======
+>>>>>>> aosp/upstream-master
             if (obj instanceof Store)
             {
                 Store store = (Store)obj;

@@ -7,6 +7,7 @@ public class GLVTypeBParameters
     protected final BigInteger beta, lambda;
     protected final ScalarSplitParameters splitParams;
 
+<<<<<<< HEAD
     /**
      * @deprecated Use constructor taking a {@link ScalarSplitParameters} instead.
      */
@@ -22,6 +23,12 @@ public class GLVTypeBParameters
     {
         this.beta = beta;
         this.lambda = lambda;
+=======
+    public GLVTypeBParameters(BigInteger beta, BigInteger lambda, ScalarSplitParameters splitParams)
+    {
+        this.beta = beta;
+        this.lambda = lambda;
+>>>>>>> aosp/upstream-master
         this.splitParams = splitParams;
     }
 
@@ -38,6 +45,7 @@ public class GLVTypeBParameters
     public ScalarSplitParameters getSplitParams()
     {
         return splitParams;
+<<<<<<< HEAD
     }
 
     /**
@@ -94,5 +102,7 @@ public class GLVTypeBParameters
     public int getBits()
     {
         return getSplitParams().getBits();
+=======
+>>>>>>> aosp/upstream-master
     }
 }

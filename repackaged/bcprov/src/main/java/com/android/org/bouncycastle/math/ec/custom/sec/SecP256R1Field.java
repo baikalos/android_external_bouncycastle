@@ -4,10 +4,17 @@ package com.android.org.bouncycastle.math.ec.custom.sec;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
+<<<<<<< HEAD:repackaged/bcprov/src/main/java/com/android/org/bouncycastle/math/ec/custom/sec/SecP256R1Field.java
 import com.android.org.bouncycastle.math.raw.Mod;
 import com.android.org.bouncycastle.math.raw.Nat;
 import com.android.org.bouncycastle.math.raw.Nat256;
 import com.android.org.bouncycastle.util.Pack;
+=======
+import org.bouncycastle.math.raw.Mod;
+import org.bouncycastle.math.raw.Nat;
+import org.bouncycastle.math.raw.Nat256;
+import org.bouncycastle.util.Pack;
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/math/ec/custom/gm/SM2P256V1Field.java
 
 /**
  * @hide This class is not part of the Android public SDK API
@@ -16,6 +23,7 @@ public class SecP256R1Field
 {
     private static final long M = 0xFFFFFFFFL;
 
+<<<<<<< HEAD:repackaged/bcprov/src/main/java/com/android/org/bouncycastle/math/ec/custom/sec/SecP256R1Field.java
     // 2^256 - 2^224 + 2^192 + 2^96 - 1
     static final int[] P = new int[]{ 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000,
         0x00000001, 0xFFFFFFFF };
@@ -23,6 +31,15 @@ public class SecP256R1Field
         0xFFFFFFFE, 0x00000001, 0xFFFFFFFE, 0x00000001, 0xFFFFFFFE, 0x00000001, 0x00000001, 0xFFFFFFFE, 0x00000002,
         0xFFFFFFFE };
     private static final int P7 = 0xFFFFFFFF;
+=======
+    // 2^256 - 2^224 - 2^96 + 2^64 - 1
+    static final int[] P = new int[]{ 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+        0xFFFFFFFF, 0xFFFFFFFE };
+    private static final int[] PExt = new int[]{ 00000001, 0x00000000, 0xFFFFFFFE, 0x00000001, 0x00000001, 0xFFFFFFFE,
+        0x00000000, 0x00000002, 0xFFFFFFFE, 0xFFFFFFFD, 0x00000003, 0xFFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000,
+        0xFFFFFFFE };
+    private static final int P7s1 = 0xFFFFFFFE >>> 1;
+>>>>>>> aosp/upstream-master:bcprov/src/main/java/org/bouncycastle/math/ec/custom/gm/SM2P256V1Field.java
     private static final int PExt15s1 = 0xFFFFFFFE >>> 1;
 
     public static void add(int[] x, int[] y, int[] z)

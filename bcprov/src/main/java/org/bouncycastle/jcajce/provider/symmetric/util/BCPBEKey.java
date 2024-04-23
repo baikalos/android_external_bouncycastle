@@ -69,19 +69,33 @@ public class BCPBEKey
 
     public String getAlgorithm()
     {
+<<<<<<< HEAD
         checkDestroyed(this);
 
         return algorithm;
+=======
+        String rv = this.algorithm;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> aosp/upstream-master
     }
 
     public String getFormat()
     {
+        checkDestroyed(this);
+
         return "RAW";
     }
 
     public byte[] getEncoded()
     {
+<<<<<<< HEAD
         checkDestroyed(this);
+=======
+        byte[] enc;
+>>>>>>> aosp/upstream-master
 
         if (param != null)
         {
@@ -96,12 +110,13 @@ public class BCPBEKey
                 kParam = (KeyParameter)param;
             }
             
-            return kParam.getKey();
+            enc = kParam.getKey();
         }
         else
         {
             if (type == PBE.PKCS12)
             {
+<<<<<<< HEAD
                 return PBEParametersGenerator.PKCS12PasswordToBytes(password);
             }
             else if (type == PBE.PKCS5S2_UTF8)
@@ -111,43 +126,98 @@ public class BCPBEKey
             else
             {   
                 return PBEParametersGenerator.PKCS5PasswordToBytes(password);
+=======
+                enc = PBEParametersGenerator.PKCS12PasswordToBytes(password);
+            }
+            else if (type == PBE.PKCS5S2_UTF8)
+            {
+                enc = PBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password);
+            }
+            else
+            {   
+                enc = PBEParametersGenerator.PKCS5PasswordToBytes(password);
+>>>>>>> aosp/upstream-master
             }
         }
+
+        checkDestroyed(this);
+
+        return enc;
     }
     
     int getType()
     {
+<<<<<<< HEAD
         checkDestroyed(this);
 
         return type;
+=======
+        int rv = type;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> aosp/upstream-master
     }
     
     int getDigest()
     {
+<<<<<<< HEAD
         checkDestroyed(this);
 
         return digest;
+=======
+        int rv = digest;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> aosp/upstream-master
     }
     
     int getKeySize()
     {
+<<<<<<< HEAD
         checkDestroyed(this);
 
         return keySize;
+=======
+        int rv = keySize;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> aosp/upstream-master
     }
     
     public int getIvSize()
     {
+<<<<<<< HEAD
         checkDestroyed(this);
 
         return ivSize;
+=======
+        int rv = ivSize;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> aosp/upstream-master
     }
     
     public CipherParameters getParam()
     {
+<<<<<<< HEAD
         checkDestroyed(this);
 
         return param;
+=======
+        CipherParameters rv = param;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> aosp/upstream-master
     }
 
     /* (non-Javadoc)
@@ -155,14 +225,26 @@ public class BCPBEKey
      */
     public char[] getPassword()
     {
+<<<<<<< HEAD
         checkDestroyed(this);
 
         if (password == null)
+=======
+        char[] clone = Arrays.clone(password);
+
+        checkDestroyed(this);
+
+        if (clone == null)
+>>>>>>> aosp/upstream-master
         {
             throw new IllegalStateException("no password available");
         }
 
+<<<<<<< HEAD
         return Arrays.clone(password);
+=======
+        return clone;
+>>>>>>> aosp/upstream-master
     }
 
     /* (non-Javadoc)
@@ -170,9 +252,17 @@ public class BCPBEKey
      */
     public byte[] getSalt()
     {
+<<<<<<< HEAD
         checkDestroyed(this);
 
         return Arrays.clone(salt);
+=======
+        byte[] clone = Arrays.clone(salt);
+
+        checkDestroyed(this);
+
+        return clone;
+>>>>>>> aosp/upstream-master
     }
 
     /* (non-Javadoc)
@@ -180,16 +270,32 @@ public class BCPBEKey
      */
     public int getIterationCount()
     {
+<<<<<<< HEAD
         checkDestroyed(this);
 
         return iterationCount;
+=======
+        int rv = iterationCount;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> aosp/upstream-master
     }
     
     public ASN1ObjectIdentifier getOID()
     {
+<<<<<<< HEAD
         checkDestroyed(this);
 
         return oid;
+=======
+        ASN1ObjectIdentifier rv = oid;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> aosp/upstream-master
     }
     
     public void setTryWrongPKCS12Zero(boolean tryWrong)
@@ -229,4 +335,8 @@ public class BCPBEKey
             throw new IllegalStateException("key has been destroyed");
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> aosp/upstream-master

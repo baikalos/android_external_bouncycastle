@@ -20,7 +20,11 @@ public class DERSet
         return (DERSet)set.toDERObject();
     }
 
+<<<<<<< HEAD
     private int bodyLength = -1;
+=======
+    private int contentsLength = -1;
+>>>>>>> aosp/upstream-master
 
     /**
      * create an empty set
@@ -61,9 +65,13 @@ public class DERSet
         super(checkSorted(isSorted), elements);
     }
 
+<<<<<<< HEAD
     private int getBodyLength() throws IOException
+=======
+    private int getContentsLength() throws IOException
+>>>>>>> aosp/upstream-master
     {
-        if (bodyLength < 0)
+        if (contentsLength < 0)
         {
             int count = elements.length;
             int totalLength = 0;
@@ -71,20 +79,29 @@ public class DERSet
             for (int i = 0; i < count; ++i)
             {
                 ASN1Primitive derObject = elements[i].toASN1Primitive().toDERObject();
+<<<<<<< HEAD
                 totalLength += derObject.encodedLength();
             }
 
             this.bodyLength = totalLength;
+=======
+                totalLength += derObject.encodedLength(true);
+            }
+
+            this.contentsLength = totalLength;
+>>>>>>> aosp/upstream-master
         }
 
-        return bodyLength;
+        return contentsLength;
     }
 
+<<<<<<< HEAD
     int encodedLength() throws IOException
+=======
+    int encodedLength(boolean withTag) throws IOException
+>>>>>>> aosp/upstream-master
     {
-        int length = getBodyLength();
-
-        return 1 + StreamUtil.calculateBodyLength(length) + length;
+        return ASN1OutputStream.getLengthOfEncodingDL(withTag, getContentsLength());
     }
 
     /*
@@ -97,6 +114,7 @@ public class DERSet
      */
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
     {
+<<<<<<< HEAD
         if (withTag)
         {
             out.write(BERTags.SET | BERTags.CONSTRUCTED);
@@ -109,6 +127,17 @@ public class DERSet
         {
             out.writeLength(getBodyLength());
 
+=======
+        out.writeIdentifier(withTag, BERTags.CONSTRUCTED | BERTags.SET);
+
+        DEROutputStream derOut = out.getDERSubStream();
+
+        int count = elements.length;
+        if (contentsLength >= 0 || count > 16)
+        {
+            out.writeDL(getContentsLength());
+
+>>>>>>> aosp/upstream-master
             for (int i = 0; i < count; ++i)
             {
                 ASN1Primitive derObject = elements[i].toASN1Primitive().toDERObject();
@@ -124,11 +153,19 @@ public class DERSet
             {
                 ASN1Primitive derObject = elements[i].toASN1Primitive().toDERObject();
                 derObjects[i] = derObject;
+<<<<<<< HEAD
                 totalLength += derObject.encodedLength();
             }
 
             this.bodyLength = totalLength;
             out.writeLength(totalLength);
+=======
+                totalLength += derObject.encodedLength(true);
+            }
+
+            this.contentsLength = totalLength;
+            out.writeDL(totalLength);
+>>>>>>> aosp/upstream-master
 
             for (int i = 0; i < count; ++i)
             {
@@ -139,7 +176,11 @@ public class DERSet
 
     ASN1Primitive toDERObject()
     {
+<<<<<<< HEAD
         return isSorted ? this : super.toDERObject();
+=======
+        return (sortedElements != null) ? this : super.toDERObject();
+>>>>>>> aosp/upstream-master
     }
 
     ASN1Primitive toDLObject()
