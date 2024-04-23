@@ -100,7 +100,18 @@ public abstract class ASN1OctetString
     extends ASN1Primitive
     implements ASN1OctetStringParser
 {
-    byte[]  string;
+    static final ASN1UniversalType TYPE = new ASN1UniversalType(ASN1OctetString.class, BERTags.OCTET_STRING)
+    {
+        ASN1Primitive fromImplicitPrimitive(DEROctetString octetString)
+        {
+            return octetString;
+        }
+
+        ASN1Primitive fromImplicitConstructed(ASN1Sequence sequence)
+        {
+            return sequence.toASN1OctetString();
+        }
+    };
 
     /**
      * return an Octet String from a tagged object.
@@ -111,10 +122,15 @@ public abstract class ASN1OctetString
      * @exception IllegalArgumentException if the tagged object cannot
      *              be converted.
      */
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     public static ASN1OctetString getInstance(
         ASN1TaggedObject    taggedObject,
         boolean             explicit)
+=======
+    public static ASN1OctetString getInstance(ASN1TaggedObject taggedObject, boolean explicit)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         if (explicit)
         {
             if (!taggedObject.isExplicit())
@@ -175,6 +191,9 @@ public abstract class ASN1OctetString
         }
 
         throw new IllegalArgumentException("unknown object in getInstance: " + taggedObject.getClass().getName());
+=======
+        return (ASN1OctetString)TYPE.getContextInstance(taggedObject, explicit);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     /**
@@ -183,36 +202,43 @@ public abstract class ASN1OctetString
      * @param obj the object we want converted.
      * @exception IllegalArgumentException if the object cannot be converted.
      */
-    public static ASN1OctetString getInstance(
-        Object  obj)
+    public static ASN1OctetString getInstance(Object obj)
     {
         if (obj == null || obj instanceof ASN1OctetString)
         {
             return (ASN1OctetString)obj;
         }
+//      else if (obj instanceof ASN1OctetStringParser)
+        else if (obj instanceof ASN1Encodable)
+        {
+            ASN1Primitive primitive = ((ASN1Encodable)obj).toASN1Primitive();
+            if (primitive instanceof ASN1OctetString)
+            {
+                return (ASN1OctetString)primitive;
+            }
+        }
         else if (obj instanceof byte[])
         {
             try
             {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 return getInstance(fromByteArray((byte[])obj));
+=======
+                return (ASN1OctetString)TYPE.fromByteArray((byte[])obj);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
             catch (IOException e)
             {
                 throw new IllegalArgumentException("failed to construct OCTET STRING from byte[]: " + e.getMessage());
             }
         }
-        else if (obj instanceof ASN1Encodable)
-        {
-            ASN1Primitive primitive = ((ASN1Encodable)obj).toASN1Primitive();
-
-            if (primitive instanceof ASN1OctetString)
-            {
-                return (ASN1OctetString)primitive;
-            }
-        }
 
         throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
     }
+
+    static final byte[] EMPTY_OCTETS = new byte[0];
+
+    byte[] string;
 
     /**
      * Base constructor.
@@ -259,6 +285,11 @@ public abstract class ASN1OctetString
         return string;
     }
 
+    public int getOctetsLength()
+    {
+        return getOctets().length;
+    }
+
     public int hashCode()
     {
         return Arrays.hashCode(this.getOctets());
@@ -292,10 +323,18 @@ public abstract class ASN1OctetString
         return new DEROctetString(string);
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     abstract void encode(ASN1OutputStream out, boolean withTag) throws IOException;
 
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     public String toString()
     {
       return "#" + Strings.fromByteArray(Hex.encode(string));
+    }
+
+    static ASN1OctetString createPrimitive(byte[] contents)
+    {
+        return new DEROctetString(contents);
     }
 }

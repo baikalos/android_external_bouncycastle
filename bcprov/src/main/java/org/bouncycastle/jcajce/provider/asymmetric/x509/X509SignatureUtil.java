@@ -18,7 +18,11 @@ import org.bouncycastle.asn1.ASN1Null;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.DERNull;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 // import org.bouncycastle.asn1.edec.EdECObjectIdentifiers;
+=======
+import org.bouncycastle.asn1.edec.EdECObjectIdentifiers;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.asn1.misc.MiscObjectIdentifiers;
 import org.bouncycastle.asn1.oiw.OIWObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
@@ -35,8 +39,13 @@ class X509SignatureUtil
 
     static
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         // algNames.put(EdECObjectIdentifiers.id_Ed25519, "Ed25519");
         // algNames.put(EdECObjectIdentifiers.id_Ed448, "Ed448");
+=======
+        algNames.put(EdECObjectIdentifiers.id_Ed25519, "Ed25519");
+        algNames.put(EdECObjectIdentifiers.id_Ed448, "Ed448");
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         algNames.put(OIWObjectIdentifiers.dsaWithSHA1, "SHA1withDSA");
         algNames.put(X9ObjectIdentifiers.id_dsa_with_sha1, "SHA1withDSA");
     }
@@ -180,6 +189,14 @@ class X509SignatureUtil
 
     static void prettyPrintSignature(byte[] sig, StringBuffer buf, String nl)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+=======
+        // -DM Hex.toHexString
+        // -DM Hex.toHexString
+        // -DM Hex.toHexString
+        // -DM Hex.toHexString
+
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         if (sig.length > 20)
         {
             buf.append("            Signature: ").append(Hex.toHexString(sig, 0, 20)).append(nl);
