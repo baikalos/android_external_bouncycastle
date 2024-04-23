@@ -48,6 +48,23 @@ public class KeyUtil
          }
     }
 
+    public static byte[] getEncodedSubjectPublicKeyInfo(AsymmetricKeyParameter publicKey)
+    {
+        if (publicKey.isPrivate())
+        {
+            throw new IllegalArgumentException("private key found");
+        }
+
+        try
+        {
+            return getEncodedSubjectPublicKeyInfo(SubjectPublicKeyInfoFactory.createSubjectPublicKeyInfo(publicKey));
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
     public static byte[] getEncodedPrivateKeyInfo(AlgorithmIdentifier algId, ASN1Encodable privKey)
     {
          try
@@ -72,5 +89,22 @@ public class KeyUtil
          {
              return null;
          }
+    }
+
+    public static byte[] getEncodedPrivateKeyInfo(AsymmetricKeyParameter privateKey, ASN1Set attributes)
+    {
+        if (!privateKey.isPrivate())
+        {
+            throw new IllegalArgumentException("public key found");
+        }
+
+        try
+        {
+            return getEncodedPrivateKeyInfo(PrivateKeyInfoFactory.createPrivateKeyInfo(privateKey, attributes));
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 }
