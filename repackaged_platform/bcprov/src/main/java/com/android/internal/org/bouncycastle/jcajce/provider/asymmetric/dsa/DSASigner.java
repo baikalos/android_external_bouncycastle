@@ -20,6 +20,7 @@ import com.android.internal.org.bouncycastle.crypto.digests.NullDigest;
 // Android-added: Check DSA keys when generated
 import com.android.internal.org.bouncycastle.crypto.params.DSAKeyParameters;
 import com.android.internal.org.bouncycastle.crypto.params.DSAParameters;
+import com.android.internal.org.bouncycastle.crypto.digests.RIPEMD160Digest;
 import com.android.internal.org.bouncycastle.crypto.params.ParametersWithRandom;
 import com.android.internal.org.bouncycastle.crypto.signers.DSAEncoding;
 // Android-removed: Unsupported algorithm
@@ -223,6 +224,18 @@ public class DSASigner
     }
     */
     // END Android-removed: Unsupported algorithm
+
+    /**
+     * @hide This class is not part of the Android public SDK API
+     */
+    static public class dsaRMD160
+        extends DSASigner
+    {
+        public dsaRMD160()
+        {
+            super(new RIPEMD160Digest(), new com.android.internal.org.bouncycastle.crypto.signers.DSASigner());
+        }
+    }
 
     /**
      * @hide This class is not part of the Android public SDK API
