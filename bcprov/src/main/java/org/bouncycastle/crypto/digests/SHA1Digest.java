@@ -349,5 +349,3 @@ public class SHA1Digest
 }
 
 
-
-
