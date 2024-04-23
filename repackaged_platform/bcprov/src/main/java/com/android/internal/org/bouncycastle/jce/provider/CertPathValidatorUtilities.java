@@ -55,7 +55,6 @@ import com.android.internal.org.bouncycastle.asn1.ASN1Sequence;
 import com.android.internal.org.bouncycastle.asn1.ASN1String;
 import com.android.internal.org.bouncycastle.asn1.DEROctetString;
 import com.android.internal.org.bouncycastle.asn1.DERSequence;
-import com.android.internal.org.bouncycastle.asn1.isismtt.ISISMTTObjectIdentifiers;
 import com.android.internal.org.bouncycastle.asn1.x500.X500Name;
 import com.android.internal.org.bouncycastle.asn1.x500.style.RFC4519Style;
 import com.android.internal.org.bouncycastle.asn1.x509.AlgorithmIdentifier;
@@ -69,6 +68,7 @@ import com.android.internal.org.bouncycastle.asn1.x509.GeneralName;
 import com.android.internal.org.bouncycastle.asn1.x509.GeneralNames;
 import com.android.internal.org.bouncycastle.asn1.x509.PolicyInformation;
 import com.android.internal.org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
+import com.android.internal.org.bouncycastle.internal.asn1.isismtt.ISISMTTObjectIdentifiers;
 import com.android.internal.org.bouncycastle.jcajce.PKIXCRLStore;
 import com.android.internal.org.bouncycastle.jcajce.PKIXCRLStoreSelector;
 import com.android.internal.org.bouncycastle.jcajce.PKIXCertRevocationCheckerParameters;
@@ -84,7 +84,6 @@ import com.android.internal.org.bouncycastle.util.Selector;
 import com.android.internal.org.bouncycastle.util.Store;
 import com.android.internal.org.bouncycastle.util.StoreException;
 import com.android.internal.org.bouncycastle.x509.X509AttributeCertificate;
-import com.android.internal.org.bouncycastle.x509.extension.X509ExtensionUtil;
 
 class CertPathValidatorUtilities
 {
@@ -777,7 +776,7 @@ class CertPathValidatorUtilities
 
                     for (int j = 0; j < genNames.length; j++)
                     {
-                        GeneralName name = genNames[i];
+                        GeneralName name = genNames[j];
                         if (name.getTagNo() == GeneralName.uniformResourceIdentifier)
                         {
                             try
