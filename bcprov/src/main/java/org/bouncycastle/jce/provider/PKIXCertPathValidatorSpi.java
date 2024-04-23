@@ -1,6 +1,5 @@
 package org.bouncycastle.jce.provider;
 
-import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.PublicKey;
 import java.security.cert.CertPath;
@@ -49,6 +48,11 @@ public class PKIXCertPathValidatorSpi
     public PKIXCertPathValidatorSpi()
     {
         this(false);
+    }
+
+    public PKIXCertPathValidatorSpi(boolean isForCRLCheck)
+    {
+        this.isForCRLCheck = isForCRLCheck;
     }
 
     public PKIXCertPathValidatorSpi(boolean isForCRLCheck)
