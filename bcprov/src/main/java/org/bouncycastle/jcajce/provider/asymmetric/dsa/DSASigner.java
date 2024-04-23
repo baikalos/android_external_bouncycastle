@@ -217,6 +217,15 @@ public class DSASigner
     */
     // END Android-removed: Unsupported algorithm
 
+    static public class dsaRMD160
+        extends DSASigner
+    {
+        public dsaRMD160()
+        {
+            super(new RIPEMD160Digest(), new org.bouncycastle.crypto.signers.DSASigner());
+        }
+    }
+
     static public class dsa224
         extends DSASigner
     {

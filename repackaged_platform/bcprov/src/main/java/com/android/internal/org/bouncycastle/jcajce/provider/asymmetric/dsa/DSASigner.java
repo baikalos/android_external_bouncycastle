@@ -227,6 +227,18 @@ public class DSASigner
     /**
      * @hide This class is not part of the Android public SDK API
      */
+    static public class dsaRMD160
+        extends DSASigner
+    {
+        public dsaRMD160()
+        {
+            super(new RIPEMD160Digest(), new com.android.internal.org.bouncycastle.crypto.signers.DSASigner());
+        }
+    }
+
+    /**
+     * @hide This class is not part of the Android public SDK API
+     */
     static public class dsa224
         extends DSASigner
     {
