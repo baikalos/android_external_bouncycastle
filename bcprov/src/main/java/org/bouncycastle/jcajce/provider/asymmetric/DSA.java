@@ -84,6 +84,8 @@ public class DSA
             provider.addAlgorithm("Alg.Alias.Signature.DSAWithSHA1", "SHA1withDSA");
             // END Android-changed: Change primary ID from DSA to SHA1withDSA
 
+            addSignatureAlgorithm(provider, "RIPEMD160", "DSA", PREFIX + "DSASigner$dsaRMD160");
+
             AsymmetricKeyInfoConverter keyFact = new KeyFactorySpi();
 
             for (int i = 0; i != DSAUtil.dsaOids.length; i++)
