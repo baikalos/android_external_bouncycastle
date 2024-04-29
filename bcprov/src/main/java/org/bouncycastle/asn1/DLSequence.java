@@ -8,7 +8,7 @@ import java.io.IOException;
 public class DLSequence
     extends ASN1Sequence
 {
-    private int bodyLength = -1;
+    private int contentsLength = -1;
 
     /**
      * Create an empty sequence
@@ -45,13 +45,21 @@ public class DLSequence
     }
 
     DLSequence(ASN1Encodable[] elements, boolean clone)
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     {
         super(elements, clone);
     }
 
     private int getBodyLength() throws IOException
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
-        if (bodyLength < 0)
+        super(elements, clone);
+    }
+
+    private int getContentsLength() throws IOException
+    {
+        if (contentsLength < 0)
         {
             int count = elements.length;
             int totalLength = 0;
@@ -59,20 +67,30 @@ public class DLSequence
             for (int i = 0; i < count; ++i)
             {
                 ASN1Primitive dlObject = elements[i].toASN1Primitive().toDLObject();
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 totalLength += dlObject.encodedLength();
+=======
+                totalLength += dlObject.encodedLength(true);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
             this.bodyLength = totalLength;
+=======
+            this.contentsLength = totalLength;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         }
 
-        return bodyLength;
+        return contentsLength;
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     int encodedLength() throws IOException
+=======
+    int encodedLength(boolean withTag) throws IOException
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
-        int length = getBodyLength();
-
-        return 1 + StreamUtil.calculateBodyLength(length) + length;
+        return ASN1OutputStream.getLengthOfEncodingDL(withTag, getContentsLength());
     }
 
     /**
@@ -85,9 +103,47 @@ public class DLSequence
      */
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         if (withTag)
+=======
+        out.writeIdentifier(withTag, BERTags.CONSTRUCTED | BERTags.SEQUENCE);
+
+        ASN1OutputStream dlOut = out.getDLSubStream();
+
+        int count = elements.length;
+        if (contentsLength >= 0 || count > 16)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
             out.write(BERTags.SEQUENCE | BERTags.CONSTRUCTED);
+=======
+            out.writeDL(getContentsLength());
+
+            for (int i = 0; i < count; ++i)
+            {
+                dlOut.writePrimitive(elements[i].toASN1Primitive(), true);
+            }
+        }
+        else
+        {
+            int totalLength = 0;
+
+            ASN1Primitive[] dlObjects = new ASN1Primitive[count];
+            for (int i = 0; i < count; ++i)
+            {
+                ASN1Primitive dlObject = elements[i].toASN1Primitive().toDLObject();
+                dlObjects[i] = dlObject;
+                totalLength += dlObject.encodedLength(true);
+            }
+
+            this.contentsLength = totalLength;
+            out.writeDL(totalLength);
+
+            for (int i = 0; i < count; ++i)
+            {
+                dlOut.writePrimitive(dlObjects[i], true);
+            }
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         }
 
         ASN1OutputStream dlOut = out.getDLSubStream();
@@ -122,6 +178,32 @@ public class DLSequence
                 dlOut.writePrimitive(dlObjects[i], true);
             }
         }
+    }
+
+    ASN1Primitive toDLObject()
+    {
+        return this;
+    }
+
+    ASN1BitString toASN1BitString()
+    {
+        return new DLBitString(BERBitString.flattenBitStrings(getConstructedBitStrings()), false);
+    }
+
+    ASN1External toASN1External()
+    {
+        return new DLExternal(this);
+    }
+
+    ASN1OctetString toASN1OctetString()
+    {
+        // NOTE: There is no DLOctetString
+        return new DEROctetString(BEROctetString.flattenOctetStrings(getConstructedOctetStrings()));
+    }
+
+    ASN1Set toASN1Set()
+    {
+        return new DLSet(false, toArrayInternal());
     }
 
     ASN1Primitive toDLObject()
