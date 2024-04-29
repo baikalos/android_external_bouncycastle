@@ -1,7 +1,6 @@
 package org.bouncycastle.asn1;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 /**
  * BER TaggedObject - in ASN.1 notation this is any object preceded by
@@ -15,11 +14,14 @@ public class BERTaggedObject
      * @param tagNo the tag number for this object.
      * @param obj the tagged object.
      */
-    public BERTaggedObject(
-        int             tagNo,
-        ASN1Encodable    obj)
+    public BERTaggedObject(int tagNo, ASN1Encodable obj)
     {
         super(true, tagNo, obj);
+    }
+
+    public BERTaggedObject(int tagClass, int tagNo, ASN1Encodable obj)
+    {
+        super(true, tagClass, tagNo, obj);
     }
 
     /**
@@ -27,32 +29,81 @@ public class BERTaggedObject
      * @param tagNo the tag number for this object.
      * @param obj the tagged object.
      */
-    public BERTaggedObject(
-        boolean         explicit,
-        int             tagNo,
-        ASN1Encodable    obj)
+    public BERTaggedObject(boolean explicit, int tagNo, ASN1Encodable obj)
     {
         super(explicit, tagNo, obj);
     }
 
-    /**
-     * create an implicitly tagged object that contains a zero
-     * length sequence.
-     */
-    public BERTaggedObject(
-        int             tagNo)
+    public BERTaggedObject(boolean explicit, int tagClass, int tagNo, ASN1Encodable obj)
     {
-        super(false, tagNo, new BERSequence());
+        super(explicit, tagClass, tagNo, obj);
     }
 
-    boolean isConstructed()
+    BERTaggedObject(int explicitness, int tagClass, int tagNo, ASN1Encodable obj)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         return explicit || obj.toASN1Primitive().isConstructed();
+=======
+        super(explicitness, tagClass, tagNo, obj);
     }
 
-    int encodedLength()
-        throws IOException
+    boolean encodeConstructed()
     {
+        return isExplicit() || obj.toASN1Primitive().encodeConstructed();
+    }
+
+    int encodedLength(boolean withTag) throws IOException
+    {
+        ASN1Primitive primitive = obj.toASN1Primitive();
+        boolean explicit = isExplicit();
+
+        int length = primitive.encodedLength(explicit);
+
+        if (explicit)
+        {
+            length += 3;
+        }
+
+        length += withTag ? ASN1OutputStream.getLengthOfIdentifier(tagNo) : 0;
+
+        return length;
+    }
+
+    void encode(ASN1OutputStream out, boolean withTag) throws IOException
+    {
+//        assert out.getClass().isAssignableFrom(ASN1OutputStream.class);
+
+        ASN1Primitive primitive = obj.toASN1Primitive();
+        boolean explicit = isExplicit();
+
+        if (withTag)
+        {
+            int flags = tagClass;
+            if (explicit || primitive.encodeConstructed())
+            {
+                flags |= BERTags.CONSTRUCTED;
+            }
+
+            out.writeIdentifier(true, flags, tagNo);
+        }
+
+        if (explicit)
+        {
+            out.write(0x80);
+            primitive.encode(out, true);
+            out.write(0x00);
+            out.write(0x00);
+        }
+        else
+        {
+            primitive.encode(out, false);
+        }
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
+    }
+
+    ASN1Sequence rebuildConstructed(ASN1Primitive primitive)
+    {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         ASN1Primitive primitive = obj.toASN1Primitive();
         int length = primitive.encodedLength();
 
@@ -67,10 +118,18 @@ public class BERTaggedObject
 
             return StreamUtil.calculateTagLength(tagNo) + length;
         }
+=======
+        return new BERSequence(primitive);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
+=======
+    ASN1TaggedObject replaceTag(int tagClass, int tagNo)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         out.writeTag(withTag, BERTags.CONSTRUCTED | BERTags.TAGGED, tagNo);
         out.write(0x80);
 
@@ -134,5 +193,8 @@ public class BERTaggedObject
 //        {
 //            out.writePrimitive(obj.toASN1Primitive(), false);
 //        }
+=======
+        return new BERTaggedObject(explicitness, tagClass, tagNo, obj);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 }
