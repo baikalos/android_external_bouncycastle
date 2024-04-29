@@ -110,20 +110,28 @@ public class RSABlindedEngine
         }
 
         BigInteger input = core.convertInput(in, inOff, inLen);
+        BigInteger result = processInput(input);
+        return core.convertOutput(result);
+    }
 
-        BigInteger result;
+    private BigInteger processInput(BigInteger input)
+    {
         if (key instanceof RSAPrivateCrtKeyParameters)
         {
-            RSAPrivateCrtKeyParameters k = (RSAPrivateCrtKeyParameters)key;
+            RSAPrivateCrtKeyParameters crtKey = (RSAPrivateCrtKeyParameters)key;
 
-            BigInteger e = k.getPublicExponent();
+            BigInteger e = crtKey.getPublicExponent();
             if (e != null)   // can't do blinding without a public exponent
             {
-                BigInteger m = k.getModulus();
-                BigInteger r = BigIntegers.createRandomInRange(ONE, m.subtract(ONE), random);
+                BigInteger m = crtKey.getModulus();
 
-                BigInteger blindedInput = r.modPow(e, m).multiply(input).mod(m);
+                BigInteger r = BigIntegers.createRandomInRange(ONE, m.subtract(ONE), random);
+                BigInteger blind = r.modPow(e, m);
+                BigInteger unblind = BigIntegers.modOddInverse(m, r);
+
+                BigInteger blindedInput = blind.multiply(input).mod(m);
                 BigInteger blindedResult = core.processBlock(blindedInput);
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 
                 BigInteger rInv = BigIntegers.modOddInverse(m, r);
                 result = blindedResult.multiply(rInv).mod(m);
@@ -136,13 +144,12 @@ public class RSABlindedEngine
             else
             {
                 result = core.processBlock(input);
+=======
+                return unblind.multiply(blindedResult).mod(m);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
         }
-        else
-        {
-            result = core.processBlock(input);
-        }
 
-        return core.convertOutput(result);
+        return core.processBlock(input);
     }
 }

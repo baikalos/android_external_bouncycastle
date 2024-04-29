@@ -16,7 +16,11 @@ public class DERSequence
         return (DERSequence)seq.toDERObject();
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     private int bodyLength = -1;
+=======
+    private int contentsLength = -1;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 
     /**
      * Create an empty sequence
@@ -53,13 +57,21 @@ public class DERSequence
     }
 
     DERSequence(ASN1Encodable[] elements, boolean clone)
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     {
         super(elements, clone);
     }
 
     private int getBodyLength() throws IOException
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
-        if (bodyLength < 0)
+        super(elements, clone);
+    }
+
+    private int getContentsLength() throws IOException
+    {
+        if (contentsLength < 0)
         {
             int count = elements.length;
             int totalLength = 0;
@@ -67,20 +79,30 @@ public class DERSequence
             for (int i = 0; i < count; ++i)
             {
                 ASN1Primitive derObject = elements[i].toASN1Primitive().toDERObject();
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 totalLength += derObject.encodedLength();
+=======
+                totalLength += derObject.encodedLength(true);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
             this.bodyLength = totalLength;
+=======
+            this.contentsLength = totalLength;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         }
 
-        return bodyLength;
+        return contentsLength;
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     int encodedLength() throws IOException
+=======
+    int encodedLength(boolean withTag) throws IOException
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
-        int length = getBodyLength();
-
-        return 1 + StreamUtil.calculateBodyLength(length) + length;
+        return ASN1OutputStream.getLengthOfEncodingDL(withTag, getContentsLength());
     }
 
     /*
@@ -93,10 +115,30 @@ public class DERSequence
      */
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         if (withTag)
+=======
+        out.writeIdentifier(withTag, BERTags.CONSTRUCTED | BERTags.SEQUENCE);
+
+        DEROutputStream derOut = out.getDERSubStream();
+
+        int count = elements.length;
+        if (contentsLength >= 0 || count > 16)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
             out.write(BERTags.SEQUENCE | BERTags.CONSTRUCTED);
+=======
+            out.writeDL(getContentsLength());
+
+            for (int i = 0; i < count; ++i)
+            {
+                ASN1Primitive derObject = elements[i].toASN1Primitive().toDERObject();
+                derObject.encode(derOut, true);
+            }
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         }
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 
         DEROutputStream derOut = out.getDERSubStream();
 
@@ -131,6 +173,49 @@ public class DERSequence
                 derObjects[i].encode(derOut, true);
             }
         }
+=======
+        else
+        {
+            int totalLength = 0;
+
+            ASN1Primitive[] derObjects = new ASN1Primitive[count];
+            for (int i = 0; i < count; ++i)
+            {
+                ASN1Primitive derObject = elements[i].toASN1Primitive().toDERObject();
+                derObjects[i] = derObject;
+                totalLength += derObject.encodedLength(true);
+            }
+
+            this.contentsLength = totalLength;
+            out.writeDL(totalLength);
+
+            for (int i = 0; i < count; ++i)
+            {
+                derObjects[i].encode(derOut, true);
+            }
+        }
+    }
+
+    ASN1BitString toASN1BitString()
+    {
+        return new DERBitString(BERBitString.flattenBitStrings(getConstructedBitStrings()), false);
+    }
+
+    ASN1External toASN1External()
+    {
+        return new DERExternal(this);
+    }
+
+    ASN1OctetString toASN1OctetString()
+    {
+        return new DEROctetString(BEROctetString.flattenOctetStrings(getConstructedOctetStrings()));
+    }
+
+    ASN1Set toASN1Set()
+    {
+        // NOTE: DLSet is intentional, we don't want sorting
+        return new DLSet(false, toArrayInternal());
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     ASN1Primitive toDERObject()
