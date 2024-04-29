@@ -7,14 +7,19 @@ public class GLVTypeBParameters
     protected final BigInteger beta, lambda;
     protected final ScalarSplitParameters splitParams;
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     /**
      * @deprecated Use constructor taking a {@link ScalarSplitParameters} instead.
      */
     public GLVTypeBParameters(BigInteger beta, BigInteger lambda, BigInteger[] v1, BigInteger[] v2, BigInteger g1,
         BigInteger g2, int bits)
+=======
+    public GLVTypeBParameters(BigInteger beta, BigInteger lambda, ScalarSplitParameters splitParams)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
         this.beta = beta;
         this.lambda = lambda;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         this.splitParams = new ScalarSplitParameters(v1, v2, g1, g2, bits);
     }
 
@@ -22,6 +27,8 @@ public class GLVTypeBParameters
     {
         this.beta = beta;
         this.lambda = lambda;
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         this.splitParams = splitParams;
     }
 
@@ -38,6 +45,7 @@ public class GLVTypeBParameters
     public ScalarSplitParameters getSplitParams()
     {
         return splitParams;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     }
 
     /**
@@ -94,5 +102,7 @@ public class GLVTypeBParameters
     public int getBits()
     {
         return getSplitParams().getBits();
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 }

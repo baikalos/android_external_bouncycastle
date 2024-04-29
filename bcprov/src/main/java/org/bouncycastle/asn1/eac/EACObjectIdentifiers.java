@@ -1,3 +1,4 @@
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 package org.bouncycastle.asn1.eac;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
@@ -108,3 +109,5 @@ public interface EACObjectIdentifiers
      */
     static final ASN1ObjectIdentifier id_EAC_ePassport = bsi_de.branch("3.1.2.1");
 }
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)

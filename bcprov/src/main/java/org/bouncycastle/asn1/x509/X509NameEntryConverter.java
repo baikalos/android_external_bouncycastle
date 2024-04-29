@@ -4,7 +4,11 @@ import java.io.IOException;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1Primitive;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 import org.bouncycastle.asn1.DERPrintableString;
+=======
+import org.bouncycastle.asn1.ASN1PrintableString;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.util.encoders.Hex;
 
 /**
@@ -71,7 +75,7 @@ public abstract class X509NameEntryConverter
     protected boolean canBePrintable(
         String  str)
     {
-        return DERPrintableString.isPrintableString(str);
+        return ASN1PrintableString.isPrintableString(str);
     }
     
     /**
