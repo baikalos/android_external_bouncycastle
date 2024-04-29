@@ -9,9 +9,14 @@ import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.DSAExt;
 import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.digests.NullDigest;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 // BEGIN Android-removed: Unsupported algorithms
 // import org.bouncycastle.crypto.digests.RIPEMD160Digest;
 // END Android-removed: Unsupported algorithms
+=======
+import org.bouncycastle.crypto.digests.RIPEMD160Digest;
+import org.bouncycastle.crypto.digests.SHAKEDigest;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.crypto.params.ParametersWithRandom;
 import org.bouncycastle.crypto.signers.DSAEncoding;
 import org.bouncycastle.crypto.signers.ECDSASigner;
@@ -25,7 +30,6 @@ import org.bouncycastle.crypto.signers.StandardDSAEncoding;
 // import org.bouncycastle.crypto.util.DigestFactory;
 import org.bouncycastle.crypto.digests.AndroidDigestFactory;
 import org.bouncycastle.jcajce.provider.asymmetric.util.DSABase;
-import org.bouncycastle.jcajce.provider.asymmetric.util.ECUtil;
 
 public class SignatureSpi
     extends DSABase
@@ -48,7 +52,7 @@ public class SignatureSpi
         PrivateKey privateKey)
         throws InvalidKeyException
     {
-        CipherParameters param = ECUtil.generatePrivateKeyParameter(privateKey);
+        CipherParameters param = ECUtils.generatePrivateKeyParameter(privateKey);
 
         digest.reset();
 
@@ -275,6 +279,26 @@ public class SignatureSpi
         }
     }
 
+    static public class ecDSAShake128
+         extends SignatureSpi
+    {
+        public ecDSAShake128()
+        {
+            // RFC 8702 specifies deterministic DSA
+            super(new SHAKEDigest(128), new ECDSASigner(new HMacDSAKCalculator(new SHAKEDigest(128))), StandardDSAEncoding.INSTANCE);
+        }
+    }
+
+    static public class ecDSAShake256
+        extends SignatureSpi
+    {
+        public ecDSAShake256()
+        {
+            // RFC 8702 specifies deterministic DSA
+            super(new SHAKEDigest(256), new ECDSASigner(new HMacDSAKCalculator(new SHAKEDigest(256))), StandardDSAEncoding.INSTANCE);
+        }
+    }
+
     static public class ecNR
         extends SignatureSpi
     {
@@ -373,6 +397,45 @@ public class SignatureSpi
             super(new RIPEMD160Digest(), new ECDSASigner(), PlainDSAEncoding.INSTANCE);
         }
     }
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     */
     // END Android-removed: Unsupported algorithms
+=======
+
+    static public class ecCVCDSA3_224
+        extends SignatureSpi
+    {
+        public ecCVCDSA3_224()
+        {
+            super(DigestFactory.createSHA3_224(), new ECDSASigner(), PlainDSAEncoding.INSTANCE);
+        }
+    }
+
+    static public class ecCVCDSA3_256
+        extends SignatureSpi
+    {
+        public ecCVCDSA3_256()
+        {
+            super(DigestFactory.createSHA3_256(), new ECDSASigner(), PlainDSAEncoding.INSTANCE);
+        }
+    }
+
+    static public class ecCVCDSA3_384
+        extends SignatureSpi
+    {
+        public ecCVCDSA3_384()
+        {
+            super(DigestFactory.createSHA3_384(), new ECDSASigner(), PlainDSAEncoding.INSTANCE);
+        }
+    }
+
+    static public class ecCVCDSA3_512
+        extends SignatureSpi
+    {
+        public ecCVCDSA3_512()
+        {
+            super(DigestFactory.createSHA3_512(), new ECDSASigner(), PlainDSAEncoding.INSTANCE);
+        }
+    }
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 }

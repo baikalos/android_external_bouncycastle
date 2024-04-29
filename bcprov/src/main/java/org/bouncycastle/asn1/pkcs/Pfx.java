@@ -21,7 +21,11 @@ public class Pfx
         ASN1Sequence   seq)
     {
         ASN1Integer version = ASN1Integer.getInstance(seq.getObjectAt(0));
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         if (version.intValueExact() != 3)
+=======
+        if (!version.hasValue(3))
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         {
             throw new IllegalArgumentException("wrong version for PFX PDU");
         }

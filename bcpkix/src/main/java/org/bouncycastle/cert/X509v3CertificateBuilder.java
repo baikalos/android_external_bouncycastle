@@ -14,10 +14,15 @@ import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.ASN1Object;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.DERBitString;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+=======
+import org.bouncycastle.asn1.DERNull;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.Certificate;
+import org.bouncycastle.asn1.x509.DeltaCertificateDescriptor;
 import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.Extensions;
 import org.bouncycastle.asn1.x509.ExtensionsGenerator;
@@ -26,6 +31,7 @@ import org.bouncycastle.asn1.x509.TBSCertificate;
 import org.bouncycastle.asn1.x509.Time;
 import org.bouncycastle.asn1.x509.V3TBSCertificateGenerator;
 import org.bouncycastle.operator.ContentSigner;
+import org.bouncycastle.util.Exceptions;
 
 
 /**
@@ -112,6 +118,7 @@ public class X509v3CertificateBuilder
 
         for (Enumeration en = exts.oids(); en.hasMoreElements();)
         {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
             extGenerator.addExtension(exts.getExtension((ASN1ObjectIdentifier)en.nextElement()));
         }
     }
@@ -140,6 +147,50 @@ public class X509v3CertificateBuilder
 
     private Extension doGetExtension(ASN1ObjectIdentifier oid)
     {
+=======
+            ASN1ObjectIdentifier oid = (ASN1ObjectIdentifier)en.nextElement();
+            // we remove the altSignatureAlgorithm, altSignatureValue, and subjectAltPublicKeyInfo
+            // extensions as they probably need to be regenerated.
+            if (Extension.subjectAltPublicKeyInfo.equals(oid)
+                || Extension.altSignatureAlgorithm.equals(oid)
+                || Extension.altSignatureValue.equals(oid))
+            {
+                continue;
+            }
+            extGenerator.addExtension(exts.getExtension(oid));
+        }
+    }
+
+    /**
+     * Return if the extension indicated by OID is present.
+     *
+     * @param oid the OID for the extension of interest.
+     * @return the Extension, or null if it is not present.
+     */
+    public boolean hasExtension(ASN1ObjectIdentifier oid)
+    {
+         return doGetExtension(oid) != null;
+    }
+
+    /**
+     * Return the current value of the extension for OID.
+     *
+     * @param oid the OID for the extension we want to fetch.
+     * @return true if a matching extension is present, false otherwise.
+     */
+    public Extension getExtension(ASN1ObjectIdentifier oid)
+    {
+         return doGetExtension(oid);
+    }
+
+    private Extension doGetExtension(ASN1ObjectIdentifier oid)
+    {
+        if (extGenerator.isEmpty())
+        {
+            return null;
+        }
+        
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         Extensions exts = extGenerator.generate();
 
         return exts.getExtension(oid);
@@ -363,6 +414,21 @@ public class X509v3CertificateBuilder
 
         if (!extGenerator.isEmpty())
         {
+            if (extGenerator.hasExtension(Extension.deltaCertificateDescriptor))
+            {
+                Extension deltaExt = extGenerator.getExtension(Extension.deltaCertificateDescriptor);
+                DeltaCertificateDescriptor deltaDesc = DeltaCertificateDescriptor.getInstance(deltaExt.getParsedValue());
+
+                try
+                {
+                    extGenerator.replaceExtension(Extension.deltaCertificateDescriptor, deltaExt.isCritical(),
+                        deltaDesc.trimTo(tbsGen.generateTBSCertificate(), extGenerator.generate()));
+                }
+                catch (IOException e)
+                {
+                    throw new IllegalStateException("unable to replace deltaCertificateDescriptor: " + e.getMessage()) ;
+                }
+            }
             tbsGen.setExtensions(extGenerator.generate());
         }
 
@@ -373,7 +439,79 @@ public class X509v3CertificateBuilder
         }
         catch (IOException e)
         {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
             throw new IllegalArgumentException("cannot produce certificate signature");
+=======
+            throw Exceptions.illegalArgumentException("cannot produce certificate signature", e);
+        }
+    }
+
+    /**
+     * Generate an X.509 certificate, based on the current issuer and subject
+     * using the passed in signer and containing altSignatureAlgorithm and altSignatureValue extensions
+     * based on the passed altSigner.
+     *
+     * @param signer the content signer to be used to generate the signature validating the certificate.
+     * @param altSigner the content signer used to create the altSignatureAlgorithm and altSignatureValue extension.
+     * @return a holder containing the resulting signed certificate.
+     */
+    public X509CertificateHolder build(
+        ContentSigner signer,
+        boolean isCritical,
+        ContentSigner altSigner)
+    {
+        try
+        {
+            extGenerator.addExtension(Extension.altSignatureAlgorithm, isCritical, altSigner.getAlgorithmIdentifier());
+        }
+        catch (IOException e)
+        {
+            throw Exceptions.illegalStateException("cannot add altSignatureAlgorithm extension", e);
+        }
+
+        if (extGenerator.hasExtension(Extension.deltaCertificateDescriptor))
+        {
+            tbsGen.setSignature(signer.getAlgorithmIdentifier());
+            
+            Extension deltaExt = extGenerator.getExtension(Extension.deltaCertificateDescriptor);
+            DeltaCertificateDescriptor deltaDesc = DeltaCertificateDescriptor.getInstance(deltaExt.getParsedValue());
+
+            try
+            {
+                // the altSignatureValue is not present yet, but it must be in the deltaCertificate and
+                // it must be different (by definition!). We add a dummy one to trigger inclusion.
+                ExtensionsGenerator tmpExtGen = new ExtensionsGenerator();
+                tmpExtGen.addExtension(extGenerator.generate());
+                tmpExtGen.addExtension(Extension.altSignatureValue, false, DERNull.INSTANCE);
+
+                extGenerator.replaceExtension(Extension.deltaCertificateDescriptor, deltaExt.isCritical(),
+                    deltaDesc.trimTo(tbsGen.generateTBSCertificate(), tmpExtGen.generate()));
+            }
+            catch (IOException e)
+            {
+                throw new IllegalStateException("unable to replace deltaCertificateDescriptor: " + e.getMessage());
+            }
+        }
+
+        tbsGen.setSignature(null);
+
+        tbsGen.setExtensions(extGenerator.generate());
+
+        try
+        {
+            extGenerator.addExtension(Extension.altSignatureValue, isCritical, new DERBitString(generateSig(altSigner, tbsGen.generatePreTBSCertificate())));
+
+            tbsGen.setSignature(signer.getAlgorithmIdentifier());
+
+            tbsGen.setExtensions(extGenerator.generate());
+            
+            TBSCertificate tbsCert = tbsGen.generateTBSCertificate();
+            return new X509CertificateHolder(generateStructure(tbsCert, signer.getAlgorithmIdentifier(), generateSig(signer, tbsCert)));
+        }
+        catch (IOException e)
+        {
+            throw Exceptions.illegalArgumentException("cannot produce certificate signature", e);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         }
     }
 

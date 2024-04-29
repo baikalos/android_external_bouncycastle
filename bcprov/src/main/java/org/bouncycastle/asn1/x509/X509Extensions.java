@@ -12,10 +12,15 @@ import org.bouncycastle.asn1.ASN1OctetString;
 import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1TaggedObject;
+import org.bouncycastle.asn1.BERTags;
 import org.bouncycastle.asn1.DERSequence;
 
 /**
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
  * @deprecated use {@link Extensions}
+=======
+ * @deprecated use {@link Extension} and  {@link Extensions}
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
  */
 public class X509Extensions
     extends ASN1Object
@@ -236,7 +241,9 @@ public class X509Extensions
 
         if (obj instanceof ASN1TaggedObject)
         {
-            return getInstance(((ASN1TaggedObject)obj).getObject());
+            ASN1TaggedObject taggedObject = ASN1TaggedObject.getInstance(obj, BERTags.CONTEXT_SPECIFIC);
+
+            return getInstance(taggedObject.getBaseObject().toASN1Primitive());
         }
 
         throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
