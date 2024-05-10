@@ -64,11 +64,16 @@ The following steps are recommended for porting new Bouncy Castle versions.
      * If upstream added a file to a directory we deleted, we probably don't
        need it
 
-  d) Confirm all changes
+  d) Update the list of exported APIs in proguard.flags, if necessary.
+
+     Check this in particular if new algorithms are getting registered with
+     ConfigurableProvider.addAlgorithm or ConfigurableProvider.addPrivateAlgorithm.
+
+  e) Confirm all changes
 
       git diff aosp/master
 
-  e) Run the tests, commonly at least
+  f) Run the tests, commonly at least
 
       cts -m CtsLibcoreTestCases
       cts -m CtsLibcoreFileIOTestCases
@@ -77,6 +82,6 @@ The following steps are recommended for porting new Bouncy Castle versions.
       cts -m CtsLibcoreOkHttpTestCases
       cts -m CtsLibcoreWycheproofBCTestCases
 
-  e) Get the change reviewed
+  g) Get the change reviewed
 
       repo upload .

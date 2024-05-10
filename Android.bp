@@ -51,37 +51,22 @@ java_defaults {
     errorprone: {
         javacflags: [
             "-Xep:MissingOverride:OFF", // Ignore missing @Override.
+            "-Xep:BoxedPrimitiveEquality:WARN",
+            "-Xep:DoubleBraceInitialization:WARN",
+            "-Xep:HashtableContains:WARN",
         ],
     },
 }
 
-// These cannot build in the PDK, because the PDK requires all libraries
-// compile against SDK versions.
 java_defaults {
     name: "bouncycastle-defaults",
     defaults: [
         "bouncycastle-errorprone-defaults",
     ],
     hostdex: true,
-    target: {
-        android: {
-            product_variables: {
-                pdk: {
-                    enabled: false,
-                },
-            },
-        },
-    },
 
     lint: {
         warning_checks: ["SuspiciousIndentation"],
-    },
-    errorprone: {
-        javacflags: [
-            "-Xep:BoxedPrimitiveEquality:WARN",
-            "-Xep:DoubleBraceInitialization:WARN",
-            "-Xep:HashtableContains:WARN",
-        ],
     },
 }
 
@@ -104,7 +89,6 @@ java_library {
     visibility: [
         "//art/build/apex",
         "//art/build/sdk",
-        "//external/wycheproof",
         "//libcore:__subpackages__",
         "//packages/modules/ArtPrebuilt",
     ],
@@ -120,6 +104,34 @@ java_library {
 
     libs: ["unsupportedappusage"],
 
+    optimize: {
+        enabled: true,
+        shrink: true,
+        optimize: true,
+        obfuscate: false,
+        proguard_compatibility: false,
+        ignore_warnings: false,
+        proguard_flags_files: ["proguard.flags"],
+    },
+
+    sdk_version: "none",
+    system_modules: "art-module-intra-core-api-stubs-system-modules",
+}
+
+java_library_static {
+    name: "bouncycastle-test-lib",
+    visibility: [
+        "//packages/modules/ArtPrebuilt",
+        "//external/bouncycastle/mts",
+    ],
+    srcs: [
+        "repackaged/bcprov/src/test/java/**/*.java",
+    ],
+    libs: ["bouncycastle"],
+    static_libs: [
+        "junit",
+        "platform-test-annotations",
+    ],
     sdk_version: "none",
     system_modules: "art-module-intra-core-api-stubs-system-modules",
 }
@@ -174,11 +186,13 @@ unbundled_visibility = [
     "//packages/apps/RemoteProvisioner/tests/unittests",
     "//packages/modules/Connectivity/tests/cts/net",
     "//packages/modules/RemoteKeyProvisioning/app/tests/unit",
+    "//packages/modules/Virtualization/service_vm/test_apk",
     "//packages/modules/Wifi/service",
     "//packages/modules/Wifi/service/tests/wifitests",
     "//libcore",
     "//system/extras/verity",
     "//system/security/identity/util",
+    "//tools/apksig",
     "//tools/security/remote_provisioning/attestation_testing",
     "//vendor:__subpackages__",
 ]
@@ -199,6 +213,7 @@ java_library {
     sdk_version: "core_current",
     min_sdk_version: "30",
     java_version: "1.7",
+    apex_available: ["com.android.wifi"],
 }
 
 // Bouncycastle PKIX classes in the original org.bouncycastle package for use
@@ -245,6 +260,22 @@ java_library_static {
 java_library_host {
     name: "bouncycastle-host",
     static_libs: ["bouncycastle-unbundled"],
+}
+
+java_test_host {
+    name: "bouncycastle-host-tests",
+    srcs: [
+        "bcprov/src/test/java/**/*.java",
+    ],
+    static_libs: [
+        "bouncycastle-unbundled",
+        "junit",
+        "platform-test-annotations",
+    ],
+    test_options: {
+        unit_test: true,
+    },
+    test_suites: ["general-tests"],
 }
 
 // Bouncycastle subset for use by frameworks/opt/net/ike project.
@@ -307,6 +338,7 @@ java_library {
 //Excludes directories not needed.
 java_library {
     name: "bouncycastle-uwb",
+    defaults: ["bouncycastle-errorprone-defaults"],
     visibility: [
         "//packages/modules/Uwb/service",
     ],
