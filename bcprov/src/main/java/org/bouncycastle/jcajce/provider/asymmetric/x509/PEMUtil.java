@@ -13,7 +13,11 @@ class PEMUtil
      * current PEM object.
      *
      */
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     private class Boundaries
+=======
+    private static class Boundaries
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
         private final String _header;
         private final String _footer;
@@ -112,7 +116,8 @@ class PEMUtil
     }
 
     ASN1Sequence readPEMObject(
-        InputStream in)
+        InputStream in,
+        boolean     isFirst)
         throws IOException
     {
         String line;
@@ -131,6 +136,14 @@ class PEMUtil
 
         if (header == null)
         {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+=======
+            if (!isFirst)
+            {
+                // just ignore the data
+                return null;
+            }
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             throw new IOException("malformed PEM data: no header found");
         }
 

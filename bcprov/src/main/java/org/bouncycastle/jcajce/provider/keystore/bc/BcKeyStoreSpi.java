@@ -28,8 +28,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
-import javax.crypto.CipherOutputStream;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
@@ -48,15 +46,22 @@ import org.bouncycastle.crypto.io.DigestOutputStream;
 import org.bouncycastle.crypto.io.MacInputStream;
 import org.bouncycastle.crypto.io.MacOutputStream;
 import org.bouncycastle.crypto.macs.HMac;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 // Android-changed: Use default provider for JCA algorithms instead of BC
 // Was: import org.bouncycastle.jcajce.util.BCJcaJceHelper;
 import org.bouncycastle.jcajce.util.DefaultJcaJceHelper;
 // import org.bouncycastle.jcajce.io.CipherInputStream;
 // import org.bouncycastle.jcajce.io.CipherOutputStream;
+=======
+import org.bouncycastle.jcajce.io.CipherInputStream;
+import org.bouncycastle.jcajce.io.CipherOutputStream;
+import org.bouncycastle.jcajce.util.BCJcaJceHelper;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.jcajce.util.JcaJceHelper;
 import org.bouncycastle.jce.interfaces.BCKeyStore;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.Arrays;
+import org.bouncycastle.util.Properties;
 import org.bouncycastle.util.io.Streams;
 import org.bouncycastle.util.io.TeeOutputStream;
 
@@ -394,6 +399,11 @@ public class BcKeyStoreSpi
     {
         byte[]      enc = key.getEncoded();
 
+        if (enc == null)
+        {
+            throw new IOException("unable to store encoding of protected key");
+        }
+
         if (key instanceof PrivateKey)
         {
             dOut.write(KEY_PRIVATE);
@@ -672,9 +682,18 @@ public class BcKeyStoreSpi
         Certificate[]   chain) 
         throws KeyStoreException
     {
-        if ((key instanceof PrivateKey) && (chain == null))
+        if ((key instanceof PrivateKey))
         {
-            throw new KeyStoreException("no certificate chain for private key");
+            if (chain == null)
+            {
+                throw new KeyStoreException("no certificate chain for private key");
+            }
+            if (key.getEncoded() == null)
+            {
+                // we ingore the password as the key is already protected.
+                table.put(alias, new StoreEntry(alias, new Date(), KEY, key, chain));
+                return;
+            }
         }
 
         try
@@ -1118,6 +1137,27 @@ public class BcKeyStoreSpi
         public Version1()
         {
             super(1);
+            if (!Properties.isOverrideSet("org.bouncycastle.bks.enable_v1"))
+            {
+                 throw new IllegalStateException("BKS-V1 not enabled");
+            }
+        }
+    }
+
+    private static class BCKeyStoreException
+        extends KeyStoreException
+    {
+        private final Exception cause;
+
+        public BCKeyStoreException(String msg, Exception cause)
+        {
+            super(msg);
+            this.cause = cause;
+        }
+
+        public Throwable getCause()
+        {
+            return cause;
         }
     }
 
