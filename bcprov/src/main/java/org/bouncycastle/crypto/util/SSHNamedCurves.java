@@ -69,8 +69,13 @@ public class SSHNamedCurves
             while (e.hasMoreElements())
             {
                 String name = (String)e.nextElement();
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 X9ECParameters parameters = CustomNamedCurves.getByName(name);
                 put(parameters.getCurve(), name);
+=======
+                ECCurve curve = CustomNamedCurves.getByNameLazy(name).getCurve();
+                put(curve, name);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
 
         }

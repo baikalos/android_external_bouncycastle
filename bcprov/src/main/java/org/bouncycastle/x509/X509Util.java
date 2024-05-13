@@ -105,8 +105,12 @@ class X509Util
         noParams.add(X9ObjectIdentifiers.ecdsa_with_SHA384);
         noParams.add(X9ObjectIdentifiers.ecdsa_with_SHA512);
         noParams.add(X9ObjectIdentifiers.id_dsa_with_sha1);
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         // BEGIN Android-removed:
         // noParams.add(OIWObjectIdentifiers.dsaWithSHA1);
+=======
+        noParams.add(OIWObjectIdentifiers.dsaWithSHA1);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         noParams.add(NISTObjectIdentifiers.dsa_with_sha224);
         noParams.add(NISTObjectIdentifiers.dsa_with_sha256);
         noParams.add(NISTObjectIdentifiers.dsa_with_sha384);
