@@ -62,6 +62,19 @@ public class HexEncoder
         return outPos - outOff;
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+=======
+    public int getEncodedLength(int inputLength)
+    {
+        return inputLength * 2;
+    }
+
+    public int getMaxDecodedLength(int inputLength)
+    {
+        return inputLength / 2;
+    }
+
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     /**
      * encode the input data producing a Hex output stream.
      *
@@ -70,15 +83,37 @@ public class HexEncoder
     public int encode(byte[] buf, int off, int len, OutputStream out) 
         throws IOException
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         byte[] tmp = new byte[72];
         while (len > 0)
+=======
+        if (len < 0)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
             int inLen = Math.min(36, len);
             int outLen = encode(buf, off, inLen, tmp, 0);
             out.write(tmp, 0, outLen);
             off += inLen;
             len -= inLen;
+=======
+            return 0;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         }
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+=======
+
+        byte[] tmp = new byte[72];
+        int remaining = len;
+        while (remaining > 0)
+        {
+            int inLen = Math.min(36, remaining);
+            int outLen = encode(buf, off, inLen, tmp, 0);
+            out.write(tmp, 0, outLen);
+            off += inLen;
+            remaining -= inLen;
+        }
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         return len * 2;
     }
 

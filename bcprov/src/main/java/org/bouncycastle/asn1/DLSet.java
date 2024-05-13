@@ -53,7 +53,7 @@ import java.io.IOException;
 public class DLSet
     extends ASN1Set
 {
-    private int bodyLength = -1;
+    private int contentsLength = -1;
 
     /**
      * create an empty set
@@ -87,13 +87,26 @@ public class DLSet
     }
 
     DLSet(boolean isSorted, ASN1Encodable[] elements)
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     {
         super(isSorted, elements);
     }
 
     private int getBodyLength() throws IOException
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
-        if (bodyLength < 0)
+        super(isSorted, elements);
+    }
+
+    DLSet(ASN1Encodable[] elements, ASN1Encodable[] sortedElements)
+    {
+        super(elements, sortedElements);
+    }
+
+    private int getContentsLength() throws IOException
+    {
+        if (contentsLength < 0)
         {
             int count = elements.length;
             int totalLength = 0;
@@ -101,20 +114,30 @@ public class DLSet
             for (int i = 0; i < count; ++i)
             {
                 ASN1Primitive dlObject = elements[i].toASN1Primitive().toDLObject();
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 totalLength += dlObject.encodedLength();
+=======
+                totalLength += dlObject.encodedLength(true);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
             this.bodyLength = totalLength;
+=======
+            this.contentsLength = totalLength;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         }
 
-        return bodyLength;
+        return contentsLength;
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     int encodedLength() throws IOException
+=======
+    int encodedLength(boolean withTag) throws IOException
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
-        int length = getBodyLength();
-
-        return 1 + StreamUtil.calculateBodyLength(length) + length;
+        return ASN1OutputStream.getLengthOfEncodingDL(withTag, getContentsLength());
     }
 
     /**
@@ -127,10 +150,29 @@ public class DLSet
      */
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         if (withTag)
+=======
+        out.writeIdentifier(withTag, BERTags.CONSTRUCTED | BERTags.SET);
+
+        ASN1OutputStream dlOut = out.getDLSubStream();
+
+        int count = elements.length;
+        if (contentsLength >= 0 || count > 16)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
             out.write(BERTags.SET | BERTags.CONSTRUCTED);
+=======
+            out.writeDL(getContentsLength());
+
+            for (int i = 0; i < count; ++i)
+            {
+                dlOut.writePrimitive(elements[i].toASN1Primitive(), true);
+            }
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         }
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 
         ASN1OutputStream dlOut = out.getDLSubStream();
 
@@ -158,6 +200,22 @@ public class DLSet
 
             this.bodyLength = totalLength;
             out.writeLength(totalLength);
+=======
+        else
+        {
+            int totalLength = 0;
+
+            ASN1Primitive[] dlObjects = new ASN1Primitive[count];
+            for (int i = 0; i < count; ++i)
+            {
+                ASN1Primitive dlObject = elements[i].toASN1Primitive().toDLObject();
+                dlObjects[i] = dlObject;
+                totalLength += dlObject.encodedLength(true);
+            }
+
+            this.contentsLength = totalLength;
+            out.writeDL(totalLength);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 
             for (int i = 0; i < count; ++i)
             {

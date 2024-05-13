@@ -1,3 +1,4 @@
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 package org.bouncycastle.asn1.cms;
 
 import org.bouncycastle.asn1.ASN1Encodable;
@@ -128,3 +129,5 @@ public class ContentInfo
         return new BERSequence(v);
     }
 }
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
