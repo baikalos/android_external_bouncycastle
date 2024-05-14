@@ -33,11 +33,16 @@ import org.bouncycastle.crypto.params.ECPublicKeyParameters;
 // import org.bouncycastle.crypto.util.DigestFactory;
 // END Android-removed: Unsupported algorithms
 import org.bouncycastle.jcajce.provider.asymmetric.util.BaseAgreementSpi;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 import org.bouncycastle.jcajce.provider.asymmetric.util.ECUtil;
 // BEGIN Android-removed: Unsupported algorithms
 // import org.bouncycastle.jcajce.spec.DHUParameterSpec;
 // import org.bouncycastle.jcajce.spec.MQVParameterSpec;
 // END Android-removed: Unsupported algorithms
+=======
+import org.bouncycastle.jcajce.spec.DHUParameterSpec;
+import org.bouncycastle.jcajce.spec.MQVParameterSpec;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.jcajce.spec.UserKeyingMaterialSpec;
 import org.bouncycastle.jce.interfaces.ECPrivateKey;
 import org.bouncycastle.jce.interfaces.ECPublicKey;
@@ -195,20 +200,23 @@ public class KeyAgreementSpi
         return null;
     }
 
-    protected void engineInit(
-        Key key,
-        AlgorithmParameterSpec params,
-        SecureRandom random)
+    protected void doInitFromKey(Key key, AlgorithmParameterSpec parameterSpec, SecureRandom random)
         throws InvalidKeyException, InvalidAlgorithmParameterException
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         // Android-removed: Unsupported algorithms
         // if (params != null &&
         //     !(params instanceof MQVParameterSpec || params instanceof UserKeyingMaterialSpec || params instanceof DHUParameterSpec))
         if (params != null && !(params instanceof UserKeyingMaterialSpec))
+=======
+        if (parameterSpec != null &&
+            !(parameterSpec instanceof MQVParameterSpec || parameterSpec instanceof UserKeyingMaterialSpec || parameterSpec instanceof DHUParameterSpec))
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         {
             throw new InvalidAlgorithmParameterException("No algorithm parameters supported");
         }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         initFromKey(key, params);
     }
 
@@ -233,6 +241,8 @@ public class KeyAgreementSpi
     {
         // BEGIN Android-removed: Unsupported algorithms
         /*
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         if (agreement instanceof ECMQVBasicAgreement)
         {
             mqvParameters = null;
@@ -249,9 +259,9 @@ public class KeyAgreementSpi
             {
                 MQVPrivateKey mqvPrivKey = (MQVPrivateKey)key;
                 staticPrivKey = (ECPrivateKeyParameters)
-                    ECUtil.generatePrivateKeyParameter(mqvPrivKey.getStaticPrivateKey());
+                    ECUtils.generatePrivateKeyParameter(mqvPrivKey.getStaticPrivateKey());
                 ephemPrivKey = (ECPrivateKeyParameters)
-                    ECUtil.generatePrivateKeyParameter(mqvPrivKey.getEphemeralPrivateKey());
+                    ECUtils.generatePrivateKeyParameter(mqvPrivKey.getEphemeralPrivateKey());
 
                 ephemPubKey = null;
                 if (mqvPrivKey.getEphemeralPublicKey() != null)
@@ -265,9 +275,9 @@ public class KeyAgreementSpi
                 MQVParameterSpec mqvParameterSpec = (MQVParameterSpec)parameterSpec;
 
                 staticPrivKey = (ECPrivateKeyParameters)
-                    ECUtil.generatePrivateKeyParameter((PrivateKey)key);
+                    ECUtils.generatePrivateKeyParameter((PrivateKey)key);
                 ephemPrivKey = (ECPrivateKeyParameters)
-                    ECUtil.generatePrivateKeyParameter(mqvParameterSpec.getEphemeralPrivateKey());
+                    ECUtils.generatePrivateKeyParameter(mqvParameterSpec.getEphemeralPrivateKey());
 
                 ephemPubKey = null;
                 if (mqvParameterSpec.getEphemeralPublicKey() != null)
@@ -299,9 +309,9 @@ public class KeyAgreementSpi
             ECPublicKeyParameters ephemPubKey;
 
             staticPrivKey = (ECPrivateKeyParameters)
-                ECUtil.generatePrivateKeyParameter((PrivateKey)key);
+                ECUtils.generatePrivateKeyParameter((PrivateKey)key);
             ephemPrivKey = (ECPrivateKeyParameters)
-                ECUtil.generatePrivateKeyParameter(dheParameterSpec.getEphemeralPrivateKey());
+                ECUtils.generatePrivateKeyParameter(dheParameterSpec.getEphemeralPrivateKey());
 
             ephemPubKey = null;
             if (dheParameterSpec.getEphemeralPublicKey() != null)
@@ -330,7 +340,7 @@ public class KeyAgreementSpi
             {
                 throw new InvalidAlgorithmParameterException("no KDF specified for UserKeyingMaterialSpec");
             }
-            ECPrivateKeyParameters privKey = (ECPrivateKeyParameters)ECUtil.generatePrivateKeyParameter((PrivateKey)key);
+            ECPrivateKeyParameters privKey = (ECPrivateKeyParameters)ECUtils.generatePrivateKeyParameter((PrivateKey)key);
             this.parameters = privKey.getParameters();
             ukmParameters = (parameterSpec instanceof UserKeyingMaterialSpec) ? ((UserKeyingMaterialSpec)parameterSpec).getUserKeyingMaterial() : null;
             ((BasicAgreement)agreement).init(privKey);
@@ -344,7 +354,7 @@ public class KeyAgreementSpi
         return fullName.substring(fullName.lastIndexOf('.') + 1);
     }
     
-    protected byte[] calcSecret()
+    protected byte[] doCalcSecret()
     {
         return Arrays.clone(result);
     }
@@ -748,6 +758,7 @@ public class KeyAgreementSpi
     }
 
     /**
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
    	 * KeyAgreement according to BSI TR-03111 chapter 4.3.1
    	 *
    	public static class ECKAEGwithSHA1KDF
@@ -756,11 +767,22 @@ public class KeyAgreementSpi
    		public ECKAEGwithSHA1KDF()
    		{
    			super("ECKAEGwithSHA1KDF", new ECDHBasicAgreement(),
+=======
+        * KeyAgreement according to BSI TR-03111 chapter 4.3.1
+        */
+       public static class ECKAEGwithSHA1KDF
+               extends KeyAgreementSpi
+       {
+           public ECKAEGwithSHA1KDF()
+           {
+               super("ECKAEGwithSHA1KDF", new ECDHBasicAgreement(),
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
                    new KDF2BytesGenerator(DigestFactory.createSHA1()));
-   		}
-   	}
+           }
+       }
 
     /**
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
    	 * KeyAgreement according to BSI TR-03111 chapter 4.3.1
    	 *
    	public static class ECKAEGwithRIPEMD160KDF
@@ -769,11 +791,22 @@ public class KeyAgreementSpi
    		public ECKAEGwithRIPEMD160KDF()
    		{
    			super("ECKAEGwithRIPEMD160KDF", new ECDHBasicAgreement(),
+=======
+        * KeyAgreement according to BSI TR-03111 chapter 4.3.1
+        */
+       public static class ECKAEGwithRIPEMD160KDF
+               extends KeyAgreementSpi
+       {
+           public ECKAEGwithRIPEMD160KDF()
+           {
+               super("ECKAEGwithRIPEMD160KDF", new ECDHBasicAgreement(),
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
                    new KDF2BytesGenerator(new RIPEMD160Digest()));
-   		}
-   	}
+           }
+       }
 
     /**
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
    	 * KeyAgreement according to BSI TR-03111 chapter 4.3.1
    	 *
    	public static class ECKAEGwithSHA224KDF
@@ -782,10 +815,21 @@ public class KeyAgreementSpi
    		public ECKAEGwithSHA224KDF()
    		{
    			super("ECKAEGwithSHA224KDF", new ECDHBasicAgreement(),
+=======
+        * KeyAgreement according to BSI TR-03111 chapter 4.3.1
+        */
+       public static class ECKAEGwithSHA224KDF
+               extends KeyAgreementSpi
+       {
+           public ECKAEGwithSHA224KDF()
+           {
+               super("ECKAEGwithSHA224KDF", new ECDHBasicAgreement(),
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
                    new KDF2BytesGenerator(DigestFactory.createSHA224()));
-   		}
-   	}
+           }
+       }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 	/**
 	 * KeyAgreement according to BSI TR-03111 chapter 4.3.1
 	 *
@@ -795,10 +839,22 @@ public class KeyAgreementSpi
 		public ECKAEGwithSHA256KDF()
 		{
 			super("ECKAEGwithSHA256KDF", new ECDHBasicAgreement(),
+=======
+    /**
+     * KeyAgreement according to BSI TR-03111 chapter 4.3.1
+     */
+    public static class ECKAEGwithSHA256KDF
+            extends KeyAgreementSpi
+    {
+        public ECKAEGwithSHA256KDF()
+        {
+            super("ECKAEGwithSHA256KDF", new ECDHBasicAgreement(),
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
                 new KDF2BytesGenerator(DigestFactory.createSHA256()));
-		}
-	}
+        }
+    }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 	/**
 	 * KeyAgreement according to BSI TR-03111 chapter 4.3.1
 	 *
@@ -808,10 +864,22 @@ public class KeyAgreementSpi
 		public ECKAEGwithSHA384KDF()
 		{
 			super("ECKAEGwithSHA384KDF", new ECDHBasicAgreement(),
+=======
+    /**
+     * KeyAgreement according to BSI TR-03111 chapter 4.3.1
+     */
+    public static class ECKAEGwithSHA384KDF
+            extends KeyAgreementSpi
+    {
+        public ECKAEGwithSHA384KDF()
+        {
+            super("ECKAEGwithSHA384KDF", new ECDHBasicAgreement(),
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
                 new KDF2BytesGenerator(DigestFactory.createSHA384()));
-		}
-	}
+        }
+    }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 	/**
 	 * KeyAgreement according to BSI TR-03111 chapter 4.3.1
 	 *
@@ -821,9 +889,25 @@ public class KeyAgreementSpi
 		public ECKAEGwithSHA512KDF()
 		{
 			super("ECKAEGwithSHA512KDF", new ECDHBasicAgreement(),
+=======
+    /**
+     * KeyAgreement according to BSI TR-03111 chapter 4.3.1
+     */
+    public static class ECKAEGwithSHA512KDF
+            extends KeyAgreementSpi
+    {
+        public ECKAEGwithSHA512KDF()
+        {
+            super("ECKAEGwithSHA512KDF", new ECDHBasicAgreement(),
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
                 new KDF2BytesGenerator(DigestFactory.createSHA512()));
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 		}
 	}
   */
   // END Android-removed: Unsupported algorithms
+=======
+        }
+    }
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 }

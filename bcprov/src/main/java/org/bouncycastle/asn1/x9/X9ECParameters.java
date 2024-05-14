@@ -36,7 +36,11 @@ public class X9ECParameters
         ASN1Sequence  seq)
     {
         if (!(seq.getObjectAt(0) instanceof ASN1Integer)
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
             || !((ASN1Integer)seq.getObjectAt(0)).hasValue(ONE))
+=======
+            || !((ASN1Integer)seq.getObjectAt(0)).hasValue(1))
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         {
             throw new IllegalArgumentException("bad version in X9ECParameters");
         }
