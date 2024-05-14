@@ -14,6 +14,7 @@ public abstract class Mod
     private static final int M30 = 0x3FFFFFFF;
     private static final long M32L = 0xFFFFFFFFL;
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     /** @deprecated Will be removed. */
     public static void add(int[] p, int[] x, int[] y, int[] z)
     {
@@ -25,6 +26,8 @@ public abstract class Mod
         }
     }
 
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     public static void checkedModOddInverse(int[] m, int[] x, int[] z)
     {
         if (0 == modOddInverse(m, x, z))
@@ -54,9 +57,14 @@ public abstract class Mod
         return  x;
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     /** @deprecated Use {@link #checkedModOddInverseVar(int[], int[], int[])} instead. */
     public static void invert(int[] m, int[] x, int[] z)
+=======
+    public static int modOddInverse(int[] m, int[] x, int[] z)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         checkedModOddInverseVar(m,  x,  z);
     }
 
@@ -83,12 +91,39 @@ public abstract class Mod
         System.arraycopy(M, 0, F, 0, len30);
 
         int eta = -1;
+=======
+        int len32 = m.length;
+//        assert len32 > 0;
+//        assert (m[0] & 1) != 0;
+//        assert m[len32 - 1] != 0;
+
+        int bits = (len32 << 5) - Integers.numberOfLeadingZeros(m[len32 - 1]);
+        int len30 = (bits + 29) / 30;
+
+        int[] t = new int[4];
+        int[] D = new int[len30];
+        int[] E = new int[len30];
+        int[] F = new int[len30];
+        int[] G = new int[len30];
+        int[] M = new int[len30];
+
+        E[0] = 1;
+        encode30(bits, x, 0, G, 0);
+        encode30(bits, m, 0, M, 0);
+        System.arraycopy(M, 0, F, 0, len30);
+
+        int delta = 0;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         int m0Inv32 = inverse32(M[0]);
         int maxDivsteps = getMaximumDivsteps(bits);
 
         for (int divSteps = 0; divSteps < maxDivsteps; divSteps += 30)
         {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
             eta = divsteps30(eta, F[0], G[0], t);
+=======
+            delta = divsteps30(delta, F[0], G[0], t);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             updateDE30(len30, D, E, t, m0Inv32, M);
             updateFG30(len30, F, G, t);
         }
@@ -228,17 +263,10 @@ public abstract class Mod
         return s;
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     /** @deprecated Will be removed. */
     public static void subtract(int[] p, int[] x, int[] y, int[] z)
-    {
-        int len = p.length;
-        int c = Nat.sub(len, x, y, z);
-        if (c != 0)
-        {
-            Nat.addTo(len, p, z);
-        }
-    }
-
+=======
     private static int add30(int len30, int[] D, int[] M)
     {
 //        assert len30 > 0;
@@ -256,6 +284,47 @@ public abstract class Mod
         return c;
     }
 
+    private static void cnegate30(int len30, int cond, int[] D)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
+    {
+//        assert len30 > 0;
+//        assert D.length >= len30;
+
+        int c = 0, last = len30 - 1;
+        for (int i = 0; i < last; ++i)
+        {
+            c += (D[i] ^ cond) - cond;
+            D[i] = c & M30; c >>= 30;
+        }
+        c += (D[last] ^ cond) - cond;
+        D[last] = c;
+    }
+
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+    private static int add30(int len30, int[] D, int[] M)
+=======
+    private static void cnormalize30(int len30, int condNegate, int[] D, int[] M)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
+    {
+//        assert len30 > 0;
+//        assert D.length >= len30;
+//        assert M.length >= len30;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+
+        int c = 0, last = len30 - 1;
+        for (int i = 0; i < last; ++i)
+        {
+            c += D[i] + M[i];
+            D[i] = c & M30; c >>= 30;
+        }
+        c += D[last] + M[last];
+        D[last] = c; c >>= 30;
+        return c;
+    }
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
+
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     private static void cnegate30(int len30, int cond, int[] D)
     {
 //        assert len30 > 0;
@@ -277,6 +346,8 @@ public abstract class Mod
 //        assert D.length >= len30;
 //        assert M.length >= len30;
 
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         int last = len30 - 1;
 
         {
@@ -331,6 +402,7 @@ public abstract class Mod
         }
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     private static int divsteps30(int eta, int f0, int g0, int[] t)
     {
         int u = 1, v = 0, q = 0, r = 1;
@@ -371,6 +443,48 @@ public abstract class Mod
         t[3] = r;
 
         return eta;
+=======
+    private static int divsteps30(int delta, int f0, int g0, int[] t)
+    {
+        int u = 1 << 30, v = 0, q = 0, r = 1 << 30;
+        int f = f0, g = g0;
+
+        for (int i = 0; i < 30; ++i)
+        {
+//            assert (f & 1) == 1;
+//            assert ((u >> (30 - i)) * f0 + (v >> (30 - i)) * g0) == f << i;
+//            assert ((q >> (30 - i)) * f0 + (r >> (30 - i)) * g0) == g << i;
+
+            int c1 = delta >> 31;
+            int c2 = -(g & 1);
+
+            int x = f ^ c1;
+            int y = u ^ c1;
+            int z = v ^ c1;
+
+            g -= x & c2;
+            q -= y & c2;
+            r -= z & c2;
+
+            c2 &= ~c1;
+            delta = (delta ^ c2) - (c2 - 1);
+
+            f += g & c2;
+            u += q & c2;
+            v += r & c2;
+
+            g >>= 1;
+            q >>= 1;
+            r >>= 1;
+        }
+
+        t[0] = u;
+        t[1] = v;
+        t[2] = q;
+        t[3] = r;
+
+        return delta;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     private static int divsteps30Var(int eta, int f0, int g0, int[] t)
