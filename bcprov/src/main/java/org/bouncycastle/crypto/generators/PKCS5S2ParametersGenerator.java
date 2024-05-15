@@ -7,10 +7,14 @@ import org.bouncycastle.crypto.PBEParametersGenerator;
 import org.bouncycastle.crypto.macs.HMac;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 // Android-changed: Use Android digests
 // import org.bouncycastle.crypto.util.DigestFactory;
 import org.bouncycastle.crypto.digests.AndroidDigestFactory;
 import org.bouncycastle.util.Arrays;
+=======
+import org.bouncycastle.crypto.util.DigestFactory;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 
 /**
  * Generator for PBE derived keys and ivs as defined by PKCS 5 V2.0 Scheme 2.

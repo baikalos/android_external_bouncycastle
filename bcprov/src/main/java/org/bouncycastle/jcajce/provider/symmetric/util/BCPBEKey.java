@@ -69,19 +69,33 @@ public class BCPBEKey
 
     public String getAlgorithm()
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         checkDestroyed(this);
 
         return algorithm;
+=======
+        String rv = this.algorithm;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     public String getFormat()
     {
+        checkDestroyed(this);
+
         return "RAW";
     }
 
     public byte[] getEncoded()
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         checkDestroyed(this);
+=======
+        byte[] enc;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 
         if (param != null)
         {
@@ -96,58 +110,114 @@ public class BCPBEKey
                 kParam = (KeyParameter)param;
             }
             
-            return kParam.getKey();
+            enc = kParam.getKey();
         }
         else
         {
             if (type == PBE.PKCS12)
             {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 return PBEParametersGenerator.PKCS12PasswordToBytes(password);
+=======
+                enc = PBEParametersGenerator.PKCS12PasswordToBytes(password);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
             else if (type == PBE.PKCS5S2_UTF8)
             {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 return PBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password);
+=======
+                enc = PBEParametersGenerator.PKCS5PasswordToUTF8Bytes(password);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
             else
             {   
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 return PBEParametersGenerator.PKCS5PasswordToBytes(password);
+=======
+                enc = PBEParametersGenerator.PKCS5PasswordToBytes(password);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
         }
+
+        checkDestroyed(this);
+
+        return enc;
     }
     
     int getType()
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         checkDestroyed(this);
 
         return type;
+=======
+        int rv = type;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
     
     int getDigest()
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         checkDestroyed(this);
 
         return digest;
+=======
+        int rv = digest;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
     
     int getKeySize()
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         checkDestroyed(this);
 
         return keySize;
+=======
+        int rv = keySize;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
     
     public int getIvSize()
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         checkDestroyed(this);
 
         return ivSize;
+=======
+        int rv = ivSize;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
     
     public CipherParameters getParam()
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         checkDestroyed(this);
 
         return param;
+=======
+        CipherParameters rv = param;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     /* (non-Javadoc)
@@ -155,6 +225,7 @@ public class BCPBEKey
      */
     public char[] getPassword()
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         checkDestroyed(this);
 
         if (password == null)
@@ -163,6 +234,18 @@ public class BCPBEKey
         }
 
         return Arrays.clone(password);
+=======
+        char[] clone = Arrays.clone(password);
+
+        checkDestroyed(this);
+
+        if (clone == null)
+        {
+            throw new IllegalStateException("no password available");
+        }
+
+        return clone;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     /* (non-Javadoc)
@@ -170,9 +253,17 @@ public class BCPBEKey
      */
     public byte[] getSalt()
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         checkDestroyed(this);
 
         return Arrays.clone(salt);
+=======
+        byte[] clone = Arrays.clone(salt);
+
+        checkDestroyed(this);
+
+        return clone;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     /* (non-Javadoc)
@@ -180,16 +271,32 @@ public class BCPBEKey
      */
     public int getIterationCount()
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         checkDestroyed(this);
 
         return iterationCount;
+=======
+        int rv = iterationCount;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
     
     public ASN1ObjectIdentifier getOID()
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         checkDestroyed(this);
 
         return oid;
+=======
+        ASN1ObjectIdentifier rv = oid;
+
+        checkDestroyed(this);
+
+        return rv;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
     
     public void setTryWrongPKCS12Zero(boolean tryWrong)
@@ -229,4 +336,8 @@ public class BCPBEKey
             throw new IllegalStateException("key has been destroyed");
         }
     }
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 }
+=======
+}
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)

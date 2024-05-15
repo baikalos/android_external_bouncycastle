@@ -1,17 +1,20 @@
 package org.bouncycastle.asn1;
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 import java.io.IOException;
 
 import org.bouncycastle.util.Arrays;
 
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 /**
  * DER UniversalString object - encodes UNICODE (ISO 10646) characters using 32-bit format. In Java we
  * have no way of representing this directly so we rely on byte arrays to carry these.
  */
 public class DERUniversalString
-    extends ASN1Primitive
-    implements ASN1String
+    extends ASN1UniversalString
 {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     private static final char[]  table = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
     private final byte[] string;
     
@@ -71,19 +74,21 @@ public class DERUniversalString
         }
     }
 
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     /**
      * Basic constructor - byte encoded string.
      *
      * @param string the byte encoding of the string to be carried in the UniversalString object,
      */
-    public DERUniversalString(
-        byte[]   string)
+    public DERUniversalString(byte[] string)
     {
-        this.string = Arrays.clone(string);
+        this(string, true);
     }
 
-    public String getString()
+    DERUniversalString(byte[] contents, boolean clone)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         StringBuffer buf = new StringBuffer("#");
 
         byte[] string;
@@ -144,5 +149,8 @@ public class DERUniversalString
     public int hashCode()
     {
         return Arrays.hashCode(string);
+=======
+        super(contents, clone);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 }

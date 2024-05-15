@@ -28,6 +28,7 @@ import java.util.Set;
 
 import javax.security.auth.x500.X500Principal;
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.ASN1InputStream;
@@ -317,6 +318,284 @@ abstract class X509CRLImpl
                         key, signature,
                         sigAlg.getParameters(),
                         DERBitString.getInstance(sigSeq.getObjectAt(i)).getBytes());
+=======
+import org.bouncycastle.asn1.ASN1BitString;
+import org.bouncycastle.asn1.ASN1Encodable;
+import org.bouncycastle.asn1.ASN1Encoding;
+import org.bouncycastle.asn1.ASN1InputStream;
+import org.bouncycastle.asn1.ASN1Integer;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.ASN1OctetString;
+import org.bouncycastle.asn1.ASN1Primitive;
+import org.bouncycastle.asn1.ASN1Sequence;
+import org.bouncycastle.asn1.util.ASN1Dump;
+import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.asn1.x509.CRLDistPoint;
+import org.bouncycastle.asn1.x509.CRLNumber;
+import org.bouncycastle.asn1.x509.CertificateList;
+import org.bouncycastle.asn1.x509.Extension;
+import org.bouncycastle.asn1.x509.Extensions;
+import org.bouncycastle.asn1.x509.GeneralNames;
+import org.bouncycastle.asn1.x509.IssuingDistributionPoint;
+import org.bouncycastle.asn1.x509.TBSCertList;
+import org.bouncycastle.asn1.x509.Time;
+import org.bouncycastle.jcajce.CompositePublicKey;
+import org.bouncycastle.jcajce.io.OutputStreamFactory;
+import org.bouncycastle.jcajce.util.JcaJceHelper;
+import org.bouncycastle.jce.X509Principal;
+import org.bouncycastle.util.Arrays;
+import org.bouncycastle.util.Strings;
+
+/**
+ * The following extensions are listed in RFC 2459 as relevant to CRLs
+ * <p>
+ * Authority Key Identifier
+ * Issuer Alternative Name
+ * CRL Number
+ * Delta CRL Indicator (critical)
+ * Issuing Distribution Point (critical)
+ */
+abstract class X509CRLImpl
+    extends X509CRL
+{
+    protected JcaJceHelper bcHelper;
+    protected CertificateList c;
+    protected String sigAlgName;
+    protected byte[] sigAlgParams;
+    protected boolean isIndirect;
+
+    X509CRLImpl(JcaJceHelper bcHelper, CertificateList c, String sigAlgName, byte[] sigAlgParams, boolean isIndirect)
+    {
+        this.bcHelper = bcHelper;
+        this.c = c;
+        this.sigAlgName = sigAlgName;
+        this.sigAlgParams = sigAlgParams;
+        this.isIndirect = isIndirect;
+    }
+
+    /**
+     * Will return true if any extensions are present and marked
+     * as critical as we currently dont handle any extensions!
+     */
+    public boolean hasUnsupportedCriticalExtension()
+    {
+        Set extns = getCriticalExtensionOIDs();
+
+        if (extns == null)
+        {
+            return false;
+        }
+
+        extns.remove(Extension.issuingDistributionPoint.getId());
+        extns.remove(Extension.deltaCRLIndicator.getId());
+
+        return !extns.isEmpty();
+    }
+
+    private Set getExtensionOIDs(boolean critical)
+    {
+        if (this.getVersion() == 2)
+        {
+            Extensions extensions = c.getTBSCertList().getExtensions();
+
+            if (extensions != null)
+            {
+                Set set = new HashSet();
+                Enumeration e = extensions.oids();
+
+                while (e.hasMoreElements())
+                {
+                    ASN1ObjectIdentifier oid = (ASN1ObjectIdentifier)e.nextElement();
+                    Extension ext = extensions.getExtension(oid);
+
+                    if (critical == ext.isCritical())
+                    {
+                        set.add(oid.getId());
+                    }
+                }
+
+                return set;
+            }
+        }
+
+        return null;
+    }
+
+    public Set getCriticalExtensionOIDs()
+    {
+        return getExtensionOIDs(true);
+    }
+
+    public Set getNonCriticalExtensionOIDs()
+    {
+        return getExtensionOIDs(false);
+    }
+
+    public byte[] getExtensionValue(String oid)
+    {
+        ASN1OctetString extValue = getExtensionValue(c, oid);
+        if (null != extValue)
+        {
+            try
+            {
+                return extValue.getEncoded();
+            }
+            catch (Exception e)
+            {
+                throw new IllegalStateException("error parsing " + e.toString());
+            }
+        }
+        return null;
+    }
+
+    public void verify(PublicKey key)
+        throws CRLException, NoSuchAlgorithmException,
+        InvalidKeyException, NoSuchProviderException, SignatureException
+    {
+        doVerify(key, new SignatureCreator()
+        {
+            public Signature createSignature(String sigName)
+                throws NoSuchAlgorithmException, NoSuchProviderException
+            {
+                try
+                {
+                    return bcHelper.createSignature(sigName);
+                }
+                catch (Exception e)
+                {
+                    return Signature.getInstance(sigName);
+                }
+            }
+        });
+    }
+
+    public void verify(PublicKey key, final String sigProvider)
+        throws CRLException, NoSuchAlgorithmException,
+        InvalidKeyException, NoSuchProviderException, SignatureException
+    {
+        doVerify(key, new SignatureCreator()
+        {
+            public Signature createSignature(String sigName)
+                throws NoSuchAlgorithmException, NoSuchProviderException
+            {
+                if (sigProvider != null)
+                {
+                    return Signature.getInstance(sigName, sigProvider);
+                }
+                else
+                {
+                    return Signature.getInstance(sigName);
+                }
+            }
+        });
+    }
+
+    public void verify(PublicKey key, final Provider sigProvider)
+        throws CRLException, NoSuchAlgorithmException,
+        InvalidKeyException, SignatureException
+    {
+        try
+        {
+            doVerify(key, new SignatureCreator()
+            {
+                public Signature createSignature(String sigName)
+                    throws NoSuchAlgorithmException, NoSuchProviderException
+                {
+                    if (sigProvider != null)
+                    {
+                        return Signature.getInstance(getSigAlgName(), sigProvider);
+                    }
+                    else
+                    {
+                        return Signature.getInstance(getSigAlgName());
+                    }
+                }
+            });
+        }
+        catch (NoSuchProviderException e)
+        {
+            // can't happen, but just in case
+            throw new NoSuchAlgorithmException("provider issue: " + e.getMessage());
+        }
+    }
+
+    private void doVerify(PublicKey key, SignatureCreator sigCreator)
+        throws CRLException, NoSuchAlgorithmException,
+        InvalidKeyException, SignatureException, NoSuchProviderException
+    {
+        if (!c.getSignatureAlgorithm().equals(c.getTBSCertList().getSignature()))
+        {
+            throw new CRLException("Signature algorithm on CertificateList does not match TBSCertList.");
+        }
+
+        if (key instanceof CompositePublicKey && X509SignatureUtil.isCompositeAlgorithm(c.getSignatureAlgorithm()))
+        {
+            List<PublicKey> pubKeys = ((CompositePublicKey)key).getPublicKeys();
+            ASN1Sequence keySeq = ASN1Sequence.getInstance(c.getSignatureAlgorithm().getParameters());
+            ASN1Sequence sigSeq = ASN1Sequence.getInstance(ASN1BitString.getInstance(c.getSignature()).getBytes());
+
+            boolean success = false;
+            for (int i = 0; i != pubKeys.size(); i++)
+            {
+                if (pubKeys.get(i) == null)
+                {
+                    continue;
+                }
+
+                AlgorithmIdentifier sigAlg = AlgorithmIdentifier.getInstance(keySeq.getObjectAt(i));
+                String sigName = X509SignatureUtil.getSignatureName(sigAlg);
+
+                Signature signature = sigCreator.createSignature(sigName);
+
+                SignatureException sigExc = null;
+
+                try
+                {
+                    checkSignature(
+                        (PublicKey)pubKeys.get(i), signature,
+                        sigAlg.getParameters(),
+                        ASN1BitString.getInstance(sigSeq.getObjectAt(i)).getBytes());
+                    success = true;
+                }
+                catch (SignatureException e)
+                {
+                    sigExc = e;
+                }
+
+                if (sigExc != null)
+                {
+                    throw sigExc;
+                }
+            }
+
+            if (!success)
+            {
+                throw new InvalidKeyException("no matching key found");
+            }
+        }
+        else if (X509SignatureUtil.isCompositeAlgorithm(c.getSignatureAlgorithm()))
+        {
+            ASN1Sequence keySeq = ASN1Sequence.getInstance(c.getSignatureAlgorithm().getParameters());
+            ASN1Sequence sigSeq = ASN1Sequence.getInstance(ASN1BitString.getInstance(c.getSignature()).getBytes());
+
+            boolean success = false;
+            for (int i = 0; i != sigSeq.size(); i++)
+            {
+                AlgorithmIdentifier sigAlg = AlgorithmIdentifier.getInstance(keySeq.getObjectAt(i));
+                String sigName = X509SignatureUtil.getSignatureName(sigAlg);
+
+                SignatureException sigExc = null;
+
+                try
+                {
+                    Signature signature = sigCreator.createSignature(sigName);
+
+                    checkSignature(
+                        key, signature,
+                        sigAlg.getParameters(),
+                        ASN1BitString.getInstance(sigSeq.getObjectAt(i)).getBytes());
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 
                     success = true;
                 }
