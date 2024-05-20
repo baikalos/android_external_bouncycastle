@@ -40,8 +40,9 @@ abstract class PKIXCRLUtil
         for (Iterator it = initialSet.iterator(); it.hasNext();)
         {
             X509CRL crl = (X509CRL)it.next();
-
-            if (crl.getNextUpdate().after(validityDate))
+            
+            Date nextUpdate = crl.getNextUpdate();
+            if (nextUpdate == null || nextUpdate.after(validityDate))
             {
                 X509Certificate cert = crlselect.getCertificateChecking();
 
@@ -76,9 +77,12 @@ abstract class PKIXCRLUtil
         while (iter.hasNext())
         {
             Object obj = iter.next();
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 
             // BEGIN Android-removed: Unknown reason
             /*
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             if (obj instanceof Store)
             {
                 Store store = (Store)obj;

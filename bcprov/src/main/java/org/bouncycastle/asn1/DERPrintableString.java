@@ -1,10 +1,5 @@
 package org.bouncycastle.asn1;
 
-import java.io.IOException;
-
-import org.bouncycastle.util.Arrays;
-import org.bouncycastle.util.Strings;
-
 /**
  * DER PrintableString object.
  * <p>
@@ -32,76 +27,8 @@ import org.bouncycastle.util.Strings;
  * </p>
  */
 public class DERPrintableString
-    extends ASN1Primitive
-    implements ASN1String
+    extends ASN1PrintableString
 {
-    private final byte[]  string;
-
-    /**
-     * Return a printable string from the passed in object.
-     *
-     * @param obj a DERPrintableString or an object that can be converted into one.
-     * @exception IllegalArgumentException if the object cannot be converted.
-     * @return a DERPrintableString instance, or null.
-     */
-    public static DERPrintableString getInstance(
-        Object  obj)
-    {
-        if (obj == null || obj instanceof DERPrintableString)
-        {
-            return (DERPrintableString)obj;
-        }
-
-        if (obj instanceof byte[])
-        {
-            try
-            {
-                return (DERPrintableString)fromByteArray((byte[])obj);
-            }
-            catch (Exception e)
-            {
-                throw new IllegalArgumentException("encoding error in getInstance: " + e.toString());
-            }
-        }
-
-        throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
-    }
-
-    /**
-     * Return a Printable String from a tagged object.
-     *
-     * @param obj the tagged object holding the object we want
-     * @param explicit true if the object is meant to be explicitly
-     *              tagged false otherwise.
-     * @exception IllegalArgumentException if the tagged object cannot
-     *               be converted.
-     * @return a DERPrintableString instance, or null.
-     */
-    public static DERPrintableString getInstance(
-        ASN1TaggedObject obj,
-        boolean          explicit)
-    {
-        ASN1Primitive o = obj.getObject();
-
-        if (explicit || o instanceof DERPrintableString)
-        {
-            return getInstance(o);
-        }
-        else
-        {
-            return new DERPrintableString(ASN1OctetString.getInstance(o).getOctets());
-        }
-    }
-
-    /**
-     * Basic constructor - byte encoded string.
-     */
-    DERPrintableString(
-        byte[]   string)
-    {
-        this.string = string;
-    }
-
     /**
      * Basic constructor - this does not validate the string
      */
@@ -123,16 +50,12 @@ public class DERPrintableString
         String   string,
         boolean  validate)
     {
-        if (validate && !isPrintableString(string))
-        {
-            throw new IllegalArgumentException("string contains illegal characters");
-        }
-
-        this.string = Strings.toByteArray(string);
+        super(string, validate);
     }
 
-    public String getString()
+    DERPrintableString(byte[] contents, boolean clone)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         return Strings.fromByteArray(string);
     }
 
@@ -233,5 +156,8 @@ public class DERPrintableString
         }
 
         return true;
+=======
+        super(contents, clone);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 }

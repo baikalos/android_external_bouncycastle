@@ -1,2 +1,7 @@
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 BOUNCYCASTLE_JDK=15on
 BOUNCYCASTLE_VERSION=168
+=======
+BOUNCYCASTLE_JDK=18on
+BOUNCYCASTLE_VERSION=177
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)

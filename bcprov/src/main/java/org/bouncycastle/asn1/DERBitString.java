@@ -8,39 +8,12 @@ import java.io.IOException;
 public class DERBitString
     extends ASN1BitString
 {
-    /**
-     * return a Bit String from the passed in object
-     *
-     * @param obj a DERBitString or an object that can be converted into one.
-     * @exception IllegalArgumentException if the object cannot be converted.
-     * @return a DERBitString instance, or null.
-     */
-    public static DERBitString getInstance(
-        Object  obj)
+    public static DERBitString convert(ASN1BitString bitString)
     {
-        if (obj == null || obj instanceof DERBitString)
-        {
-            return (DERBitString)obj;
-        }
-        if (obj instanceof DLBitString)
-        {
-            return new DERBitString(((DLBitString)obj).data, ((DLBitString)obj).padBits);
-        }
-        if (obj instanceof byte[])
-        {
-            try
-            {
-                return (DERBitString)fromByteArray((byte[])obj);
-            }
-            catch (Exception e)
-            {
-                throw new IllegalArgumentException("encoding error in getInstance: " + e.toString());
-            }
-        }
-
-        throw new IllegalArgumentException("illegal object in getInstance: " + obj.getClass().getName());
+        return (DERBitString)bitString.toDERObject();
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     /**
      * return a Bit String from a tagged object.
      *
@@ -85,35 +58,53 @@ public class DERBitString
 
     public DERBitString(
         byte[]  data)
+=======
+    public DERBitString(byte[] data)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
         this(data, 0);
     }
 
-    public DERBitString(
-        int value)
+    public DERBitString(byte data, int padBits)
     {
+        super(data, padBits);
+    }
+
+    public DERBitString(byte[] data, int padBits)
+    {
+        super(data, padBits);
+    }
+
+    public DERBitString(int value)
+    {
+        // TODO[asn1] Unify in single allocation of 'contents'
         super(getBytes(value), getPadBits(value));
     }
 
-    public DERBitString(
-        ASN1Encodable obj)
-        throws IOException
+    public DERBitString(ASN1Encodable obj) throws IOException
     {
+        // TODO[asn1] Unify in single allocation of 'contents'
         super(obj.toASN1Primitive().getEncoded(ASN1Encoding.DER), 0);
     }
 
-    boolean isConstructed()
+    DERBitString(byte[] contents, boolean check)
+    {
+        super(contents, check);
+    }
+
+    boolean encodeConstructed()
     {
         return false;
     }
 
-    int encodedLength()
+    int encodedLength(boolean withTag)
     {
-        return 1 + StreamUtil.calculateBodyLength(data.length + 1) + data.length + 1;
+        return ASN1OutputStream.getLengthOfEncodingDL(withTag, contents.length);
     }
 
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         int len = data.length;
         if (0 == len
             || 0 == padBits
@@ -127,6 +118,37 @@ public class DERBitString
             out.writeEncoded(withTag, BERTags.BIT_STRING, (byte)padBits, data, 0, len - 1, der);
         }
     }
+=======
+        int padBits = contents[0] & 0xFF;
+        int length = contents.length;
+        int last = length - 1;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
+
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+    ASN1Primitive toDERObject()
+    {
+        return this;
+    }
+=======
+        byte lastOctet = contents[last];
+        byte lastOctetDER = (byte)(contents[last] & (0xFF << padBits));
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
+
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+    ASN1Primitive toDLObject()
+    {
+        return this;
+=======
+        if (lastOctet == lastOctetDER)
+        {
+            out.writeEncodingDL(withTag, BERTags.BIT_STRING, contents);
+        }
+        else
+        {
+            out.writeEncodingDL(withTag, BERTags.BIT_STRING, contents, 0, last, lastOctetDER);
+        }
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
+    }
 
     ASN1Primitive toDERObject()
     {
@@ -138,21 +160,8 @@ public class DERBitString
         return this;
     }
 
-    static DERBitString fromOctetString(byte[] bytes)
+    static DERBitString fromOctetString(ASN1OctetString octetString)
     {
-        if (bytes.length < 1)
-        {
-            throw new IllegalArgumentException("truncated BIT STRING detected");
-        }
-
-        int padBits = bytes[0];
-        byte[] data = new byte[bytes.length - 1];
-
-        if (data.length != 0)
-        {
-            System.arraycopy(bytes, 1, data, 0, bytes.length - 1);
-        }
-
-        return new DERBitString(data, padBits);
+        return new DERBitString(octetString.getOctets(), true);
     }
 }
