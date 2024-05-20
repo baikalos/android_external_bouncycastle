@@ -73,7 +73,11 @@ public class CompositePrivateKey
         try
         {
             return new PrivateKeyInfo(
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 new AlgorithmIdentifier(MiscObjectIdentifiers.id_alg_composite), new DERSequence(v)).getEncoded(ASN1Encoding.DER);
+=======
+                new AlgorithmIdentifier(MiscObjectIdentifiers.id_composite_key), new DERSequence(v)).getEncoded(ASN1Encoding.DER);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         }
         catch (IOException e)
         {
