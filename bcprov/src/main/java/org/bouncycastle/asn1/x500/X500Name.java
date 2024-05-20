@@ -1,7 +1,5 @@
 package org.bouncycastle.asn1.x500;
 
-import java.util.Enumeration;
-
 import org.bouncycastle.asn1.ASN1Choice;
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1Object;
@@ -111,18 +109,31 @@ public class X500Name
         X500NameStyle style,
         ASN1Sequence  seq)
     {
+        int count = seq.size();
+
         this.style = style;
-        this.rdns = new RDN[seq.size()];
+        this.rdns = new RDN[count];
 
         boolean inPlace = true;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 
         int index = 0;
         for (Enumeration e = seq.getObjects(); e.hasMoreElements();)
+=======
+        for (int index = 0; index < count; ++index)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
             Object element = e.nextElement();
             RDN rdn = RDN.getInstance(element);
             inPlace &= (rdn == element);
             rdns[index++] = rdn;
+=======
+            ASN1Encodable element = seq.getObjectAt(index);
+            RDN rdn = RDN.getInstance(element);
+            inPlace &= (rdn == element);
+            rdns[index] = rdn;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         }
 
         if (inPlace)
@@ -227,6 +238,14 @@ public class X500Name
         }
 
         return res;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+=======
+    }
+
+    public int size()
+    {
+        return rdns.length;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     public ASN1Primitive toASN1Primitive()
@@ -265,14 +284,14 @@ public class X500Name
         
         ASN1Primitive derO = ((ASN1Encodable)obj).toASN1Primitive();
 
-        if (this.toASN1Primitive().equals(derO))
+        if (toASN1Primitive().equals(derO))
         {
             return true;
         }
 
         try
         {
-            return style.areEqual(this, new X500Name(ASN1Sequence.getInstance(((ASN1Encodable)obj).toASN1Primitive())));
+            return style.areEqual(this, getInstance(obj));
         }
         catch (Exception e)
         {
