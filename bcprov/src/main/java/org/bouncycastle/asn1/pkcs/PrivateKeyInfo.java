@@ -164,7 +164,7 @@ public class PrivateKeyInfo
                     throw new IllegalArgumentException("'publicKey' requires version v2(1) or later");
                 }
 
-                this.publicKey = DERBitString.getInstance(tagged, false);
+                this.publicKey = ASN1BitString.getInstance(tagged, false);
                 break;
             }
             default:
@@ -195,6 +195,14 @@ public class PrivateKeyInfo
         return new DEROctetString(privateKey.getOctets());
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+=======
+    public int getPrivateKeyLength()
+    {
+        return privateKey.getOctetsLength();
+    }
+
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     public ASN1Encodable parsePrivateKey()
         throws IOException
     {

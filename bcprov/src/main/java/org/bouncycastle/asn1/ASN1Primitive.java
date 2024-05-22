@@ -15,12 +15,25 @@ public abstract class ASN1Primitive
 
     public void encodeTo(OutputStream output) throws IOException
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         ASN1OutputStream.create(output).writeObject(this);
     }
 
     public void encodeTo(OutputStream output, String encoding) throws IOException
     {
         ASN1OutputStream.create(output, encoding).writeObject(this);
+=======
+        ASN1OutputStream asn1Out = ASN1OutputStream.create(output); 
+        asn1Out.writePrimitive(this, true);
+        asn1Out.flushInternal();
+    }
+
+    public void encodeTo(OutputStream output, String encoding) throws IOException
+    {
+        ASN1OutputStream asn1Out = ASN1OutputStream.create(output, encoding); 
+        asn1Out.writePrimitive(this, true);
+        asn1Out.flushInternal();
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     /**
@@ -103,14 +116,9 @@ public abstract class ASN1Primitive
      * Return true if this objected is a CONSTRUCTED one, false otherwise.
      * @return true if CONSTRUCTED bit set on object's tag, false otherwise.
      */
-    abstract boolean isConstructed();
+    abstract boolean encodeConstructed();
 
-    /**
-     * Return the length of the encoding this object will produce.
-     * @return the length of the object's encoding.
-     * @throws IOException if the encoding length cannot be calculated.
-     */
-    abstract int encodedLength() throws IOException;
+    abstract int encodedLength(boolean withTag) throws IOException;
 
     abstract void encode(ASN1OutputStream out, boolean withTag) throws IOException;
 

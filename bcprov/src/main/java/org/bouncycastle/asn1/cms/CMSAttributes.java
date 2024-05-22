@@ -1,3 +1,4 @@
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 package org.bouncycastle.asn1.cms;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
@@ -34,3 +35,5 @@ public interface CMSAttributes
     ASN1ObjectIdentifier  cmsAlgorithmProtect = PKCSObjectIdentifiers.id_aa_cmsAlgorithmProtect;
 
 }
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
