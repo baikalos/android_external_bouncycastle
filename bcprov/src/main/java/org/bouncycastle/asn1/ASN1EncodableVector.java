@@ -48,6 +48,19 @@ public class ASN1EncodableVector
         this.elementCount = minCapacity;
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+=======
+    public void addAll(ASN1Encodable[] others)
+    {
+        if (null == others)
+        {
+            throw new NullPointerException("'others' cannot be null");
+        }
+
+        doAddAll(others, "'others' elements cannot be null");
+    }
+
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     public void addAll(ASN1EncodableVector other)
     {
         if (null == other)
@@ -55,6 +68,7 @@ public class ASN1EncodableVector
             throw new NullPointerException("'other' cannot be null");
         }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         int otherElementCount = other.size();
         if (otherElementCount < 1)
         {
@@ -75,6 +89,33 @@ public class ASN1EncodableVector
             if (null == otherElement)
             {
                 throw new NullPointerException("'other' elements cannot be null");
+=======
+        doAddAll(other.elements, "'other' elements cannot be null");
+    }
+
+    private void doAddAll(ASN1Encodable[] others, String nullMsg)
+    {
+        int otherElementCount = others.length;
+        if (otherElementCount < 1)
+        {
+            return;
+        }
+
+        int capacity = elements.length;
+        int minCapacity = elementCount + otherElementCount;
+        if ((minCapacity > capacity) | copyOnWrite)
+        {
+            reallocate(minCapacity);
+        }
+
+        int i = 0;
+        do
+        {
+            ASN1Encodable otherElement = others[i];
+            if (null == otherElement)
+            {
+                throw new NullPointerException(nullMsg);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
 
             this.elements[elementCount + i] = otherElement;
