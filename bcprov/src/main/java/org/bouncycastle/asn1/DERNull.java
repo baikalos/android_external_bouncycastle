@@ -18,18 +18,22 @@ public class DERNull
     {
     }
 
-    boolean isConstructed()
+    boolean encodeConstructed()
     {
         return false;
     }
 
-    int encodedLength()
+    int encodedLength(boolean withTag)
     {
-        return 2;
+        return ASN1OutputStream.getLengthOfEncodingDL(withTag, 0);
     }
 
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         out.writeEncoded(withTag, BERTags.NULL, zeroBytes);
+=======
+        out.writeEncodingDL(withTag, BERTags.NULL, zeroBytes);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 }

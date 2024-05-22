@@ -1,10 +1,5 @@
 package org.bouncycastle.asn1;
 
-import java.io.IOException;
-
-import org.bouncycastle.util.Arrays;
-import org.bouncycastle.util.Strings;
-
 /**
  * DER IA5String object - this is a ISO 646 (ASCII) string encoding code points 0 to 127.
  * <p>
@@ -12,9 +7,9 @@ import org.bouncycastle.util.Strings;
  * </p>
  */
 public class DERIA5String
-    extends ASN1Primitive
-    implements ASN1String
+    extends ASN1IA5String
 {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     private final byte[]  string;
 
     /**
@@ -83,12 +78,13 @@ public class DERIA5String
         this.string = string;
     }
 
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     /**
      * Basic constructor - without validation.
      * @param string the base string to use..
      */
-    public DERIA5String(
-        String   string)
+    public DERIA5String(String string)
     {
         this(string, false);
     }
@@ -101,10 +97,9 @@ public class DERIA5String
      * @throws IllegalArgumentException if validate is true and the string
      * contains characters that should not be in an IA5String.
      */
-    public DERIA5String(
-        String   string,
-        boolean  validate)
+    public DERIA5String(String string, boolean validate)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         if (string == null)
         {
             throw new NullPointerException("'string' cannot be null");
@@ -115,10 +110,14 @@ public class DERIA5String
         }
 
         this.string = Strings.toByteArray(string);
+=======
+        super(string, validate);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
-    public String getString()
+    DERIA5String(byte[] contents, boolean clone)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         return Strings.fromByteArray(string);
     }
 
@@ -186,5 +185,8 @@ public class DERIA5String
         }
 
         return true;
+=======
+        super(contents, clone);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 }

@@ -1,10 +1,5 @@
 package org.bouncycastle.asn1;
 
-import java.io.IOException;
-
-import org.bouncycastle.util.Arrays;
-import org.bouncycastle.util.Strings;
-
 /**
  * ASN.1 GENERAL-STRING data type.
  * <p>
@@ -13,9 +8,9 @@ import org.bouncycastle.util.Strings;
  * </p>
  */
 public class DERGeneralString 
-    extends ASN1Primitive
-    implements ASN1String
+    extends ASN1GeneralString
 {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     private final byte[] string;
 
     /**
@@ -80,23 +75,21 @@ public class DERGeneralString
         this.string = string;
     }
 
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     /**
      * Construct a GeneralString from the passed in String.
      *
      * @param string the string to be contained in this object.
      */
-    public DERGeneralString(String string) 
+    public DERGeneralString(String string)
     {
-        this.string = Strings.toByteArray(string);
+        super(string);
     }
 
-    /**
-     * Return a Java String representation of our contained String.
-     *
-     * @return a Java String representing our contents.
-     */
-    public String getString() 
+    DERGeneralString(byte[] contents, boolean clone)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         return Strings.fromByteArray(string);
     }
 
@@ -144,5 +137,8 @@ public class DERGeneralString
         DERGeneralString s = (DERGeneralString)o;
 
         return Arrays.areEqual(string, s.string);
+=======
+        super(contents, clone);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 }
