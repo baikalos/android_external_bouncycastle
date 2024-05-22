@@ -55,9 +55,14 @@ public class EncryptedData
     private EncryptedData(
         ASN1Sequence seq)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         int version = ((ASN1Integer)seq.getObjectAt(0)).intValueExact();
 
         if (version != 0)
+=======
+        ASN1Integer version = (ASN1Integer)seq.getObjectAt(0);
+        if (!version.hasValue(0))
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         {
             throw new IllegalArgumentException("sequence not version 0");
         }

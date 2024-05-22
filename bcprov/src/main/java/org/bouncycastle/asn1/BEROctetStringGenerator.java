@@ -96,8 +96,11 @@ public class BEROctetStringGenerator
 
         public void write(byte[] b, int off, int len) throws IOException
         {
-            while (len > 0)
+            int bufLen = _buf.length;
+            int available = bufLen - _off;
+            if (len < available)
             {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 int numToCopy = Math.min(len, _buf.length - _off);
                 System.arraycopy(b, off, _buf, _off, numToCopy);
 
@@ -112,7 +115,30 @@ public class BEROctetStringGenerator
 
                 off += numToCopy;
                 len -= numToCopy;
+=======
+                System.arraycopy(b, off, _buf, _off, len);
+                _off += len;
+                return;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
+
+            int count = 0;
+            if (_off > 0)
+            {
+                System.arraycopy(b, off, _buf, _off, available);
+                count += available;
+                DEROctetString.encode(_derOut, true, _buf, 0, bufLen);
+            }
+
+            int remaining;
+            while ((remaining = (len - count)) >= bufLen)
+            {
+                DEROctetString.encode(_derOut, true, b, off + count, bufLen);
+                count += bufLen;
+            }
+
+            System.arraycopy(b, off + count, _buf, 0, remaining);
+            this._off = remaining;
         }
 
         public void close()

@@ -3,7 +3,11 @@ package org.bouncycastle.cms;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 // import org.bouncycastle.operator.InputAEADDecryptor;
+=======
+import org.bouncycastle.operator.InputAEADDecryptor;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.operator.InputDecryptor;
 import org.bouncycastle.operator.MacCalculator;
 import org.bouncycastle.util.io.TeeInputStream;
@@ -34,6 +38,7 @@ public class RecipientOperator
         }
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     // BEGIN Android-removed
     /*
     public boolean isAEADBased()
@@ -47,6 +52,17 @@ public class RecipientOperator
     }
     */
     // END Android-removed
+=======
+    public boolean isAEADBased()
+    {
+        return operator instanceof InputAEADDecryptor;
+    }
+
+    public OutputStream getAADStream()
+    {
+        return ((InputAEADDecryptor)operator).getAADStream();
+    }
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 
     public boolean isMacBased()
     {
