@@ -14,9 +14,14 @@ import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.DERTaggedObject;
 import org.bouncycastle.crypto.Digest;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 // Android-changed: Use Android digests
 // import org.bouncycastle.crypto.digests.SHA1Digest;
 import org.bouncycastle.crypto.digests.AndroidDigestFactory;
+=======
+import org.bouncycastle.crypto.digests.SHA1Digest;
+import org.bouncycastle.util.Arrays;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.util.encoders.Hex;
 
 /**
@@ -109,6 +114,7 @@ public class AuthorityKeyIdentifier
     public AuthorityKeyIdentifier(
         SubjectPublicKeyInfo    spki)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         // Android-changed: Use Android digests
         // Digest  digest = new SHA1Digest();
         Digest  digest = AndroidDigestFactory.getSHA1();
@@ -118,6 +124,9 @@ public class AuthorityKeyIdentifier
         digest.update(bytes, 0, bytes.length);
         digest.doFinal(resBuf, 0);
         this.keyidentifier = new DEROctetString(resBuf);
+=======
+        this(spki, null, null);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     /**
@@ -173,7 +182,7 @@ public class AuthorityKeyIdentifier
         GeneralNames            name,
         BigInteger              serialNumber)
     {
-        this.keyidentifier = (keyIdentifier != null) ? new DEROctetString(keyIdentifier) : null;
+        this.keyidentifier = (keyIdentifier != null) ? new DEROctetString(Arrays.clone(keyIdentifier)) : null;
         this.certissuer = name;
         this.certserno = (serialNumber != null) ? new ASN1Integer(serialNumber) : null;
     }
@@ -230,6 +239,10 @@ public class AuthorityKeyIdentifier
 
     public String toString()
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
+=======
+        // -DM Hex.toHexString
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         String keyID = (keyidentifier != null) ? Hex.toHexString(keyidentifier.getOctets()) : "null";
 
         return "AuthorityKeyIdentifier: KeyID(" + keyID + ")";

@@ -8,7 +8,11 @@ import javax.security.auth.x500.X500Principal;
 
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameStyle;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 // import org.bouncycastle.jcajce.interfaces.BCX509Certificate;
+=======
+import org.bouncycastle.jcajce.interfaces.BCX509Certificate;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.x509.X509AttributeCertificate;
 
 class PrincipalUtils
@@ -38,6 +42,7 @@ class PrincipalUtils
 
     static X500Name getIssuerPrincipal(X509Certificate certificate)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         // BEGIN Android-removed: unsupported
         /*
         if (certificate instanceof BCX509Certificate)
@@ -64,6 +69,26 @@ class PrincipalUtils
         }
         */
         // END Android-removed: unsupported
+=======
+        if (certificate instanceof BCX509Certificate)
+        {
+            return notNull(((BCX509Certificate)certificate).getIssuerX500Name());
+        }
+        return getX500Name(notNull(certificate).getIssuerX500Principal());
+    }
+
+    static X500Name getIssuerPrincipal(X509CRL crl)
+    {
+        return getX500Name(notNull(crl).getIssuerX500Principal());
+    }
+
+    static X500Name getSubjectPrincipal(X509Certificate certificate)
+    {
+        if (certificate instanceof BCX509Certificate)
+        {
+            return notNull(((BCX509Certificate)certificate).getSubjectX500Name());
+        }
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         return getX500Name(notNull(certificate).getSubjectX500Principal());
     }
 
