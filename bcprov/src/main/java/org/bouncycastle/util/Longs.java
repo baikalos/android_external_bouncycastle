@@ -1,7 +1,38 @@
 package org.bouncycastle.util;
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 public class Longs
 {
+=======
+/**
+ * Utility methods and constants for longs.
+ */
+public class Longs
+{
+    public static final int BYTES = 8;
+    public static final int SIZE = Long.SIZE;
+
+    public static long highestOneBit(long i)
+    {
+        return Long.highestOneBit(i);
+    }
+
+    public static long lowestOneBit(long i)
+    {
+        return Long.lowestOneBit(i);
+    }
+
+    public static int numberOfLeadingZeros(long i)
+    {
+        return Long.numberOfLeadingZeros(i);
+    }
+
+    public static int numberOfTrailingZeros(long i)
+    {
+        return Long.numberOfTrailingZeros(i);
+    }
+
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     public static long reverse(long i)
     {
         return Long.reverse(i);

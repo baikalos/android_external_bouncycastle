@@ -39,11 +39,19 @@ public class RSADigestSigner
      */
     static
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         // BEGIN Android-removed: Unsupported algorithms
         // oidMap.put("RIPEMD128", TeleTrusTObjectIdentifiers.ripemd128);
         // oidMap.put("RIPEMD160", TeleTrusTObjectIdentifiers.ripemd160);
         // oidMap.put("RIPEMD256", TeleTrusTObjectIdentifiers.ripemd256);
         // END Android-removed: Unsupported algorithms
+=======
+        // Null-digester is intentionally NOT on this mapping.
+        
+        oidMap.put("RIPEMD128", TeleTrusTObjectIdentifiers.ripemd128);
+        oidMap.put("RIPEMD160", TeleTrusTObjectIdentifiers.ripemd160);
+        oidMap.put("RIPEMD256", TeleTrusTObjectIdentifiers.ripemd256);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 
         oidMap.put("SHA-1", X509ObjectIdentifiers.id_SHA1);
         oidMap.put("SHA-224", NISTObjectIdentifiers.id_sha224);

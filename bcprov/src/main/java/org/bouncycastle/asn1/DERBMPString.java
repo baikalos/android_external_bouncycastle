@@ -1,9 +1,5 @@
 package org.bouncycastle.asn1;
 
-import java.io.IOException;
-
-import org.bouncycastle.util.Arrays;
-
 /**
  * DER BMPString object encodes BMP (<i>Basic Multilingual Plane</i>) subset
  * (aka UCS-2) of UNICODE (ISO 10646) characters in codepoints 0 to 65535.
@@ -13,9 +9,9 @@ import org.bouncycastle.util.Arrays;
  * </p>
  */
 public class DERBMPString
-    extends ASN1Primitive
-    implements ASN1String
+    extends ASN1BMPString
 {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     private final char[]  string;
 
     /**
@@ -113,28 +109,38 @@ public class DERBMPString
         this.string = string;
     }
 
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     /**
      * Basic constructor
      * @param string a String to wrap as a BMP STRING.
      */
-    public DERBMPString(
-        String   string)
+    public DERBMPString(String string)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         if (string == null)
         {
             throw new NullPointerException("'string' cannot be null");
         }
 
         this.string = string.toCharArray();
+=======
+        super(string);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
-    public String getString()
+    /**
+     * Basic constructor - byte encoded string.
+     * @param contents the encoded BMP STRING to wrap.
+     */
+    DERBMPString(byte[] contents)
     {
-        return new String(string);
+        super(contents);
     }
 
-    public String toString()
+    DERBMPString(char[] string)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         return getString();
     }
 
@@ -211,5 +217,8 @@ public class DERBMPString
 
             out.write(buf, 0, bufPos);
         }
+=======
+        super(string);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 }

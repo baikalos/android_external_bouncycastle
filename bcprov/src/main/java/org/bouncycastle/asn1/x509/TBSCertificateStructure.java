@@ -1,11 +1,15 @@
 package org.bouncycastle.asn1.x509;
 
+import org.bouncycastle.asn1.ASN1BitString;
 import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.ASN1Object;
 import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1TaggedObject;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 import org.bouncycastle.asn1.DERBitString;
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.x500.X500Name;
 
@@ -43,8 +47,8 @@ public class TBSCertificateStructure
     Time                    startDate, endDate;
     X500Name                subject;
     SubjectPublicKeyInfo    subjectPublicKeyInfo;
-    DERBitString            issuerUniqueId;
-    DERBitString            subjectUniqueId;
+    ASN1BitString           issuerUniqueId;
+    ASN1BitString           subjectUniqueId;
     X509Extensions          extensions;
 
     public static TBSCertificateStructure getInstance(
@@ -116,10 +120,10 @@ public class TBSCertificateStructure
             switch (extra.getTagNo())
             {
             case 1:
-                issuerUniqueId = DERBitString.getInstance(extra, false);
+                issuerUniqueId = ASN1BitString.getInstance(extra, false);
                 break;
             case 2:
-                subjectUniqueId = DERBitString.getInstance(extra, false);
+                subjectUniqueId = ASN1BitString.getInstance(extra, false);
                 break;
             case 3:
                 extensions = X509Extensions.getInstance(extra);
@@ -172,12 +176,12 @@ public class TBSCertificateStructure
         return subjectPublicKeyInfo;
     }
 
-    public DERBitString getIssuerUniqueId()
+    public ASN1BitString getIssuerUniqueId()
     {
         return issuerUniqueId;
     }
 
-    public DERBitString getSubjectUniqueId()
+    public ASN1BitString getSubjectUniqueId()
     {
         return subjectUniqueId;
     }

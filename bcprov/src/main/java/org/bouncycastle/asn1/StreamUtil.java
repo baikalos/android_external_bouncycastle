@@ -8,9 +8,12 @@ import java.nio.channels.FileChannel;
 
 class StreamUtil
 {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     // Android-removed: Check max memory at runtime
     // private static final long  MAX_MEMORY = Runtime.getRuntime().maxMemory();
 
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     /**
      * Find out possible longest length, capped by available memory.
      *
@@ -49,13 +52,17 @@ class StreamUtil
             }
         }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         // BEGIN Android-changed: Check max memory at runtime
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         long maxMemory = Runtime.getRuntime().maxMemory();
         if (maxMemory > Integer.MAX_VALUE)
         {
             return Integer.MAX_VALUE;
         }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         return (int) maxMemory;
         // END Android-changed: Check max memory at runtime
     }
@@ -114,5 +121,8 @@ class StreamUtil
         }
 
         return length;
+=======
+        return (int)maxMemory;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 }
