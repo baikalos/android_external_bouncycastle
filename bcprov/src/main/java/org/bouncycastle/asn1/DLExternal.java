@@ -1,8 +1,5 @@
 package org.bouncycastle.asn1;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
 /**
  * Class representing the Definite-Length-type External
  */
@@ -19,11 +16,30 @@ public class DLExternal
      * <li> Anything but {@link DERTaggedObject} + data {@link DERTaggedObject} (data value form)</li>
      * </ul>
      *
-     * @throws IllegalArgumentException if input size is wrong, or
+     * @throws IllegalArgumentException if input size is wrong, or input is not an acceptable format
+     * 
+     * @deprecated Use {@link DLExternal#DLExternal(DLSequence)} instead.
      */
     public DLExternal(ASN1EncodableVector vector)
     {
-        super(vector);
+        this(DLFactory.createSequence(vector));
+    }
+
+    /**
+     * Construct a Definite-Length EXTERNAL object, the input sequence must have exactly two elements on it.
+     * <p>
+     * Acceptable input formats are:
+     * <ul>
+     * <li> {@link ASN1ObjectIdentifier} + data {@link DERTaggedObject} (direct reference form)</li>
+     * <li> {@link ASN1Integer} + data {@link DERTaggedObject} (indirect reference form)</li>
+     * <li> Anything but {@link DERTaggedObject} + data {@link DERTaggedObject} (data value form)</li>
+     * </ul>
+     *
+     * @throws IllegalArgumentException if input size is wrong, or input is not an acceptable format
+     */
+    public DLExternal(DLSequence sequence)
+    {
+        super(sequence);
     }
 
     /**
@@ -34,9 +50,10 @@ public class DLExternal
      * @param dataValueDescriptor The data value descriptor or <code>null</code> if not set.
      * @param externalData The external data in its encoded form.
      */
-    public DLExternal(ASN1ObjectIdentifier directReference, ASN1Integer indirectReference, ASN1Primitive dataValueDescriptor, DERTaggedObject externalData)
+    public DLExternal(ASN1ObjectIdentifier directReference, ASN1Integer indirectReference,
+        ASN1Primitive dataValueDescriptor, DERTaggedObject externalData)
     {
-        this(directReference, indirectReference, dataValueDescriptor, externalData.getTagNo(), externalData.toASN1Primitive());
+        super(directReference, indirectReference, dataValueDescriptor, externalData);
     }
 
     /**
@@ -48,11 +65,13 @@ public class DLExternal
      * @param encoding The encoding to be used for the external data
      * @param externalData The external data
      */
-    public DLExternal(ASN1ObjectIdentifier directReference, ASN1Integer indirectReference, ASN1Primitive dataValueDescriptor, int encoding, ASN1Primitive externalData)
+    public DLExternal(ASN1ObjectIdentifier directReference, ASN1Integer indirectReference,
+        ASN1Primitive dataValueDescriptor, int encoding, ASN1Primitive externalData)
     {
         super(directReference, indirectReference, dataValueDescriptor, encoding, externalData);
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     ASN1Primitive toDLObject()
     {
         return this;
@@ -60,7 +79,11 @@ public class DLExternal
 
     int encodedLength()
         throws IOException
+=======
+    ASN1Sequence buildSequence()
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         return this.getEncoded().length;
     }
 
@@ -70,21 +93,36 @@ public class DLExternal
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+=======
+        ASN1EncodableVector v = new ASN1EncodableVector(4);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         if (directReference != null)
         {
-            baos.write(directReference.getEncoded(ASN1Encoding.DL));
+            v.add(directReference);
         }
         if (indirectReference != null)
         {
-            baos.write(indirectReference.getEncoded(ASN1Encoding.DL));
+            v.add(indirectReference);
         }
         if (dataValueDescriptor != null)
         {
-            baos.write(dataValueDescriptor.getEncoded(ASN1Encoding.DL));
+            v.add(dataValueDescriptor.toDLObject());
         }
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         ASN1TaggedObject obj = new DLTaggedObject(true, encoding, externalContent);
         baos.write(obj.getEncoded(ASN1Encoding.DL));
         
         out.writeEncoded(withTag, BERTags.CONSTRUCTED, BERTags.EXTERNAL, baos.toByteArray());
+=======
+
+        v.add(new DLTaggedObject(0 == encoding, encoding, externalContent));
+
+        return new DLSequence(v);
+    }
+
+    ASN1Primitive toDLObject()
+    {
+        return this;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 }
