@@ -203,7 +203,11 @@ public class GeneralSubtree
 
         v.add(base);
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         if (minimum != null && !minimum.hasValue(ZERO))
+=======
+        if (minimum != null && !minimum.hasValue(0))
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
         {
             v.add(new DERTaggedObject(false, 0, minimum));
         }

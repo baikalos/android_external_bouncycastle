@@ -26,6 +26,8 @@ import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
 import org.bouncycastle.cert.X509AttributeCertificateHolder;
 import org.bouncycastle.cert.X509CRLHolder;
 import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.operator.DefaultDigestAlgorithmIdentifierFinder;
+import org.bouncycastle.operator.DigestAlgorithmIdentifierFinder;
 import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.Store;
 
@@ -92,11 +94,19 @@ public class CMSSignedGenerator
     protected List signerGens = new ArrayList();
     protected Map digests = new HashMap();
 
+    protected DigestAlgorithmIdentifierFinder digestAlgIdFinder;
+
     /**
      * base constructor
      */
     protected CMSSignedGenerator()
     {
+        this(new DefaultDigestAlgorithmIdentifierFinder());
+    }
+
+    protected CMSSignedGenerator(DigestAlgorithmIdentifierFinder digestAlgIdFinder)
+    {
+        this.digestAlgIdFinder = digestAlgIdFinder;
     }
 
     protected Map getBaseParameters(ASN1ObjectIdentifier contentType, AlgorithmIdentifier digAlgId, byte[] hash)
@@ -195,7 +205,9 @@ public class CMSSignedGenerator
         ASN1ObjectIdentifier   otherRevocationInfoFormat,
         ASN1Encodable          otherRevocationInfo)
     {
-        crls.add(new DERTaggedObject(false, 1, new OtherRevocationInfoFormat(otherRevocationInfoFormat, otherRevocationInfo)));
+        OtherRevocationInfoFormat infoFormat = new OtherRevocationInfoFormat(otherRevocationInfoFormat, otherRevocationInfo);
+        CMSUtils.validateInfoFormat(infoFormat);
+        crls.add(new DERTaggedObject(false, 1, infoFormat));
     }
 
     /**

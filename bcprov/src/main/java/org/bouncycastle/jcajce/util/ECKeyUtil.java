@@ -11,6 +11,7 @@ import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.asn1.x9.ECNamedCurveTable;
 import org.bouncycastle.asn1.x9.X962Parameters;
 import org.bouncycastle.asn1.x9.X9ECParameters;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 import org.bouncycastle.asn1.x9.X9ECPoint;
 import org.bouncycastle.crypto.ec.CustomNamedCurves;
 
@@ -72,6 +73,70 @@ public class ECKeyUtil
                 if (x9 == null)
                 {
                     x9 = ECNamedCurveTable.getByOID(oid);
+=======
+import org.bouncycastle.asn1.x9.X9ECParametersHolder;
+import org.bouncycastle.asn1.x9.X9ECPoint;
+import org.bouncycastle.crypto.ec.CustomNamedCurves;
+
+/**
+ * Utility class for EC Keys.
+ */
+public class ECKeyUtil
+{
+    /**
+     * Convert an ECPublicKey into an ECPublicKey which always encodes
+     * with point compression.
+     *
+     * @param ecPublicKey the originating public key.
+     * @return a wrapped version of ecPublicKey which uses point compression.
+     */
+    public static ECPublicKey createKeyWithCompression(ECPublicKey ecPublicKey)
+    {
+        return new ECPublicKeyWithCompression(ecPublicKey);
+    }
+
+    private static class ECPublicKeyWithCompression
+        implements ECPublicKey
+    {
+        private final ECPublicKey ecPublicKey;
+
+        public ECPublicKeyWithCompression(ECPublicKey ecPublicKey)
+        {
+            this.ecPublicKey = ecPublicKey;
+        }
+
+        public ECPoint getW()
+        {
+            return ecPublicKey.getW();
+        }
+
+        public String getAlgorithm()
+        {
+            return ecPublicKey.getAlgorithm();
+        }
+
+        public String getFormat()
+        {
+            return ecPublicKey.getFormat();
+        }
+
+        public byte[] getEncoded()
+        {
+            SubjectPublicKeyInfo publicKeyInfo = SubjectPublicKeyInfo.getInstance(ecPublicKey.getEncoded());
+
+            X962Parameters params = X962Parameters.getInstance(publicKeyInfo.getAlgorithm().getParameters());
+
+            org.bouncycastle.math.ec.ECCurve curve;
+
+            if (params.isNamedCurve())
+            {
+                ASN1ObjectIdentifier oid = (ASN1ObjectIdentifier)params.getParameters();
+
+                X9ECParametersHolder x9 = CustomNamedCurves.getByOIDLazy(oid);
+                if (x9 == null)
+                {
+                    x9 = ECNamedCurveTable.getByOIDLazy(oid);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
                 }
                 curve = x9.getCurve();
             }
