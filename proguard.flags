@@ -167,6 +167,7 @@
 -keep class com.android.org.bouncycastle.math.ec.ECAlgorithms { public *; }
 -keep class com.android.org.bouncycastle.math.ec.ECCurve { public *; }
 -keep class com.android.org.bouncycastle.math.ec.ECCurve$Config { public *; }
+-keep class com.android.org.bouncycastle.math.ec.ECCurve$Fp { public *; }
 -keep class com.android.org.bouncycastle.math.ec.ECPoint { public *; }
 -keep class com.android.org.bouncycastle.math.ec.FixedPointCombMultiplier { public *; }
 -keep class com.android.org.bouncycastle.math.raw.Interleave { public *; }
