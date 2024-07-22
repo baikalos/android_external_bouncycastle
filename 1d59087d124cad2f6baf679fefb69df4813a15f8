@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dcf326c_d8978fa1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2024-07-22T08:29:58Z",
+      "side": 1,
+      "message": "Please fix automerge errors",
+      "revId": "1d59087d124cad2f6baf679fefb69df4813a15f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
