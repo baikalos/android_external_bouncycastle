@@ -30,9 +30,12 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECParameterSpec;
 import org.bouncycastle.jce.spec.ECPrivateKeySpec;
 import org.bouncycastle.jce.spec.ECPublicKeySpec;
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 // Android-removed: Unsupported algorithms
 // import org.bouncycastle.jce.spec.OpenSSHPrivateKeySpec;
 // import org.bouncycastle.jce.spec.OpenSSHPublicKeySpec;
+=======
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 
 public class KeyFactorySpi
     extends BaseKeyFactorySpi
@@ -237,7 +240,11 @@ public class KeyFactorySpi
 
             try
             {
-                return new BCECPrivateKey(algorithm, new PrivateKeyInfo(new AlgorithmIdentifier(X9ObjectIdentifiers.id_ecPublicKey, ecKey.getParameters()), ecKey), configuration);
+                return new BCECPrivateKey(algorithm,
+                    new PrivateKeyInfo(
+                        new AlgorithmIdentifier(X9ObjectIdentifiers.id_ecPublicKey, ecKey.getParametersObject()),
+                        ecKey),
+                    configuration);
             }
             catch (IOException e)
             {

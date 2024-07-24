@@ -46,7 +46,13 @@ import org.bouncycastle.util.Strings;
 public class ASN1GeneralizedTime
     extends ASN1Primitive
 {
-    protected byte[] time;
+    static final ASN1UniversalType TYPE = new ASN1UniversalType(ASN1GeneralizedTime.class, BERTags.GENERALIZED_TIME)
+    {
+        ASN1Primitive fromImplicitPrimitive(DEROctetString octetString)
+        {
+            return createPrimitive(octetString.getOctets());
+        }
+    };
 
     /**
      * return a generalized time from the passed in object
@@ -62,12 +68,19 @@ public class ASN1GeneralizedTime
         {
             return (ASN1GeneralizedTime)obj;
         }
-
+        if (obj instanceof ASN1Encodable)
+        {
+            ASN1Primitive primitive = ((ASN1Encodable)obj).toASN1Primitive();
+            if (primitive instanceof ASN1GeneralizedTime)
+            {
+                return (ASN1GeneralizedTime)primitive;
+            }
+        }
         if (obj instanceof byte[])
         {
             try
             {
-                return (ASN1GeneralizedTime)fromByteArray((byte[])obj);
+                return (ASN1GeneralizedTime)TYPE.fromByteArray((byte[])obj);
             }
             catch (Exception e)
             {
@@ -81,17 +94,15 @@ public class ASN1GeneralizedTime
     /**
      * return a Generalized Time object from a tagged object.
      *
-     * @param obj      the tagged object holding the object we want
-     * @param explicit true if the object is meant to be explicitly
-     *                 tagged false otherwise.
+     * @param taggedObject the tagged object holding the object we want
+     * @param explicit     true if the object is meant to be explicitly tagged false
+     *                     otherwise.
      * @return an ASN1GeneralizedTime instance.
-     * @throws IllegalArgumentException if the tagged object cannot
-     * be converted.
+     * @throws IllegalArgumentException if the tagged object cannot be converted.
      */
-    public static ASN1GeneralizedTime getInstance(
-        ASN1TaggedObject obj,
-        boolean explicit)
+    public static ASN1GeneralizedTime getInstance(ASN1TaggedObject taggedObject, boolean explicit)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         ASN1Primitive o = obj.getObject();
 
         if (explicit || o instanceof ASN1GeneralizedTime)
@@ -102,7 +113,12 @@ public class ASN1GeneralizedTime
         {
             return new ASN1GeneralizedTime(ASN1OctetString.getInstance(o).getOctets());
         }
+=======
+        return (ASN1GeneralizedTime)TYPE.getContextInstance(taggedObject, explicit);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
+
+    final byte[] contents;
 
     /**
      * The correct format for this is YYYYMMDDHHMMSS[.f]Z, or without the Z
@@ -116,7 +132,7 @@ public class ASN1GeneralizedTime
     public ASN1GeneralizedTime(
         String time)
     {
-        this.time = Strings.toByteArray(time);
+        this.contents = Strings.toByteArray(time);
         try
         {
             this.getDate();
@@ -135,13 +151,17 @@ public class ASN1GeneralizedTime
     public ASN1GeneralizedTime(
         Date time)
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         // Android-changed: Use localized version
         // SimpleDateFormat dateF = new SimpleDateFormat("yyyyMMddHHmmss'Z'", DateUtil.EN_Locale);
         SimpleDateFormat dateF = new SimpleDateFormat("yyyyMMddHHmmss'Z'", Locale.US);
+=======
+        SimpleDateFormat dateF = new SimpleDateFormat("yyyyMMddHHmmss'Z'", LocaleUtil.EN_Locale);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 
         dateF.setTimeZone(new SimpleTimeZone(0, "Z"));
 
-        this.time = Strings.toByteArray(dateF.format(time));
+        this.contents = Strings.toByteArray(dateF.format(time));
     }
 
     /**
@@ -163,7 +183,7 @@ public class ASN1GeneralizedTime
 
         dateF.setTimeZone(new SimpleTimeZone(0, "Z"));
 
-        this.time = Strings.toByteArray(dateF.format(time));
+        this.contents = Strings.toByteArray(dateF.format(time));
     }
 
     ASN1GeneralizedTime(
@@ -173,7 +193,11 @@ public class ASN1GeneralizedTime
         {
             throw new IllegalArgumentException("GeneralizedTime string too short");
         }
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         this.time = bytes;
+=======
+        this.contents = bytes;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 
         if (!(isDigit(0) && isDigit(1) && isDigit(2) && isDigit(3)))
         {
@@ -188,7 +212,7 @@ public class ASN1GeneralizedTime
      */
     public String getTimeString()
     {
-        return Strings.fromByteArray(time);
+        return Strings.fromByteArray(contents);
     }
 
     /**
@@ -206,7 +230,7 @@ public class ASN1GeneralizedTime
      */
     public String getTime()
     {
-        String stime = Strings.fromByteArray(time);
+        String stime = Strings.fromByteArray(contents);
 
         //
         // standardise the format.
@@ -358,34 +382,50 @@ public class ASN1GeneralizedTime
         throws ParseException
     {
         SimpleDateFormat dateF;
-        String stime = Strings.fromByteArray(time);
+        String stime = Strings.fromByteArray(contents);
         String d = stime;
 
         if (stime.endsWith("Z"))
         {
             if (hasFractionalSeconds())
             {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 // Android-changed: Use localized version
                 // dateF = new SimpleDateFormat("yyyyMMddHHmmss.SSS'Z'");
                 dateF = new SimpleDateFormat("yyyyMMddHHmmss.SSS'Z'", Locale.US);
+=======
+                dateF = new SimpleDateFormat("yyyyMMddHHmmss.SSS'Z'", LocaleUtil.EN_Locale);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
             else if (hasSeconds())
             {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 // Android-changed: Use localized version
                 // dateF = new SimpleDateFormat("yyyyMMddHHmmss'Z'");
                 dateF = new SimpleDateFormat("yyyyMMddHHmmss'Z'", Locale.US);
+=======
+                dateF = new SimpleDateFormat("yyyyMMddHHmmss'Z'", LocaleUtil.EN_Locale);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
             else if (hasMinutes())
             {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 // Android-changed: Use localized version
                 // dateF = new SimpleDateFormat("yyyyMMddHHmm'Z'");
                 dateF = new SimpleDateFormat("yyyyMMddHHmm'Z'", Locale.US);
+=======
+                dateF = new SimpleDateFormat("yyyyMMddHHmm'Z'", LocaleUtil.EN_Locale);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
             else
             {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
                 // Android-changed: Use localized version
                 // dateF = new SimpleDateFormat("yyyyMMddHH'Z'");
                 dateF = new SimpleDateFormat("yyyyMMddHH'Z'", Locale.US);
+=======
+                dateF = new SimpleDateFormat("yyyyMMddHH'Z'", LocaleUtil.EN_Locale);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
             }
 
             dateF.setTimeZone(new SimpleTimeZone(0, "Z"));
@@ -430,14 +470,18 @@ public class ASN1GeneralizedTime
             d = pruneFractionalSeconds(d);
         }
         
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         return DateUtil.epochAdjust(dateF.parse(d));
+=======
+        return dateF.parse(d);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     protected boolean hasFractionalSeconds()
     {
-        for (int i = 0; i != time.length; i++)
+        for (int i = 0; i != contents.length; i++)
         {
-            if (time[i] == '.')
+            if (contents[i] == '.')
             {
                 if (i == 14)
                 {
@@ -460,31 +504,34 @@ public class ASN1GeneralizedTime
 
     private boolean isDigit(int pos)
     {
-        return time.length > pos && time[pos] >= '0' && time[pos] <= '9';
+        return contents.length > pos && contents[pos] >= '0' && contents[pos] <= '9';
     }
 
-    boolean isConstructed()
+    final boolean encodeConstructed()
     {
         return false;
     }
 
-    int encodedLength()
+    int encodedLength(boolean withTag)
     {
-        int length = time.length;
-
-        return 1 + StreamUtil.calculateBodyLength(length) + length;
+        return ASN1OutputStream.getLengthOfEncodingDL(withTag, contents.length);
     }
 
     void encode(ASN1OutputStream out, boolean withTag) throws IOException
     {
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
         out.writeEncoded(withTag, BERTags.GENERALIZED_TIME, time);
+=======
+        out.writeEncodingDL(withTag, BERTags.GENERALIZED_TIME, contents);
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     }
 
     ASN1Primitive toDERObject()
     {
-        return new DERGeneralizedTime(time);
+        return new DERGeneralizedTime(contents);
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     ASN1Primitive toDLObject()
     {
         return new DERGeneralizedTime(time);
@@ -492,17 +539,25 @@ public class ASN1GeneralizedTime
 
     boolean asn1Equals(
         ASN1Primitive o)
+=======
+    boolean asn1Equals(ASN1Primitive o)
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
     {
         if (!(o instanceof ASN1GeneralizedTime))
         {
             return false;
         }
 
-        return Arrays.areEqual(time, ((ASN1GeneralizedTime)o).time);
+        return Arrays.areEqual(contents, ((ASN1GeneralizedTime)o).contents);
     }
 
     public int hashCode()
     {
-        return Arrays.hashCode(time);
+        return Arrays.hashCode(contents);
+    }
+
+    static ASN1GeneralizedTime createPrimitive(byte[] contents)
+    {
+        return new ASN1GeneralizedTime(contents);
     }
 }
