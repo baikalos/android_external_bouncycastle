@@ -16,6 +16,224 @@
       "message": "The failing test in the presubmit has a history of failing, and is not one I have changed.",
       "revId": "562c409903fecc8ffb4391662da652470697e0c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63d241ce_4b8738ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-24T15:21:29Z",
+      "side": 1,
+      "message": "Awesome work! I\u0027m going to do another pass over the ASN.1 library as I think there might be logic changes there that we should take which maybe this CL doesn\u0027t.\n\nBut I would suggest if this builds after repackaging and removing the files I suggest, then merge it as-is so it gets into beta1 tomorrow, then we can do a second CL later with the ASN.1 changes.",
+      "revId": "562c409903fecc8ffb4391662da652470697e0c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50c9f622_996e624e",
+        "filename": "bcprov/src/main/java/org/bouncycastle/crypto/Xof.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-24T15:21:29Z",
+      "side": 1,
+      "message": "Needed?",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "562c409903fecc8ffb4391662da652470697e0c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a7ad048_d09da8b0",
+        "filename": "bcprov/src/main/java/org/bouncycastle/crypto/io/CipherIOException.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-24T15:21:29Z",
+      "side": 1,
+      "message": "New class, not needed.",
+      "range": {
+        "startLine": 8,
+        "startChar": 13,
+        "endLine": 8,
+        "endChar": 30
+      },
+      "revId": "562c409903fecc8ffb4391662da652470697e0c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf929101_ba5b0c96",
+        "filename": "bcprov/src/main/java/org/bouncycastle/crypto/io/CipherInputStream.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-24T15:21:29Z",
+      "side": 1,
+      "message": "New class, not needed.",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "562c409903fecc8ffb4391662da652470697e0c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbb660a9_6c153836",
+        "filename": "bcprov/src/main/java/org/bouncycastle/crypto/io/CipherOutputStream.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-24T15:21:29Z",
+      "side": 1,
+      "message": "New class, not needed.",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "562c409903fecc8ffb4391662da652470697e0c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0598d5f4_8f3d1526",
+        "filename": "bcprov/src/main/java/org/bouncycastle/crypto/io/InvalidCipherTextIOException.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-24T15:21:29Z",
+      "side": 1,
+      "message": "New class, not needed.",
+      "range": {
+        "startLine": 10,
+        "startChar": 13,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "562c409903fecc8ffb4391662da652470697e0c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ace1870_31bc4334",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/keystore/util/JKSKeyStoreSpi.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-24T15:21:29Z",
+      "side": 1,
+      "message": "I think we might need this to support JKS KeyStores with passwords.",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 26
+      },
+      "revId": "562c409903fecc8ffb4391662da652470697e0c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "986ae5f8_da6fd723",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jcajce/provider/symmetric/util/BaseBlockCipher.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 1453,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-24T15:21:29Z",
+      "side": 1,
+      "message": "nit: Use block comments for removing large chunks of code.",
+      "revId": "562c409903fecc8ffb4391662da652470697e0c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e96f039_55fef7d4",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/CertPathValidatorUtilities.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-24T15:21:29Z",
+      "side": 1,
+      "message": "Needed?",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "562c409903fecc8ffb4391662da652470697e0c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a0a6a37_33c2c036",
+        "filename": "bcprov/src/main/java/org/bouncycastle/jce/provider/PKIXCertPathValidatorSpi.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-24T15:21:29Z",
+      "side": 1,
+      "message": "Needed?",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 28
+      },
+      "revId": "562c409903fecc8ffb4391662da652470697e0c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
