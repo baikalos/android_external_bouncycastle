@@ -11,8 +11,13 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.List;
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.DERBitString;
+=======
+import org.bouncycastle.asn1.ASN1BitString;
+import org.bouncycastle.asn1.ASN1Sequence;
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
 import org.bouncycastle.asn1.misc.MiscObjectIdentifiers;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
@@ -278,7 +283,7 @@ public class JcaContentVerifierProviderBuilder
         return rawSig;
     }
 
-    private class SigVerifier
+    private static class SigVerifier
         implements ContentVerifier
     {
         private final AlgorithmIdentifier algorithm;
@@ -321,7 +326,7 @@ public class JcaContentVerifierProviderBuilder
         }
     }
 
-    private class RawSigVerifier
+    private static class RawSigVerifier
         extends SigVerifier
         implements RawContentVerifier
     {
@@ -382,6 +387,7 @@ public class JcaContentVerifierProviderBuilder
         }
     }
 
+<<<<<<< HEAD   (572cf5 Merge "Make bouncycastle-unbundle visible to avf tests" into)
     private class CompositeVerifier
         implements ContentVerifier
     {
@@ -434,6 +440,60 @@ public class JcaContentVerifierProviderBuilder
                     if (sigs[i] != null)
                     {
                         if (!sigs[i].verify(DERBitString.getInstance(sigSeq.getObjectAt(i)).getBytes()))
+=======
+    private static class CompositeVerifier
+        implements ContentVerifier
+    {
+        private Signature[] sigs;
+        private OutputStream stream;
+
+        public CompositeVerifier(Signature[] sigs)
+            throws OperatorCreationException
+        {
+            this.sigs = sigs;
+
+            int start = 0;
+            while (start < sigs.length && sigs[start] == null)
+            {
+                start++;
+            }
+
+            if (start == sigs.length)
+            {
+                throw new OperatorCreationException("no matching signature found in composite");
+            }
+            this.stream = OutputStreamFactory.createStream(sigs[start]);
+            for (int i = start + 1; i != sigs.length; i++)
+            {
+                if (sigs[i] != null)
+                {
+                    this.stream = new TeeOutputStream(this.stream, OutputStreamFactory.createStream(sigs[i]));
+                }
+            }
+        }
+
+        public AlgorithmIdentifier getAlgorithmIdentifier()
+        {
+            return new AlgorithmIdentifier(MiscObjectIdentifiers.id_alg_composite);
+        }
+
+        public OutputStream getOutputStream()
+        {
+            return stream;
+        }
+
+        public boolean verify(byte[] expected)
+        {
+            try
+            {
+                ASN1Sequence sigSeq = ASN1Sequence.getInstance(expected);
+                boolean failed = false;
+                for (int i = 0; i != sigSeq.size(); i++)
+                {
+                    if (sigs[i] != null)
+                    {
+                        if (!sigs[i].verify(ASN1BitString.getInstance(sigSeq.getObjectAt(i)).getBytes()))
+>>>>>>> BRANCH (3d1a66 Merge "bouncycastle: Android tree with upstream code for ver)
                         {
                             failed = true;
                         }
