@@ -71,6 +71,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9468bbf9_d5b00462",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2024-07-24T16:31:14Z",
+      "side": 1,
+      "message": "Actually fwiw it now builds locally",
+      "parentUuid": "37308b12_2f9422be",
+      "revId": "562c409903fecc8ffb4391662da652470697e0c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "50c9f622_996e624e",
