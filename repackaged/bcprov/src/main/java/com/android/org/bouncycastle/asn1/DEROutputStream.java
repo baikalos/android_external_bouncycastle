@@ -11,7 +11,7 @@ import java.io.OutputStream;
 public class DEROutputStream
     extends ASN1OutputStream
 {
-    @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
+    @android.compat.annotation.UnsupportedAppUsage
     public DEROutputStream(
         OutputStream    os)
     {

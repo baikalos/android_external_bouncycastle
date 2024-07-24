@@ -26,7 +26,7 @@ public class ASN1InputStream
 
     private final byte[][] tmpBuffers;
 
-    @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
+    @android.compat.annotation.UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public ASN1InputStream(
         InputStream is)

@@ -20,7 +20,7 @@ public class DERInteger
         super(bytes, true);
     }
 
-    @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
+    @android.compat.annotation.UnsupportedAppUsage
     public DERInteger(BigInteger value)
     {
         super(value);

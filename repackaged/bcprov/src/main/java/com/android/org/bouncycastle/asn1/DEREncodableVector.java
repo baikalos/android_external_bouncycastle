@@ -13,7 +13,7 @@ public class DEREncodableVector
     /**
      * @deprecated use ASN1EncodableVector instead.
      */
-    @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
+    @android.compat.annotation.UnsupportedAppUsage
     public DEREncodableVector()
     {
 

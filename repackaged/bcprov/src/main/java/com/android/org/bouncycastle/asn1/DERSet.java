@@ -41,7 +41,7 @@ public class DERSet
      * create a set containing a vector of objects.
      * @param v the vector of objects to make up the set.
      */
-    @android.compat.annotation.UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
+    @android.compat.annotation.UnsupportedAppUsage
     public DERSet(
         ASN1EncodableVector v)
     {
