@@ -34,6 +34,24 @@
       "parentUuid": "0f54c71c_8376f794",
       "revId": "0b91c091c79ecdfbfbcbd499d54790ae790551e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0151639d_0f52a227",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-25T09:11:03Z",
+      "side": 1,
+      "message": "Ah sorry, I missed the stacked change",
+      "parentUuid": "d9510116_a2010c8f",
+      "revId": "0b91c091c79ecdfbfbcbd499d54790ae790551e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
