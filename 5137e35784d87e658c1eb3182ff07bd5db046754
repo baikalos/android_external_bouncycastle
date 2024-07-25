@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5177d26_49331a32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-07-25T07:48:46Z",
+      "side": 1,
+      "message": "Actually, can we hold off on submitting this for a little while, there may be a quick forward fix.\n\nThe breakage this causes is in test code only, so there is no impact on device functionality.",
+      "revId": "5137e35784d87e658c1eb3182ff07bd5db046754",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
