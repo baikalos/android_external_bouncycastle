@@ -184,3 +184,8 @@
 # tests.com.android.org.bouncycastle.crypto.digests
 -keep class com.android.org.bouncycastle.crypto.digests.*Digest { public *; }
 -keep class com.android.org.bouncycastle.crypto.digests.OpenSSLDigest$* { public *; }
+
+# ASN.1 classes, unsupported usage by vendors, e.g. b/356844860
+-keep class com.android.org.bouncycastle.asn1.ASN1* { public *; }
+-keep class com.android.org.bouncycastle.asn1.DER* { public *; }
+-keep class com.android.org.bouncycastle.asn1.BER* { public *; }
