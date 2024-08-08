@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1b4d7b7_0f5d24a0",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-08-08T09:47:51Z",
+      "side": 1,
+      "message": "Nope, you want bouncycastle-unbundled 😊",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "886168b300de1b808682332eb7b9125214b27a96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
