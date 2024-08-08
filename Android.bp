@@ -107,12 +107,10 @@ java_library {
 
     optimize: {
         enabled: true,
-        shrink: true,
         optimize: true,
         obfuscate: false,
         proguard_compatibility: false,
         ignore_warnings: false,
-        proguard_flags_files: ["proguard.flags"],
     },
 
     sdk_version: "none",
