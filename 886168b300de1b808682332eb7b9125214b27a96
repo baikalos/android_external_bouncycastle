@@ -22,6 +22,30 @@
       },
       "revId": "886168b300de1b808682332eb7b9125214b27a96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "101f93dd_cd4372eb",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1307893
+      },
+      "writtenOn": "2024-08-26T08:42:29Z",
+      "side": 1,
+      "message": "Our goal is to convert the art/.../`ahat-tests` to `Android.bp`.\n\nHowever, to generate `test-dump.hprof` in `ahat-tests`, we need to execute the `art` script (`art/tools/art`). As mentioned in b/342330305#comment3, the `art` script uses a `hardcoded` approach, requiring its necessary libraries to be in `specific locations` for proper execution.\n\nAmong them, `bouncycastle` must be located at `\u003chost out\u003e/apex/com.android.art/javalib/bouncycastle.jar` to run (as defined in `get_boot_class_path()` within `art/tools/art`).\n\n`ART_HOST_DEX_DEPENDENCIES` is defined in `art/build/Android.common_path.mk` as:\n```\nART_HOST_DEX_DEPENDENCIES :\u003d $(foreach jar,$(HOST_TEST_CORE_JARS),$(HOST_OUT_JAVA_LIBRARIES)/$(jar).jar)\n```\nWithin this `ART_HOST_DEX_DEPENDENCIES`, `HOST_TEST_CORE_JARS` includes `$(CORE_IMG_JARS)`.\n\nAnd `CORE_IMG_JARS` is defined as:\n```\nCORE_IMG_JARS :\u003d core-oj core-libart okhttp bouncycastle apache-xml\n```\n`bouncycastle` is defined here.\n\nTherefore, we can see that `ahat-tests` requires `bouncycastle`, not `bouncycastle-unbundled`.\n\nAre `bouncycastle-unbundled` and `bouncycastle` essentially the same? \nIf we directly replace it with `bouncycastle-unbundled`, will the execution result be the same?\n\nBecause we are using `cc_genrule` to reproduce the behavior in `Android.mk`, and Soong\u0027s `genrule` runs in a `sandbox` environment, we need to explicitly define each library or tool that needs to be used. \nIf `bouncycastle-unbundled` and `bouncycastle` are essentially the same, perhaps we can directly specify the use of `bouncycastle-unbundled` instead of `bouncycastle` in the sandbox.",
+      "parentUuid": "d1b4d7b7_0f5d24a0",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "886168b300de1b808682332eb7b9125214b27a96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
