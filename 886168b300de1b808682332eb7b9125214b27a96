@@ -46,6 +46,30 @@
       },
       "revId": "886168b300de1b808682332eb7b9125214b27a96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd0b0ba6_eb1368ac",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2024-08-27T16:39:28Z",
+      "side": 1,
+      "message": "\u003e Therefore, we can see that `ahat-tests` requires `bouncycastle`, not `bouncycastle-unbundled`.\n\nAh ok.\n\n\u003e Are `bouncycastle-unbundled` and `bouncycastle` essentially the same? \n\u003e If we directly replace it with `bouncycastle-unbundled`, will the execution result be the same?\n\nNot quite.  The two libraries are repackaged into different library namespaces to allow them to co-exist in an app without clashes, which is why I assumed you had the wrong version initially.\n\n`bouncycastle` is built into `com.android.org.bouncycastle`\n\n`bouncycastle-unbundled` is built into `org.bouncycastle`\n\nSo it sounds like you definitely need `bouncycastle` or your symbols won\u0027t match up.",
+      "parentUuid": "101f93dd_cd4372eb",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "886168b300de1b808682332eb7b9125214b27a96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
