@@ -87,6 +87,7 @@ java_library {
     name: "bouncycastle",
     // Restrict visibility to only those targets that need to access it.
     visibility: [
+        "//art/tools/ahat",
         "//art/build/apex",
         "//art/build/sdk",
         "//art/tools/fuzzer",
